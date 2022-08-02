@@ -1,6 +1,6 @@
 # shp-geojson (shpUtil)
 
-shp 或 kmz 格式 与 GeoJSON 格式 互相转换工具类(shpUtil)
+shp 格式 与 GeoJSON 格式 互相转换工具类(shpUtil)
 
 ## 运行命令
 
