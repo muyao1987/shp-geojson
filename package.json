@@ -1,13 +1,13 @@
 {
   "name": "shp-geojson",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "shp与geojson互转工具类",
   "main": "dist/shp-geojson-src.js",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "shpjs": "^4.0.4"
+    "@mars3d/shpjs": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
