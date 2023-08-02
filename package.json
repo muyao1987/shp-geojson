@@ -1,13 +1,17 @@
 {
   "name": "shp-geojson",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "shp与geojson互转工具类",
   "main": "dist/shp-geojson-src.js",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@mars3d/shpjs": "^4.1.0"
+    "jszip": "^3.5.0",
+    "lie": "^3.0.1",
+    "lru-cache": "^7.0.0",
+    "parsedbf": "^1.1.0",
+    "proj4": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
@@ -25,7 +29,15 @@
     "eslint-plugin-promise": "^4.3.1",
     "prettier": "^2.2.1",
     "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "babel-minify": "^0.5.1",
+    "browserify": "^17.0.0",
+    "chai": "^3.3.0",
+    "chai-as-promised": "^5.1.0",
+    "express": "^4.17.2",
+    "mocha": "^7.1.2",
+    "morgan": "^1.10.0",
+    "semistandard": "^16.0.1"
   },
   "scripts": {
     "build": "webpack --env.prod  --env.min --progress --profile --colors --config ./scripts/webpack.config.js && webpack --env.prod --progress --profile --colors --config ./scripts/webpack.config.js",
