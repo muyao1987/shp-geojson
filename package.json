@@ -1,6 +1,6 @@
 {
   "name": "shp-geojson",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "shp与geojson互转工具类",
   "main": "dist/shp-geojson-src.js",
   "files": [

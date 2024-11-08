@@ -1,4 +1,3 @@
-let proj4 = require('proj4')
 const _parseDbf = require('parsedbf')
 const Promise = require('lie')
 const Cache = require('lru-cache')
@@ -7,20 +6,9 @@ const Buffer = require('buffer').Buffer
 import { unzip } from './unzip'
 import { binaryAjax } from './binaryajax'
 import { parseShp as _parseShp } from './parseShp'
+import { getProj4 } from './proj4'
 
-if (proj4.default) {
-  proj4 = proj4.default
-}
-
-function getProj4(value) {
-  if (window.proj4) {
-    return window.proj4(value)
-  }
-  if (window.mars3d && window.mars3d.proj4) {
-    return window.mars3d.proj4(value)
-  }
-  return proj4(value)
-}
+export { proj4, getCrsList } from './proj4'
 
 const cache = new Cache({ max: 20 })
 

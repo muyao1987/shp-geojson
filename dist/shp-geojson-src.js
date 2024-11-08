@@ -1,7 +1,7 @@
 /*!
  * shp与geojson互转工具类
- * 版本信息：v2.0.0, hash值: 059dbd8b804dda881d52
- * 编译日期：2023-08-02 16:24:45
+ * 版本信息：v2.0.1, hash值: a3c85fd901704d82b3f5
+ * 编译日期：2024-11-08 13:33:43
  * 版权所有：Copyright by 木遥 https://github.com/muyao1987/shp-geojson
  * 
  */
@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,7 +107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 // TODO(Babel 8): Remove this file.
 
-var runtime = __webpack_require__(35)();
+var runtime = __webpack_require__(47)();
 module.exports = runtime;
 
 // Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
@@ -163,9 +163,9 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(43)
-var ieee754 = __webpack_require__(44)
-var isArray = __webpack_require__(13)
+var base64 = __webpack_require__(54)
+var ieee754 = __webpack_require__(55)
+var isArray = __webpack_require__(20)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -1949,46 +1949,8215 @@ function isnan (val) {
 /* 3 */
 /***/ (function(module, exports) {
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+function asyncGeneratorStep(n, t, e, r, o, a, c) {
   try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
+    var i = n[a](c),
+      u = i.value;
+  } catch (n) {
+    return void e(n);
   }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
+  i.done ? t(u) : Promise.resolve(u).then(r, o);
 }
-
-function _asyncToGenerator(fn) {
+function _asyncToGenerator(n) {
   return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+    var t = this,
+      e = arguments;
+    return new Promise(function (r, o) {
+      var a = n.apply(t, e);
+      function _next(n) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "next", n);
       }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      function _throw(n) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "throw", n);
       }
-
-      _next(undefined);
+      _next(void 0);
     });
   };
 }
-
 module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ lib; });
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ getProj4; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ getCrsList; });
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(40);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/global.js
+/* harmony default export */ var global = (function(defs) {
+  defs('EPSG:4326', "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees");
+  defs('EPSG:4269', "+title=NAD83 (long/lat) +proj=longlat +a=6378137.0 +b=6356752.31414036 +ellps=GRS80 +datum=NAD83 +units=degrees");
+  defs('EPSG:3857', "+title=WGS 84 / Pseudo-Mercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs");
+  // UTM WGS84
+  for (var i = 0; i <= 60; ++i) {
+    defs('EPSG:' + (32600 + i), "+proj=utm +zone=" + i + " +datum=WGS84 +units=m");
+    defs('EPSG:' + (32700 + i), "+proj=utm +zone=" + i + " +south +datum=WGS84 +units=m");
+  }
+
+  defs.WGS84 = defs['EPSG:4326'];
+  defs['EPSG:3785'] = defs['EPSG:3857']; // maintain backward compat, official code is 3857
+  defs.GOOGLE = defs['EPSG:3857'];
+  defs['EPSG:900913'] = defs['EPSG:3857'];
+  defs['EPSG:102113'] = defs['EPSG:3857'];
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/values.js
+var PJD_3PARAM = 1;
+var PJD_7PARAM = 2;
+var PJD_GRIDSHIFT = 3;
+var PJD_WGS84 = 4; // WGS84 or equivalent
+var PJD_NODATUM = 5; // WGS84 or equivalent
+var SRS_WGS84_SEMIMAJOR = 6378137.0;  // only used in grid shift transforms
+var SRS_WGS84_SEMIMINOR = 6356752.314;  // only used in grid shift transforms
+var SRS_WGS84_ESQUARED = 0.0066943799901413165; // only used in grid shift transforms
+var SEC_TO_RAD = 4.84813681109535993589914102357e-6;
+var HALF_PI = Math.PI/2;
+// ellipoid pj_set_ell.c
+var SIXTH = 0.1666666666666666667;
+/* 1/6 */
+var RA4 = 0.04722222222222222222;
+/* 17/360 */
+var RA6 = 0.02215608465608465608;
+var EPSLN = 1.0e-10;
+// you'd think you could use Number.EPSILON above but that makes
+// Mollweide get into an infinate loop.
+
+var D2R = 0.01745329251994329577;
+var R2D = 57.29577951308232088;
+var FORTPI = Math.PI/4;
+var TWO_PI = Math.PI * 2;
+// SPI is slightly greater than Math.PI, so values that exceed the -180..180
+// degree range by a tiny amount don't get wrapped. This prevents points that
+// have drifted from their original location along the 180th meridian (due to
+// floating point error) from changing their sign.
+var SPI = 3.14159265359;
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/PrimeMeridian.js
+var PrimeMeridian_exports = {};
+
+
+PrimeMeridian_exports.greenwich = 0.0; //"0dE",
+PrimeMeridian_exports.lisbon = -9.131906111111; //"9d07'54.862\"W",
+PrimeMeridian_exports.paris = 2.337229166667; //"2d20'14.025\"E",
+PrimeMeridian_exports.bogota = -74.080916666667; //"74d04'51.3\"W",
+PrimeMeridian_exports.madrid = -3.687938888889; //"3d41'16.58\"W",
+PrimeMeridian_exports.rome = 12.452333333333; //"12d27'8.4\"E",
+PrimeMeridian_exports.bern = 7.439583333333; //"7d26'22.5\"E",
+PrimeMeridian_exports.jakarta = 106.807719444444; //"106d48'27.79\"E",
+PrimeMeridian_exports.ferro = -17.666666666667; //"17d40'W",
+PrimeMeridian_exports.brussels = 4.367975; //"4d22'4.71\"E",
+PrimeMeridian_exports.stockholm = 18.058277777778; //"18d3'29.8\"E",
+PrimeMeridian_exports.athens = 23.7163375; //"23d42'58.815\"E",
+PrimeMeridian_exports.oslo = 10.722916666667; //"10d43'22.5\"E"
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/units.js
+/* harmony default export */ var units = ({
+  'mm': {to_meter: 0.001},
+  'cm': {to_meter: 0.01},
+  'ft': {to_meter: 0.3048},
+  'us-ft': {to_meter: 1200 / 3937},
+  'fath': {to_meter: 1.8288},
+  'kmi': {to_meter: 1852},
+  'us-ch': {to_meter: 20.1168402336805},
+  'us-mi': {to_meter: 1609.34721869444},
+  'km': {to_meter: 1000},
+  'ind-ft': {to_meter: 0.30479841},
+  'ind-yd': {to_meter: 0.91439523},
+  'mi': {to_meter: 1609.344},
+  'yd': {to_meter: 0.9144},
+  'ch': {to_meter: 20.1168},
+  'link': {to_meter: 0.201168},
+  'dm': {to_meter: 0.01},
+  'in': {to_meter: 0.0254},
+  'ind-ch': {to_meter: 20.11669506},
+  'us-in': {to_meter: 0.025400050800101},
+  'us-yd': {to_meter: 0.914401828803658}
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/match.js
+var ignoredChar = /[\s_\-\/\(\)]/g;
+function match(obj, key) {
+  if (obj[key]) {
+    return obj[key];
+  }
+  var keys = Object.keys(obj);
+  var lkey = key.toLowerCase().replace(ignoredChar, '');
+  var i = -1;
+  var testkey, processedKey;
+  while (++i < keys.length) {
+    testkey = keys[i];
+    processedKey = testkey.toLowerCase().replace(ignoredChar, '');
+    if (processedKey === lkey) {
+      return obj[testkey];
+    }
+  }
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projString.js
+
+
+
+
+
+/* harmony default export */ var projString = (function(defData) {
+  var self = {};
+  var paramObj = defData.split('+').map(function(v) {
+    return v.trim();
+  }).filter(function(a) {
+    return a;
+  }).reduce(function(p, a) {
+    var split = a.split('=');
+    split.push(true);
+    p[split[0].toLowerCase()] = split[1];
+    return p;
+  }, {});
+  var paramName, paramVal, paramOutname;
+  var params = {
+    proj: 'projName',
+    datum: 'datumCode',
+    rf: function(v) {
+      self.rf = parseFloat(v);
+    },
+    lat_0: function(v) {
+      self.lat0 = v * D2R;
+    },
+    lat_1: function(v) {
+      self.lat1 = v * D2R;
+    },
+    lat_2: function(v) {
+      self.lat2 = v * D2R;
+    },
+    lat_ts: function(v) {
+      self.lat_ts = v * D2R;
+    },
+    lon_0: function(v) {
+      self.long0 = v * D2R;
+    },
+    lon_1: function(v) {
+      self.long1 = v * D2R;
+    },
+    lon_2: function(v) {
+      self.long2 = v * D2R;
+    },
+    alpha: function(v) {
+      self.alpha = parseFloat(v) * D2R;
+    },
+    gamma: function(v) {
+      self.rectified_grid_angle = parseFloat(v);
+    },
+    lonc: function(v) {
+      self.longc = v * D2R;
+    },
+    x_0: function(v) {
+      self.x0 = parseFloat(v);
+    },
+    y_0: function(v) {
+      self.y0 = parseFloat(v);
+    },
+    k_0: function(v) {
+      self.k0 = parseFloat(v);
+    },
+    k: function(v) {
+      self.k0 = parseFloat(v);
+    },
+    a: function(v) {
+      self.a = parseFloat(v);
+    },
+    b: function(v) {
+      self.b = parseFloat(v);
+    },
+    r: function(v) {
+      self.a = self.b = parseFloat(v);
+    },
+    r_a: function() {
+      self.R_A = true;
+    },
+    zone: function(v) {
+      self.zone = parseInt(v, 10);
+    },
+    south: function() {
+      self.utmSouth = true;
+    },
+    towgs84: function(v) {
+      self.datum_params = v.split(",").map(function(a) {
+        return parseFloat(a);
+      });
+    },
+    to_meter: function(v) {
+      self.to_meter = parseFloat(v);
+    },
+    units: function(v) {
+      self.units = v;
+      var unit = match(units, v);
+      if (unit) {
+        self.to_meter = unit.to_meter;
+      }
+    },
+    from_greenwich: function(v) {
+      self.from_greenwich = v * D2R;
+    },
+    pm: function(v) {
+      var pm = match(PrimeMeridian_exports, v);
+      self.from_greenwich = (pm ? pm : parseFloat(v)) * D2R;
+    },
+    nadgrids: function(v) {
+      if (v === '@null') {
+        self.datumCode = 'none';
+      }
+      else {
+        self.nadgrids = v;
+      }
+    },
+    axis: function(v) {
+      var legalAxis = "ewnsud";
+      if (v.length === 3 && legalAxis.indexOf(v.substr(0, 1)) !== -1 && legalAxis.indexOf(v.substr(1, 1)) !== -1 && legalAxis.indexOf(v.substr(2, 1)) !== -1) {
+        self.axis = v;
+      }
+    },
+    approx: function() {
+      self.approx = true;
+    }
+  };
+  for (paramName in paramObj) {
+    paramVal = paramObj[paramName];
+    if (paramName in params) {
+      paramOutname = params[paramName];
+      if (typeof paramOutname === 'function') {
+        paramOutname(paramVal);
+      }
+      else {
+        self[paramOutname] = paramVal;
+      }
+    }
+    else {
+      self[paramName] = paramVal;
+    }
+  }
+  if(typeof self.datumCode === 'string' && self.datumCode !== "WGS84"){
+    self.datumCode = self.datumCode.toLowerCase();
+  }
+  return self;
+});
+
+// CONCATENATED MODULE: ./node_modules/wkt-parser/parser.js
+/* harmony default export */ var parser = (parseString);
+
+var NEUTRAL = 1;
+var KEYWORD = 2;
+var NUMBER = 3;
+var QUOTED = 4;
+var AFTERQUOTE = 5;
+var ENDED = -1;
+var whitespace = /\s/;
+var latin = /[A-Za-z]/;
+var keyword = /[A-Za-z84_]/;
+var endThings = /[,\]]/;
+var digets = /[\d\.E\-\+]/;
+// const ignoredChar = /[\s_\-\/\(\)]/g;
+function Parser(text) {
+  if (typeof text !== 'string') {
+    throw new Error('not a string');
+  }
+  this.text = text.trim();
+  this.level = 0;
+  this.place = 0;
+  this.root = null;
+  this.stack = [];
+  this.currentObject = null;
+  this.state = NEUTRAL;
+}
+Parser.prototype.readCharicter = function() {
+  var char = this.text[this.place++];
+  if (this.state !== QUOTED) {
+    while (whitespace.test(char)) {
+      if (this.place >= this.text.length) {
+        return;
+      }
+      char = this.text[this.place++];
+    }
+  }
+  switch (this.state) {
+    case NEUTRAL:
+      return this.neutral(char);
+    case KEYWORD:
+      return this.keyword(char)
+    case QUOTED:
+      return this.quoted(char);
+    case AFTERQUOTE:
+      return this.afterquote(char);
+    case NUMBER:
+      return this.number(char);
+    case ENDED:
+      return;
+  }
+};
+Parser.prototype.afterquote = function(char) {
+  if (char === '"') {
+    this.word += '"';
+    this.state = QUOTED;
+    return;
+  }
+  if (endThings.test(char)) {
+    this.word = this.word.trim();
+    this.afterItem(char);
+    return;
+  }
+  throw new Error('havn\'t handled "' +char + '" in afterquote yet, index ' + this.place);
+};
+Parser.prototype.afterItem = function(char) {
+  if (char === ',') {
+    if (this.word !== null) {
+      this.currentObject.push(this.word);
+    }
+    this.word = null;
+    this.state = NEUTRAL;
+    return;
+  }
+  if (char === ']') {
+    this.level--;
+    if (this.word !== null) {
+      this.currentObject.push(this.word);
+      this.word = null;
+    }
+    this.state = NEUTRAL;
+    this.currentObject = this.stack.pop();
+    if (!this.currentObject) {
+      this.state = ENDED;
+    }
+
+    return;
+  }
+};
+Parser.prototype.number = function(char) {
+  if (digets.test(char)) {
+    this.word += char;
+    return;
+  }
+  if (endThings.test(char)) {
+    this.word = parseFloat(this.word);
+    this.afterItem(char);
+    return;
+  }
+  throw new Error('havn\'t handled "' +char + '" in number yet, index ' + this.place);
+};
+Parser.prototype.quoted = function(char) {
+  if (char === '"') {
+    this.state = AFTERQUOTE;
+    return;
+  }
+  this.word += char;
+  return;
+};
+Parser.prototype.keyword = function(char) {
+  if (keyword.test(char)) {
+    this.word += char;
+    return;
+  }
+  if (char === '[') {
+    var newObjects = [];
+    newObjects.push(this.word);
+    this.level++;
+    if (this.root === null) {
+      this.root = newObjects;
+    } else {
+      this.currentObject.push(newObjects);
+    }
+    this.stack.push(this.currentObject);
+    this.currentObject = newObjects;
+    this.state = NEUTRAL;
+    return;
+  }
+  if (endThings.test(char)) {
+    this.afterItem(char);
+    return;
+  }
+  throw new Error('havn\'t handled "' +char + '" in keyword yet, index ' + this.place);
+};
+Parser.prototype.neutral = function(char) {
+  if (latin.test(char)) {
+    this.word = char;
+    this.state = KEYWORD;
+    return;
+  }
+  if (char === '"') {
+    this.word = '';
+    this.state = QUOTED;
+    return;
+  }
+  if (digets.test(char)) {
+    this.word = char;
+    this.state = NUMBER;
+    return;
+  }
+  if (endThings.test(char)) {
+    this.afterItem(char);
+    return;
+  }
+  throw new Error('havn\'t handled "' +char + '" in neutral yet, index ' + this.place);
+};
+Parser.prototype.output = function() {
+  while (this.place < this.text.length) {
+    this.readCharicter();
+  }
+  if (this.state === ENDED) {
+    return this.root;
+  }
+  throw new Error('unable to parse string "' +this.text + '". State is ' + this.state);
+};
+
+function parseString(txt) {
+  var parser = new Parser(txt);
+  return parser.output();
+}
+
+// CONCATENATED MODULE: ./node_modules/wkt-parser/process.js
+
+
+function mapit(obj, key, value) {
+  if (Array.isArray(key)) {
+    value.unshift(key);
+    key = null;
+  }
+  var thing = key ? {} : obj;
+
+  var out = value.reduce(function(newObj, item) {
+    sExpr(item, newObj);
+    return newObj
+  }, thing);
+  if (key) {
+    obj[key] = out;
+  }
+}
+
+function sExpr(v, obj) {
+  if (!Array.isArray(v)) {
+    obj[v] = true;
+    return;
+  }
+  var key = v.shift();
+  if (key === 'PARAMETER') {
+    key = v.shift();
+  }
+  if (v.length === 1) {
+    if (Array.isArray(v[0])) {
+      obj[key] = {};
+      sExpr(v[0], obj[key]);
+      return;
+    }
+    obj[key] = v[0];
+    return;
+  }
+  if (!v.length) {
+    obj[key] = true;
+    return;
+  }
+  if (key === 'TOWGS84') {
+    obj[key] = v;
+    return;
+  }
+  if (key === 'AXIS') {
+    if (!(key in obj)) {
+      obj[key] = [];
+    }
+    obj[key].push(v);
+    return;
+  }
+  if (!Array.isArray(key)) {
+    obj[key] = {};
+  }
+
+  var i;
+  switch (key) {
+    case 'UNIT':
+    case 'PRIMEM':
+    case 'VERT_DATUM':
+      obj[key] = {
+        name: v[0].toLowerCase(),
+        convert: v[1]
+      };
+      if (v.length === 3) {
+        sExpr(v[2], obj[key]);
+      }
+      return;
+    case 'SPHEROID':
+    case 'ELLIPSOID':
+      obj[key] = {
+        name: v[0],
+        a: v[1],
+        rf: v[2]
+      };
+      if (v.length === 4) {
+        sExpr(v[3], obj[key]);
+      }
+      return;
+    case 'EDATUM':
+    case 'ENGINEERINGDATUM':
+    case 'LOCAL_DATUM':
+    case 'DATUM':
+    case 'VERT_CS':
+    case 'VERTCRS':
+    case 'VERTICALCRS':
+      v[0] = ['name', v[0]];
+      mapit(obj, key, v);
+      return;
+    case 'COMPD_CS':
+    case 'COMPOUNDCRS':
+    case 'FITTED_CS':
+    // the followings are the crs defined in
+    // https://github.com/proj4js/proj4js/blob/1da4ed0b865d0fcb51c136090569210cdcc9019e/lib/parseCode.js#L11
+    case 'PROJECTEDCRS':
+    case 'PROJCRS':
+    case 'GEOGCS':
+    case 'GEOCCS':
+    case 'PROJCS':
+    case 'LOCAL_CS':
+    case 'GEODCRS':
+    case 'GEODETICCRS':
+    case 'GEODETICDATUM':
+    case 'ENGCRS':
+    case 'ENGINEERINGCRS':
+      v[0] = ['name', v[0]];
+      mapit(obj, key, v);
+      obj[key].type = key;
+      return;
+    default:
+      i = -1;
+      while (++i < v.length) {
+        if (!Array.isArray(v[i])) {
+          return sExpr(v, obj[key]);
+        }
+      }
+      return mapit(obj, key, v);
+  }
+}
+
+// CONCATENATED MODULE: ./node_modules/wkt-parser/index.js
+var wkt_parser_D2R = 0.01745329251994329577;
+
+
+
+var knownTypes = ['PROJECTEDCRS', 'PROJCRS', 'GEOGCS', 'GEOCCS', 'PROJCS', 'LOCAL_CS', 'GEODCRS',
+  'GEODETICCRS', 'GEODETICDATUM', 'ENGCRS', 'ENGINEERINGCRS'];
+
+function rename(obj, params) {
+  var outName = params[0];
+  var inName = params[1];
+  if (!(outName in obj) && (inName in obj)) {
+    obj[outName] = obj[inName];
+    if (params.length === 3) {
+      obj[outName] = params[2](obj[outName]);
+    }
+  }
+}
+
+function d2r(input) {
+  return input * wkt_parser_D2R;
+}
+
+function cleanWKT(wkt) {
+  var keys = Object.keys(wkt);
+  for (var i = 0, ii = keys.length; i <ii; ++i) {
+    var key = keys[i];
+    // the followings are the crs defined in
+    // https://github.com/proj4js/proj4js/blob/1da4ed0b865d0fcb51c136090569210cdcc9019e/lib/parseCode.js#L11
+    if (knownTypes.indexOf(key) !== -1) {
+      setPropertiesFromWkt(wkt[key]);
+    }
+    if (typeof wkt[key] === 'object') {
+      cleanWKT(wkt[key]);
+    }
+  }
+}
+
+function setPropertiesFromWkt(wkt) {
+  if (wkt.AUTHORITY) {
+    var authority = Object.keys(wkt.AUTHORITY)[0];
+    if (authority && authority in wkt.AUTHORITY) {
+      wkt.title = authority + ':' + wkt.AUTHORITY[authority];
+    }
+  }
+  if (wkt.type === 'GEOGCS') {
+    wkt.projName = 'longlat';
+  } else if (wkt.type === 'LOCAL_CS') {
+    wkt.projName = 'identity';
+    wkt.local = true;
+  } else {
+    if (typeof wkt.PROJECTION === 'object') {
+      wkt.projName = Object.keys(wkt.PROJECTION)[0];
+    } else {
+      wkt.projName = wkt.PROJECTION;
+    }
+  }
+  if (wkt.AXIS) {
+    var axisOrder = '';
+    for (var i = 0, ii = wkt.AXIS.length; i < ii; ++i) {
+      var axis = [wkt.AXIS[i][0].toLowerCase(), wkt.AXIS[i][1].toLowerCase()];
+      if (axis[0].indexOf('north') !== -1 || ((axis[0] === 'y' || axis[0] === 'lat') && axis[1] === 'north')) {
+        axisOrder += 'n';
+      } else if (axis[0].indexOf('south') !== -1 || ((axis[0] === 'y' || axis[0] === 'lat') && axis[1] === 'south')) {
+        axisOrder += 's';
+      } else if (axis[0].indexOf('east') !== -1 || ((axis[0] === 'x' || axis[0] === 'lon') && axis[1] === 'east')) {
+        axisOrder += 'e';
+      } else if (axis[0].indexOf('west') !== -1 || ((axis[0] === 'x' || axis[0] === 'lon') && axis[1] === 'west')) {
+        axisOrder += 'w';
+      }
+    }
+    if (axisOrder.length === 2) {
+      axisOrder += 'u';
+    }
+    if (axisOrder.length === 3) {
+      wkt.axis = axisOrder;
+    }
+  }
+  if (wkt.UNIT) {
+    wkt.units = wkt.UNIT.name.toLowerCase();
+    if (wkt.units === 'metre') {
+      wkt.units = 'meter';
+    }
+    if (wkt.UNIT.convert) {
+      if (wkt.type === 'GEOGCS') {
+        if (wkt.DATUM && wkt.DATUM.SPHEROID) {
+          wkt.to_meter = wkt.UNIT.convert*wkt.DATUM.SPHEROID.a;
+        }
+      } else {
+        wkt.to_meter = wkt.UNIT.convert;
+      }
+    }
+  }
+  var geogcs = wkt.GEOGCS;
+  if (wkt.type === 'GEOGCS') {
+    geogcs = wkt;
+  }
+  if (geogcs) {
+    //if(wkt.GEOGCS.PRIMEM&&wkt.GEOGCS.PRIMEM.convert){
+    //  wkt.from_greenwich=wkt.GEOGCS.PRIMEM.convert*D2R;
+    //}
+    if (geogcs.DATUM) {
+      wkt.datumCode = geogcs.DATUM.name.toLowerCase();
+    } else {
+      wkt.datumCode = geogcs.name.toLowerCase();
+    }
+    if (wkt.datumCode.slice(0, 2) === 'd_') {
+      wkt.datumCode = wkt.datumCode.slice(2);
+    }
+    if (wkt.datumCode === 'new_zealand_1949') {
+      wkt.datumCode = 'nzgd49';
+    }
+    if (wkt.datumCode === 'wgs_1984' || wkt.datumCode === 'world_geodetic_system_1984') {
+      if (wkt.PROJECTION === 'Mercator_Auxiliary_Sphere') {
+        wkt.sphere = true;
+      }
+      wkt.datumCode = 'wgs84';
+    }
+    if (wkt.datumCode === 'belge_1972') {
+      wkt.datumCode = 'rnb72';
+    }
+    if (geogcs.DATUM && geogcs.DATUM.SPHEROID) {
+      wkt.ellps = geogcs.DATUM.SPHEROID.name.replace('_19', '').replace(/[Cc]larke\_18/, 'clrk');
+      if (wkt.ellps.toLowerCase().slice(0, 13) === 'international') {
+        wkt.ellps = 'intl';
+      }
+
+      wkt.a = geogcs.DATUM.SPHEROID.a;
+      wkt.rf = parseFloat(geogcs.DATUM.SPHEROID.rf, 10);
+    }
+
+    if (geogcs.DATUM && geogcs.DATUM.TOWGS84) {
+      wkt.datum_params = geogcs.DATUM.TOWGS84;
+    }
+    if (~wkt.datumCode.indexOf('osgb_1936')) {
+      wkt.datumCode = 'osgb36';
+    }
+    if (~wkt.datumCode.indexOf('osni_1952')) {
+      wkt.datumCode = 'osni52';
+    }
+    if (~wkt.datumCode.indexOf('tm65')
+      || ~wkt.datumCode.indexOf('geodetic_datum_of_1965')) {
+      wkt.datumCode = 'ire65';
+    }
+    if (wkt.datumCode === 'ch1903+') {
+      wkt.datumCode = 'ch1903';
+    }
+    if (~wkt.datumCode.indexOf('israel')) {
+      wkt.datumCode = 'isr93';
+    }
+  }
+  if (wkt.b && !isFinite(wkt.b)) {
+    wkt.b = wkt.a;
+  }
+
+  function toMeter(input) {
+    var ratio = wkt.to_meter || 1;
+    return input * ratio;
+  }
+  var renamer = function(a) {
+    return rename(wkt, a);
+  };
+  var list = [
+    ['standard_parallel_1', 'Standard_Parallel_1'],
+    ['standard_parallel_1', 'Latitude of 1st standard parallel'],
+    ['standard_parallel_2', 'Standard_Parallel_2'],
+    ['standard_parallel_2', 'Latitude of 2nd standard parallel'],
+    ['false_easting', 'False_Easting'],
+    ['false_easting', 'False easting'],
+    ['false-easting', 'Easting at false origin'],
+    ['false_northing', 'False_Northing'],
+    ['false_northing', 'False northing'],
+    ['false_northing', 'Northing at false origin'],
+    ['central_meridian', 'Central_Meridian'],
+    ['central_meridian', 'Longitude of natural origin'],
+    ['central_meridian', 'Longitude of false origin'],
+    ['latitude_of_origin', 'Latitude_Of_Origin'],
+    ['latitude_of_origin', 'Central_Parallel'],
+    ['latitude_of_origin', 'Latitude of natural origin'],
+    ['latitude_of_origin', 'Latitude of false origin'],
+    ['scale_factor', 'Scale_Factor'],
+    ['k0', 'scale_factor'],
+    ['latitude_of_center', 'Latitude_Of_Center'],
+    ['latitude_of_center', 'Latitude_of_center'],
+    ['lat0', 'latitude_of_center', d2r],
+    ['longitude_of_center', 'Longitude_Of_Center'],
+    ['longitude_of_center', 'Longitude_of_center'],
+    ['longc', 'longitude_of_center', d2r],
+    ['x0', 'false_easting', toMeter],
+    ['y0', 'false_northing', toMeter],
+    ['long0', 'central_meridian', d2r],
+    ['lat0', 'latitude_of_origin', d2r],
+    ['lat0', 'standard_parallel_1', d2r],
+    ['lat1', 'standard_parallel_1', d2r],
+    ['lat2', 'standard_parallel_2', d2r],
+    ['azimuth', 'Azimuth'],
+    ['alpha', 'azimuth', d2r],
+    ['srsCode', 'name']
+  ];
+  list.forEach(renamer);
+  if (!wkt.long0 && wkt.longc && (wkt.projName === 'Albers_Conic_Equal_Area' || wkt.projName === 'Lambert_Azimuthal_Equal_Area')) {
+    wkt.long0 = wkt.longc;
+  }
+  if (!wkt.lat_ts && wkt.lat1 && (wkt.projName === 'Stereographic_South_Pole' || wkt.projName === 'Polar Stereographic (variant B)')) {
+    wkt.lat0 = d2r(wkt.lat1 > 0 ? 90 : -90);
+    wkt.lat_ts = wkt.lat1;
+  } else if (!wkt.lat_ts && wkt.lat0 && wkt.projName === 'Polar_Stereographic') {
+    wkt.lat_ts = wkt.lat0;
+    wkt.lat0 = d2r(wkt.lat0 > 0 ? 90 : -90);
+  }
+}
+/* harmony default export */ var wkt_parser = (function(wkt) {
+  var lisp = parser(wkt);
+  var type = lisp[0];
+  var obj = {};
+  sExpr(lisp, obj);
+  cleanWKT(obj);
+  return obj[type];
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/defs.js
+
+
+
+
+function defs(name) {
+  /*global console*/
+  var that = this;
+  if (arguments.length === 2) {
+    var def = arguments[1];
+    if (typeof def === 'string') {
+      if (def.charAt(0) === '+') {
+        defs[name] = projString(arguments[1]);
+      }
+      else {
+        defs[name] = wkt_parser(arguments[1]);
+      }
+    } else {
+      defs[name] = def;
+    }
+  }
+  else if (arguments.length === 1) {
+    if (Array.isArray(name)) {
+      return name.map(function(v) {
+        if (Array.isArray(v)) {
+          defs.apply(that, v);
+        }
+        else {
+          defs(v);
+        }
+      });
+    }
+    else if (typeof name === 'string') {
+      if (name in defs) {
+        return defs[name];
+      }
+    }
+    else if ('EPSG' in name) {
+      defs['EPSG:' + name.EPSG] = name;
+    }
+    else if ('ESRI' in name) {
+      defs['ESRI:' + name.ESRI] = name;
+    }
+    else if ('IAU2000' in name) {
+      defs['IAU2000:' + name.IAU2000] = name;
+    }
+    else {
+      console.log(name);
+    }
+    return;
+  }
+
+
+}
+global(defs);
+/* harmony default export */ var lib_defs = (defs);
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/parseCode.js
+
+
+
+
+function testObj(code){
+  return typeof code === 'string';
+}
+function testDef(code){
+  return code in lib_defs;
+}
+var codeWords = ['PROJECTEDCRS', 'PROJCRS', 'GEOGCS','GEOCCS','PROJCS','LOCAL_CS', 'GEODCRS', 'GEODETICCRS', 'GEODETICDATUM', 'ENGCRS', 'ENGINEERINGCRS'];
+function testWKT(code){
+  return codeWords.some(function (word) {
+    return code.indexOf(word) > -1;
+  });
+}
+var codes = ['3857', '900913', '3785', '102113'];
+function checkMercator(item) {
+  var auth = match(item, 'authority');
+  if (!auth) {
+    return;
+  }
+  var code = match(auth, 'epsg');
+  return code && codes.indexOf(code) > -1;
+}
+function checkProjStr(item) {
+  var ext = match(item, 'extension');
+  if (!ext) {
+    return;
+  }
+  return match(ext, 'proj4');
+}
+function testProj(code){
+  return code[0] === '+';
+}
+function parse(code){
+  if (testObj(code)) {
+    //check to see if this is a WKT string
+    if (testDef(code)) {
+      return lib_defs[code];
+    }
+    if (testWKT(code)) {
+      var out = wkt_parser(code);
+      // test of spetial case, due to this being a very common and often malformed
+      if (checkMercator(out)) {
+        return lib_defs['EPSG:3857'];
+      }
+      var maybeProjStr = checkProjStr(out);
+      if (maybeProjStr) {
+        return projString(maybeProjStr);
+      }
+      return out;
+    }
+    if (testProj(code)) {
+      return projString(code);
+    }
+  }else{
+    return code;
+  }
+}
+
+/* harmony default export */ var parseCode = (parse);
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/extend.js
+/* harmony default export */ var extend = (function(destination, source) {
+  destination = destination || {};
+  var value, property;
+  if (!source) {
+    return destination;
+  }
+  for (property in source) {
+    value = source[property];
+    if (value !== undefined) {
+      destination[property] = value;
+    }
+  }
+  return destination;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/msfnz.js
+/* harmony default export */ var msfnz = (function(eccent, sinphi, cosphi) {
+  var con = eccent * sinphi;
+  return cosphi / (Math.sqrt(1 - con * con));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/sign.js
+/* harmony default export */ var sign = (function(x) {
+  return x<0 ? -1 : 1;
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/adjust_lon.js
+
+
+
+
+/* harmony default export */ var adjust_lon = (function(x) {
+  return (Math.abs(x) <= SPI) ? x : (x - (sign(x) * TWO_PI));
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/tsfnz.js
+
+
+/* harmony default export */ var tsfnz = (function(eccent, phi, sinphi) {
+  var con = eccent * sinphi;
+  var com = 0.5 * eccent;
+  con = Math.pow(((1 - con) / (1 + con)), com);
+  return (Math.tan(0.5 * (HALF_PI - phi)) / con);
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/phi2z.js
+
+
+/* harmony default export */ var phi2z = (function(eccent, ts) {
+  var eccnth = 0.5 * eccent;
+  var con, dphi;
+  var phi = HALF_PI - 2 * Math.atan(ts);
+  for (var i = 0; i <= 15; i++) {
+    con = eccent * Math.sin(phi);
+    dphi = HALF_PI - 2 * Math.atan(ts * (Math.pow(((1 - con) / (1 + con)), eccnth))) - phi;
+    phi += dphi;
+    if (Math.abs(dphi) <= 0.0000000001) {
+      return phi;
+    }
+  }
+  //console.log("phi2z has NoConvergence");
+  return -9999;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/merc.js
+
+
+
+
+
+
+function init() {
+  var con = this.b / this.a;
+  this.es = 1 - con * con;
+  if(!('x0' in this)){
+    this.x0 = 0;
+  }
+  if(!('y0' in this)){
+    this.y0 = 0;
+  }
+  this.e = Math.sqrt(this.es);
+  if (this.lat_ts) {
+    if (this.sphere) {
+      this.k0 = Math.cos(this.lat_ts);
+    }
+    else {
+      this.k0 = msfnz(this.e, Math.sin(this.lat_ts), Math.cos(this.lat_ts));
+    }
+  }
+  else {
+    if (!this.k0) {
+      if (this.k) {
+        this.k0 = this.k;
+      }
+      else {
+        this.k0 = 1;
+      }
+    }
+  }
+}
+
+/* Mercator forward equations--mapping lat,long to x,y
+  --------------------------------------------------*/
+
+function forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+  // convert to radians
+  if (lat * R2D > 90 && lat * R2D < -90 && lon * R2D > 180 && lon * R2D < -180) {
+    return null;
+  }
+
+  var x, y;
+  if (Math.abs(Math.abs(lat) - HALF_PI) <= EPSLN) {
+    return null;
+  }
+  else {
+    if (this.sphere) {
+      x = this.x0 + this.a * this.k0 * adjust_lon(lon - this.long0);
+      y = this.y0 + this.a * this.k0 * Math.log(Math.tan(FORTPI + 0.5 * lat));
+    }
+    else {
+      var sinphi = Math.sin(lat);
+      var ts = tsfnz(this.e, lat, sinphi);
+      x = this.x0 + this.a * this.k0 * adjust_lon(lon - this.long0);
+      y = this.y0 - this.a * this.k0 * Math.log(ts);
+    }
+    p.x = x;
+    p.y = y;
+    return p;
+  }
+}
+
+/* Mercator inverse equations--mapping x,y to lat/long
+  --------------------------------------------------*/
+function merc_inverse(p) {
+
+  var x = p.x - this.x0;
+  var y = p.y - this.y0;
+  var lon, lat;
+
+  if (this.sphere) {
+    lat = HALF_PI - 2 * Math.atan(Math.exp(-y / (this.a * this.k0)));
+  }
+  else {
+    var ts = Math.exp(-y / (this.a * this.k0));
+    lat = phi2z(this.e, ts);
+    if (lat === -9999) {
+      return null;
+    }
+  }
+  lon = adjust_lon(this.long0 + x / (this.a * this.k0));
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var names = ["Mercator", "Popular Visualisation Pseudo Mercator", "Mercator_1SP", "Mercator_Auxiliary_Sphere", "merc"];
+/* harmony default export */ var merc = ({
+  init: init,
+  forward: forward,
+  inverse: merc_inverse,
+  names: names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/longlat.js
+function longlat_init() {
+  //no-op for longlat
+}
+
+function identity(pt) {
+  return pt;
+}
+
+
+var longlat_names = ["longlat", "identity"];
+/* harmony default export */ var longlat = ({
+  init: longlat_init,
+  forward: identity,
+  inverse: identity,
+  names: longlat_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections.js
+
+
+var projs = [merc, longlat];
+var projections_names = {};
+var projStore = [];
+
+function add(proj, i) {
+  var len = projStore.length;
+  if (!proj.names) {
+    console.log(i);
+    return true;
+  }
+  projStore[len] = proj;
+  proj.names.forEach(function(n) {
+    projections_names[n.toLowerCase()] = len;
+  });
+  return this;
+}
+
+
+
+function get(name) {
+  if (!name) {
+    return false;
+  }
+  var n = name.toLowerCase();
+  if (typeof projections_names[n] !== 'undefined' && projStore[projections_names[n]]) {
+    return projStore[projections_names[n]];
+  }
+}
+
+function start() {
+  projs.forEach(add);
+}
+/* harmony default export */ var projections = ({
+  start: start,
+  add: add,
+  get: get
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/Ellipsoid.js
+var Ellipsoid_exports = {};
+
+Ellipsoid_exports.MERIT = {
+  a: 6378137.0,
+  rf: 298.257,
+  ellipseName: "MERIT 1983"
+};
+
+Ellipsoid_exports.SGS85 = {
+  a: 6378136.0,
+  rf: 298.257,
+  ellipseName: "Soviet Geodetic System 85"
+};
+
+Ellipsoid_exports.GRS80 = {
+  a: 6378137.0,
+  rf: 298.257222101,
+  ellipseName: "GRS 1980(IUGG, 1980)"
+};
+
+Ellipsoid_exports.IAU76 = {
+  a: 6378140.0,
+  rf: 298.257,
+  ellipseName: "IAU 1976"
+};
+
+Ellipsoid_exports.airy = {
+  a: 6377563.396,
+  b: 6356256.910,
+  ellipseName: "Airy 1830"
+};
+
+Ellipsoid_exports.APL4 = {
+  a: 6378137,
+  rf: 298.25,
+  ellipseName: "Appl. Physics. 1965"
+};
+
+Ellipsoid_exports.NWL9D = {
+  a: 6378145.0,
+  rf: 298.25,
+  ellipseName: "Naval Weapons Lab., 1965"
+};
+
+Ellipsoid_exports.mod_airy = {
+  a: 6377340.189,
+  b: 6356034.446,
+  ellipseName: "Modified Airy"
+};
+
+Ellipsoid_exports.andrae = {
+  a: 6377104.43,
+  rf: 300.0,
+  ellipseName: "Andrae 1876 (Den., Iclnd.)"
+};
+
+Ellipsoid_exports.aust_SA = {
+  a: 6378160.0,
+  rf: 298.25,
+  ellipseName: "Australian Natl & S. Amer. 1969"
+};
+
+Ellipsoid_exports.GRS67 = {
+  a: 6378160.0,
+  rf: 298.2471674270,
+  ellipseName: "GRS 67(IUGG 1967)"
+};
+
+Ellipsoid_exports.bessel = {
+  a: 6377397.155,
+  rf: 299.1528128,
+  ellipseName: "Bessel 1841"
+};
+
+Ellipsoid_exports.bess_nam = {
+  a: 6377483.865,
+  rf: 299.1528128,
+  ellipseName: "Bessel 1841 (Namibia)"
+};
+
+Ellipsoid_exports.clrk66 = {
+  a: 6378206.4,
+  b: 6356583.8,
+  ellipseName: "Clarke 1866"
+};
+
+Ellipsoid_exports.clrk80 = {
+  a: 6378249.145,
+  rf: 293.4663,
+  ellipseName: "Clarke 1880 mod."
+};
+
+Ellipsoid_exports.clrk80ign = {
+  a: 6378249.2,
+  b: 6356515,
+  rf: 293.4660213,
+  ellipseName: "Clarke 1880 (IGN)"
+};
+
+Ellipsoid_exports.clrk58 = {
+  a: 6378293.645208759,
+  rf: 294.2606763692654,
+  ellipseName: "Clarke 1858"
+};
+
+Ellipsoid_exports.CPM = {
+  a: 6375738.7,
+  rf: 334.29,
+  ellipseName: "Comm. des Poids et Mesures 1799"
+};
+
+Ellipsoid_exports.delmbr = {
+  a: 6376428.0,
+  rf: 311.5,
+  ellipseName: "Delambre 1810 (Belgium)"
+};
+
+Ellipsoid_exports.engelis = {
+  a: 6378136.05,
+  rf: 298.2566,
+  ellipseName: "Engelis 1985"
+};
+
+Ellipsoid_exports.evrst30 = {
+  a: 6377276.345,
+  rf: 300.8017,
+  ellipseName: "Everest 1830"
+};
+
+Ellipsoid_exports.evrst48 = {
+  a: 6377304.063,
+  rf: 300.8017,
+  ellipseName: "Everest 1948"
+};
+
+Ellipsoid_exports.evrst56 = {
+  a: 6377301.243,
+  rf: 300.8017,
+  ellipseName: "Everest 1956"
+};
+
+Ellipsoid_exports.evrst69 = {
+  a: 6377295.664,
+  rf: 300.8017,
+  ellipseName: "Everest 1969"
+};
+
+Ellipsoid_exports.evrstSS = {
+  a: 6377298.556,
+  rf: 300.8017,
+  ellipseName: "Everest (Sabah & Sarawak)"
+};
+
+Ellipsoid_exports.fschr60 = {
+  a: 6378166.0,
+  rf: 298.3,
+  ellipseName: "Fischer (Mercury Datum) 1960"
+};
+
+Ellipsoid_exports.fschr60m = {
+  a: 6378155.0,
+  rf: 298.3,
+  ellipseName: "Fischer 1960"
+};
+
+Ellipsoid_exports.fschr68 = {
+  a: 6378150.0,
+  rf: 298.3,
+  ellipseName: "Fischer 1968"
+};
+
+Ellipsoid_exports.helmert = {
+  a: 6378200.0,
+  rf: 298.3,
+  ellipseName: "Helmert 1906"
+};
+
+Ellipsoid_exports.hough = {
+  a: 6378270.0,
+  rf: 297.0,
+  ellipseName: "Hough"
+};
+
+Ellipsoid_exports.intl = {
+  a: 6378388.0,
+  rf: 297.0,
+  ellipseName: "International 1909 (Hayford)"
+};
+
+Ellipsoid_exports.kaula = {
+  a: 6378163.0,
+  rf: 298.24,
+  ellipseName: "Kaula 1961"
+};
+
+Ellipsoid_exports.lerch = {
+  a: 6378139.0,
+  rf: 298.257,
+  ellipseName: "Lerch 1979"
+};
+
+Ellipsoid_exports.mprts = {
+  a: 6397300.0,
+  rf: 191.0,
+  ellipseName: "Maupertius 1738"
+};
+
+Ellipsoid_exports.new_intl = {
+  a: 6378157.5,
+  b: 6356772.2,
+  ellipseName: "New International 1967"
+};
+
+Ellipsoid_exports.plessis = {
+  a: 6376523.0,
+  rf: 6355863.0,
+  ellipseName: "Plessis 1817 (France)"
+};
+
+Ellipsoid_exports.krass = {
+  a: 6378245.0,
+  rf: 298.3,
+  ellipseName: "Krassovsky, 1942"
+};
+
+Ellipsoid_exports.SEasia = {
+  a: 6378155.0,
+  b: 6356773.3205,
+  ellipseName: "Southeast Asia"
+};
+
+Ellipsoid_exports.walbeck = {
+  a: 6376896.0,
+  b: 6355834.8467,
+  ellipseName: "Walbeck"
+};
+
+Ellipsoid_exports.WGS60 = {
+  a: 6378165.0,
+  rf: 298.3,
+  ellipseName: "WGS 60"
+};
+
+Ellipsoid_exports.WGS66 = {
+  a: 6378145.0,
+  rf: 298.25,
+  ellipseName: "WGS 66"
+};
+
+Ellipsoid_exports.WGS7 = {
+  a: 6378135.0,
+  rf: 298.26,
+  ellipseName: "WGS 72"
+};
+
+var WGS84 = Ellipsoid_exports.WGS84 = {
+  a: 6378137.0,
+  rf: 298.257223563,
+  ellipseName: "WGS 84"
+};
+
+Ellipsoid_exports.sphere = {
+  a: 6370997.0,
+  b: 6370997.0,
+  ellipseName: "Normal Sphere (r=6370997)"
+};
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/deriveConstants.js
+
+
+
+
+function eccentricity(a, b, rf, R_A) {
+  var a2 = a * a; // used in geocentric
+  var b2 = b * b; // used in geocentric
+  var es = (a2 - b2) / a2; // e ^ 2
+  var e = 0;
+  if (R_A) {
+    a *= 1 - es * (SIXTH + es * (RA4 + es * RA6));
+    a2 = a * a;
+    es = 0;
+  } else {
+    e = Math.sqrt(es); // eccentricity
+  }
+  var ep2 = (a2 - b2) / b2; // used in geocentric
+  return {
+    es: es,
+    e: e,
+    ep2: ep2
+  };
+}
+function deriveConstants_sphere(a, b, rf, ellps, sphere) {
+  if (!a) { // do we have an ellipsoid?
+    var ellipse = match(Ellipsoid_exports, ellps);
+    if (!ellipse) {
+      ellipse = WGS84;
+    }
+    a = ellipse.a;
+    b = ellipse.b;
+    rf = ellipse.rf;
+  }
+
+  if (rf && !b) {
+    b = (1.0 - 1.0 / rf) * a;
+  }
+  if (rf === 0 || Math.abs(a - b) < EPSLN) {
+    sphere = true;
+    b = a;
+  }
+  return {
+    a: a,
+    b: b,
+    rf: rf,
+    sphere: sphere
+  };
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/Datum.js
+var datums = {
+  wgs84: {
+    towgs84: "0,0,0",
+    ellipse: "WGS84",
+    datumName: "WGS84"
+  },
+  ch1903: {
+    towgs84: "674.374,15.056,405.346",
+    ellipse: "bessel",
+    datumName: "swiss"
+  },
+  ggrs87: {
+    towgs84: "-199.87,74.79,246.62",
+    ellipse: "GRS80",
+    datumName: "Greek_Geodetic_Reference_System_1987"
+  },
+  nad83: {
+    towgs84: "0,0,0",
+    ellipse: "GRS80",
+    datumName: "North_American_Datum_1983"
+  },
+  nad27: {
+    nadgrids: "@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat",
+    ellipse: "clrk66",
+    datumName: "North_American_Datum_1927"
+  },
+  potsdam: {
+    towgs84: "598.1,73.7,418.2,0.202,0.045,-2.455,6.7",
+    ellipse: "bessel",
+    datumName: "Potsdam Rauenberg 1950 DHDN"
+  },
+  carthage: {
+    towgs84: "-263.0,6.0,431.0",
+    ellipse: "clark80",
+    datumName: "Carthage 1934 Tunisia"
+  },
+  hermannskogel: {
+    towgs84: "577.326,90.129,463.919,5.137,1.474,5.297,2.4232",
+    ellipse: "bessel",
+    datumName: "Hermannskogel"
+  },
+  militargeographische_institut: {
+    towgs84: "577.326,90.129,463.919,5.137,1.474,5.297,2.4232",
+    ellipse: "bessel",
+    datumName: "Militar-Geographische Institut",
+  },
+  osni52: {
+    towgs84: "482.530,-130.596,564.557,-1.042,-0.214,-0.631,8.15",
+    ellipse: "airy",
+    datumName: "Irish National"
+  },
+  ire65: {
+    towgs84: "482.530,-130.596,564.557,-1.042,-0.214,-0.631,8.15",
+    ellipse: "mod_airy",
+    datumName: "Ireland 1965"
+  },
+  rassadiran: {
+    towgs84: "-133.63,-157.5,-158.62",
+    ellipse: "intl",
+    datumName: "Rassadiran"
+  },
+  nzgd49: {
+    towgs84: "59.47,-5.04,187.44,0.47,-0.1,1.024,-4.5993",
+    ellipse: "intl",
+    datumName: "New Zealand Geodetic Datum 1949"
+  },
+  osgb36: {
+    towgs84: "446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894",
+    ellipse: "airy",
+    datumName: "Ordnance Survey of Great Britain 1936"
+  },
+  s_jtsk: {
+    towgs84: "589,76,480",
+    ellipse: 'bessel',
+    datumName: 'S-JTSK (Ferro)'
+  },
+  beduaram: {
+    towgs84: '-106,-87,188',
+    ellipse: 'clrk80',
+    datumName: 'Beduaram'
+  },
+  gunung_segara: {
+    towgs84: '-403,684,41',
+    ellipse: 'bessel',
+    datumName: 'Gunung Segara Jakarta'
+  },
+  rnb72: {
+    towgs84: "106.869,-52.2978,103.724,-0.33657,0.456955,-1.84218,1",
+    ellipse: "intl",
+    datumName: "Reseau National Belge 1972"
+  }
+};
+
+for (var Datum_key in datums) {
+  var datum = datums[Datum_key];
+  datums[datum.datumName] = datum;
+}
+
+/* harmony default export */ var Datum = (datums);
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/datum.js
+
+
+function datum_datum(datumCode, datum_params, a, b, es, ep2, nadgrids) {
+  var out = {};
+
+  if (datumCode === undefined || datumCode === 'none') {
+    out.datum_type = PJD_NODATUM;
+  } else {
+    out.datum_type = PJD_WGS84;
+  }
+
+  if (datum_params) {
+    out.datum_params = datum_params.map(parseFloat);
+    if (out.datum_params[0] !== 0 || out.datum_params[1] !== 0 || out.datum_params[2] !== 0) {
+      out.datum_type = PJD_3PARAM;
+    }
+    if (out.datum_params.length > 3) {
+      if (out.datum_params[3] !== 0 || out.datum_params[4] !== 0 || out.datum_params[5] !== 0 || out.datum_params[6] !== 0) {
+        out.datum_type = PJD_7PARAM;
+        out.datum_params[3] *= SEC_TO_RAD;
+        out.datum_params[4] *= SEC_TO_RAD;
+        out.datum_params[5] *= SEC_TO_RAD;
+        out.datum_params[6] = (out.datum_params[6] / 1000000.0) + 1.0;
+      }
+    }
+  }
+
+  if (nadgrids) {
+    out.datum_type = PJD_GRIDSHIFT;
+    out.grids = nadgrids;
+  }
+  out.a = a; //datum object also uses these values
+  out.b = b;
+  out.es = es;
+  out.ep2 = ep2;
+  return out;
+}
+
+/* harmony default export */ var lib_datum = (datum_datum);
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/nadgrid.js
+/**
+ * Resources for details of NTv2 file formats:
+ * - https://web.archive.org/web/20140127204822if_/http://www.mgs.gov.on.ca:80/stdprodconsume/groups/content/@mgs/@iandit/documents/resourcelist/stel02_047447.pdf
+ * - http://mimaka.com/help/gs/html/004_NTV2%20Data%20Format.htm
+ */
+
+var loadedNadgrids = {};
+
+/**
+ * Load a binary NTv2 file (.gsb) to a key that can be used in a proj string like +nadgrids=<key>. Pass the NTv2 file
+ * as an ArrayBuffer.
+ */
+function nadgrid(key, data) {
+  var view = new DataView(data);
+  var isLittleEndian = detectLittleEndian(view);
+  var header = readHeader(view, isLittleEndian);
+  var subgrids = readSubgrids(view, header, isLittleEndian);
+  var nadgrid = {header: header, subgrids: subgrids};
+  loadedNadgrids[key] = nadgrid;
+  return nadgrid;
+}
+
+/**
+ * Given a proj4 value for nadgrids, return an array of loaded grids
+ */
+function getNadgrids(nadgrids) {
+  // Format details: http://proj.maptools.org/gen_parms.html
+  if (nadgrids === undefined) { return null; }
+  var grids = nadgrids.split(',');
+  return grids.map(parseNadgridString);
+}
+
+function parseNadgridString(value) {
+  if (value.length === 0) {
+    return null;
+  }
+  var optional = value[0] === '@';
+  if (optional) {
+    value = value.slice(1);
+  }
+  if (value === 'null') {
+    return {name: 'null', mandatory: !optional, grid: null, isNull: true};
+  }
+  return {
+    name: value,
+    mandatory: !optional,
+    grid: loadedNadgrids[value] || null,
+    isNull: false
+  };
+}
+
+function secondsToRadians(seconds) {
+  return (seconds / 3600) * Math.PI / 180;
+}
+
+function detectLittleEndian(view) {
+  var nFields = view.getInt32(8, false);
+  if (nFields === 11) {
+    return false;
+  }
+  nFields = view.getInt32(8, true);
+  if (nFields !== 11) {
+    console.warn('Failed to detect nadgrid endian-ness, defaulting to little-endian');
+  }
+  return true;
+}
+
+function readHeader(view, isLittleEndian) {
+  return {
+    nFields: view.getInt32(8, isLittleEndian),
+    nSubgridFields: view.getInt32(24, isLittleEndian),
+    nSubgrids: view.getInt32(40, isLittleEndian),
+    shiftType: decodeString(view, 56, 56 + 8).trim(),
+    fromSemiMajorAxis: view.getFloat64(120, isLittleEndian),
+    fromSemiMinorAxis: view.getFloat64(136, isLittleEndian),
+    toSemiMajorAxis: view.getFloat64(152, isLittleEndian),
+    toSemiMinorAxis: view.getFloat64(168, isLittleEndian),
+  };
+}
+
+function decodeString(view, start, end) {
+  return String.fromCharCode.apply(null, new Uint8Array(view.buffer.slice(start, end)));
+}
+
+function readSubgrids(view, header, isLittleEndian) {
+  var gridOffset = 176;
+  var grids = [];
+  for (var i = 0; i < header.nSubgrids; i++) {
+    var subHeader = readGridHeader(view, gridOffset, isLittleEndian);
+    var nodes = readGridNodes(view, gridOffset, subHeader, isLittleEndian);
+    var lngColumnCount = Math.round(
+      1 + (subHeader.upperLongitude - subHeader.lowerLongitude) / subHeader.longitudeInterval);
+    var latColumnCount = Math.round(
+      1 + (subHeader.upperLatitude - subHeader.lowerLatitude) / subHeader.latitudeInterval);
+    // Proj4 operates on radians whereas the coordinates are in seconds in the grid
+    grids.push({
+      ll: [secondsToRadians(subHeader.lowerLongitude), secondsToRadians(subHeader.lowerLatitude)],
+      del: [secondsToRadians(subHeader.longitudeInterval), secondsToRadians(subHeader.latitudeInterval)],
+      lim: [lngColumnCount, latColumnCount],
+      count: subHeader.gridNodeCount,
+      cvs: mapNodes(nodes)
+    });
+    gridOffset += 176 + subHeader.gridNodeCount * 16;
+  }
+  return grids;
+}
+
+function mapNodes(nodes) {
+  return nodes.map(function (r) {return [secondsToRadians(r.longitudeShift), secondsToRadians(r.latitudeShift)];});
+}
+
+function readGridHeader(view, offset, isLittleEndian) {
+  return {
+    name: decodeString(view, offset + 8, offset + 16).trim(),
+    parent: decodeString(view, offset + 24, offset + 24 + 8).trim(),
+    lowerLatitude: view.getFloat64(offset + 72, isLittleEndian),
+    upperLatitude: view.getFloat64(offset + 88, isLittleEndian),
+    lowerLongitude: view.getFloat64(offset + 104, isLittleEndian),
+    upperLongitude: view.getFloat64(offset + 120, isLittleEndian),
+    latitudeInterval: view.getFloat64(offset + 136, isLittleEndian),
+    longitudeInterval: view.getFloat64(offset + 152, isLittleEndian),
+    gridNodeCount: view.getInt32(offset + 168, isLittleEndian)
+  };
+}
+
+function readGridNodes(view, offset, gridHeader, isLittleEndian) {
+  var nodesOffset = offset + 176;
+  var gridRecordLength = 16;
+  var gridShiftRecords = [];
+  for (var i = 0; i < gridHeader.gridNodeCount; i++) {
+    var record = {
+      latitudeShift: view.getFloat32(nodesOffset + i * gridRecordLength, isLittleEndian),
+      longitudeShift: view.getFloat32(nodesOffset + i * gridRecordLength + 4, isLittleEndian),
+      latitudeAccuracy: view.getFloat32(nodesOffset + i * gridRecordLength + 8, isLittleEndian),
+      longitudeAccuracy: view.getFloat32(nodesOffset + i * gridRecordLength + 12, isLittleEndian),
+    };
+    gridShiftRecords.push(record);
+  }
+  return gridShiftRecords;
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/Proj.js
+
+
+
+
+
+
+
+
+
+function Projection(srsCode,callback) {
+  if (!(this instanceof Projection)) {
+    return new Projection(srsCode);
+  }
+  callback = callback || function(error){
+    if(error){
+      throw error;
+    }
+  };
+  var json = parseCode(srsCode);
+  if(typeof json !== 'object'){
+    callback('Could not parse to valid json: ' + srsCode);
+    return;
+  }
+  var ourProj = Projection.projections.get(json.projName);
+  if(!ourProj){
+    callback('Could not get projection name from: ' + srsCode);
+    return;
+  }
+  if (json.datumCode && json.datumCode !== 'none') {
+    var datumDef = match(Datum, json.datumCode);
+    if (datumDef) {
+      json.datum_params = json.datum_params || (datumDef.towgs84 ? datumDef.towgs84.split(',') : null);
+      json.ellps = datumDef.ellipse;
+      json.datumName = datumDef.datumName ? datumDef.datumName : json.datumCode;
+    }
+  }
+  json.k0 = json.k0 || 1.0;
+  json.axis = json.axis || 'enu';
+  json.ellps = json.ellps || 'wgs84';
+  json.lat1 = json.lat1 || json.lat0; // Lambert_Conformal_Conic_1SP, for example, needs this
+
+  var sphere_ = deriveConstants_sphere(json.a, json.b, json.rf, json.ellps, json.sphere);
+  var ecc = eccentricity(sphere_.a, sphere_.b, sphere_.rf, json.R_A);
+  var nadgrids = getNadgrids(json.nadgrids);
+  var datumObj = json.datum || lib_datum(json.datumCode, json.datum_params, sphere_.a, sphere_.b, ecc.es, ecc.ep2,
+    nadgrids);
+
+  extend(this, json); // transfer everything over from the projection because we don't know what we'll need
+  extend(this, ourProj); // transfer all the methods from the projection
+
+  // copy the 4 things over we calculated in deriveConstants.sphere
+  this.a = sphere_.a;
+  this.b = sphere_.b;
+  this.rf = sphere_.rf;
+  this.sphere = sphere_.sphere;
+
+  // copy the 3 things we calculated in deriveConstants.eccentricity
+  this.es = ecc.es;
+  this.e = ecc.e;
+  this.ep2 = ecc.ep2;
+
+  // add in the datum object
+  this.datum = datumObj;
+
+  // init the projection
+  this.init();
+
+  // legecy callback from back in the day when it went to spatialreference.org
+  callback(null, this);
+
+}
+Projection.projections = projections;
+Projection.projections.start();
+/* harmony default export */ var Proj = (Projection);
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/datumUtils.js
+
+
+function compareDatums(source, dest) {
+  if (source.datum_type !== dest.datum_type) {
+    return false; // false, datums are not equal
+  } else if (source.a !== dest.a || Math.abs(source.es - dest.es) > 0.000000000050) {
+    // the tolerance for es is to ensure that GRS80 and WGS84
+    // are considered identical
+    return false;
+  } else if (source.datum_type === PJD_3PARAM) {
+    return (source.datum_params[0] === dest.datum_params[0] && source.datum_params[1] === dest.datum_params[1] && source.datum_params[2] === dest.datum_params[2]);
+  } else if (source.datum_type === PJD_7PARAM) {
+    return (source.datum_params[0] === dest.datum_params[0] && source.datum_params[1] === dest.datum_params[1] && source.datum_params[2] === dest.datum_params[2] && source.datum_params[3] === dest.datum_params[3] && source.datum_params[4] === dest.datum_params[4] && source.datum_params[5] === dest.datum_params[5] && source.datum_params[6] === dest.datum_params[6]);
+  } else {
+    return true; // datums are equal
+  }
+} // cs_compare_datums()
+
+/*
+ * The function Convert_Geodetic_To_Geocentric converts geodetic coordinates
+ * (latitude, longitude, and height) to geocentric coordinates (X, Y, Z),
+ * according to the current ellipsoid parameters.
+ *
+ *    Latitude  : Geodetic latitude in radians                     (input)
+ *    Longitude : Geodetic longitude in radians                    (input)
+ *    Height    : Geodetic height, in meters                       (input)
+ *    X         : Calculated Geocentric X coordinate, in meters    (output)
+ *    Y         : Calculated Geocentric Y coordinate, in meters    (output)
+ *    Z         : Calculated Geocentric Z coordinate, in meters    (output)
+ *
+ */
+function geodeticToGeocentric(p, es, a) {
+  var Longitude = p.x;
+  var Latitude = p.y;
+  var Height = p.z ? p.z : 0; //Z value not always supplied
+
+  var Rn; /*  Earth radius at location  */
+  var Sin_Lat; /*  Math.sin(Latitude)  */
+  var Sin2_Lat; /*  Square of Math.sin(Latitude)  */
+  var Cos_Lat; /*  Math.cos(Latitude)  */
+
+  /*
+   ** Don't blow up if Latitude is just a little out of the value
+   ** range as it may just be a rounding issue.  Also removed longitude
+   ** test, it should be wrapped by Math.cos() and Math.sin().  NFW for PROJ.4, Sep/2001.
+   */
+  if (Latitude < -HALF_PI && Latitude > -1.001 * HALF_PI) {
+    Latitude = -HALF_PI;
+  } else if (Latitude > HALF_PI && Latitude < 1.001 * HALF_PI) {
+    Latitude = HALF_PI;
+  } else if (Latitude < -HALF_PI) {
+    /* Latitude out of range */
+    //..reportError('geocent:lat out of range:' + Latitude);
+    return { x: -Infinity, y: -Infinity, z: p.z };
+  } else if (Latitude > HALF_PI) {
+    /* Latitude out of range */
+    return { x: Infinity, y: Infinity, z: p.z };
+  }
+
+  if (Longitude > Math.PI) {
+    Longitude -= (2 * Math.PI);
+  }
+  Sin_Lat = Math.sin(Latitude);
+  Cos_Lat = Math.cos(Latitude);
+  Sin2_Lat = Sin_Lat * Sin_Lat;
+  Rn = a / (Math.sqrt(1.0e0 - es * Sin2_Lat));
+  return {
+    x: (Rn + Height) * Cos_Lat * Math.cos(Longitude),
+    y: (Rn + Height) * Cos_Lat * Math.sin(Longitude),
+    z: ((Rn * (1 - es)) + Height) * Sin_Lat
+  };
+} // cs_geodetic_to_geocentric()
+
+function geocentricToGeodetic(p, es, a, b) {
+  /* local defintions and variables */
+  /* end-criterium of loop, accuracy of sin(Latitude) */
+  var genau = 1e-12;
+  var genau2 = (genau * genau);
+  var maxiter = 30;
+
+  var P; /* distance between semi-minor axis and location */
+  var RR; /* distance between center and location */
+  var CT; /* sin of geocentric latitude */
+  var ST; /* cos of geocentric latitude */
+  var RX;
+  var RK;
+  var RN; /* Earth radius at location */
+  var CPHI0; /* cos of start or old geodetic latitude in iterations */
+  var SPHI0; /* sin of start or old geodetic latitude in iterations */
+  var CPHI; /* cos of searched geodetic latitude */
+  var SPHI; /* sin of searched geodetic latitude */
+  var SDPHI; /* end-criterium: addition-theorem of sin(Latitude(iter)-Latitude(iter-1)) */
+  var iter; /* # of continous iteration, max. 30 is always enough (s.a.) */
+
+  var X = p.x;
+  var Y = p.y;
+  var Z = p.z ? p.z : 0.0; //Z value not always supplied
+  var Longitude;
+  var Latitude;
+  var Height;
+
+  P = Math.sqrt(X * X + Y * Y);
+  RR = Math.sqrt(X * X + Y * Y + Z * Z);
+
+  /*      special cases for latitude and longitude */
+  if (P / a < genau) {
+
+    /*  special case, if P=0. (X=0., Y=0.) */
+    Longitude = 0.0;
+
+    /*  if (X,Y,Z)=(0.,0.,0.) then Height becomes semi-minor axis
+     *  of ellipsoid (=center of mass), Latitude becomes PI/2 */
+    if (RR / a < genau) {
+      Latitude = HALF_PI;
+      Height = -b;
+      return {
+        x: p.x,
+        y: p.y,
+        z: p.z
+      };
+    }
+  } else {
+    /*  ellipsoidal (geodetic) longitude
+     *  interval: -PI < Longitude <= +PI */
+    Longitude = Math.atan2(Y, X);
+  }
+
+  /* --------------------------------------------------------------
+   * Following iterative algorithm was developped by
+   * "Institut for Erdmessung", University of Hannover, July 1988.
+   * Internet: www.ife.uni-hannover.de
+   * Iterative computation of CPHI,SPHI and Height.
+   * Iteration of CPHI and SPHI to 10**-12 radian resp.
+   * 2*10**-7 arcsec.
+   * --------------------------------------------------------------
+   */
+  CT = Z / RR;
+  ST = P / RR;
+  RX = 1.0 / Math.sqrt(1.0 - es * (2.0 - es) * ST * ST);
+  CPHI0 = ST * (1.0 - es) * RX;
+  SPHI0 = CT * RX;
+  iter = 0;
+
+  /* loop to find sin(Latitude) resp. Latitude
+   * until |sin(Latitude(iter)-Latitude(iter-1))| < genau */
+  do {
+    iter++;
+    RN = a / Math.sqrt(1.0 - es * SPHI0 * SPHI0);
+
+    /*  ellipsoidal (geodetic) height */
+    Height = P * CPHI0 + Z * SPHI0 - RN * (1.0 - es * SPHI0 * SPHI0);
+
+    RK = es * RN / (RN + Height);
+    RX = 1.0 / Math.sqrt(1.0 - RK * (2.0 - RK) * ST * ST);
+    CPHI = ST * (1.0 - RK) * RX;
+    SPHI = CT * RX;
+    SDPHI = SPHI * CPHI0 - CPHI * SPHI0;
+    CPHI0 = CPHI;
+    SPHI0 = SPHI;
+  }
+  while (SDPHI * SDPHI > genau2 && iter < maxiter);
+
+  /*      ellipsoidal (geodetic) latitude */
+  Latitude = Math.atan(SPHI / Math.abs(CPHI));
+  return {
+    x: Longitude,
+    y: Latitude,
+    z: Height
+  };
+} // cs_geocentric_to_geodetic()
+
+/****************************************************************/
+// pj_geocentic_to_wgs84( p )
+//  p = point to transform in geocentric coordinates (x,y,z)
+
+
+/** point object, nothing fancy, just allows values to be
+    passed back and forth by reference rather than by value.
+    Other point classes may be used as long as they have
+    x and y properties, which will get modified in the transform method.
+*/
+function geocentricToWgs84(p, datum_type, datum_params) {
+
+  if (datum_type === PJD_3PARAM) {
+    // if( x[io] === HUGE_VAL )
+    //    continue;
+    return {
+      x: p.x + datum_params[0],
+      y: p.y + datum_params[1],
+      z: p.z + datum_params[2],
+    };
+  } else if (datum_type === PJD_7PARAM) {
+    var Dx_BF = datum_params[0];
+    var Dy_BF = datum_params[1];
+    var Dz_BF = datum_params[2];
+    var Rx_BF = datum_params[3];
+    var Ry_BF = datum_params[4];
+    var Rz_BF = datum_params[5];
+    var M_BF = datum_params[6];
+    // if( x[io] === HUGE_VAL )
+    //    continue;
+    return {
+      x: M_BF * (p.x - Rz_BF * p.y + Ry_BF * p.z) + Dx_BF,
+      y: M_BF * (Rz_BF * p.x + p.y - Rx_BF * p.z) + Dy_BF,
+      z: M_BF * (-Ry_BF * p.x + Rx_BF * p.y + p.z) + Dz_BF
+    };
+  }
+} // cs_geocentric_to_wgs84
+
+/****************************************************************/
+// pj_geocentic_from_wgs84()
+//  coordinate system definition,
+//  point to transform in geocentric coordinates (x,y,z)
+function geocentricFromWgs84(p, datum_type, datum_params) {
+
+  if (datum_type === PJD_3PARAM) {
+    //if( x[io] === HUGE_VAL )
+    //    continue;
+    return {
+      x: p.x - datum_params[0],
+      y: p.y - datum_params[1],
+      z: p.z - datum_params[2],
+    };
+
+  } else if (datum_type === PJD_7PARAM) {
+    var Dx_BF = datum_params[0];
+    var Dy_BF = datum_params[1];
+    var Dz_BF = datum_params[2];
+    var Rx_BF = datum_params[3];
+    var Ry_BF = datum_params[4];
+    var Rz_BF = datum_params[5];
+    var M_BF = datum_params[6];
+    var x_tmp = (p.x - Dx_BF) / M_BF;
+    var y_tmp = (p.y - Dy_BF) / M_BF;
+    var z_tmp = (p.z - Dz_BF) / M_BF;
+    //if( x[io] === HUGE_VAL )
+    //    continue;
+
+    return {
+      x: x_tmp + Rz_BF * y_tmp - Ry_BF * z_tmp,
+      y: -Rz_BF * x_tmp + y_tmp + Rx_BF * z_tmp,
+      z: Ry_BF * x_tmp - Rx_BF * y_tmp + z_tmp
+    };
+  } //cs_geocentric_from_wgs84()
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/datum_transform.js
+
+
+
+
+function checkParams(type) {
+  return (type === PJD_3PARAM || type === PJD_7PARAM);
+}
+
+/* harmony default export */ var datum_transform = (function(source, dest, point) {
+  // Short cut if the datums are identical.
+  if (compareDatums(source, dest)) {
+    return point; // in this case, zero is sucess,
+    // whereas cs_compare_datums returns 1 to indicate TRUE
+    // confusing, should fix this
+  }
+
+  // Explicitly skip datum transform by setting 'datum=none' as parameter for either source or dest
+  if (source.datum_type === PJD_NODATUM || dest.datum_type === PJD_NODATUM) {
+    return point;
+  }
+
+  // If this datum requires grid shifts, then apply it to geodetic coordinates.
+  var source_a = source.a;
+  var source_es = source.es;
+  if (source.datum_type === PJD_GRIDSHIFT) {
+    var gridShiftCode = applyGridShift(source, false, point);
+    if (gridShiftCode !== 0) {
+      return undefined;
+    }
+    source_a = SRS_WGS84_SEMIMAJOR;
+    source_es = SRS_WGS84_ESQUARED;
+  }
+
+  var dest_a = dest.a;
+  var dest_b = dest.b;
+  var dest_es = dest.es;
+  if (dest.datum_type === PJD_GRIDSHIFT) {
+    dest_a = SRS_WGS84_SEMIMAJOR;
+    dest_b = SRS_WGS84_SEMIMINOR;
+    dest_es = SRS_WGS84_ESQUARED;
+  }
+
+  // Do we need to go through geocentric coordinates?
+  if (source_es === dest_es && source_a === dest_a && !checkParams(source.datum_type) &&  !checkParams(dest.datum_type)) {
+    return point;
+  }
+
+  // Convert to geocentric coordinates.
+  point = geodeticToGeocentric(point, source_es, source_a);
+  // Convert between datums
+  if (checkParams(source.datum_type)) {
+    point = geocentricToWgs84(point, source.datum_type, source.datum_params);
+  }
+  if (checkParams(dest.datum_type)) {
+    point = geocentricFromWgs84(point, dest.datum_type, dest.datum_params);
+  }
+  point = geocentricToGeodetic(point, dest_es, dest_a, dest_b);
+
+  if (dest.datum_type === PJD_GRIDSHIFT) {
+    var destGridShiftResult = applyGridShift(dest, true, point);
+    if (destGridShiftResult !== 0) {
+      return undefined;
+    }
+  }
+
+  return point;
+});
+
+function applyGridShift(source, inverse, point) {
+  if (source.grids === null || source.grids.length === 0) {
+    console.log('Grid shift grids not found');
+    return -1;
+  }
+  var input = {x: -point.x, y: point.y};
+  var output = {x: Number.NaN, y: Number.NaN};
+  var onlyMandatoryGrids = false;
+  var attemptedGrids = [];
+  outer:
+  for (var i = 0; i < source.grids.length; i++) {
+    var grid = source.grids[i];
+    attemptedGrids.push(grid.name);
+    if (grid.isNull) {
+      output = input;
+      break;
+    }
+    onlyMandatoryGrids = grid.mandatory;
+    if (grid.grid === null) {
+      if (grid.mandatory) {
+        console.log("Unable to find mandatory grid '" + grid.name + "'");
+        return -1;
+      }
+      continue;
+    }
+    var subgrids = grid.grid.subgrids;
+    for (var j = 0, jj = subgrids.length; j < jj; j++) {
+      var subgrid = subgrids[j];
+      // skip tables that don't match our point at all
+      var epsilon = (Math.abs(subgrid.del[1]) + Math.abs(subgrid.del[0])) / 10000.0;
+      var minX = subgrid.ll[0] - epsilon;
+      var minY = subgrid.ll[1] - epsilon;
+      var maxX = subgrid.ll[0] + (subgrid.lim[0] - 1) * subgrid.del[0] + epsilon;
+      var maxY = subgrid.ll[1] + (subgrid.lim[1] - 1) * subgrid.del[1] + epsilon;
+      if (minY > input.y || minX > input.x || maxY < input.y || maxX < input.x ) {
+        continue;
+      }
+      output = applySubgridShift(input, inverse, subgrid);
+      if (!isNaN(output.x)) {
+        break outer;
+      }
+    }
+  }
+  if (isNaN(output.x)) {
+    console.log("Failed to find a grid shift table for location '"+
+      -input.x * R2D + " " + input.y * R2D + " tried: '" + attemptedGrids + "'");
+    return -1;
+  }
+  point.x = -output.x;
+  point.y = output.y;
+  return 0;
+}
+
+function applySubgridShift(pin, inverse, ct) {
+  var val = {x: Number.NaN, y: Number.NaN};
+  if (isNaN(pin.x)) { return val; }
+  var tb = {x: pin.x, y: pin.y};
+  tb.x -= ct.ll[0];
+  tb.y -= ct.ll[1];
+  tb.x = adjust_lon(tb.x - Math.PI) + Math.PI;
+  var t = nadInterpolate(tb, ct);
+  if (inverse) {
+    if (isNaN(t.x)) {
+      return val;
+    }
+    t.x = tb.x - t.x;
+    t.y = tb.y - t.y;
+    var i = 9, tol = 1e-12;
+    var dif, del;
+    do {
+      del = nadInterpolate(t, ct);
+      if (isNaN(del.x)) {
+        console.log("Inverse grid shift iteration failed, presumably at grid edge.  Using first approximation.");
+        break;
+      }
+      dif = {x: tb.x - (del.x + t.x), y: tb.y - (del.y + t.y)};
+      t.x += dif.x;
+      t.y += dif.y;
+    } while (i-- && Math.abs(dif.x) > tol && Math.abs(dif.y) > tol);
+    if (i < 0) {
+      console.log("Inverse grid shift iterator failed to converge.");
+      return val;
+    }
+    val.x = adjust_lon(t.x + ct.ll[0]);
+    val.y = t.y + ct.ll[1];
+  } else {
+    if (!isNaN(t.x)) {
+      val.x = pin.x + t.x;
+      val.y = pin.y + t.y;
+    }
+  }
+  return val;
+}
+
+function nadInterpolate(pin, ct) {
+  var t = {x: pin.x / ct.del[0], y: pin.y / ct.del[1]};
+  var indx = {x: Math.floor(t.x), y: Math.floor(t.y)};
+  var frct = {x: t.x - 1.0 * indx.x, y: t.y - 1.0 * indx.y};
+  var val= {x: Number.NaN, y: Number.NaN};
+  var inx;
+  if (indx.x < 0 || indx.x >= ct.lim[0]) {
+    return val;
+  }
+  if (indx.y < 0 || indx.y >= ct.lim[1]) {
+    return val;
+  }
+  inx = (indx.y * ct.lim[0]) + indx.x;
+  var f00 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+  inx++;
+  var f10= {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+  inx += ct.lim[0];
+  var f11 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+  inx--;
+  var f01 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+  var m11 = frct.x * frct.y, m10 = frct.x * (1.0 - frct.y),
+    m00 = (1.0 - frct.x) * (1.0 - frct.y), m01 = (1.0 - frct.x) * frct.y;
+  val.x = (m00 * f00.x + m10 * f10.x + m01 * f01.x + m11 * f11.x);
+  val.y = (m00 * f00.y + m10 * f10.y + m01 * f01.y + m11 * f11.y);
+  return val;
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/adjust_axis.js
+/* harmony default export */ var adjust_axis = (function(crs, denorm, point) {
+  var xin = point.x,
+    yin = point.y,
+    zin = point.z || 0.0;
+  var v, t, i;
+  var out = {};
+  for (i = 0; i < 3; i++) {
+    if (denorm && i === 2 && point.z === undefined) {
+      continue;
+    }
+    if (i === 0) {
+      v = xin;
+      if ("ew".indexOf(crs.axis[i]) !== -1) {
+        t = 'x';
+      } else {
+        t = 'y';
+      }
+
+    }
+    else if (i === 1) {
+      v = yin;
+      if ("ns".indexOf(crs.axis[i]) !== -1) {
+        t = 'y';
+      } else {
+        t = 'x';
+      }
+    }
+    else {
+      v = zin;
+      t = 'z';
+    }
+    switch (crs.axis[i]) {
+    case 'e':
+      out[t] = v;
+      break;
+    case 'w':
+      out[t] = -v;
+      break;
+    case 'n':
+      out[t] = v;
+      break;
+    case 's':
+      out[t] = -v;
+      break;
+    case 'u':
+      if (point[t] !== undefined) {
+        out.z = v;
+      }
+      break;
+    case 'd':
+      if (point[t] !== undefined) {
+        out.z = -v;
+      }
+      break;
+    default:
+      //console.log("ERROR: unknow axis ("+crs.axis[i]+") - check definition of "+crs.projName);
+      return null;
+    }
+  }
+  return out;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/toPoint.js
+/* harmony default export */ var toPoint = (function (array){
+  var out = {
+    x: array[0],
+    y: array[1]
+  };
+  if (array.length>2) {
+    out.z = array[2];
+  }
+  if (array.length>3) {
+    out.m = array[3];
+  }
+  return out;
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/checkSanity.js
+/* harmony default export */ var checkSanity = (function (point) {
+  checkCoord(point.x);
+  checkCoord(point.y);
+});
+function checkCoord(num) {
+  if (typeof Number.isFinite === 'function') {
+    if (Number.isFinite(num)) {
+      return;
+    }
+    throw new TypeError('coordinates must be finite numbers');
+  }
+  if (typeof num !== 'number' || num !== num || !isFinite(num)) {
+    throw new TypeError('coordinates must be finite numbers');
+  }
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/transform.js
+
+
+
+
+
+
+
+function checkNotWGS(source, dest) {
+  return (
+    (source.datum.datum_type === PJD_3PARAM || source.datum.datum_type === PJD_7PARAM || source.datum.datum_type === PJD_GRIDSHIFT) && dest.datumCode !== 'WGS84') ||
+    ((dest.datum.datum_type === PJD_3PARAM || dest.datum.datum_type === PJD_7PARAM || dest.datum.datum_type === PJD_GRIDSHIFT) && source.datumCode !== 'WGS84');
+}
+
+function transform(source, dest, point, enforceAxis) {
+  var wgs84;
+  if (Array.isArray(point)) {
+    point = toPoint(point);
+  } else {
+    // Clone the point object so inputs don't get modified
+    point = {
+      x: point.x,
+      y: point.y,
+      z: point.z,
+      m: point.m
+    };
+  }
+  var hasZ = point.z !== undefined;
+  checkSanity(point);
+  // Workaround for datum shifts towgs84, if either source or destination projection is not wgs84
+  if (source.datum && dest.datum && checkNotWGS(source, dest)) {
+    wgs84 = new Proj('WGS84');
+    point = transform(source, wgs84, point, enforceAxis);
+    source = wgs84;
+  }
+  // DGR, 2010/11/12
+  if (enforceAxis && source.axis !== 'enu') {
+    point = adjust_axis(source, false, point);
+  }
+  // Transform source points to long/lat, if they aren't already.
+  if (source.projName === 'longlat') {
+    point = {
+      x: point.x * D2R,
+      y: point.y * D2R,
+      z: point.z || 0
+    };
+  } else {
+    if (source.to_meter) {
+      point = {
+        x: point.x * source.to_meter,
+        y: point.y * source.to_meter,
+        z: point.z || 0
+      };
+    }
+    point = source.inverse(point); // Convert Cartesian to longlat
+    if (!point) {
+      return;
+    }
+  }
+  // Adjust for the prime meridian if necessary
+  if (source.from_greenwich) {
+    point.x += source.from_greenwich;
+  }
+
+  // Convert datums if needed, and if possible.
+  point = datum_transform(source.datum, dest.datum, point);
+  if (!point) {
+    return;
+  }
+
+  // Adjust for the prime meridian if necessary
+  if (dest.from_greenwich) {
+    point = {
+      x: point.x - dest.from_greenwich,
+      y: point.y,
+      z: point.z || 0
+    };
+  }
+
+  if (dest.projName === 'longlat') {
+    // convert radians to decimal degrees
+    point = {
+      x: point.x * R2D,
+      y: point.y * R2D,
+      z: point.z || 0
+    };
+  } else { // else project
+    point = dest.forward(point);
+    if (dest.to_meter) {
+      point = {
+        x: point.x / dest.to_meter,
+        y: point.y / dest.to_meter,
+        z: point.z || 0
+      };
+    }
+  }
+
+  // DGR, 2010/11/12
+  if (enforceAxis && dest.axis !== 'enu') {
+    return adjust_axis(dest, true, point);
+  }
+
+  if (point && !hasZ) {
+    delete point.z;
+  }
+  return point;
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/core.js
+
+
+var core_wgs84 = Proj('WGS84');
+
+function transformer(from, to, coords, enforceAxis) {
+  var transformedArray, out, keys;
+  if (Array.isArray(coords)) {
+    transformedArray = transform(from, to, coords, enforceAxis) || {x: NaN, y: NaN};
+    if (coords.length > 2) {
+      if ((typeof from.name !== 'undefined' && from.name === 'geocent') || (typeof to.name !== 'undefined' && to.name === 'geocent')) {
+        if (typeof transformedArray.z === 'number') {
+          return [transformedArray.x, transformedArray.y, transformedArray.z].concat(coords.slice(3));
+        } else {
+          return [transformedArray.x, transformedArray.y, coords[2]].concat(coords.slice(3));
+        }
+      } else {
+        return [transformedArray.x, transformedArray.y].concat(coords.slice(2));
+      }
+    } else {
+      return [transformedArray.x, transformedArray.y];
+    }
+  } else {
+    out = transform(from, to, coords, enforceAxis);
+    keys = Object.keys(coords);
+    if (keys.length === 2) {
+      return out;
+    }
+    keys.forEach(function (key) {
+      if ((typeof from.name !== 'undefined' && from.name === 'geocent') || (typeof to.name !== 'undefined' && to.name === 'geocent')) {
+        if (key === 'x' || key === 'y' || key === 'z') {
+          return;
+        }
+      } else {
+        if (key === 'x' || key === 'y') {
+          return;
+        }
+      }
+      out[key] = coords[key];
+    });
+    return out;
+  }
+}
+
+function checkProj(item) {
+  if (item instanceof Proj) {
+    return item;
+  }
+  if (item.oProj) {
+    return item.oProj;
+  }
+  return Proj(item);
+}
+
+function core_proj4(fromProj, toProj, coord) {
+  fromProj = checkProj(fromProj);
+  var single = false;
+  var obj;
+  if (typeof toProj === 'undefined') {
+    toProj = fromProj;
+    fromProj = core_wgs84;
+    single = true;
+  } else if (typeof toProj.x !== 'undefined' || Array.isArray(toProj)) {
+    coord = toProj;
+    toProj = fromProj;
+    fromProj = core_wgs84;
+    single = true;
+  }
+  toProj = checkProj(toProj);
+  if (coord) {
+    return transformer(fromProj, toProj, coord);
+  } else {
+    obj = {
+      forward: function (coords, enforceAxis) {
+        return transformer(fromProj, toProj, coords, enforceAxis);
+      },
+      inverse: function (coords, enforceAxis) {
+        return transformer(toProj, fromProj, coords, enforceAxis);
+      }
+    };
+    if (single) {
+      obj.oProj = toProj;
+    }
+    return obj;
+  }
+}
+/* harmony default export */ var core = (core_proj4);
+// CONCATENATED MODULE: ./node_modules/mgrs/mgrs.js
+
+
+
+/**
+ * UTM zones are grouped, and assigned to one of a group of 6
+ * sets.
+ *
+ * {int} @private
+ */
+var NUM_100K_SETS = 6;
+
+/**
+ * The column letters (for easting) of the lower left value, per
+ * set.
+ *
+ * {string} @private
+ */
+var SET_ORIGIN_COLUMN_LETTERS = 'AJSAJS';
+
+/**
+ * The row letters (for northing) of the lower left value, per
+ * set.
+ *
+ * {string} @private
+ */
+var SET_ORIGIN_ROW_LETTERS = 'AFAFAF';
+
+var mgrs_A = 65; // A
+var I = 73; // I
+var O = 79; // O
+var mgrs_V = 86; // V
+var mgrs_Z = 90; // Z
+/* harmony default export */ var mgrs = ({
+  forward: mgrs_forward,
+  inverse: mgrs_inverse,
+  toPoint: mgrs_toPoint
+});
+/**
+ * Conversion of lat/lon to MGRS.
+ *
+ * @param {object} ll Object literal with lat and lon properties on a
+ *     WGS84 ellipsoid.
+ * @param {int} accuracy Accuracy in digits (5 for 1 m, 4 for 10 m, 3 for
+ *      100 m, 2 for 1000 m or 1 for 10000 m). Optional, default is 5.
+ * @return {string} the MGRS string for the given location and accuracy.
+ */
+function mgrs_forward(ll, accuracy) {
+  accuracy = accuracy || 5; // default accuracy 1m
+  return encode(LLtoUTM({
+    lat: ll[1],
+    lon: ll[0]
+  }), accuracy);
+};
+
+/**
+ * Conversion of MGRS to lat/lon.
+ *
+ * @param {string} mgrs MGRS string.
+ * @return {array} An array with left (longitude), bottom (latitude), right
+ *     (longitude) and top (latitude) values in WGS84, representing the
+ *     bounding box for the provided MGRS reference.
+ */
+function mgrs_inverse(mgrs) {
+  var bbox = UTMtoLL(decode(mgrs.toUpperCase()));
+  if (bbox.lat && bbox.lon) {
+    return [bbox.lon, bbox.lat, bbox.lon, bbox.lat];
+  }
+  return [bbox.left, bbox.bottom, bbox.right, bbox.top];
+};
+
+function mgrs_toPoint(mgrs) {
+  var bbox = UTMtoLL(decode(mgrs.toUpperCase()));
+  if (bbox.lat && bbox.lon) {
+    return [bbox.lon, bbox.lat];
+  }
+  return [(bbox.left + bbox.right) / 2, (bbox.top + bbox.bottom) / 2];
+};
+/**
+ * Conversion from degrees to radians.
+ *
+ * @private
+ * @param {number} deg the angle in degrees.
+ * @return {number} the angle in radians.
+ */
+function degToRad(deg) {
+  return (deg * (Math.PI / 180.0));
+}
+
+/**
+ * Conversion from radians to degrees.
+ *
+ * @private
+ * @param {number} rad the angle in radians.
+ * @return {number} the angle in degrees.
+ */
+function radToDeg(rad) {
+  return (180.0 * (rad / Math.PI));
+}
+
+/**
+ * Converts a set of Longitude and Latitude co-ordinates to UTM
+ * using the WGS84 ellipsoid.
+ *
+ * @private
+ * @param {object} ll Object literal with lat and lon properties
+ *     representing the WGS84 coordinate to be converted.
+ * @return {object} Object literal containing the UTM value with easting,
+ *     northing, zoneNumber and zoneLetter properties, and an optional
+ *     accuracy property in digits. Returns null if the conversion failed.
+ */
+function LLtoUTM(ll) {
+  var Lat = ll.lat;
+  var Long = ll.lon;
+  var a = 6378137.0; //ellip.radius;
+  var eccSquared = 0.00669438; //ellip.eccsq;
+  var k0 = 0.9996;
+  var LongOrigin;
+  var eccPrimeSquared;
+  var N, T, C, A, M;
+  var LatRad = degToRad(Lat);
+  var LongRad = degToRad(Long);
+  var LongOriginRad;
+  var ZoneNumber;
+  // (int)
+  ZoneNumber = Math.floor((Long + 180) / 6) + 1;
+
+  //Make sure the longitude 180.00 is in Zone 60
+  if (Long === 180) {
+    ZoneNumber = 60;
+  }
+
+  // Special zone for Norway
+  if (Lat >= 56.0 && Lat < 64.0 && Long >= 3.0 && Long < 12.0) {
+    ZoneNumber = 32;
+  }
+
+  // Special zones for Svalbard
+  if (Lat >= 72.0 && Lat < 84.0) {
+    if (Long >= 0.0 && Long < 9.0) {
+      ZoneNumber = 31;
+    }
+    else if (Long >= 9.0 && Long < 21.0) {
+      ZoneNumber = 33;
+    }
+    else if (Long >= 21.0 && Long < 33.0) {
+      ZoneNumber = 35;
+    }
+    else if (Long >= 33.0 && Long < 42.0) {
+      ZoneNumber = 37;
+    }
+  }
+
+  LongOrigin = (ZoneNumber - 1) * 6 - 180 + 3; //+3 puts origin
+  // in middle of
+  // zone
+  LongOriginRad = degToRad(LongOrigin);
+
+  eccPrimeSquared = (eccSquared) / (1 - eccSquared);
+
+  N = a / Math.sqrt(1 - eccSquared * Math.sin(LatRad) * Math.sin(LatRad));
+  T = Math.tan(LatRad) * Math.tan(LatRad);
+  C = eccPrimeSquared * Math.cos(LatRad) * Math.cos(LatRad);
+  A = Math.cos(LatRad) * (LongRad - LongOriginRad);
+
+  M = a * ((1 - eccSquared / 4 - 3 * eccSquared * eccSquared / 64 - 5 * eccSquared * eccSquared * eccSquared / 256) * LatRad - (3 * eccSquared / 8 + 3 * eccSquared * eccSquared / 32 + 45 * eccSquared * eccSquared * eccSquared / 1024) * Math.sin(2 * LatRad) + (15 * eccSquared * eccSquared / 256 + 45 * eccSquared * eccSquared * eccSquared / 1024) * Math.sin(4 * LatRad) - (35 * eccSquared * eccSquared * eccSquared / 3072) * Math.sin(6 * LatRad));
+
+  var UTMEasting = (k0 * N * (A + (1 - T + C) * A * A * A / 6.0 + (5 - 18 * T + T * T + 72 * C - 58 * eccPrimeSquared) * A * A * A * A * A / 120.0) + 500000.0);
+
+  var UTMNorthing = (k0 * (M + N * Math.tan(LatRad) * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * A * A * A * A / 24.0 + (61 - 58 * T + T * T + 600 * C - 330 * eccPrimeSquared) * A * A * A * A * A * A / 720.0)));
+  if (Lat < 0.0) {
+    UTMNorthing += 10000000.0; //10000000 meter offset for
+    // southern hemisphere
+  }
+
+  return {
+    northing: Math.round(UTMNorthing),
+    easting: Math.round(UTMEasting),
+    zoneNumber: ZoneNumber,
+    zoneLetter: getLetterDesignator(Lat)
+  };
+}
+
+/**
+ * Converts UTM coords to lat/long, using the WGS84 ellipsoid. This is a convenience
+ * class where the Zone can be specified as a single string eg."60N" which
+ * is then broken down into the ZoneNumber and ZoneLetter.
+ *
+ * @private
+ * @param {object} utm An object literal with northing, easting, zoneNumber
+ *     and zoneLetter properties. If an optional accuracy property is
+ *     provided (in meters), a bounding box will be returned instead of
+ *     latitude and longitude.
+ * @return {object} An object literal containing either lat and lon values
+ *     (if no accuracy was provided), or top, right, bottom and left values
+ *     for the bounding box calculated according to the provided accuracy.
+ *     Returns null if the conversion failed.
+ */
+function UTMtoLL(utm) {
+
+  var UTMNorthing = utm.northing;
+  var UTMEasting = utm.easting;
+  var zoneLetter = utm.zoneLetter;
+  var zoneNumber = utm.zoneNumber;
+  // check the ZoneNummber is valid
+  if (zoneNumber < 0 || zoneNumber > 60) {
+    return null;
+  }
+
+  var k0 = 0.9996;
+  var a = 6378137.0; //ellip.radius;
+  var eccSquared = 0.00669438; //ellip.eccsq;
+  var eccPrimeSquared;
+  var e1 = (1 - Math.sqrt(1 - eccSquared)) / (1 + Math.sqrt(1 - eccSquared));
+  var N1, T1, C1, R1, D, M;
+  var LongOrigin;
+  var mu, phi1Rad;
+
+  // remove 500,000 meter offset for longitude
+  var x = UTMEasting - 500000.0;
+  var y = UTMNorthing;
+
+  // We must know somehow if we are in the Northern or Southern
+  // hemisphere, this is the only time we use the letter So even
+  // if the Zone letter isn't exactly correct it should indicate
+  // the hemisphere correctly
+  if (zoneLetter < 'N') {
+    y -= 10000000.0; // remove 10,000,000 meter offset used
+    // for southern hemisphere
+  }
+
+  // There are 60 zones with zone 1 being at West -180 to -174
+  LongOrigin = (zoneNumber - 1) * 6 - 180 + 3; // +3 puts origin
+  // in middle of
+  // zone
+
+  eccPrimeSquared = (eccSquared) / (1 - eccSquared);
+
+  M = y / k0;
+  mu = M / (a * (1 - eccSquared / 4 - 3 * eccSquared * eccSquared / 64 - 5 * eccSquared * eccSquared * eccSquared / 256));
+
+  phi1Rad = mu + (3 * e1 / 2 - 27 * e1 * e1 * e1 / 32) * Math.sin(2 * mu) + (21 * e1 * e1 / 16 - 55 * e1 * e1 * e1 * e1 / 32) * Math.sin(4 * mu) + (151 * e1 * e1 * e1 / 96) * Math.sin(6 * mu);
+  // double phi1 = ProjMath.radToDeg(phi1Rad);
+
+  N1 = a / Math.sqrt(1 - eccSquared * Math.sin(phi1Rad) * Math.sin(phi1Rad));
+  T1 = Math.tan(phi1Rad) * Math.tan(phi1Rad);
+  C1 = eccPrimeSquared * Math.cos(phi1Rad) * Math.cos(phi1Rad);
+  R1 = a * (1 - eccSquared) / Math.pow(1 - eccSquared * Math.sin(phi1Rad) * Math.sin(phi1Rad), 1.5);
+  D = x / (N1 * k0);
+
+  var lat = phi1Rad - (N1 * Math.tan(phi1Rad) / R1) * (D * D / 2 - (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * eccPrimeSquared) * D * D * D * D / 24 + (61 + 90 * T1 + 298 * C1 + 45 * T1 * T1 - 252 * eccPrimeSquared - 3 * C1 * C1) * D * D * D * D * D * D / 720);
+  lat = radToDeg(lat);
+
+  var lon = (D - (1 + 2 * T1 + C1) * D * D * D / 6 + (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * eccPrimeSquared + 24 * T1 * T1) * D * D * D * D * D / 120) / Math.cos(phi1Rad);
+  lon = LongOrigin + radToDeg(lon);
+
+  var result;
+  if (utm.accuracy) {
+    var topRight = UTMtoLL({
+      northing: utm.northing + utm.accuracy,
+      easting: utm.easting + utm.accuracy,
+      zoneLetter: utm.zoneLetter,
+      zoneNumber: utm.zoneNumber
+    });
+    result = {
+      top: topRight.lat,
+      right: topRight.lon,
+      bottom: lat,
+      left: lon
+    };
+  }
+  else {
+    result = {
+      lat: lat,
+      lon: lon
+    };
+  }
+  return result;
+}
+
+/**
+ * Calculates the MGRS letter designator for the given latitude.
+ *
+ * @private
+ * @param {number} lat The latitude in WGS84 to get the letter designator
+ *     for.
+ * @return {char} The letter designator.
+ */
+function getLetterDesignator(lat) {
+  //This is here as an error flag to show that the Latitude is
+  //outside MGRS limits
+  var LetterDesignator = 'Z';
+
+  if ((84 >= lat) && (lat >= 72)) {
+    LetterDesignator = 'X';
+  }
+  else if ((72 > lat) && (lat >= 64)) {
+    LetterDesignator = 'W';
+  }
+  else if ((64 > lat) && (lat >= 56)) {
+    LetterDesignator = 'V';
+  }
+  else if ((56 > lat) && (lat >= 48)) {
+    LetterDesignator = 'U';
+  }
+  else if ((48 > lat) && (lat >= 40)) {
+    LetterDesignator = 'T';
+  }
+  else if ((40 > lat) && (lat >= 32)) {
+    LetterDesignator = 'S';
+  }
+  else if ((32 > lat) && (lat >= 24)) {
+    LetterDesignator = 'R';
+  }
+  else if ((24 > lat) && (lat >= 16)) {
+    LetterDesignator = 'Q';
+  }
+  else if ((16 > lat) && (lat >= 8)) {
+    LetterDesignator = 'P';
+  }
+  else if ((8 > lat) && (lat >= 0)) {
+    LetterDesignator = 'N';
+  }
+  else if ((0 > lat) && (lat >= -8)) {
+    LetterDesignator = 'M';
+  }
+  else if ((-8 > lat) && (lat >= -16)) {
+    LetterDesignator = 'L';
+  }
+  else if ((-16 > lat) && (lat >= -24)) {
+    LetterDesignator = 'K';
+  }
+  else if ((-24 > lat) && (lat >= -32)) {
+    LetterDesignator = 'J';
+  }
+  else if ((-32 > lat) && (lat >= -40)) {
+    LetterDesignator = 'H';
+  }
+  else if ((-40 > lat) && (lat >= -48)) {
+    LetterDesignator = 'G';
+  }
+  else if ((-48 > lat) && (lat >= -56)) {
+    LetterDesignator = 'F';
+  }
+  else if ((-56 > lat) && (lat >= -64)) {
+    LetterDesignator = 'E';
+  }
+  else if ((-64 > lat) && (lat >= -72)) {
+    LetterDesignator = 'D';
+  }
+  else if ((-72 > lat) && (lat >= -80)) {
+    LetterDesignator = 'C';
+  }
+  return LetterDesignator;
+}
+
+/**
+ * Encodes a UTM location as MGRS string.
+ *
+ * @private
+ * @param {object} utm An object literal with easting, northing,
+ *     zoneLetter, zoneNumber
+ * @param {number} accuracy Accuracy in digits (1-5).
+ * @return {string} MGRS string for the given UTM location.
+ */
+function encode(utm, accuracy) {
+  // prepend with leading zeroes
+  var seasting = "00000" + utm.easting,
+    snorthing = "00000" + utm.northing;
+
+  return utm.zoneNumber + utm.zoneLetter + get100kID(utm.easting, utm.northing, utm.zoneNumber) + seasting.substr(seasting.length - 5, accuracy) + snorthing.substr(snorthing.length - 5, accuracy);
+}
+
+/**
+ * Get the two letter 100k designator for a given UTM easting,
+ * northing and zone number value.
+ *
+ * @private
+ * @param {number} easting
+ * @param {number} northing
+ * @param {number} zoneNumber
+ * @return the two letter 100k designator for the given UTM location.
+ */
+function get100kID(easting, northing, zoneNumber) {
+  var setParm = get100kSetForZone(zoneNumber);
+  var setColumn = Math.floor(easting / 100000);
+  var setRow = Math.floor(northing / 100000) % 20;
+  return getLetter100kID(setColumn, setRow, setParm);
+}
+
+/**
+ * Given a UTM zone number, figure out the MGRS 100K set it is in.
+ *
+ * @private
+ * @param {number} i An UTM zone number.
+ * @return {number} the 100k set the UTM zone is in.
+ */
+function get100kSetForZone(i) {
+  var setParm = i % NUM_100K_SETS;
+  if (setParm === 0) {
+    setParm = NUM_100K_SETS;
+  }
+
+  return setParm;
+}
+
+/**
+ * Get the two-letter MGRS 100k designator given information
+ * translated from the UTM northing, easting and zone number.
+ *
+ * @private
+ * @param {number} column the column index as it relates to the MGRS
+ *        100k set spreadsheet, created from the UTM easting.
+ *        Values are 1-8.
+ * @param {number} row the row index as it relates to the MGRS 100k set
+ *        spreadsheet, created from the UTM northing value. Values
+ *        are from 0-19.
+ * @param {number} parm the set block, as it relates to the MGRS 100k set
+ *        spreadsheet, created from the UTM zone. Values are from
+ *        1-60.
+ * @return two letter MGRS 100k code.
+ */
+function getLetter100kID(column, row, parm) {
+  // colOrigin and rowOrigin are the letters at the origin of the set
+  var index = parm - 1;
+  var colOrigin = SET_ORIGIN_COLUMN_LETTERS.charCodeAt(index);
+  var rowOrigin = SET_ORIGIN_ROW_LETTERS.charCodeAt(index);
+
+  // colInt and rowInt are the letters to build to return
+  var colInt = colOrigin + column - 1;
+  var rowInt = rowOrigin + row;
+  var rollover = false;
+
+  if (colInt > mgrs_Z) {
+    colInt = colInt - mgrs_Z + mgrs_A - 1;
+    rollover = true;
+  }
+
+  if (colInt === I || (colOrigin < I && colInt > I) || ((colInt > I || colOrigin < I) && rollover)) {
+    colInt++;
+  }
+
+  if (colInt === O || (colOrigin < O && colInt > O) || ((colInt > O || colOrigin < O) && rollover)) {
+    colInt++;
+
+    if (colInt === I) {
+      colInt++;
+    }
+  }
+
+  if (colInt > mgrs_Z) {
+    colInt = colInt - mgrs_Z + mgrs_A - 1;
+  }
+
+  if (rowInt > mgrs_V) {
+    rowInt = rowInt - mgrs_V + mgrs_A - 1;
+    rollover = true;
+  }
+  else {
+    rollover = false;
+  }
+
+  if (((rowInt === I) || ((rowOrigin < I) && (rowInt > I))) || (((rowInt > I) || (rowOrigin < I)) && rollover)) {
+    rowInt++;
+  }
+
+  if (((rowInt === O) || ((rowOrigin < O) && (rowInt > O))) || (((rowInt > O) || (rowOrigin < O)) && rollover)) {
+    rowInt++;
+
+    if (rowInt === I) {
+      rowInt++;
+    }
+  }
+
+  if (rowInt > mgrs_V) {
+    rowInt = rowInt - mgrs_V + mgrs_A - 1;
+  }
+
+  var twoLetter = String.fromCharCode(colInt) + String.fromCharCode(rowInt);
+  return twoLetter;
+}
+
+/**
+ * Decode the UTM parameters from a MGRS string.
+ *
+ * @private
+ * @param {string} mgrsString an UPPERCASE coordinate string is expected.
+ * @return {object} An object literal with easting, northing, zoneLetter,
+ *     zoneNumber and accuracy (in meters) properties.
+ */
+function decode(mgrsString) {
+
+  if (mgrsString && mgrsString.length === 0) {
+    throw ("MGRSPoint coverting from nothing");
+  }
+
+  var length = mgrsString.length;
+
+  var hunK = null;
+  var sb = "";
+  var testChar;
+  var i = 0;
+
+  // get Zone number
+  while (!(/[A-Z]/).test(testChar = mgrsString.charAt(i))) {
+    if (i >= 2) {
+      throw ("MGRSPoint bad conversion from: " + mgrsString);
+    }
+    sb += testChar;
+    i++;
+  }
+
+  var zoneNumber = parseInt(sb, 10);
+
+  if (i === 0 || i + 3 > length) {
+    // A good MGRS string has to be 4-5 digits long,
+    // ##AAA/#AAA at least.
+    throw ("MGRSPoint bad conversion from: " + mgrsString);
+  }
+
+  var zoneLetter = mgrsString.charAt(i++);
+
+  // Should we check the zone letter here? Why not.
+  if (zoneLetter <= 'A' || zoneLetter === 'B' || zoneLetter === 'Y' || zoneLetter >= 'Z' || zoneLetter === 'I' || zoneLetter === 'O') {
+    throw ("MGRSPoint zone letter " + zoneLetter + " not handled: " + mgrsString);
+  }
+
+  hunK = mgrsString.substring(i, i += 2);
+
+  var set = get100kSetForZone(zoneNumber);
+
+  var east100k = getEastingFromChar(hunK.charAt(0), set);
+  var north100k = getNorthingFromChar(hunK.charAt(1), set);
+
+  // We have a bug where the northing may be 2000000 too low.
+  // How
+  // do we know when to roll over?
+
+  while (north100k < getMinNorthing(zoneLetter)) {
+    north100k += 2000000;
+  }
+
+  // calculate the char index for easting/northing separator
+  var remainder = length - i;
+
+  if (remainder % 2 !== 0) {
+    throw ("MGRSPoint has to have an even number \nof digits after the zone letter and two 100km letters - front \nhalf for easting meters, second half for \nnorthing meters" + mgrsString);
+  }
+
+  var sep = remainder / 2;
+
+  var sepEasting = 0.0;
+  var sepNorthing = 0.0;
+  var accuracyBonus, sepEastingString, sepNorthingString, easting, northing;
+  if (sep > 0) {
+    accuracyBonus = 100000.0 / Math.pow(10, sep);
+    sepEastingString = mgrsString.substring(i, i + sep);
+    sepEasting = parseFloat(sepEastingString) * accuracyBonus;
+    sepNorthingString = mgrsString.substring(i + sep);
+    sepNorthing = parseFloat(sepNorthingString) * accuracyBonus;
+  }
+
+  easting = sepEasting + east100k;
+  northing = sepNorthing + north100k;
+
+  return {
+    easting: easting,
+    northing: northing,
+    zoneLetter: zoneLetter,
+    zoneNumber: zoneNumber,
+    accuracy: accuracyBonus
+  };
+}
+
+/**
+ * Given the first letter from a two-letter MGRS 100k zone, and given the
+ * MGRS table set for the zone number, figure out the easting value that
+ * should be added to the other, secondary easting value.
+ *
+ * @private
+ * @param {char} e The first letter from a two-letter MGRS 100´k zone.
+ * @param {number} set The MGRS table set for the zone number.
+ * @return {number} The easting value for the given letter and set.
+ */
+function getEastingFromChar(e, set) {
+  // colOrigin is the letter at the origin of the set for the
+  // column
+  var curCol = SET_ORIGIN_COLUMN_LETTERS.charCodeAt(set - 1);
+  var eastingValue = 100000.0;
+  var rewindMarker = false;
+
+  while (curCol !== e.charCodeAt(0)) {
+    curCol++;
+    if (curCol === I) {
+      curCol++;
+    }
+    if (curCol === O) {
+      curCol++;
+    }
+    if (curCol > mgrs_Z) {
+      if (rewindMarker) {
+        throw ("Bad character: " + e);
+      }
+      curCol = mgrs_A;
+      rewindMarker = true;
+    }
+    eastingValue += 100000.0;
+  }
+
+  return eastingValue;
+}
+
+/**
+ * Given the second letter from a two-letter MGRS 100k zone, and given the
+ * MGRS table set for the zone number, figure out the northing value that
+ * should be added to the other, secondary northing value. You have to
+ * remember that Northings are determined from the equator, and the vertical
+ * cycle of letters mean a 2000000 additional northing meters. This happens
+ * approx. every 18 degrees of latitude. This method does *NOT* count any
+ * additional northings. You have to figure out how many 2000000 meters need
+ * to be added for the zone letter of the MGRS coordinate.
+ *
+ * @private
+ * @param {char} n Second letter of the MGRS 100k zone
+ * @param {number} set The MGRS table set number, which is dependent on the
+ *     UTM zone number.
+ * @return {number} The northing value for the given letter and set.
+ */
+function getNorthingFromChar(n, set) {
+
+  if (n > 'V') {
+    throw ("MGRSPoint given invalid Northing " + n);
+  }
+
+  // rowOrigin is the letter at the origin of the set for the
+  // column
+  var curRow = SET_ORIGIN_ROW_LETTERS.charCodeAt(set - 1);
+  var northingValue = 0.0;
+  var rewindMarker = false;
+
+  while (curRow !== n.charCodeAt(0)) {
+    curRow++;
+    if (curRow === I) {
+      curRow++;
+    }
+    if (curRow === O) {
+      curRow++;
+    }
+    // fixing a bug making whole application hang in this loop
+    // when 'n' is a wrong character
+    if (curRow > mgrs_V) {
+      if (rewindMarker) { // making sure that this loop ends
+        throw ("Bad character: " + n);
+      }
+      curRow = mgrs_A;
+      rewindMarker = true;
+    }
+    northingValue += 100000.0;
+  }
+
+  return northingValue;
+}
+
+/**
+ * The function getMinNorthing returns the minimum northing value of a MGRS
+ * zone.
+ *
+ * Ported from Geotrans' c Lattitude_Band_Value structure table.
+ *
+ * @private
+ * @param {char} zoneLetter The MGRS zone to get the min northing for.
+ * @return {number}
+ */
+function getMinNorthing(zoneLetter) {
+  var northing;
+  switch (zoneLetter) {
+  case 'C':
+    northing = 1100000.0;
+    break;
+  case 'D':
+    northing = 2000000.0;
+    break;
+  case 'E':
+    northing = 2800000.0;
+    break;
+  case 'F':
+    northing = 3700000.0;
+    break;
+  case 'G':
+    northing = 4600000.0;
+    break;
+  case 'H':
+    northing = 5500000.0;
+    break;
+  case 'J':
+    northing = 6400000.0;
+    break;
+  case 'K':
+    northing = 7300000.0;
+    break;
+  case 'L':
+    northing = 8200000.0;
+    break;
+  case 'M':
+    northing = 9100000.0;
+    break;
+  case 'N':
+    northing = 0.0;
+    break;
+  case 'P':
+    northing = 800000.0;
+    break;
+  case 'Q':
+    northing = 1700000.0;
+    break;
+  case 'R':
+    northing = 2600000.0;
+    break;
+  case 'S':
+    northing = 3500000.0;
+    break;
+  case 'T':
+    northing = 4400000.0;
+    break;
+  case 'U':
+    northing = 5300000.0;
+    break;
+  case 'V':
+    northing = 6200000.0;
+    break;
+  case 'W':
+    northing = 7000000.0;
+    break;
+  case 'X':
+    northing = 7900000.0;
+    break;
+  default:
+    northing = -1.0;
+  }
+  if (northing >= 0.0) {
+    return northing;
+  }
+  else {
+    throw ("Invalid zone letter: " + zoneLetter);
+  }
+
+}
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/Point.js
+
+
+function Point(x, y, z) {
+  if (!(this instanceof Point)) {
+    return new Point(x, y, z);
+  }
+  if (Array.isArray(x)) {
+    this.x = x[0];
+    this.y = x[1];
+    this.z = x[2] || 0.0;
+  } else if(typeof x === 'object') {
+    this.x = x.x;
+    this.y = x.y;
+    this.z = x.z || 0.0;
+  } else if (typeof x === 'string' && typeof y === 'undefined') {
+    var coords = x.split(',');
+    this.x = parseFloat(coords[0], 10);
+    this.y = parseFloat(coords[1], 10);
+    this.z = parseFloat(coords[2], 10) || 0.0;
+  } else {
+    this.x = x;
+    this.y = y;
+    this.z = z || 0.0;
+  }
+  console.warn('proj4.Point will be removed in version 3, use proj4.toPoint');
+}
+
+Point.fromMGRS = function(mgrsStr) {
+  return new Point(mgrs_toPoint(mgrsStr));
+};
+Point.prototype.toMGRS = function(accuracy) {
+  return mgrs_forward([this.x, this.y], accuracy);
+};
+/* harmony default export */ var lib_Point = (Point);
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/pj_enfn.js
+var C00 = 1;
+var C02 = 0.25;
+var C04 = 0.046875;
+var C06 = 0.01953125;
+var C08 = 0.01068115234375;
+var C22 = 0.75;
+var C44 = 0.46875;
+var C46 = 0.01302083333333333333;
+var C48 = 0.00712076822916666666;
+var C66 = 0.36458333333333333333;
+var C68 = 0.00569661458333333333;
+var C88 = 0.3076171875;
+
+/* harmony default export */ var pj_enfn = (function(es) {
+  var en = [];
+  en[0] = C00 - es * (C02 + es * (C04 + es * (C06 + es * C08)));
+  en[1] = es * (C22 - es * (C04 + es * (C06 + es * C08)));
+  var t = es * es;
+  en[2] = t * (C44 - es * (C46 + es * C48));
+  t *= es;
+  en[3] = t * (C66 - es * C68);
+  en[4] = t * es * C88;
+  return en;
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/pj_mlfn.js
+/* harmony default export */ var pj_mlfn = (function(phi, sphi, cphi, en) {
+  cphi *= sphi;
+  sphi *= sphi;
+  return (en[0] * phi - cphi * (en[1] + sphi * (en[2] + sphi * (en[3] + sphi * en[4]))));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/pj_inv_mlfn.js
+
+
+
+var MAX_ITER = 20;
+
+/* harmony default export */ var pj_inv_mlfn = (function(arg, es, en) {
+  var k = 1 / (1 - es);
+  var phi = arg;
+  for (var i = MAX_ITER; i; --i) { /* rarely goes over 2 iterations */
+    var s = Math.sin(phi);
+    var t = 1 - es * s * s;
+    //t = this.pj_mlfn(phi, s, Math.cos(phi), en) - arg;
+    //phi -= t * (t * Math.sqrt(t)) * k;
+    t = (pj_mlfn(phi, s, Math.cos(phi), en) - arg) * (t * Math.sqrt(t)) * k;
+    phi -= t;
+    if (Math.abs(t) < EPSLN) {
+      return phi;
+    }
+  }
+  //..reportError("cass:pj_inv_mlfn: Convergence error");
+  return phi;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/tmerc.js
+// Heavily based on this tmerc projection implementation
+// https://github.com/mbloch/mapshaper-proj/blob/master/src/projections/tmerc.js
+
+
+
+
+
+
+
+
+
+function tmerc_init() {
+  this.x0 = this.x0 !== undefined ? this.x0 : 0;
+  this.y0 = this.y0 !== undefined ? this.y0 : 0;
+  this.long0 = this.long0 !== undefined ? this.long0 : 0;
+  this.lat0 = this.lat0 !== undefined ? this.lat0 : 0;
+
+  if (this.es) {
+    this.en = pj_enfn(this.es);
+    this.ml0 = pj_mlfn(this.lat0, Math.sin(this.lat0), Math.cos(this.lat0), this.en);
+  }
+}
+
+/**
+    Transverse Mercator Forward  - long/lat to x/y
+    long/lat in radians
+  */
+function tmerc_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+
+  var delta_lon = adjust_lon(lon - this.long0);
+  var con;
+  var x, y;
+  var sin_phi = Math.sin(lat);
+  var cos_phi = Math.cos(lat);
+
+  if (!this.es) {
+    var b = cos_phi * Math.sin(delta_lon);
+
+    if ((Math.abs(Math.abs(b) - 1)) < EPSLN) {
+      return (93);
+    }
+    else {
+      x = 0.5 * this.a * this.k0 * Math.log((1 + b) / (1 - b)) + this.x0;
+      y = cos_phi * Math.cos(delta_lon) / Math.sqrt(1 - Math.pow(b, 2));
+      b = Math.abs(y);
+
+      if (b >= 1) {
+        if ((b - 1) > EPSLN) {
+          return (93);
+        }
+        else {
+          y = 0;
+        }
+      }
+      else {
+        y = Math.acos(y);
+      }
+
+      if (lat < 0) {
+        y = -y;
+      }
+
+      y = this.a * this.k0 * (y - this.lat0) + this.y0;
+    }
+  }
+  else {
+    var al = cos_phi * delta_lon;
+    var als = Math.pow(al, 2);
+    var c = this.ep2 * Math.pow(cos_phi, 2);
+    var cs = Math.pow(c, 2);
+    var tq = Math.abs(cos_phi) > EPSLN ? Math.tan(lat) : 0;
+    var t = Math.pow(tq, 2);
+    var ts = Math.pow(t, 2);
+    con = 1 - this.es * Math.pow(sin_phi, 2);
+    al = al / Math.sqrt(con);
+    var ml = pj_mlfn(lat, sin_phi, cos_phi, this.en);
+
+    x = this.a * (this.k0 * al * (1 +
+      als / 6 * (1 - t + c +
+      als / 20 * (5 - 18 * t + ts + 14 * c - 58 * t * c +
+      als / 42 * (61 + 179 * ts - ts * t - 479 * t))))) +
+      this.x0;
+
+    y = this.a * (this.k0 * (ml - this.ml0 +
+      sin_phi * delta_lon * al / 2 * (1 +
+      als / 12 * (5 - t + 9 * c + 4 * cs +
+      als / 30 * (61 + ts - 58 * t + 270 * c - 330 * t * c +
+      als / 56 * (1385 + 543 * ts - ts * t - 3111 * t)))))) +
+      this.y0;
+  }
+
+  p.x = x;
+  p.y = y;
+
+  return p;
+}
+
+/**
+    Transverse Mercator Inverse  -  x/y to long/lat
+  */
+function tmerc_inverse(p) {
+  var con, phi;
+  var lat, lon;
+  var x = (p.x - this.x0) * (1 / this.a);
+  var y = (p.y - this.y0) * (1 / this.a);
+
+  if (!this.es) {
+    var f = Math.exp(x / this.k0);
+    var g = 0.5 * (f - 1 / f);
+    var temp = this.lat0 + y / this.k0;
+    var h = Math.cos(temp);
+    con = Math.sqrt((1 - Math.pow(h, 2)) / (1 + Math.pow(g, 2)));
+    lat = Math.asin(con);
+
+    if (y < 0) {
+      lat = -lat;
+    }
+
+    if ((g === 0) && (h === 0)) {
+      lon = 0;
+    }
+    else {
+      lon = adjust_lon(Math.atan2(g, h) + this.long0);
+    }
+  }
+  else { // ellipsoidal form
+    con = this.ml0 + y / this.k0;
+    phi = pj_inv_mlfn(con, this.es, this.en);
+
+    if (Math.abs(phi) < HALF_PI) {
+      var sin_phi = Math.sin(phi);
+      var cos_phi = Math.cos(phi);
+      var tan_phi = Math.abs(cos_phi) > EPSLN ? Math.tan(phi) : 0;
+      var c = this.ep2 * Math.pow(cos_phi, 2);
+      var cs = Math.pow(c, 2);
+      var t = Math.pow(tan_phi, 2);
+      var ts = Math.pow(t, 2);
+      con = 1 - this.es * Math.pow(sin_phi, 2);
+      var d = x * Math.sqrt(con) / this.k0;
+      var ds = Math.pow(d, 2);
+      con = con * tan_phi;
+
+      lat = phi - (con * ds / (1 - this.es)) * 0.5 * (1 -
+        ds / 12 * (5 + 3 * t - 9 * c * t + c - 4 * cs -
+        ds / 30 * (61 + 90 * t - 252 * c * t + 45 * ts + 46 * c -
+        ds / 56 * (1385 + 3633 * t + 4095 * ts + 1574 * ts * t))));
+
+      lon = adjust_lon(this.long0 + (d * (1 -
+        ds / 6 * (1 + 2 * t + c -
+        ds / 20 * (5 + 28 * t + 24 * ts + 8 * c * t + 6 * c -
+        ds / 42 * (61 + 662 * t + 1320 * ts + 720 * ts * t)))) / cos_phi));
+    }
+    else {
+      lat = HALF_PI * sign(y);
+      lon = 0;
+    }
+  }
+
+  p.x = lon;
+  p.y = lat;
+
+  return p;
+}
+
+var tmerc_names = ["Fast_Transverse_Mercator", "Fast Transverse Mercator"];
+/* harmony default export */ var tmerc = ({
+  init: tmerc_init,
+  forward: tmerc_forward,
+  inverse: tmerc_inverse,
+  names: tmerc_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/sinh.js
+/* harmony default export */ var sinh = (function(x) {
+  var r = Math.exp(x);
+  r = (r - 1 / r) / 2;
+  return r;
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/hypot.js
+/* harmony default export */ var hypot = (function(x, y) {
+  x = Math.abs(x);
+  y = Math.abs(y);
+  var a = Math.max(x, y);
+  var b = Math.min(x, y) / (a ? a : 1);
+
+  return a * Math.sqrt(1 + Math.pow(b, 2));
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/log1py.js
+/* harmony default export */ var log1py = (function(x) {
+  var y = 1 + x;
+  var z = y - 1;
+
+  return z === 0 ? x : x * Math.log(y) / z;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/asinhy.js
+
+
+
+/* harmony default export */ var asinhy = (function(x) {
+  var y = Math.abs(x);
+  y = log1py(y * (1 + y / (hypot(1, y) + 1)));
+
+  return x < 0 ? -y : y;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/gatg.js
+/* harmony default export */ var gatg = (function(pp, B) {
+  var cos_2B = 2 * Math.cos(2 * B);
+  var i = pp.length - 1;
+  var h1 = pp[i];
+  var h2 = 0;
+  var h;
+
+  while (--i >= 0) {
+    h = -h2 + cos_2B * h1 + pp[i];
+    h2 = h1;
+    h1 = h;
+  }
+
+  return (B + h * Math.sin(2 * B));
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/clens.js
+/* harmony default export */ var clens = (function(pp, arg_r) {
+  var r = 2 * Math.cos(arg_r);
+  var i = pp.length - 1;
+  var hr1 = pp[i];
+  var hr2 = 0;
+  var hr;
+
+  while (--i >= 0) {
+    hr = -hr2 + r * hr1 + pp[i];
+    hr2 = hr1;
+    hr1 = hr;
+  }
+
+  return Math.sin(arg_r) * hr;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/cosh.js
+/* harmony default export */ var cosh = (function(x) {
+  var r = Math.exp(x);
+  r = (r + 1 / r) / 2;
+  return r;
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/clens_cmplx.js
+
+
+
+/* harmony default export */ var clens_cmplx = (function(pp, arg_r, arg_i) {
+  var sin_arg_r = Math.sin(arg_r);
+  var cos_arg_r = Math.cos(arg_r);
+  var sinh_arg_i = sinh(arg_i);
+  var cosh_arg_i = cosh(arg_i);
+  var r = 2 * cos_arg_r * cosh_arg_i;
+  var i = -2 * sin_arg_r * sinh_arg_i;
+  var j = pp.length - 1;
+  var hr = pp[j];
+  var hi1 = 0;
+  var hr1 = 0;
+  var hi = 0;
+  var hr2;
+  var hi2;
+
+  while (--j >= 0) {
+    hr2 = hr1;
+    hi2 = hi1;
+    hr1 = hr;
+    hi1 = hi;
+    hr = -hr2 + r * hr1 - i * hi1 + pp[j];
+    hi = -hi2 + i * hr1 + r * hi1;
+  }
+
+  r = sin_arg_r * cosh_arg_i;
+  i = cos_arg_r * sinh_arg_i;
+
+  return [r * hr - i * hi, r * hi + i * hr];
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/etmerc.js
+// Heavily based on this etmerc projection implementation
+// https://github.com/mbloch/mapshaper-proj/blob/master/src/projections/etmerc.js
+
+
+
+
+
+
+
+
+
+
+function etmerc_init() {
+  if (!this.approx && (isNaN(this.es) || this.es <= 0)) {
+    throw new Error('Incorrect elliptical usage. Try using the +approx option in the proj string, or PROJECTION["Fast_Transverse_Mercator"] in the WKT.');
+  }
+  if (this.approx) {
+    // When '+approx' is set, use tmerc instead
+    tmerc.init.apply(this);
+    this.forward = tmerc.forward;
+    this.inverse = tmerc.inverse;
+  }
+
+  this.x0 = this.x0 !== undefined ? this.x0 : 0;
+  this.y0 = this.y0 !== undefined ? this.y0 : 0;
+  this.long0 = this.long0 !== undefined ? this.long0 : 0;
+  this.lat0 = this.lat0 !== undefined ? this.lat0 : 0;
+
+  this.cgb = [];
+  this.cbg = [];
+  this.utg = [];
+  this.gtu = [];
+
+  var f = this.es / (1 + Math.sqrt(1 - this.es));
+  var n = f / (2 - f);
+  var np = n;
+
+  this.cgb[0] = n * (2 + n * (-2 / 3 + n * (-2 + n * (116 / 45 + n * (26 / 45 + n * (-2854 / 675 ))))));
+  this.cbg[0] = n * (-2 + n * ( 2 / 3 + n * ( 4 / 3 + n * (-82 / 45 + n * (32 / 45 + n * (4642 / 4725))))));
+
+  np = np * n;
+  this.cgb[1] = np * (7 / 3 + n * (-8 / 5 + n * (-227 / 45 + n * (2704 / 315 + n * (2323 / 945)))));
+  this.cbg[1] = np * (5 / 3 + n * (-16 / 15 + n * ( -13 / 9 + n * (904 / 315 + n * (-1522 / 945)))));
+
+  np = np * n;
+  this.cgb[2] = np * (56 / 15 + n * (-136 / 35 + n * (-1262 / 105 + n * (73814 / 2835))));
+  this.cbg[2] = np * (-26 / 15 + n * (34 / 21 + n * (8 / 5 + n * (-12686 / 2835))));
+
+  np = np * n;
+  this.cgb[3] = np * (4279 / 630 + n * (-332 / 35 + n * (-399572 / 14175)));
+  this.cbg[3] = np * (1237 / 630 + n * (-12 / 5 + n * ( -24832 / 14175)));
+
+  np = np * n;
+  this.cgb[4] = np * (4174 / 315 + n * (-144838 / 6237));
+  this.cbg[4] = np * (-734 / 315 + n * (109598 / 31185));
+
+  np = np * n;
+  this.cgb[5] = np * (601676 / 22275);
+  this.cbg[5] = np * (444337 / 155925);
+
+  np = Math.pow(n, 2);
+  this.Qn = this.k0 / (1 + n) * (1 + np * (1 / 4 + np * (1 / 64 + np / 256)));
+
+  this.utg[0] = n * (-0.5 + n * ( 2 / 3 + n * (-37 / 96 + n * ( 1 / 360 + n * (81 / 512 + n * (-96199 / 604800))))));
+  this.gtu[0] = n * (0.5 + n * (-2 / 3 + n * (5 / 16 + n * (41 / 180 + n * (-127 / 288 + n * (7891 / 37800))))));
+
+  this.utg[1] = np * (-1 / 48 + n * (-1 / 15 + n * (437 / 1440 + n * (-46 / 105 + n * (1118711 / 3870720)))));
+  this.gtu[1] = np * (13 / 48 + n * (-3 / 5 + n * (557 / 1440 + n * (281 / 630 + n * (-1983433 / 1935360)))));
+
+  np = np * n;
+  this.utg[2] = np * (-17 / 480 + n * (37 / 840 + n * (209 / 4480 + n * (-5569 / 90720 ))));
+  this.gtu[2] = np * (61 / 240 + n * (-103 / 140 + n * (15061 / 26880 + n * (167603 / 181440))));
+
+  np = np * n;
+  this.utg[3] = np * (-4397 / 161280 + n * (11 / 504 + n * (830251 / 7257600)));
+  this.gtu[3] = np * (49561 / 161280 + n * (-179 / 168 + n * (6601661 / 7257600)));
+
+  np = np * n;
+  this.utg[4] = np * (-4583 / 161280 + n * (108847 / 3991680));
+  this.gtu[4] = np * (34729 / 80640 + n * (-3418889 / 1995840));
+
+  np = np * n;
+  this.utg[5] = np * (-20648693 / 638668800);
+  this.gtu[5] = np * (212378941 / 319334400);
+
+  var Z = gatg(this.cbg, this.lat0);
+  this.Zb = -this.Qn * (Z + clens(this.gtu, 2 * Z));
+}
+
+function etmerc_forward(p) {
+  var Ce = adjust_lon(p.x - this.long0);
+  var Cn = p.y;
+
+  Cn = gatg(this.cbg, Cn);
+  var sin_Cn = Math.sin(Cn);
+  var cos_Cn = Math.cos(Cn);
+  var sin_Ce = Math.sin(Ce);
+  var cos_Ce = Math.cos(Ce);
+
+  Cn = Math.atan2(sin_Cn, cos_Ce * cos_Cn);
+  Ce = Math.atan2(sin_Ce * cos_Cn, hypot(sin_Cn, cos_Cn * cos_Ce));
+  Ce = asinhy(Math.tan(Ce));
+
+  var tmp = clens_cmplx(this.gtu, 2 * Cn, 2 * Ce);
+
+  Cn = Cn + tmp[0];
+  Ce = Ce + tmp[1];
+
+  var x;
+  var y;
+
+  if (Math.abs(Ce) <= 2.623395162778) {
+    x = this.a * (this.Qn * Ce) + this.x0;
+    y = this.a * (this.Qn * Cn + this.Zb) + this.y0;
+  }
+  else {
+    x = Infinity;
+    y = Infinity;
+  }
+
+  p.x = x;
+  p.y = y;
+
+  return p;
+}
+
+function etmerc_inverse(p) {
+  var Ce = (p.x - this.x0) * (1 / this.a);
+  var Cn = (p.y - this.y0) * (1 / this.a);
+
+  Cn = (Cn - this.Zb) / this.Qn;
+  Ce = Ce / this.Qn;
+
+  var lon;
+  var lat;
+
+  if (Math.abs(Ce) <= 2.623395162778) {
+    var tmp = clens_cmplx(this.utg, 2 * Cn, 2 * Ce);
+
+    Cn = Cn + tmp[0];
+    Ce = Ce + tmp[1];
+    Ce = Math.atan(sinh(Ce));
+
+    var sin_Cn = Math.sin(Cn);
+    var cos_Cn = Math.cos(Cn);
+    var sin_Ce = Math.sin(Ce);
+    var cos_Ce = Math.cos(Ce);
+
+    Cn = Math.atan2(sin_Cn * cos_Ce, hypot(sin_Ce, cos_Ce * cos_Cn));
+    Ce = Math.atan2(sin_Ce, cos_Ce * cos_Cn);
+
+    lon = adjust_lon(Ce + this.long0);
+    lat = gatg(this.cgb, Cn);
+  }
+  else {
+    lon = Infinity;
+    lat = Infinity;
+  }
+
+  p.x = lon;
+  p.y = lat;
+
+  return p;
+}
+
+var etmerc_names = ["Extended_Transverse_Mercator", "Extended Transverse Mercator", "etmerc", "Transverse_Mercator", "Transverse Mercator", "Gauss Kruger", "Gauss_Kruger", "tmerc"];
+/* harmony default export */ var etmerc = ({
+  init: etmerc_init,
+  forward: etmerc_forward,
+  inverse: etmerc_inverse,
+  names: etmerc_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/adjust_zone.js
+
+
+/* harmony default export */ var adjust_zone = (function(zone, lon) {
+  if (zone === undefined) {
+    zone = Math.floor((adjust_lon(lon) + Math.PI) * 30 / Math.PI) + 1;
+
+    if (zone < 0) {
+      return 0;
+    } else if (zone > 60) {
+      return 60;
+    }
+  }
+  return zone;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/utm.js
+
+
+var dependsOn = 'etmerc';
+
+
+
+function utm_init() {
+  var zone = adjust_zone(this.zone, this.long0);
+  if (zone === undefined) {
+    throw new Error('unknown utm zone');
+  }
+  this.lat0 = 0;
+  this.long0 =  ((6 * Math.abs(zone)) - 183) * D2R;
+  this.x0 = 500000;
+  this.y0 = this.utmSouth ? 10000000 : 0;
+  this.k0 = 0.9996;
+
+  etmerc.init.apply(this);
+  this.forward = etmerc.forward;
+  this.inverse = etmerc.inverse;
+}
+
+var utm_names = ["Universal Transverse Mercator System", "utm"];
+/* harmony default export */ var utm = ({
+  init: utm_init,
+  names: utm_names,
+  dependsOn: dependsOn
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/srat.js
+/* harmony default export */ var srat = (function(esinp, exp) {
+  return (Math.pow((1 - esinp) / (1 + esinp), exp));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/gauss.js
+
+var gauss_MAX_ITER = 20;
+
+
+function gauss_init() {
+  var sphi = Math.sin(this.lat0);
+  var cphi = Math.cos(this.lat0);
+  cphi *= cphi;
+  this.rc = Math.sqrt(1 - this.es) / (1 - this.es * sphi * sphi);
+  this.C = Math.sqrt(1 + this.es * cphi * cphi / (1 - this.es));
+  this.phic0 = Math.asin(sphi / this.C);
+  this.ratexp = 0.5 * this.C * this.e;
+  this.K = Math.tan(0.5 * this.phic0 + FORTPI) / (Math.pow(Math.tan(0.5 * this.lat0 + FORTPI), this.C) * srat(this.e * sphi, this.ratexp));
+}
+
+function gauss_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+
+  p.y = 2 * Math.atan(this.K * Math.pow(Math.tan(0.5 * lat + FORTPI), this.C) * srat(this.e * Math.sin(lat), this.ratexp)) - HALF_PI;
+  p.x = this.C * lon;
+  return p;
+}
+
+function gauss_inverse(p) {
+  var DEL_TOL = 1e-14;
+  var lon = p.x / this.C;
+  var lat = p.y;
+  var num = Math.pow(Math.tan(0.5 * lat + FORTPI) / this.K, 1 / this.C);
+  for (var i = gauss_MAX_ITER; i > 0; --i) {
+    lat = 2 * Math.atan(num * srat(this.e * Math.sin(p.y), - 0.5 * this.e)) - HALF_PI;
+    if (Math.abs(lat - p.y) < DEL_TOL) {
+      break;
+    }
+    p.y = lat;
+  }
+  /* convergence failed */
+  if (!i) {
+    return null;
+  }
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var gauss_names = ["gauss"];
+/* harmony default export */ var gauss = ({
+  init: gauss_init,
+  forward: gauss_forward,
+  inverse: gauss_inverse,
+  names: gauss_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/sterea.js
+
+
+
+
+function sterea_init() {
+  gauss.init.apply(this);
+  if (!this.rc) {
+    return;
+  }
+  this.sinc0 = Math.sin(this.phic0);
+  this.cosc0 = Math.cos(this.phic0);
+  this.R2 = 2 * this.rc;
+  if (!this.title) {
+    this.title = "Oblique Stereographic Alternative";
+  }
+}
+
+function sterea_forward(p) {
+  var sinc, cosc, cosl, k;
+  p.x = adjust_lon(p.x - this.long0);
+  gauss.forward.apply(this, [p]);
+  sinc = Math.sin(p.y);
+  cosc = Math.cos(p.y);
+  cosl = Math.cos(p.x);
+  k = this.k0 * this.R2 / (1 + this.sinc0 * sinc + this.cosc0 * cosc * cosl);
+  p.x = k * cosc * Math.sin(p.x);
+  p.y = k * (this.cosc0 * sinc - this.sinc0 * cosc * cosl);
+  p.x = this.a * p.x + this.x0;
+  p.y = this.a * p.y + this.y0;
+  return p;
+}
+
+function sterea_inverse(p) {
+  var sinc, cosc, lon, lat, rho;
+  p.x = (p.x - this.x0) / this.a;
+  p.y = (p.y - this.y0) / this.a;
+
+  p.x /= this.k0;
+  p.y /= this.k0;
+  if ((rho = hypot(p.x, p.y))) {
+    var c = 2 * Math.atan2(rho, this.R2);
+    sinc = Math.sin(c);
+    cosc = Math.cos(c);
+    lat = Math.asin(cosc * this.sinc0 + p.y * sinc * this.cosc0 / rho);
+    lon = Math.atan2(p.x * sinc, rho * this.cosc0 * cosc - p.y * this.sinc0 * sinc);
+  }
+  else {
+    lat = this.phic0;
+    lon = 0;
+  }
+
+  p.x = lon;
+  p.y = lat;
+  gauss.inverse.apply(this, [p]);
+  p.x = adjust_lon(p.x + this.long0);
+  return p;
+}
+
+var sterea_names = ["Stereographic_North_Pole", "Oblique_Stereographic", "sterea","Oblique Stereographic Alternative","Double_Stereographic"];
+/* harmony default export */ var sterea = ({
+  init: sterea_init,
+  forward: sterea_forward,
+  inverse: sterea_inverse,
+  names: sterea_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/stere.js
+
+
+
+
+
+
+
+
+function ssfn_(phit, sinphi, eccen) {
+  sinphi *= eccen;
+  return (Math.tan(0.5 * (HALF_PI + phit)) * Math.pow((1 - sinphi) / (1 + sinphi), 0.5 * eccen));
+}
+
+function stere_init() {
+
+  // setting default parameters
+  this.x0 = this.x0 || 0;
+  this.y0 = this.y0 || 0;
+  this.lat0 = this.lat0 || 0;
+  this.long0 = this.long0 || 0;
+
+  this.coslat0 = Math.cos(this.lat0);
+  this.sinlat0 = Math.sin(this.lat0);
+  if (this.sphere) {
+    if (this.k0 === 1 && !isNaN(this.lat_ts) && Math.abs(this.coslat0) <= EPSLN) {
+      this.k0 = 0.5 * (1 + sign(this.lat0) * Math.sin(this.lat_ts));
+    }
+  }
+  else {
+    if (Math.abs(this.coslat0) <= EPSLN) {
+      if (this.lat0 > 0) {
+        //North pole
+        //trace('stere:north pole');
+        this.con = 1;
+      }
+      else {
+        //South pole
+        //trace('stere:south pole');
+        this.con = -1;
+      }
+    }
+    this.cons = Math.sqrt(Math.pow(1 + this.e, 1 + this.e) * Math.pow(1 - this.e, 1 - this.e));
+    if (this.k0 === 1 && !isNaN(this.lat_ts) && Math.abs(this.coslat0) <= EPSLN && Math.abs(Math.cos(this.lat_ts)) > EPSLN) {
+      // When k0 is 1 (default value) and lat_ts is a vaild number and lat0 is at a pole and lat_ts is not at a pole
+      // Recalculate k0 using formula 21-35 from p161 of Snyder, 1987
+      this.k0 = 0.5 * this.cons * msfnz(this.e, Math.sin(this.lat_ts), Math.cos(this.lat_ts)) / tsfnz(this.e, this.con * this.lat_ts, this.con * Math.sin(this.lat_ts));
+    }
+    this.ms1 = msfnz(this.e, this.sinlat0, this.coslat0);
+    this.X0 = 2 * Math.atan(this.ssfn_(this.lat0, this.sinlat0, this.e)) - HALF_PI;
+    this.cosX0 = Math.cos(this.X0);
+    this.sinX0 = Math.sin(this.X0);
+  }
+}
+
+// Stereographic forward equations--mapping lat,long to x,y
+function stere_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+  var sinlat = Math.sin(lat);
+  var coslat = Math.cos(lat);
+  var A, X, sinX, cosX, ts, rh;
+  var dlon = adjust_lon(lon - this.long0);
+
+  if (Math.abs(Math.abs(lon - this.long0) - Math.PI) <= EPSLN && Math.abs(lat + this.lat0) <= EPSLN) {
+    //case of the origine point
+    //trace('stere:this is the origin point');
+    p.x = NaN;
+    p.y = NaN;
+    return p;
+  }
+  if (this.sphere) {
+    //trace('stere:sphere case');
+    A = 2 * this.k0 / (1 + this.sinlat0 * sinlat + this.coslat0 * coslat * Math.cos(dlon));
+    p.x = this.a * A * coslat * Math.sin(dlon) + this.x0;
+    p.y = this.a * A * (this.coslat0 * sinlat - this.sinlat0 * coslat * Math.cos(dlon)) + this.y0;
+    return p;
+  }
+  else {
+    X = 2 * Math.atan(this.ssfn_(lat, sinlat, this.e)) - HALF_PI;
+    cosX = Math.cos(X);
+    sinX = Math.sin(X);
+    if (Math.abs(this.coslat0) <= EPSLN) {
+      ts = tsfnz(this.e, lat * this.con, this.con * sinlat);
+      rh = 2 * this.a * this.k0 * ts / this.cons;
+      p.x = this.x0 + rh * Math.sin(lon - this.long0);
+      p.y = this.y0 - this.con * rh * Math.cos(lon - this.long0);
+      //trace(p.toString());
+      return p;
+    }
+    else if (Math.abs(this.sinlat0) < EPSLN) {
+      //Eq
+      //trace('stere:equateur');
+      A = 2 * this.a * this.k0 / (1 + cosX * Math.cos(dlon));
+      p.y = A * sinX;
+    }
+    else {
+      //other case
+      //trace('stere:normal case');
+      A = 2 * this.a * this.k0 * this.ms1 / (this.cosX0 * (1 + this.sinX0 * sinX + this.cosX0 * cosX * Math.cos(dlon)));
+      p.y = A * (this.cosX0 * sinX - this.sinX0 * cosX * Math.cos(dlon)) + this.y0;
+    }
+    p.x = A * cosX * Math.sin(dlon) + this.x0;
+  }
+  //trace(p.toString());
+  return p;
+}
+
+//* Stereographic inverse equations--mapping x,y to lat/long
+function stere_inverse(p) {
+  p.x -= this.x0;
+  p.y -= this.y0;
+  var lon, lat, ts, ce, Chi;
+  var rh = Math.sqrt(p.x * p.x + p.y * p.y);
+  if (this.sphere) {
+    var c = 2 * Math.atan(rh / (2 * this.a * this.k0));
+    lon = this.long0;
+    lat = this.lat0;
+    if (rh <= EPSLN) {
+      p.x = lon;
+      p.y = lat;
+      return p;
+    }
+    lat = Math.asin(Math.cos(c) * this.sinlat0 + p.y * Math.sin(c) * this.coslat0 / rh);
+    if (Math.abs(this.coslat0) < EPSLN) {
+      if (this.lat0 > 0) {
+        lon = adjust_lon(this.long0 + Math.atan2(p.x, - 1 * p.y));
+      }
+      else {
+        lon = adjust_lon(this.long0 + Math.atan2(p.x, p.y));
+      }
+    }
+    else {
+      lon = adjust_lon(this.long0 + Math.atan2(p.x * Math.sin(c), rh * this.coslat0 * Math.cos(c) - p.y * this.sinlat0 * Math.sin(c)));
+    }
+    p.x = lon;
+    p.y = lat;
+    return p;
+  }
+  else {
+    if (Math.abs(this.coslat0) <= EPSLN) {
+      if (rh <= EPSLN) {
+        lat = this.lat0;
+        lon = this.long0;
+        p.x = lon;
+        p.y = lat;
+        //trace(p.toString());
+        return p;
+      }
+      p.x *= this.con;
+      p.y *= this.con;
+      ts = rh * this.cons / (2 * this.a * this.k0);
+      lat = this.con * phi2z(this.e, ts);
+      lon = this.con * adjust_lon(this.con * this.long0 + Math.atan2(p.x, - 1 * p.y));
+    }
+    else {
+      ce = 2 * Math.atan(rh * this.cosX0 / (2 * this.a * this.k0 * this.ms1));
+      lon = this.long0;
+      if (rh <= EPSLN) {
+        Chi = this.X0;
+      }
+      else {
+        Chi = Math.asin(Math.cos(ce) * this.sinX0 + p.y * Math.sin(ce) * this.cosX0 / rh);
+        lon = adjust_lon(this.long0 + Math.atan2(p.x * Math.sin(ce), rh * this.cosX0 * Math.cos(ce) - p.y * this.sinX0 * Math.sin(ce)));
+      }
+      lat = -1 * phi2z(this.e, Math.tan(0.5 * (HALF_PI + Chi)));
+    }
+  }
+  p.x = lon;
+  p.y = lat;
+
+  //trace(p.toString());
+  return p;
+
+}
+
+var stere_names = ["stere", "Stereographic_South_Pole", "Polar Stereographic (variant B)", "Polar_Stereographic"];
+/* harmony default export */ var stere = ({
+  init: stere_init,
+  forward: stere_forward,
+  inverse: stere_inverse,
+  names: stere_names,
+  ssfn_: ssfn_
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/somerc.js
+/*
+  references:
+    Formules et constantes pour le Calcul pour la
+    projection cylindrique conforme à axe oblique et pour la transformation entre
+    des systèmes de référence.
+    http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.77004.DownloadFile.tmp/swissprojectionfr.pdf
+  */
+
+function somerc_init() {
+  var phy0 = this.lat0;
+  this.lambda0 = this.long0;
+  var sinPhy0 = Math.sin(phy0);
+  var semiMajorAxis = this.a;
+  var invF = this.rf;
+  var flattening = 1 / invF;
+  var e2 = 2 * flattening - Math.pow(flattening, 2);
+  var e = this.e = Math.sqrt(e2);
+  this.R = this.k0 * semiMajorAxis * Math.sqrt(1 - e2) / (1 - e2 * Math.pow(sinPhy0, 2));
+  this.alpha = Math.sqrt(1 + e2 / (1 - e2) * Math.pow(Math.cos(phy0), 4));
+  this.b0 = Math.asin(sinPhy0 / this.alpha);
+  var k1 = Math.log(Math.tan(Math.PI / 4 + this.b0 / 2));
+  var k2 = Math.log(Math.tan(Math.PI / 4 + phy0 / 2));
+  var k3 = Math.log((1 + e * sinPhy0) / (1 - e * sinPhy0));
+  this.K = k1 - this.alpha * k2 + this.alpha * e / 2 * k3;
+}
+
+function somerc_forward(p) {
+  var Sa1 = Math.log(Math.tan(Math.PI / 4 - p.y / 2));
+  var Sa2 = this.e / 2 * Math.log((1 + this.e * Math.sin(p.y)) / (1 - this.e * Math.sin(p.y)));
+  var S = -this.alpha * (Sa1 + Sa2) + this.K;
+
+  // spheric latitude
+  var b = 2 * (Math.atan(Math.exp(S)) - Math.PI / 4);
+
+  // spheric longitude
+  var I = this.alpha * (p.x - this.lambda0);
+
+  // psoeudo equatorial rotation
+  var rotI = Math.atan(Math.sin(I) / (Math.sin(this.b0) * Math.tan(b) + Math.cos(this.b0) * Math.cos(I)));
+
+  var rotB = Math.asin(Math.cos(this.b0) * Math.sin(b) - Math.sin(this.b0) * Math.cos(b) * Math.cos(I));
+
+  p.y = this.R / 2 * Math.log((1 + Math.sin(rotB)) / (1 - Math.sin(rotB))) + this.y0;
+  p.x = this.R * rotI + this.x0;
+  return p;
+}
+
+function somerc_inverse(p) {
+  var Y = p.x - this.x0;
+  var X = p.y - this.y0;
+
+  var rotI = Y / this.R;
+  var rotB = 2 * (Math.atan(Math.exp(X / this.R)) - Math.PI / 4);
+
+  var b = Math.asin(Math.cos(this.b0) * Math.sin(rotB) + Math.sin(this.b0) * Math.cos(rotB) * Math.cos(rotI));
+  var I = Math.atan(Math.sin(rotI) / (Math.cos(this.b0) * Math.cos(rotI) - Math.sin(this.b0) * Math.tan(rotB)));
+
+  var lambda = this.lambda0 + I / this.alpha;
+
+  var S = 0;
+  var phy = b;
+  var prevPhy = -1000;
+  var iteration = 0;
+  while (Math.abs(phy - prevPhy) > 0.0000001) {
+    if (++iteration > 20) {
+      //...reportError("omercFwdInfinity");
+      return;
+    }
+    //S = Math.log(Math.tan(Math.PI / 4 + phy / 2));
+    S = 1 / this.alpha * (Math.log(Math.tan(Math.PI / 4 + b / 2)) - this.K) + this.e * Math.log(Math.tan(Math.PI / 4 + Math.asin(this.e * Math.sin(phy)) / 2));
+    prevPhy = phy;
+    phy = 2 * Math.atan(Math.exp(S)) - Math.PI / 2;
+  }
+
+  p.x = lambda;
+  p.y = phy;
+  return p;
+}
+
+var somerc_names = ["somerc"];
+/* harmony default export */ var somerc = ({
+  init: somerc_init,
+  forward: somerc_forward,
+  inverse: somerc_inverse,
+  names: somerc_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/omerc.js
+
+
+
+
+
+var TOL = 1e-7;
+
+function isTypeA(P) {
+  var typeAProjections = ['Hotine_Oblique_Mercator','Hotine_Oblique_Mercator_Azimuth_Natural_Origin'];
+  var projectionName = typeof P.PROJECTION === "object" ? Object.keys(P.PROJECTION)[0] : P.PROJECTION;
+  
+  return 'no_uoff' in P || 'no_off' in P || typeAProjections.indexOf(projectionName) !== -1;
+}
+
+
+/* Initialize the Oblique Mercator  projection
+    ------------------------------------------*/
+function omerc_init() {  
+  var con, com, cosph0, D, F, H, L, sinph0, p, J, gamma = 0,
+    gamma0, lamc = 0, lam1 = 0, lam2 = 0, phi1 = 0, phi2 = 0, alpha_c = 0, AB;
+  
+  // only Type A uses the no_off or no_uoff property
+  // https://github.com/OSGeo/proj.4/issues/104
+  this.no_off = isTypeA(this);
+  this.no_rot = 'no_rot' in this;
+  
+  var alp = false;
+  if ("alpha" in this) {
+    alp = true;
+  }
+
+  var gam = false;
+  if ("rectified_grid_angle" in this) {
+    gam = true;
+  }
+
+  if (alp) {
+    alpha_c = this.alpha;
+  }
+  
+  if (gam) {
+    gamma = (this.rectified_grid_angle * D2R);
+  }
+  
+  if (alp || gam) {
+    lamc = this.longc;
+  } else {
+    lam1 = this.long1;
+    phi1 = this.lat1;
+    lam2 = this.long2;
+    phi2 = this.lat2;
+    
+    if (Math.abs(phi1 - phi2) <= TOL || (con = Math.abs(phi1)) <= TOL ||
+        Math.abs(con - HALF_PI) <= TOL || Math.abs(Math.abs(this.lat0) - HALF_PI) <= TOL ||
+        Math.abs(Math.abs(phi2) - HALF_PI) <= TOL) {
+      throw new Error();
+    }
+  }
+  
+  var one_es = 1.0 - this.es;
+  com = Math.sqrt(one_es);
+  
+  if (Math.abs(this.lat0) > EPSLN) {
+    sinph0 = Math.sin(this.lat0);
+    cosph0 = Math.cos(this.lat0);
+    con = 1 - this.es * sinph0 * sinph0;
+    this.B = cosph0 * cosph0;
+    this.B = Math.sqrt(1 + this.es * this.B * this.B / one_es);
+    this.A = this.B * this.k0 * com / con;
+    D = this.B * com / (cosph0 * Math.sqrt(con));
+    F = D * D -1;
+    
+    if (F <= 0) {
+      F = 0;
+    } else {
+      F = Math.sqrt(F);
+      if (this.lat0 < 0) {
+        F = -F;
+      }
+    }
+    
+    this.E = F += D;
+    this.E *= Math.pow(tsfnz(this.e, this.lat0, sinph0), this.B);
+  } else {
+    this.B = 1 / com;
+    this.A = this.k0;
+    this.E = D = F = 1;
+  }
+  
+  if (alp || gam) {
+    if (alp) {
+      gamma0 = Math.asin(Math.sin(alpha_c) / D);
+      if (!gam) {
+        gamma = alpha_c;
+      }
+    } else {
+      gamma0 = gamma;
+      alpha_c = Math.asin(D * Math.sin(gamma0));
+    }
+    this.lam0 = lamc - Math.asin(0.5 * (F - 1 / F) * Math.tan(gamma0)) / this.B;
+  } else {
+    H = Math.pow(tsfnz(this.e, phi1, Math.sin(phi1)), this.B);
+    L = Math.pow(tsfnz(this.e, phi2, Math.sin(phi2)), this.B);
+    F = this.E / H;
+    p = (L - H) / (L + H);
+    J = this.E * this.E;
+    J = (J - L * H) / (J + L * H);
+    con = lam1 - lam2;
+    
+    if (con < -Math.pi) {
+      lam2 -=TWO_PI;
+    } else if (con > Math.pi) {
+      lam2 += TWO_PI;
+    }
+    
+    this.lam0 = adjust_lon(0.5 * (lam1 + lam2) - Math.atan(J * Math.tan(0.5 * this.B * (lam1 - lam2)) / p) / this.B);
+    gamma0 = Math.atan(2 * Math.sin(this.B * adjust_lon(lam1 - this.lam0)) / (F - 1 / F));
+    gamma = alpha_c = Math.asin(D * Math.sin(gamma0));
+  }
+  
+  this.singam = Math.sin(gamma0);
+  this.cosgam = Math.cos(gamma0);
+  this.sinrot = Math.sin(gamma);
+  this.cosrot = Math.cos(gamma);
+  
+  this.rB = 1 / this.B;
+  this.ArB = this.A * this.rB;
+  this.BrA = 1 / this.ArB;
+  AB = this.A * this.B;
+  
+  if (this.no_off) {
+    this.u_0 = 0;
+  } else {
+    this.u_0 = Math.abs(this.ArB * Math.atan(Math.sqrt(D * D - 1) / Math.cos(alpha_c)));
+    
+    if (this.lat0 < 0) {
+      this.u_0 = - this.u_0;
+    }  
+  }
+    
+  F = 0.5 * gamma0;
+  this.v_pole_n = this.ArB * Math.log(Math.tan(FORTPI - F));
+  this.v_pole_s = this.ArB * Math.log(Math.tan(FORTPI + F));
+}
+
+
+/* Oblique Mercator forward equations--mapping lat,long to x,y
+    ----------------------------------------------------------*/
+function omerc_forward(p) {
+  var coords = {};
+  var S, T, U, V, W, temp, u, v;
+  p.x = p.x - this.lam0;
+  
+  if (Math.abs(Math.abs(p.y) - HALF_PI) > EPSLN) {
+    W = this.E / Math.pow(tsfnz(this.e, p.y, Math.sin(p.y)), this.B);
+    
+    temp = 1 / W;
+    S = 0.5 * (W - temp);
+    T = 0.5 * (W + temp);
+    V = Math.sin(this.B * p.x);
+    U = (S * this.singam - V * this.cosgam) / T;
+        
+    if (Math.abs(Math.abs(U) - 1.0) < EPSLN) {
+      throw new Error();
+    }
+    
+    v = 0.5 * this.ArB * Math.log((1 - U)/(1 + U));
+    temp = Math.cos(this.B * p.x);
+    
+    if (Math.abs(temp) < TOL) {
+      u = this.A * p.x;
+    } else {
+      u = this.ArB * Math.atan2((S * this.cosgam + V * this.singam), temp);
+    }    
+  } else {
+    v = p.y > 0 ? this.v_pole_n : this.v_pole_s;
+    u = this.ArB * p.y;
+  }
+     
+  if (this.no_rot) {
+    coords.x = u;
+    coords.y = v;
+  } else {
+    u -= this.u_0;
+    coords.x = v * this.cosrot + u * this.sinrot;
+    coords.y = u * this.cosrot - v * this.sinrot;
+  }
+  
+  coords.x = (this.a * coords.x + this.x0);
+  coords.y = (this.a * coords.y + this.y0);
+  
+  return coords;
+}
+
+function omerc_inverse(p) {
+  var u, v, Qp, Sp, Tp, Vp, Up;
+  var coords = {};
+  
+  p.x = (p.x - this.x0) * (1.0 / this.a);
+  p.y = (p.y - this.y0) * (1.0 / this.a);
+
+  if (this.no_rot) {
+    v = p.y;
+    u = p.x;
+  } else {
+    v = p.x * this.cosrot - p.y * this.sinrot;
+    u = p.y * this.cosrot + p.x * this.sinrot + this.u_0;
+  }
+  
+  Qp = Math.exp(-this.BrA * v);
+  Sp = 0.5 * (Qp - 1 / Qp);
+  Tp = 0.5 * (Qp + 1 / Qp);
+  Vp = Math.sin(this.BrA * u);
+  Up = (Vp * this.cosgam + Sp * this.singam) / Tp;
+  
+  if (Math.abs(Math.abs(Up) - 1) < EPSLN) {
+    coords.x = 0;
+    coords.y = Up < 0 ? -HALF_PI : HALF_PI;
+  } else {
+    coords.y = this.E / Math.sqrt((1 + Up) / (1 - Up));
+    coords.y = phi2z(this.e, Math.pow(coords.y, 1 / this.B));
+    
+    if (coords.y === Infinity) {
+      throw new Error();
+    }
+        
+    coords.x = -this.rB * Math.atan2((Sp * this.cosgam - Vp * this.singam), Math.cos(this.BrA * u));
+  }
+  
+  coords.x += this.lam0;
+  
+  return coords;
+}
+
+var omerc_names = ["Hotine_Oblique_Mercator", "Hotine Oblique Mercator", "Hotine_Oblique_Mercator_Azimuth_Natural_Origin", "Hotine_Oblique_Mercator_Two_Point_Natural_Origin", "Hotine_Oblique_Mercator_Azimuth_Center", "Oblique_Mercator", "omerc"];
+/* harmony default export */ var omerc = ({
+  init: omerc_init,
+  forward: omerc_forward,
+  inverse: omerc_inverse,
+  names: omerc_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/lcc.js
+
+
+
+
+
+
+function lcc_init() {
+  
+  //double lat0;                    /* the reference latitude               */
+  //double long0;                   /* the reference longitude              */
+  //double lat1;                    /* first standard parallel              */
+  //double lat2;                    /* second standard parallel             */
+  //double r_maj;                   /* major axis                           */
+  //double r_min;                   /* minor axis                           */
+  //double false_east;              /* x offset in meters                   */
+  //double false_north;             /* y offset in meters                   */
+  
+  //the above value can be set with proj4.defs
+  //example: proj4.defs("EPSG:2154","+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+  if (!this.lat2) {
+    this.lat2 = this.lat1;
+  } //if lat2 is not defined
+  if (!this.k0) {
+    this.k0 = 1;
+  }
+  this.x0 = this.x0 || 0;
+  this.y0 = this.y0 || 0;
+  // Standard Parallels cannot be equal and on opposite sides of the equator
+  if (Math.abs(this.lat1 + this.lat2) < EPSLN) {
+    return;
+  }
+
+  var temp = this.b / this.a;
+  this.e = Math.sqrt(1 - temp * temp);
+
+  var sin1 = Math.sin(this.lat1);
+  var cos1 = Math.cos(this.lat1);
+  var ms1 = msfnz(this.e, sin1, cos1);
+  var ts1 = tsfnz(this.e, this.lat1, sin1);
+
+  var sin2 = Math.sin(this.lat2);
+  var cos2 = Math.cos(this.lat2);
+  var ms2 = msfnz(this.e, sin2, cos2);
+  var ts2 = tsfnz(this.e, this.lat2, sin2);
+
+  var ts0 = tsfnz(this.e, this.lat0, Math.sin(this.lat0));
+
+  if (Math.abs(this.lat1 - this.lat2) > EPSLN) {
+    this.ns = Math.log(ms1 / ms2) / Math.log(ts1 / ts2);
+  }
+  else {
+    this.ns = sin1;
+  }
+  if (isNaN(this.ns)) {
+    this.ns = sin1;
+  }
+  this.f0 = ms1 / (this.ns * Math.pow(ts1, this.ns));
+  this.rh = this.a * this.f0 * Math.pow(ts0, this.ns);
+  if (!this.title) {
+    this.title = "Lambert Conformal Conic";
+  }
+}
+
+// Lambert Conformal conic forward equations--mapping lat,long to x,y
+// -----------------------------------------------------------------
+function lcc_forward(p) {
+
+  var lon = p.x;
+  var lat = p.y;
+
+  // singular cases :
+  if (Math.abs(2 * Math.abs(lat) - Math.PI) <= EPSLN) {
+    lat = sign(lat) * (HALF_PI - 2 * EPSLN);
+  }
+
+  var con = Math.abs(Math.abs(lat) - HALF_PI);
+  var ts, rh1;
+  if (con > EPSLN) {
+    ts = tsfnz(this.e, lat, Math.sin(lat));
+    rh1 = this.a * this.f0 * Math.pow(ts, this.ns);
+  }
+  else {
+    con = lat * this.ns;
+    if (con <= 0) {
+      return null;
+    }
+    rh1 = 0;
+  }
+  var theta = this.ns * adjust_lon(lon - this.long0);
+  p.x = this.k0 * (rh1 * Math.sin(theta)) + this.x0;
+  p.y = this.k0 * (this.rh - rh1 * Math.cos(theta)) + this.y0;
+
+  return p;
+}
+
+// Lambert Conformal Conic inverse equations--mapping x,y to lat/long
+// -----------------------------------------------------------------
+function lcc_inverse(p) {
+
+  var rh1, con, ts;
+  var lat, lon;
+  var x = (p.x - this.x0) / this.k0;
+  var y = (this.rh - (p.y - this.y0) / this.k0);
+  if (this.ns > 0) {
+    rh1 = Math.sqrt(x * x + y * y);
+    con = 1;
+  }
+  else {
+    rh1 = -Math.sqrt(x * x + y * y);
+    con = -1;
+  }
+  var theta = 0;
+  if (rh1 !== 0) {
+    theta = Math.atan2((con * x), (con * y));
+  }
+  if ((rh1 !== 0) || (this.ns > 0)) {
+    con = 1 / this.ns;
+    ts = Math.pow((rh1 / (this.a * this.f0)), con);
+    lat = phi2z(this.e, ts);
+    if (lat === -9999) {
+      return null;
+    }
+  }
+  else {
+    lat = -HALF_PI;
+  }
+  lon = adjust_lon(theta / this.ns + this.long0);
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var lcc_names = [
+  "Lambert Tangential Conformal Conic Projection",
+  "Lambert_Conformal_Conic",
+  "Lambert_Conformal_Conic_1SP",
+  "Lambert_Conformal_Conic_2SP",
+  "lcc",
+  "Lambert Conic Conformal (1SP)",
+  "Lambert Conic Conformal (2SP)"
+];
+
+/* harmony default export */ var lcc = ({
+  init: lcc_init,
+  forward: lcc_forward,
+  inverse: lcc_inverse,
+  names: lcc_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/krovak.js
+
+
+function krovak_init() {
+  this.a = 6377397.155;
+  this.es = 0.006674372230614;
+  this.e = Math.sqrt(this.es);
+  if (!this.lat0) {
+    this.lat0 = 0.863937979737193;
+  }
+  if (!this.long0) {
+    this.long0 = 0.7417649320975901 - 0.308341501185665;
+  }
+  /* if scale not set default to 0.9999 */
+  if (!this.k0) {
+    this.k0 = 0.9999;
+  }
+  this.s45 = 0.785398163397448; /* 45 */
+  this.s90 = 2 * this.s45;
+  this.fi0 = this.lat0;
+  this.e2 = this.es;
+  this.e = Math.sqrt(this.e2);
+  this.alfa = Math.sqrt(1 + (this.e2 * Math.pow(Math.cos(this.fi0), 4)) / (1 - this.e2));
+  this.uq = 1.04216856380474;
+  this.u0 = Math.asin(Math.sin(this.fi0) / this.alfa);
+  this.g = Math.pow((1 + this.e * Math.sin(this.fi0)) / (1 - this.e * Math.sin(this.fi0)), this.alfa * this.e / 2);
+  this.k = Math.tan(this.u0 / 2 + this.s45) / Math.pow(Math.tan(this.fi0 / 2 + this.s45), this.alfa) * this.g;
+  this.k1 = this.k0;
+  this.n0 = this.a * Math.sqrt(1 - this.e2) / (1 - this.e2 * Math.pow(Math.sin(this.fi0), 2));
+  this.s0 = 1.37008346281555;
+  this.n = Math.sin(this.s0);
+  this.ro0 = this.k1 * this.n0 / Math.tan(this.s0);
+  this.ad = this.s90 - this.uq;
+}
+
+/* ellipsoid */
+/* calculate xy from lat/lon */
+/* Constants, identical to inverse transform function */
+function krovak_forward(p) {
+  var gfi, u, deltav, s, d, eps, ro;
+  var lon = p.x;
+  var lat = p.y;
+  var delta_lon = adjust_lon(lon - this.long0);
+  /* Transformation */
+  gfi = Math.pow(((1 + this.e * Math.sin(lat)) / (1 - this.e * Math.sin(lat))), (this.alfa * this.e / 2));
+  u = 2 * (Math.atan(this.k * Math.pow(Math.tan(lat / 2 + this.s45), this.alfa) / gfi) - this.s45);
+  deltav = -delta_lon * this.alfa;
+  s = Math.asin(Math.cos(this.ad) * Math.sin(u) + Math.sin(this.ad) * Math.cos(u) * Math.cos(deltav));
+  d = Math.asin(Math.cos(u) * Math.sin(deltav) / Math.cos(s));
+  eps = this.n * d;
+  ro = this.ro0 * Math.pow(Math.tan(this.s0 / 2 + this.s45), this.n) / Math.pow(Math.tan(s / 2 + this.s45), this.n);
+  p.y = ro * Math.cos(eps) / 1;
+  p.x = ro * Math.sin(eps) / 1;
+
+  if (!this.czech) {
+    p.y *= -1;
+    p.x *= -1;
+  }
+  return (p);
+}
+
+/* calculate lat/lon from xy */
+function krovak_inverse(p) {
+  var u, deltav, s, d, eps, ro, fi1;
+  var ok;
+
+  /* Transformation */
+  /* revert y, x*/
+  var tmp = p.x;
+  p.x = p.y;
+  p.y = tmp;
+  if (!this.czech) {
+    p.y *= -1;
+    p.x *= -1;
+  }
+  ro = Math.sqrt(p.x * p.x + p.y * p.y);
+  eps = Math.atan2(p.y, p.x);
+  d = eps / Math.sin(this.s0);
+  s = 2 * (Math.atan(Math.pow(this.ro0 / ro, 1 / this.n) * Math.tan(this.s0 / 2 + this.s45)) - this.s45);
+  u = Math.asin(Math.cos(this.ad) * Math.sin(s) - Math.sin(this.ad) * Math.cos(s) * Math.cos(d));
+  deltav = Math.asin(Math.cos(s) * Math.sin(d) / Math.cos(u));
+  p.x = this.long0 - deltav / this.alfa;
+  fi1 = u;
+  ok = 0;
+  var iter = 0;
+  do {
+    p.y = 2 * (Math.atan(Math.pow(this.k, - 1 / this.alfa) * Math.pow(Math.tan(u / 2 + this.s45), 1 / this.alfa) * Math.pow((1 + this.e * Math.sin(fi1)) / (1 - this.e * Math.sin(fi1)), this.e / 2)) - this.s45);
+    if (Math.abs(fi1 - p.y) < 0.0000000001) {
+      ok = 1;
+    }
+    fi1 = p.y;
+    iter += 1;
+  } while (ok === 0 && iter < 15);
+  if (iter >= 15) {
+    return null;
+  }
+
+  return (p);
+}
+
+var krovak_names = ["Krovak", "krovak"];
+/* harmony default export */ var krovak = ({
+  init: krovak_init,
+  forward: krovak_forward,
+  inverse: krovak_inverse,
+  names: krovak_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/mlfn.js
+/* harmony default export */ var mlfn = (function(e0, e1, e2, e3, phi) {
+  return (e0 * phi - e1 * Math.sin(2 * phi) + e2 * Math.sin(4 * phi) - e3 * Math.sin(6 * phi));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e0fn.js
+/* harmony default export */ var e0fn = (function(x) {
+  return (1 - 0.25 * x * (1 + x / 16 * (3 + 1.25 * x)));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e1fn.js
+/* harmony default export */ var e1fn = (function(x) {
+  return (0.375 * x * (1 + 0.25 * x * (1 + 0.46875 * x)));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e2fn.js
+/* harmony default export */ var e2fn = (function(x) {
+  return (0.05859375 * x * x * (1 + 0.75 * x));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e3fn.js
+/* harmony default export */ var e3fn = (function(x) {
+  return (x * x * x * (35 / 3072));
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/gN.js
+/* harmony default export */ var gN = (function(a, e, sinphi) {
+  var temp = e * sinphi;
+  return a / Math.sqrt(1 - temp * temp);
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/adjust_lat.js
+
+
+
+/* harmony default export */ var adjust_lat = (function(x) {
+  return (Math.abs(x) < HALF_PI) ? x : (x - (sign(x) * Math.PI));
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/imlfn.js
+/* harmony default export */ var imlfn = (function(ml, e0, e1, e2, e3) {
+  var phi;
+  var dphi;
+
+  phi = ml / e0;
+  for (var i = 0; i < 15; i++) {
+    dphi = (ml - (e0 * phi - e1 * Math.sin(2 * phi) + e2 * Math.sin(4 * phi) - e3 * Math.sin(6 * phi))) / (e0 - 2 * e1 * Math.cos(2 * phi) + 4 * e2 * Math.cos(4 * phi) - 6 * e3 * Math.cos(6 * phi));
+    phi += dphi;
+    if (Math.abs(dphi) <= 0.0000000001) {
+      return phi;
+    }
+  }
+
+  //..reportError("IMLFN-CONV:Latitude failed to converge after 15 iterations");
+  return NaN;
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/cass.js
+
+
+
+
+
+
+
+
+
+
+
+function cass_init() {
+  if (!this.sphere) {
+    this.e0 = e0fn(this.es);
+    this.e1 = e1fn(this.es);
+    this.e2 = e2fn(this.es);
+    this.e3 = e3fn(this.es);
+    this.ml0 = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, this.lat0);
+  }
+}
+
+/* Cassini forward equations--mapping lat,long to x,y
+  -----------------------------------------------------------------------*/
+function cass_forward(p) {
+
+  /* Forward equations
+      -----------------*/
+  var x, y;
+  var lam = p.x;
+  var phi = p.y;
+  lam = adjust_lon(lam - this.long0);
+
+  if (this.sphere) {
+    x = this.a * Math.asin(Math.cos(phi) * Math.sin(lam));
+    y = this.a * (Math.atan2(Math.tan(phi), Math.cos(lam)) - this.lat0);
+  }
+  else {
+    //ellipsoid
+    var sinphi = Math.sin(phi);
+    var cosphi = Math.cos(phi);
+    var nl = gN(this.a, this.e, sinphi);
+    var tl = Math.tan(phi) * Math.tan(phi);
+    var al = lam * Math.cos(phi);
+    var asq = al * al;
+    var cl = this.es * cosphi * cosphi / (1 - this.es);
+    var ml = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, phi);
+
+    x = nl * al * (1 - asq * tl * (1 / 6 - (8 - tl + 8 * cl) * asq / 120));
+    y = ml - this.ml0 + nl * sinphi / cosphi * asq * (0.5 + (5 - tl + 6 * cl) * asq / 24);
+
+
+  }
+
+  p.x = x + this.x0;
+  p.y = y + this.y0;
+  return p;
+}
+
+/* Inverse equations
+  -----------------*/
+function cass_inverse(p) {
+  p.x -= this.x0;
+  p.y -= this.y0;
+  var x = p.x / this.a;
+  var y = p.y / this.a;
+  var phi, lam;
+
+  if (this.sphere) {
+    var dd = y + this.lat0;
+    phi = Math.asin(Math.sin(dd) * Math.cos(x));
+    lam = Math.atan2(Math.tan(x), Math.cos(dd));
+  }
+  else {
+    /* ellipsoid */
+    var ml1 = this.ml0 / this.a + y;
+    var phi1 = imlfn(ml1, this.e0, this.e1, this.e2, this.e3);
+    if (Math.abs(Math.abs(phi1) - HALF_PI) <= EPSLN) {
+      p.x = this.long0;
+      p.y = HALF_PI;
+      if (y < 0) {
+        p.y *= -1;
+      }
+      return p;
+    }
+    var nl1 = gN(this.a, this.e, Math.sin(phi1));
+
+    var rl1 = nl1 * nl1 * nl1 / this.a / this.a * (1 - this.es);
+    var tl1 = Math.pow(Math.tan(phi1), 2);
+    var dl = x * this.a / nl1;
+    var dsq = dl * dl;
+    phi = phi1 - nl1 * Math.tan(phi1) / rl1 * dl * dl * (0.5 - (1 + 3 * tl1) * dl * dl / 24);
+    lam = dl * (1 - dsq * (tl1 / 3 + (1 + 3 * tl1) * tl1 * dsq / 15)) / Math.cos(phi1);
+
+  }
+
+  p.x = adjust_lon(lam + this.long0);
+  p.y = adjust_lat(phi);
+  return p;
+
+}
+
+var cass_names = ["Cassini", "Cassini_Soldner", "cass"];
+/* harmony default export */ var cass = ({
+  init: cass_init,
+  forward: cass_forward,
+  inverse: cass_inverse,
+  names: cass_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/qsfnz.js
+/* harmony default export */ var qsfnz = (function(eccent, sinphi) {
+  var con;
+  if (eccent > 1.0e-7) {
+    con = eccent * sinphi;
+    return ((1 - eccent * eccent) * (sinphi / (1 - con * con) - (0.5 / eccent) * Math.log((1 - con) / (1 + con))));
+  }
+  else {
+    return (2 * sinphi);
+  }
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/laea.js
+
+
+
+
+
+
+/*
+  reference
+    "New Equal-Area Map Projections for Noncircular Regions", John P. Snyder,
+    The American Cartographer, Vol 15, No. 4, October 1988, pp. 341-355.
+  */
+
+var S_POLE = 1;
+
+var N_POLE = 2;
+var EQUIT = 3;
+var OBLIQ = 4;
+
+/* Initialize the Lambert Azimuthal Equal Area projection
+  ------------------------------------------------------*/
+function laea_init() {
+  var t = Math.abs(this.lat0);
+  if (Math.abs(t - HALF_PI) < EPSLN) {
+    this.mode = this.lat0 < 0 ? this.S_POLE : this.N_POLE;
+  }
+  else if (Math.abs(t) < EPSLN) {
+    this.mode = this.EQUIT;
+  }
+  else {
+    this.mode = this.OBLIQ;
+  }
+  if (this.es > 0) {
+    var sinphi;
+
+    this.qp = qsfnz(this.e, 1);
+    this.mmf = 0.5 / (1 - this.es);
+    this.apa = authset(this.es);
+    switch (this.mode) {
+    case this.N_POLE:
+      this.dd = 1;
+      break;
+    case this.S_POLE:
+      this.dd = 1;
+      break;
+    case this.EQUIT:
+      this.rq = Math.sqrt(0.5 * this.qp);
+      this.dd = 1 / this.rq;
+      this.xmf = 1;
+      this.ymf = 0.5 * this.qp;
+      break;
+    case this.OBLIQ:
+      this.rq = Math.sqrt(0.5 * this.qp);
+      sinphi = Math.sin(this.lat0);
+      this.sinb1 = qsfnz(this.e, sinphi) / this.qp;
+      this.cosb1 = Math.sqrt(1 - this.sinb1 * this.sinb1);
+      this.dd = Math.cos(this.lat0) / (Math.sqrt(1 - this.es * sinphi * sinphi) * this.rq * this.cosb1);
+      this.ymf = (this.xmf = this.rq) / this.dd;
+      this.xmf *= this.dd;
+      break;
+    }
+  }
+  else {
+    if (this.mode === this.OBLIQ) {
+      this.sinph0 = Math.sin(this.lat0);
+      this.cosph0 = Math.cos(this.lat0);
+    }
+  }
+}
+
+/* Lambert Azimuthal Equal Area forward equations--mapping lat,long to x,y
+  -----------------------------------------------------------------------*/
+function laea_forward(p) {
+
+  /* Forward equations
+      -----------------*/
+  var x, y, coslam, sinlam, sinphi, q, sinb, cosb, b, cosphi;
+  var lam = p.x;
+  var phi = p.y;
+
+  lam = adjust_lon(lam - this.long0);
+  if (this.sphere) {
+    sinphi = Math.sin(phi);
+    cosphi = Math.cos(phi);
+    coslam = Math.cos(lam);
+    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
+      y = (this.mode === this.EQUIT) ? 1 + cosphi * coslam : 1 + this.sinph0 * sinphi + this.cosph0 * cosphi * coslam;
+      if (y <= EPSLN) {
+        return null;
+      }
+      y = Math.sqrt(2 / y);
+      x = y * cosphi * Math.sin(lam);
+      y *= (this.mode === this.EQUIT) ? sinphi : this.cosph0 * sinphi - this.sinph0 * cosphi * coslam;
+    }
+    else if (this.mode === this.N_POLE || this.mode === this.S_POLE) {
+      if (this.mode === this.N_POLE) {
+        coslam = -coslam;
+      }
+      if (Math.abs(phi + this.lat0) < EPSLN) {
+        return null;
+      }
+      y = FORTPI - phi * 0.5;
+      y = 2 * ((this.mode === this.S_POLE) ? Math.cos(y) : Math.sin(y));
+      x = y * Math.sin(lam);
+      y *= coslam;
+    }
+  }
+  else {
+    sinb = 0;
+    cosb = 0;
+    b = 0;
+    coslam = Math.cos(lam);
+    sinlam = Math.sin(lam);
+    sinphi = Math.sin(phi);
+    q = qsfnz(this.e, sinphi);
+    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
+      sinb = q / this.qp;
+      cosb = Math.sqrt(1 - sinb * sinb);
+    }
+    switch (this.mode) {
+    case this.OBLIQ:
+      b = 1 + this.sinb1 * sinb + this.cosb1 * cosb * coslam;
+      break;
+    case this.EQUIT:
+      b = 1 + cosb * coslam;
+      break;
+    case this.N_POLE:
+      b = HALF_PI + phi;
+      q = this.qp - q;
+      break;
+    case this.S_POLE:
+      b = phi - HALF_PI;
+      q = this.qp + q;
+      break;
+    }
+    if (Math.abs(b) < EPSLN) {
+      return null;
+    }
+    switch (this.mode) {
+    case this.OBLIQ:
+    case this.EQUIT:
+      b = Math.sqrt(2 / b);
+      if (this.mode === this.OBLIQ) {
+        y = this.ymf * b * (this.cosb1 * sinb - this.sinb1 * cosb * coslam);
+      }
+      else {
+        y = (b = Math.sqrt(2 / (1 + cosb * coslam))) * sinb * this.ymf;
+      }
+      x = this.xmf * b * cosb * sinlam;
+      break;
+    case this.N_POLE:
+    case this.S_POLE:
+      if (q >= 0) {
+        x = (b = Math.sqrt(q)) * sinlam;
+        y = coslam * ((this.mode === this.S_POLE) ? b : -b);
+      }
+      else {
+        x = y = 0;
+      }
+      break;
+    }
+  }
+
+  p.x = this.a * x + this.x0;
+  p.y = this.a * y + this.y0;
+  return p;
+}
+
+/* Inverse equations
+  -----------------*/
+function laea_inverse(p) {
+  p.x -= this.x0;
+  p.y -= this.y0;
+  var x = p.x / this.a;
+  var y = p.y / this.a;
+  var lam, phi, cCe, sCe, q, rho, ab;
+  if (this.sphere) {
+    var cosz = 0,
+      rh, sinz = 0;
+
+    rh = Math.sqrt(x * x + y * y);
+    phi = rh * 0.5;
+    if (phi > 1) {
+      return null;
+    }
+    phi = 2 * Math.asin(phi);
+    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
+      sinz = Math.sin(phi);
+      cosz = Math.cos(phi);
+    }
+    switch (this.mode) {
+    case this.EQUIT:
+      phi = (Math.abs(rh) <= EPSLN) ? 0 : Math.asin(y * sinz / rh);
+      x *= sinz;
+      y = cosz * rh;
+      break;
+    case this.OBLIQ:
+      phi = (Math.abs(rh) <= EPSLN) ? this.lat0 : Math.asin(cosz * this.sinph0 + y * sinz * this.cosph0 / rh);
+      x *= sinz * this.cosph0;
+      y = (cosz - Math.sin(phi) * this.sinph0) * rh;
+      break;
+    case this.N_POLE:
+      y = -y;
+      phi = HALF_PI - phi;
+      break;
+    case this.S_POLE:
+      phi -= HALF_PI;
+      break;
+    }
+    lam = (y === 0 && (this.mode === this.EQUIT || this.mode === this.OBLIQ)) ? 0 : Math.atan2(x, y);
+  }
+  else {
+    ab = 0;
+    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
+      x /= this.dd;
+      y *= this.dd;
+      rho = Math.sqrt(x * x + y * y);
+      if (rho < EPSLN) {
+        p.x = this.long0;
+        p.y = this.lat0;
+        return p;
+      }
+      sCe = 2 * Math.asin(0.5 * rho / this.rq);
+      cCe = Math.cos(sCe);
+      x *= (sCe = Math.sin(sCe));
+      if (this.mode === this.OBLIQ) {
+        ab = cCe * this.sinb1 + y * sCe * this.cosb1 / rho;
+        q = this.qp * ab;
+        y = rho * this.cosb1 * cCe - y * this.sinb1 * sCe;
+      }
+      else {
+        ab = y * sCe / rho;
+        q = this.qp * ab;
+        y = rho * cCe;
+      }
+    }
+    else if (this.mode === this.N_POLE || this.mode === this.S_POLE) {
+      if (this.mode === this.N_POLE) {
+        y = -y;
+      }
+      q = (x * x + y * y);
+      if (!q) {
+        p.x = this.long0;
+        p.y = this.lat0;
+        return p;
+      }
+      ab = 1 - q / this.qp;
+      if (this.mode === this.S_POLE) {
+        ab = -ab;
+      }
+    }
+    lam = Math.atan2(x, y);
+    phi = authlat(Math.asin(ab), this.apa);
+  }
+
+  p.x = adjust_lon(this.long0 + lam);
+  p.y = phi;
+  return p;
+}
+
+/* determine latitude from authalic latitude */
+var P00 = 0.33333333333333333333;
+
+var P01 = 0.17222222222222222222;
+var P02 = 0.10257936507936507936;
+var P10 = 0.06388888888888888888;
+var P11 = 0.06640211640211640211;
+var P20 = 0.01641501294219154443;
+
+function authset(es) {
+  var t;
+  var APA = [];
+  APA[0] = es * P00;
+  t = es * es;
+  APA[0] += t * P01;
+  APA[1] = t * P10;
+  t *= es;
+  APA[0] += t * P02;
+  APA[1] += t * P11;
+  APA[2] = t * P20;
+  return APA;
+}
+
+function authlat(beta, APA) {
+  var t = beta + beta;
+  return (beta + APA[0] * Math.sin(t) + APA[1] * Math.sin(t + t) + APA[2] * Math.sin(t + t + t));
+}
+
+var laea_names = ["Lambert Azimuthal Equal Area", "Lambert_Azimuthal_Equal_Area", "laea"];
+/* harmony default export */ var laea = ({
+  init: laea_init,
+  forward: laea_forward,
+  inverse: laea_inverse,
+  names: laea_names,
+  S_POLE: S_POLE,
+  N_POLE: N_POLE,
+  EQUIT: EQUIT,
+  OBLIQ: OBLIQ
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/asinz.js
+/* harmony default export */ var asinz = (function(x) {
+  if (Math.abs(x) > 1) {
+    x = (x > 1) ? 1 : -1;
+  }
+  return Math.asin(x);
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/aea.js
+
+
+
+
+
+
+function aea_init() {
+
+  if (Math.abs(this.lat1 + this.lat2) < EPSLN) {
+    return;
+  }
+  this.temp = this.b / this.a;
+  this.es = 1 - Math.pow(this.temp, 2);
+  this.e3 = Math.sqrt(this.es);
+
+  this.sin_po = Math.sin(this.lat1);
+  this.cos_po = Math.cos(this.lat1);
+  this.t1 = this.sin_po;
+  this.con = this.sin_po;
+  this.ms1 = msfnz(this.e3, this.sin_po, this.cos_po);
+  this.qs1 = qsfnz(this.e3, this.sin_po);
+
+  this.sin_po = Math.sin(this.lat2);
+  this.cos_po = Math.cos(this.lat2);
+  this.t2 = this.sin_po;
+  this.ms2 = msfnz(this.e3, this.sin_po, this.cos_po);
+  this.qs2 = qsfnz(this.e3, this.sin_po);
+
+  this.sin_po = Math.sin(this.lat0);
+  this.cos_po = Math.cos(this.lat0);
+  this.t3 = this.sin_po;
+  this.qs0 = qsfnz(this.e3, this.sin_po);
+
+  if (Math.abs(this.lat1 - this.lat2) > EPSLN) {
+    this.ns0 = (this.ms1 * this.ms1 - this.ms2 * this.ms2) / (this.qs2 - this.qs1);
+  }
+  else {
+    this.ns0 = this.con;
+  }
+  this.c = this.ms1 * this.ms1 + this.ns0 * this.qs1;
+  this.rh = this.a * Math.sqrt(this.c - this.ns0 * this.qs0) / this.ns0;
+}
+
+/* Albers Conical Equal Area forward equations--mapping lat,long to x,y
+  -------------------------------------------------------------------*/
+function aea_forward(p) {
+
+  var lon = p.x;
+  var lat = p.y;
+
+  this.sin_phi = Math.sin(lat);
+  this.cos_phi = Math.cos(lat);
+
+  var qs = qsfnz(this.e3, this.sin_phi);
+  var rh1 = this.a * Math.sqrt(this.c - this.ns0 * qs) / this.ns0;
+  var theta = this.ns0 * adjust_lon(lon - this.long0);
+  var x = rh1 * Math.sin(theta) + this.x0;
+  var y = this.rh - rh1 * Math.cos(theta) + this.y0;
+
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+function aea_inverse(p) {
+  var rh1, qs, con, theta, lon, lat;
+
+  p.x -= this.x0;
+  p.y = this.rh - p.y + this.y0;
+  if (this.ns0 >= 0) {
+    rh1 = Math.sqrt(p.x * p.x + p.y * p.y);
+    con = 1;
+  }
+  else {
+    rh1 = -Math.sqrt(p.x * p.x + p.y * p.y);
+    con = -1;
+  }
+  theta = 0;
+  if (rh1 !== 0) {
+    theta = Math.atan2(con * p.x, con * p.y);
+  }
+  con = rh1 * this.ns0 / this.a;
+  if (this.sphere) {
+    lat = Math.asin((this.c - con * con) / (2 * this.ns0));
+  }
+  else {
+    qs = (this.c - con * con) / this.ns0;
+    lat = this.phi1z(this.e3, qs);
+  }
+
+  lon = adjust_lon(theta / this.ns0 + this.long0);
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+/* Function to compute phi1, the latitude for the inverse of the
+   Albers Conical Equal-Area projection.
+-------------------------------------------*/
+function phi1z(eccent, qs) {
+  var sinphi, cosphi, con, com, dphi;
+  var phi = asinz(0.5 * qs);
+  if (eccent < EPSLN) {
+    return phi;
+  }
+
+  var eccnts = eccent * eccent;
+  for (var i = 1; i <= 25; i++) {
+    sinphi = Math.sin(phi);
+    cosphi = Math.cos(phi);
+    con = eccent * sinphi;
+    com = 1 - con * con;
+    dphi = 0.5 * com * com / cosphi * (qs / (1 - eccnts) - sinphi / com + 0.5 / eccent * Math.log((1 - con) / (1 + con)));
+    phi = phi + dphi;
+    if (Math.abs(dphi) <= 1e-7) {
+      return phi;
+    }
+  }
+  return null;
+}
+
+var aea_names = ["Albers_Conic_Equal_Area", "Albers", "aea"];
+/* harmony default export */ var aea = ({
+  init: aea_init,
+  forward: aea_forward,
+  inverse: aea_inverse,
+  names: aea_names,
+  phi1z: phi1z
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/gnom.js
+
+
+
+
+/*
+  reference:
+    Wolfram Mathworld "Gnomonic Projection"
+    http://mathworld.wolfram.com/GnomonicProjection.html
+    Accessed: 12th November 2009
+  */
+function gnom_init() {
+
+  /* Place parameters in static storage for common use
+      -------------------------------------------------*/
+  this.sin_p14 = Math.sin(this.lat0);
+  this.cos_p14 = Math.cos(this.lat0);
+  // Approximation for projecting points to the horizon (infinity)
+  this.infinity_dist = 1000 * this.a;
+  this.rc = 1;
+}
+
+/* Gnomonic forward equations--mapping lat,long to x,y
+    ---------------------------------------------------*/
+function gnom_forward(p) {
+  var sinphi, cosphi; /* sin and cos value        */
+  var dlon; /* delta longitude value      */
+  var coslon; /* cos of longitude        */
+  var ksp; /* scale factor          */
+  var g;
+  var x, y;
+  var lon = p.x;
+  var lat = p.y;
+  /* Forward equations
+      -----------------*/
+  dlon = adjust_lon(lon - this.long0);
+
+  sinphi = Math.sin(lat);
+  cosphi = Math.cos(lat);
+
+  coslon = Math.cos(dlon);
+  g = this.sin_p14 * sinphi + this.cos_p14 * cosphi * coslon;
+  ksp = 1;
+  if ((g > 0) || (Math.abs(g) <= EPSLN)) {
+    x = this.x0 + this.a * ksp * cosphi * Math.sin(dlon) / g;
+    y = this.y0 + this.a * ksp * (this.cos_p14 * sinphi - this.sin_p14 * cosphi * coslon) / g;
+  }
+  else {
+
+    // Point is in the opposing hemisphere and is unprojectable
+    // We still need to return a reasonable point, so we project
+    // to infinity, on a bearing
+    // equivalent to the northern hemisphere equivalent
+    // This is a reasonable approximation for short shapes and lines that
+    // straddle the horizon.
+
+    x = this.x0 + this.infinity_dist * cosphi * Math.sin(dlon);
+    y = this.y0 + this.infinity_dist * (this.cos_p14 * sinphi - this.sin_p14 * cosphi * coslon);
+
+  }
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+function gnom_inverse(p) {
+  var rh; /* Rho */
+  var sinc, cosc;
+  var c;
+  var lon, lat;
+
+  /* Inverse equations
+      -----------------*/
+  p.x = (p.x - this.x0) / this.a;
+  p.y = (p.y - this.y0) / this.a;
+
+  p.x /= this.k0;
+  p.y /= this.k0;
+
+  if ((rh = Math.sqrt(p.x * p.x + p.y * p.y))) {
+    c = Math.atan2(rh, this.rc);
+    sinc = Math.sin(c);
+    cosc = Math.cos(c);
+
+    lat = asinz(cosc * this.sin_p14 + (p.y * sinc * this.cos_p14) / rh);
+    lon = Math.atan2(p.x * sinc, rh * this.cos_p14 * cosc - p.y * this.sin_p14 * sinc);
+    lon = adjust_lon(this.long0 + lon);
+  }
+  else {
+    lat = this.phic0;
+    lon = 0;
+  }
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var gnom_names = ["gnom"];
+/* harmony default export */ var gnom = ({
+  init: gnom_init,
+  forward: gnom_forward,
+  inverse: gnom_inverse,
+  names: gnom_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/common/iqsfnz.js
+
+
+/* harmony default export */ var iqsfnz = (function(eccent, q) {
+  var temp = 1 - (1 - eccent * eccent) / (2 * eccent) * Math.log((1 - eccent) / (1 + eccent));
+  if (Math.abs(Math.abs(q) - temp) < 1.0E-6) {
+    if (q < 0) {
+      return (-1 * HALF_PI);
+    }
+    else {
+      return HALF_PI;
+    }
+  }
+  //var phi = 0.5* q/(1-eccent*eccent);
+  var phi = Math.asin(0.5 * q);
+  var dphi;
+  var sin_phi;
+  var cos_phi;
+  var con;
+  for (var i = 0; i < 30; i++) {
+    sin_phi = Math.sin(phi);
+    cos_phi = Math.cos(phi);
+    con = eccent * sin_phi;
+    dphi = Math.pow(1 - con * con, 2) / (2 * cos_phi) * (q / (1 - eccent * eccent) - sin_phi / (1 - con * con) + 0.5 / eccent * Math.log((1 - con) / (1 + con)));
+    phi += dphi;
+    if (Math.abs(dphi) <= 0.0000000001) {
+      return phi;
+    }
+  }
+
+  //console.log("IQSFN-CONV:Latitude failed to converge after 30 iterations");
+  return NaN;
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/cea.js
+
+
+
+
+
+/*
+  reference:
+    "Cartographic Projection Procedures for the UNIX Environment-
+    A User's Manual" by Gerald I. Evenden,
+    USGS Open File Report 90-284and Release 4 Interim Reports (2003)
+*/
+function cea_init() {
+  //no-op
+  if (!this.sphere) {
+    this.k0 = msfnz(this.e, Math.sin(this.lat_ts), Math.cos(this.lat_ts));
+  }
+}
+
+/* Cylindrical Equal Area forward equations--mapping lat,long to x,y
+    ------------------------------------------------------------*/
+function cea_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+  var x, y;
+  /* Forward equations
+      -----------------*/
+  var dlon = adjust_lon(lon - this.long0);
+  if (this.sphere) {
+    x = this.x0 + this.a * dlon * Math.cos(this.lat_ts);
+    y = this.y0 + this.a * Math.sin(lat) / Math.cos(this.lat_ts);
+  }
+  else {
+    var qs = qsfnz(this.e, Math.sin(lat));
+    x = this.x0 + this.a * this.k0 * dlon;
+    y = this.y0 + this.a * qs * 0.5 / this.k0;
+  }
+
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+/* Cylindrical Equal Area inverse equations--mapping x,y to lat/long
+    ------------------------------------------------------------*/
+function cea_inverse(p) {
+  p.x -= this.x0;
+  p.y -= this.y0;
+  var lon, lat;
+
+  if (this.sphere) {
+    lon = adjust_lon(this.long0 + (p.x / this.a) / Math.cos(this.lat_ts));
+    lat = Math.asin((p.y / this.a) * Math.cos(this.lat_ts));
+  }
+  else {
+    lat = iqsfnz(this.e, 2 * p.y * this.k0 / this.a);
+    lon = adjust_lon(this.long0 + p.x / (this.a * this.k0));
+  }
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var cea_names = ["cea"];
+/* harmony default export */ var cea = ({
+  init: cea_init,
+  forward: cea_forward,
+  inverse: cea_inverse,
+  names: cea_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/eqc.js
+
+
+
+function eqc_init() {
+
+  this.x0 = this.x0 || 0;
+  this.y0 = this.y0 || 0;
+  this.lat0 = this.lat0 || 0;
+  this.long0 = this.long0 || 0;
+  this.lat_ts = this.lat_ts || 0;
+  this.title = this.title || "Equidistant Cylindrical (Plate Carre)";
+
+  this.rc = Math.cos(this.lat_ts);
+}
+
+// forward equations--mapping lat,long to x,y
+// -----------------------------------------------------------------
+function eqc_forward(p) {
+
+  var lon = p.x;
+  var lat = p.y;
+
+  var dlon = adjust_lon(lon - this.long0);
+  var dlat = adjust_lat(lat - this.lat0);
+  p.x = this.x0 + (this.a * dlon * this.rc);
+  p.y = this.y0 + (this.a * dlat);
+  return p;
+}
+
+// inverse equations--mapping x,y to lat/long
+// -----------------------------------------------------------------
+function eqc_inverse(p) {
+
+  var x = p.x;
+  var y = p.y;
+
+  p.x = adjust_lon(this.long0 + ((x - this.x0) / (this.a * this.rc)));
+  p.y = adjust_lat(this.lat0 + ((y - this.y0) / (this.a)));
+  return p;
+}
+
+var eqc_names = ["Equirectangular", "Equidistant_Cylindrical", "eqc"];
+/* harmony default export */ var eqc = ({
+  init: eqc_init,
+  forward: eqc_forward,
+  inverse: eqc_inverse,
+  names: eqc_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/poly.js
+
+
+
+
+
+
+
+
+
+
+var poly_MAX_ITER = 20;
+
+function poly_init() {
+  /* Place parameters in static storage for common use
+      -------------------------------------------------*/
+  this.temp = this.b / this.a;
+  this.es = 1 - Math.pow(this.temp, 2); // devait etre dans tmerc.js mais n y est pas donc je commente sinon retour de valeurs nulles
+  this.e = Math.sqrt(this.es);
+  this.e0 = e0fn(this.es);
+  this.e1 = e1fn(this.es);
+  this.e2 = e2fn(this.es);
+  this.e3 = e3fn(this.es);
+  this.ml0 = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, this.lat0); //si que des zeros le calcul ne se fait pas
+}
+
+/* Polyconic forward equations--mapping lat,long to x,y
+    ---------------------------------------------------*/
+function poly_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+  var x, y, el;
+  var dlon = adjust_lon(lon - this.long0);
+  el = dlon * Math.sin(lat);
+  if (this.sphere) {
+    if (Math.abs(lat) <= EPSLN) {
+      x = this.a * dlon;
+      y = -1 * this.a * this.lat0;
+    }
+    else {
+      x = this.a * Math.sin(el) / Math.tan(lat);
+      y = this.a * (adjust_lat(lat - this.lat0) + (1 - Math.cos(el)) / Math.tan(lat));
+    }
+  }
+  else {
+    if (Math.abs(lat) <= EPSLN) {
+      x = this.a * dlon;
+      y = -1 * this.ml0;
+    }
+    else {
+      var nl = gN(this.a, this.e, Math.sin(lat)) / Math.tan(lat);
+      x = nl * Math.sin(el);
+      y = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, lat) - this.ml0 + nl * (1 - Math.cos(el));
+    }
+
+  }
+  p.x = x + this.x0;
+  p.y = y + this.y0;
+  return p;
+}
+
+/* Inverse equations
+  -----------------*/
+function poly_inverse(p) {
+  var lon, lat, x, y, i;
+  var al, bl;
+  var phi, dphi;
+  x = p.x - this.x0;
+  y = p.y - this.y0;
+
+  if (this.sphere) {
+    if (Math.abs(y + this.a * this.lat0) <= EPSLN) {
+      lon = adjust_lon(x / this.a + this.long0);
+      lat = 0;
+    }
+    else {
+      al = this.lat0 + y / this.a;
+      bl = x * x / this.a / this.a + al * al;
+      phi = al;
+      var tanphi;
+      for (i = poly_MAX_ITER; i; --i) {
+        tanphi = Math.tan(phi);
+        dphi = -1 * (al * (phi * tanphi + 1) - phi - 0.5 * (phi * phi + bl) * tanphi) / ((phi - al) / tanphi - 1);
+        phi += dphi;
+        if (Math.abs(dphi) <= EPSLN) {
+          lat = phi;
+          break;
+        }
+      }
+      lon = adjust_lon(this.long0 + (Math.asin(x * Math.tan(phi) / this.a)) / Math.sin(lat));
+    }
+  }
+  else {
+    if (Math.abs(y + this.ml0) <= EPSLN) {
+      lat = 0;
+      lon = adjust_lon(this.long0 + x / this.a);
+    }
+    else {
+
+      al = (this.ml0 + y) / this.a;
+      bl = x * x / this.a / this.a + al * al;
+      phi = al;
+      var cl, mln, mlnp, ma;
+      var con;
+      for (i = poly_MAX_ITER; i; --i) {
+        con = this.e * Math.sin(phi);
+        cl = Math.sqrt(1 - con * con) * Math.tan(phi);
+        mln = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, phi);
+        mlnp = this.e0 - 2 * this.e1 * Math.cos(2 * phi) + 4 * this.e2 * Math.cos(4 * phi) - 6 * this.e3 * Math.cos(6 * phi);
+        ma = mln / this.a;
+        dphi = (al * (cl * ma + 1) - ma - 0.5 * cl * (ma * ma + bl)) / (this.es * Math.sin(2 * phi) * (ma * ma + bl - 2 * al * ma) / (4 * cl) + (al - ma) * (cl * mlnp - 2 / Math.sin(2 * phi)) - mlnp);
+        phi -= dphi;
+        if (Math.abs(dphi) <= EPSLN) {
+          lat = phi;
+          break;
+        }
+      }
+
+      //lat=phi4z(this.e,this.e0,this.e1,this.e2,this.e3,al,bl,0,0);
+      cl = Math.sqrt(1 - this.es * Math.pow(Math.sin(lat), 2)) * Math.tan(lat);
+      lon = adjust_lon(this.long0 + Math.asin(x * cl / this.a) / Math.sin(lat));
+    }
+  }
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var poly_names = ["Polyconic", "poly"];
+/* harmony default export */ var poly = ({
+  init: poly_init,
+  forward: poly_forward,
+  inverse: poly_inverse,
+  names: poly_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/nzmg.js
+
+
+/*
+  reference
+    Department of Land and Survey Technical Circular 1973/32
+      http://www.linz.govt.nz/docs/miscellaneous/nz-map-definition.pdf
+    OSG Technical Report 4.1
+      http://www.linz.govt.nz/docs/miscellaneous/nzmg.pdf
+  */
+
+/**
+ * iterations: Number of iterations to refine inverse transform.
+ *     0 -> km accuracy
+ *     1 -> m accuracy -- suitable for most mapping applications
+ *     2 -> mm accuracy
+ */
+var iterations = 1;
+
+function nzmg_init() {
+  this.A = [];
+  this.A[1] = 0.6399175073;
+  this.A[2] = -0.1358797613;
+  this.A[3] = 0.063294409;
+  this.A[4] = -0.02526853;
+  this.A[5] = 0.0117879;
+  this.A[6] = -0.0055161;
+  this.A[7] = 0.0026906;
+  this.A[8] = -0.001333;
+  this.A[9] = 0.00067;
+  this.A[10] = -0.00034;
+
+  this.B_re = [];
+  this.B_im = [];
+  this.B_re[1] = 0.7557853228;
+  this.B_im[1] = 0;
+  this.B_re[2] = 0.249204646;
+  this.B_im[2] = 0.003371507;
+  this.B_re[3] = -0.001541739;
+  this.B_im[3] = 0.041058560;
+  this.B_re[4] = -0.10162907;
+  this.B_im[4] = 0.01727609;
+  this.B_re[5] = -0.26623489;
+  this.B_im[5] = -0.36249218;
+  this.B_re[6] = -0.6870983;
+  this.B_im[6] = -1.1651967;
+
+  this.C_re = [];
+  this.C_im = [];
+  this.C_re[1] = 1.3231270439;
+  this.C_im[1] = 0;
+  this.C_re[2] = -0.577245789;
+  this.C_im[2] = -0.007809598;
+  this.C_re[3] = 0.508307513;
+  this.C_im[3] = -0.112208952;
+  this.C_re[4] = -0.15094762;
+  this.C_im[4] = 0.18200602;
+  this.C_re[5] = 1.01418179;
+  this.C_im[5] = 1.64497696;
+  this.C_re[6] = 1.9660549;
+  this.C_im[6] = 2.5127645;
+
+  this.D = [];
+  this.D[1] = 1.5627014243;
+  this.D[2] = 0.5185406398;
+  this.D[3] = -0.03333098;
+  this.D[4] = -0.1052906;
+  this.D[5] = -0.0368594;
+  this.D[6] = 0.007317;
+  this.D[7] = 0.01220;
+  this.D[8] = 0.00394;
+  this.D[9] = -0.0013;
+}
+
+/**
+    New Zealand Map Grid Forward  - long/lat to x/y
+    long/lat in radians
+  */
+function nzmg_forward(p) {
+  var n;
+  var lon = p.x;
+  var lat = p.y;
+
+  var delta_lat = lat - this.lat0;
+  var delta_lon = lon - this.long0;
+
+  // 1. Calculate d_phi and d_psi    ...                          // and d_lambda
+  // For this algorithm, delta_latitude is in seconds of arc x 10-5, so we need to scale to those units. Longitude is radians.
+  var d_phi = delta_lat / SEC_TO_RAD * 1E-5;
+  var d_lambda = delta_lon;
+  var d_phi_n = 1; // d_phi^0
+
+  var d_psi = 0;
+  for (n = 1; n <= 10; n++) {
+    d_phi_n = d_phi_n * d_phi;
+    d_psi = d_psi + this.A[n] * d_phi_n;
+  }
+
+  // 2. Calculate theta
+  var th_re = d_psi;
+  var th_im = d_lambda;
+
+  // 3. Calculate z
+  var th_n_re = 1;
+  var th_n_im = 0; // theta^0
+  var th_n_re1;
+  var th_n_im1;
+
+  var z_re = 0;
+  var z_im = 0;
+  for (n = 1; n <= 6; n++) {
+    th_n_re1 = th_n_re * th_re - th_n_im * th_im;
+    th_n_im1 = th_n_im * th_re + th_n_re * th_im;
+    th_n_re = th_n_re1;
+    th_n_im = th_n_im1;
+    z_re = z_re + this.B_re[n] * th_n_re - this.B_im[n] * th_n_im;
+    z_im = z_im + this.B_im[n] * th_n_re + this.B_re[n] * th_n_im;
+  }
+
+  // 4. Calculate easting and northing
+  p.x = (z_im * this.a) + this.x0;
+  p.y = (z_re * this.a) + this.y0;
+
+  return p;
+}
+
+/**
+    New Zealand Map Grid Inverse  -  x/y to long/lat
+  */
+function nzmg_inverse(p) {
+  var n;
+  var x = p.x;
+  var y = p.y;
+
+  var delta_x = x - this.x0;
+  var delta_y = y - this.y0;
+
+  // 1. Calculate z
+  var z_re = delta_y / this.a;
+  var z_im = delta_x / this.a;
+
+  // 2a. Calculate theta - first approximation gives km accuracy
+  var z_n_re = 1;
+  var z_n_im = 0; // z^0
+  var z_n_re1;
+  var z_n_im1;
+
+  var th_re = 0;
+  var th_im = 0;
+  for (n = 1; n <= 6; n++) {
+    z_n_re1 = z_n_re * z_re - z_n_im * z_im;
+    z_n_im1 = z_n_im * z_re + z_n_re * z_im;
+    z_n_re = z_n_re1;
+    z_n_im = z_n_im1;
+    th_re = th_re + this.C_re[n] * z_n_re - this.C_im[n] * z_n_im;
+    th_im = th_im + this.C_im[n] * z_n_re + this.C_re[n] * z_n_im;
+  }
+
+  // 2b. Iterate to refine the accuracy of the calculation
+  //        0 iterations gives km accuracy
+  //        1 iteration gives m accuracy -- good enough for most mapping applications
+  //        2 iterations bives mm accuracy
+  for (var i = 0; i < this.iterations; i++) {
+    var th_n_re = th_re;
+    var th_n_im = th_im;
+    var th_n_re1;
+    var th_n_im1;
+
+    var num_re = z_re;
+    var num_im = z_im;
+    for (n = 2; n <= 6; n++) {
+      th_n_re1 = th_n_re * th_re - th_n_im * th_im;
+      th_n_im1 = th_n_im * th_re + th_n_re * th_im;
+      th_n_re = th_n_re1;
+      th_n_im = th_n_im1;
+      num_re = num_re + (n - 1) * (this.B_re[n] * th_n_re - this.B_im[n] * th_n_im);
+      num_im = num_im + (n - 1) * (this.B_im[n] * th_n_re + this.B_re[n] * th_n_im);
+    }
+
+    th_n_re = 1;
+    th_n_im = 0;
+    var den_re = this.B_re[1];
+    var den_im = this.B_im[1];
+    for (n = 2; n <= 6; n++) {
+      th_n_re1 = th_n_re * th_re - th_n_im * th_im;
+      th_n_im1 = th_n_im * th_re + th_n_re * th_im;
+      th_n_re = th_n_re1;
+      th_n_im = th_n_im1;
+      den_re = den_re + n * (this.B_re[n] * th_n_re - this.B_im[n] * th_n_im);
+      den_im = den_im + n * (this.B_im[n] * th_n_re + this.B_re[n] * th_n_im);
+    }
+
+    // Complex division
+    var den2 = den_re * den_re + den_im * den_im;
+    th_re = (num_re * den_re + num_im * den_im) / den2;
+    th_im = (num_im * den_re - num_re * den_im) / den2;
+  }
+
+  // 3. Calculate d_phi              ...                                    // and d_lambda
+  var d_psi = th_re;
+  var d_lambda = th_im;
+  var d_psi_n = 1; // d_psi^0
+
+  var d_phi = 0;
+  for (n = 1; n <= 9; n++) {
+    d_psi_n = d_psi_n * d_psi;
+    d_phi = d_phi + this.D[n] * d_psi_n;
+  }
+
+  // 4. Calculate latitude and longitude
+  // d_phi is calcuated in second of arc * 10^-5, so we need to scale back to radians. d_lambda is in radians.
+  var lat = this.lat0 + (d_phi * SEC_TO_RAD * 1E5);
+  var lon = this.long0 + d_lambda;
+
+  p.x = lon;
+  p.y = lat;
+
+  return p;
+}
+
+var nzmg_names = ["New_Zealand_Map_Grid", "nzmg"];
+/* harmony default export */ var nzmg = ({
+  init: nzmg_init,
+  forward: nzmg_forward,
+  inverse: nzmg_inverse,
+  names: nzmg_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/mill.js
+
+
+/*
+  reference
+    "New Equal-Area Map Projections for Noncircular Regions", John P. Snyder,
+    The American Cartographer, Vol 15, No. 4, October 1988, pp. 341-355.
+  */
+
+
+/* Initialize the Miller Cylindrical projection
+  -------------------------------------------*/
+function mill_init() {
+  //no-op
+}
+
+/* Miller Cylindrical forward equations--mapping lat,long to x,y
+    ------------------------------------------------------------*/
+function mill_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+  /* Forward equations
+      -----------------*/
+  var dlon = adjust_lon(lon - this.long0);
+  var x = this.x0 + this.a * dlon;
+  var y = this.y0 + this.a * Math.log(Math.tan((Math.PI / 4) + (lat / 2.5))) * 1.25;
+
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+/* Miller Cylindrical inverse equations--mapping x,y to lat/long
+    ------------------------------------------------------------*/
+function mill_inverse(p) {
+  p.x -= this.x0;
+  p.y -= this.y0;
+
+  var lon = adjust_lon(this.long0 + p.x / this.a);
+  var lat = 2.5 * (Math.atan(Math.exp(0.8 * p.y / this.a)) - Math.PI / 4);
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var mill_names = ["Miller_Cylindrical", "mill"];
+/* harmony default export */ var mill = ({
+  init: mill_init,
+  forward: mill_forward,
+  inverse: mill_inverse,
+  names: mill_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/sinu.js
+
+
+
+var sinu_MAX_ITER = 20;
+
+
+
+
+
+
+
+function sinu_init() {
+  /* Place parameters in static storage for common use
+    -------------------------------------------------*/
+
+
+  if (!this.sphere) {
+    this.en = pj_enfn(this.es);
+  }
+  else {
+    this.n = 1;
+    this.m = 0;
+    this.es = 0;
+    this.C_y = Math.sqrt((this.m + 1) / this.n);
+    this.C_x = this.C_y / (this.m + 1);
+  }
+
+}
+
+/* Sinusoidal forward equations--mapping lat,long to x,y
+  -----------------------------------------------------*/
+function sinu_forward(p) {
+  var x, y;
+  var lon = p.x;
+  var lat = p.y;
+  /* Forward equations
+    -----------------*/
+  lon = adjust_lon(lon - this.long0);
+
+  if (this.sphere) {
+    if (!this.m) {
+      lat = this.n !== 1 ? Math.asin(this.n * Math.sin(lat)) : lat;
+    }
+    else {
+      var k = this.n * Math.sin(lat);
+      for (var i = sinu_MAX_ITER; i; --i) {
+        var V = (this.m * lat + Math.sin(lat) - k) / (this.m + Math.cos(lat));
+        lat -= V;
+        if (Math.abs(V) < EPSLN) {
+          break;
+        }
+      }
+    }
+    x = this.a * this.C_x * lon * (this.m + Math.cos(lat));
+    y = this.a * this.C_y * lat;
+
+  }
+  else {
+
+    var s = Math.sin(lat);
+    var c = Math.cos(lat);
+    y = this.a * pj_mlfn(lat, s, c, this.en);
+    x = this.a * lon * c / Math.sqrt(1 - this.es * s * s);
+  }
+
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+function sinu_inverse(p) {
+  var lat, temp, lon, s;
+
+  p.x -= this.x0;
+  lon = p.x / this.a;
+  p.y -= this.y0;
+  lat = p.y / this.a;
+
+  if (this.sphere) {
+    lat /= this.C_y;
+    lon = lon / (this.C_x * (this.m + Math.cos(lat)));
+    if (this.m) {
+      lat = asinz((this.m * lat + Math.sin(lat)) / this.n);
+    }
+    else if (this.n !== 1) {
+      lat = asinz(Math.sin(lat) / this.n);
+    }
+    lon = adjust_lon(lon + this.long0);
+    lat = adjust_lat(lat);
+  }
+  else {
+    lat = pj_inv_mlfn(p.y / this.a, this.es, this.en);
+    s = Math.abs(lat);
+    if (s < HALF_PI) {
+      s = Math.sin(lat);
+      temp = this.long0 + p.x * Math.sqrt(1 - this.es * s * s) / (this.a * Math.cos(lat));
+      //temp = this.long0 + p.x / (this.a * Math.cos(lat));
+      lon = adjust_lon(temp);
+    }
+    else if ((s - EPSLN) < HALF_PI) {
+      lon = this.long0;
+    }
+  }
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var sinu_names = ["Sinusoidal", "sinu"];
+/* harmony default export */ var sinu = ({
+  init: sinu_init,
+  forward: sinu_forward,
+  inverse: sinu_inverse,
+  names: sinu_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/moll.js
+
+function moll_init() {}
+
+/* Mollweide forward equations--mapping lat,long to x,y
+    ----------------------------------------------------*/
+function moll_forward(p) {
+
+  /* Forward equations
+      -----------------*/
+  var lon = p.x;
+  var lat = p.y;
+
+  var delta_lon = adjust_lon(lon - this.long0);
+  var theta = lat;
+  var con = Math.PI * Math.sin(lat);
+
+  /* Iterate using the Newton-Raphson method to find theta
+      -----------------------------------------------------*/
+  while (true) {
+    var delta_theta = -(theta + Math.sin(theta) - con) / (1 + Math.cos(theta));
+    theta += delta_theta;
+    if (Math.abs(delta_theta) < EPSLN) {
+      break;
+    }
+  }
+  theta /= 2;
+
+  /* If the latitude is 90 deg, force the x coordinate to be "0 + false easting"
+       this is done here because of precision problems with "cos(theta)"
+       --------------------------------------------------------------------------*/
+  if (Math.PI / 2 - Math.abs(lat) < EPSLN) {
+    delta_lon = 0;
+  }
+  var x = 0.900316316158 * this.a * delta_lon * Math.cos(theta) + this.x0;
+  var y = 1.4142135623731 * this.a * Math.sin(theta) + this.y0;
+
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+function moll_inverse(p) {
+  var theta;
+  var arg;
+
+  /* Inverse equations
+      -----------------*/
+  p.x -= this.x0;
+  p.y -= this.y0;
+  arg = p.y / (1.4142135623731 * this.a);
+
+  /* Because of division by zero problems, 'arg' can not be 1.  Therefore
+       a number very close to one is used instead.
+       -------------------------------------------------------------------*/
+  if (Math.abs(arg) > 0.999999999999) {
+    arg = 0.999999999999;
+  }
+  theta = Math.asin(arg);
+  var lon = adjust_lon(this.long0 + (p.x / (0.900316316158 * this.a * Math.cos(theta))));
+  if (lon < (-Math.PI)) {
+    lon = -Math.PI;
+  }
+  if (lon > Math.PI) {
+    lon = Math.PI;
+  }
+  arg = (2 * theta + Math.sin(2 * theta)) / Math.PI;
+  if (Math.abs(arg) > 1) {
+    arg = 1;
+  }
+  var lat = Math.asin(arg);
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var moll_names = ["Mollweide", "moll"];
+/* harmony default export */ var moll = ({
+  init: moll_init,
+  forward: moll_forward,
+  inverse: moll_inverse,
+  names: moll_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/eqdc.js
+
+
+
+
+
+
+
+
+
+
+
+function eqdc_init() {
+
+  /* Place parameters in static storage for common use
+      -------------------------------------------------*/
+  // Standard Parallels cannot be equal and on opposite sides of the equator
+  if (Math.abs(this.lat1 + this.lat2) < EPSLN) {
+    return;
+  }
+  this.lat2 = this.lat2 || this.lat1;
+  this.temp = this.b / this.a;
+  this.es = 1 - Math.pow(this.temp, 2);
+  this.e = Math.sqrt(this.es);
+  this.e0 = e0fn(this.es);
+  this.e1 = e1fn(this.es);
+  this.e2 = e2fn(this.es);
+  this.e3 = e3fn(this.es);
+
+  this.sinphi = Math.sin(this.lat1);
+  this.cosphi = Math.cos(this.lat1);
+
+  this.ms1 = msfnz(this.e, this.sinphi, this.cosphi);
+  this.ml1 = mlfn(this.e0, this.e1, this.e2, this.e3, this.lat1);
+
+  if (Math.abs(this.lat1 - this.lat2) < EPSLN) {
+    this.ns = this.sinphi;
+  }
+  else {
+    this.sinphi = Math.sin(this.lat2);
+    this.cosphi = Math.cos(this.lat2);
+    this.ms2 = msfnz(this.e, this.sinphi, this.cosphi);
+    this.ml2 = mlfn(this.e0, this.e1, this.e2, this.e3, this.lat2);
+    this.ns = (this.ms1 - this.ms2) / (this.ml2 - this.ml1);
+  }
+  this.g = this.ml1 + this.ms1 / this.ns;
+  this.ml0 = mlfn(this.e0, this.e1, this.e2, this.e3, this.lat0);
+  this.rh = this.a * (this.g - this.ml0);
+}
+
+/* Equidistant Conic forward equations--mapping lat,long to x,y
+  -----------------------------------------------------------*/
+function eqdc_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+  var rh1;
+
+  /* Forward equations
+      -----------------*/
+  if (this.sphere) {
+    rh1 = this.a * (this.g - lat);
+  }
+  else {
+    var ml = mlfn(this.e0, this.e1, this.e2, this.e3, lat);
+    rh1 = this.a * (this.g - ml);
+  }
+  var theta = this.ns * adjust_lon(lon - this.long0);
+  var x = this.x0 + rh1 * Math.sin(theta);
+  var y = this.y0 + this.rh - rh1 * Math.cos(theta);
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+/* Inverse equations
+  -----------------*/
+function eqdc_inverse(p) {
+  p.x -= this.x0;
+  p.y = this.rh - p.y + this.y0;
+  var con, rh1, lat, lon;
+  if (this.ns >= 0) {
+    rh1 = Math.sqrt(p.x * p.x + p.y * p.y);
+    con = 1;
+  }
+  else {
+    rh1 = -Math.sqrt(p.x * p.x + p.y * p.y);
+    con = -1;
+  }
+  var theta = 0;
+  if (rh1 !== 0) {
+    theta = Math.atan2(con * p.x, con * p.y);
+  }
+
+  if (this.sphere) {
+    lon = adjust_lon(this.long0 + theta / this.ns);
+    lat = adjust_lat(this.g - rh1 / this.a);
+    p.x = lon;
+    p.y = lat;
+    return p;
+  }
+  else {
+    var ml = this.g - rh1 / this.a;
+    lat = imlfn(ml, this.e0, this.e1, this.e2, this.e3);
+    lon = adjust_lon(this.long0 + theta / this.ns);
+    p.x = lon;
+    p.y = lat;
+    return p;
+  }
+
+}
+
+var eqdc_names = ["Equidistant_Conic", "eqdc"];
+/* harmony default export */ var eqdc = ({
+  init: eqdc_init,
+  forward: eqdc_forward,
+  inverse: eqdc_inverse,
+  names: eqdc_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/vandg.js
+
+
+
+
+
+
+/* Initialize the Van Der Grinten projection
+  ----------------------------------------*/
+function vandg_init() {
+  //this.R = 6370997; //Radius of earth
+  this.R = this.a;
+}
+
+function vandg_forward(p) {
+
+  var lon = p.x;
+  var lat = p.y;
+
+  /* Forward equations
+    -----------------*/
+  var dlon = adjust_lon(lon - this.long0);
+  var x, y;
+
+  if (Math.abs(lat) <= EPSLN) {
+    x = this.x0 + this.R * dlon;
+    y = this.y0;
+  }
+  var theta = asinz(2 * Math.abs(lat / Math.PI));
+  if ((Math.abs(dlon) <= EPSLN) || (Math.abs(Math.abs(lat) - HALF_PI) <= EPSLN)) {
+    x = this.x0;
+    if (lat >= 0) {
+      y = this.y0 + Math.PI * this.R * Math.tan(0.5 * theta);
+    }
+    else {
+      y = this.y0 + Math.PI * this.R * -Math.tan(0.5 * theta);
+    }
+    //  return(OK);
+  }
+  var al = 0.5 * Math.abs((Math.PI / dlon) - (dlon / Math.PI));
+  var asq = al * al;
+  var sinth = Math.sin(theta);
+  var costh = Math.cos(theta);
+
+  var g = costh / (sinth + costh - 1);
+  var gsq = g * g;
+  var m = g * (2 / sinth - 1);
+  var msq = m * m;
+  var con = Math.PI * this.R * (al * (g - msq) + Math.sqrt(asq * (g - msq) * (g - msq) - (msq + asq) * (gsq - msq))) / (msq + asq);
+  if (dlon < 0) {
+    con = -con;
+  }
+  x = this.x0 + con;
+  //con = Math.abs(con / (Math.PI * this.R));
+  var q = asq + g;
+  con = Math.PI * this.R * (m * q - al * Math.sqrt((msq + asq) * (asq + 1) - q * q)) / (msq + asq);
+  if (lat >= 0) {
+    //y = this.y0 + Math.PI * this.R * Math.sqrt(1 - con * con - 2 * al * con);
+    y = this.y0 + con;
+  }
+  else {
+    //y = this.y0 - Math.PI * this.R * Math.sqrt(1 - con * con - 2 * al * con);
+    y = this.y0 - con;
+  }
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+/* Van Der Grinten inverse equations--mapping x,y to lat/long
+  ---------------------------------------------------------*/
+function vandg_inverse(p) {
+  var lon, lat;
+  var xx, yy, xys, c1, c2, c3;
+  var a1;
+  var m1;
+  var con;
+  var th1;
+  var d;
+
+  /* inverse equations
+    -----------------*/
+  p.x -= this.x0;
+  p.y -= this.y0;
+  con = Math.PI * this.R;
+  xx = p.x / con;
+  yy = p.y / con;
+  xys = xx * xx + yy * yy;
+  c1 = -Math.abs(yy) * (1 + xys);
+  c2 = c1 - 2 * yy * yy + xx * xx;
+  c3 = -2 * c1 + 1 + 2 * yy * yy + xys * xys;
+  d = yy * yy / c3 + (2 * c2 * c2 * c2 / c3 / c3 / c3 - 9 * c1 * c2 / c3 / c3) / 27;
+  a1 = (c1 - c2 * c2 / 3 / c3) / c3;
+  m1 = 2 * Math.sqrt(-a1 / 3);
+  con = ((3 * d) / a1) / m1;
+  if (Math.abs(con) > 1) {
+    if (con >= 0) {
+      con = 1;
+    }
+    else {
+      con = -1;
+    }
+  }
+  th1 = Math.acos(con) / 3;
+  if (p.y >= 0) {
+    lat = (-m1 * Math.cos(th1 + Math.PI / 3) - c2 / 3 / c3) * Math.PI;
+  }
+  else {
+    lat = -(-m1 * Math.cos(th1 + Math.PI / 3) - c2 / 3 / c3) * Math.PI;
+  }
+
+  if (Math.abs(xx) < EPSLN) {
+    lon = this.long0;
+  }
+  else {
+    lon = adjust_lon(this.long0 + Math.PI * (xys - 1 + Math.sqrt(1 + 2 * (xx * xx - yy * yy) + xys * xys)) / 2 / xx);
+  }
+
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var vandg_names = ["Van_der_Grinten_I", "VanDerGrinten", "vandg"];
+/* harmony default export */ var vandg = ({
+  init: vandg_init,
+  forward: vandg_forward,
+  inverse: vandg_inverse,
+  names: vandg_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/aeqd.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function aeqd_init() {
+  this.sin_p12 = Math.sin(this.lat0);
+  this.cos_p12 = Math.cos(this.lat0);
+}
+
+function aeqd_forward(p) {
+  var lon = p.x;
+  var lat = p.y;
+  var sinphi = Math.sin(p.y);
+  var cosphi = Math.cos(p.y);
+  var dlon = adjust_lon(lon - this.long0);
+  var e0, e1, e2, e3, Mlp, Ml, tanphi, Nl1, Nl, psi, Az, G, H, GH, Hs, c, kp, cos_c, s, s2, s3, s4, s5;
+  if (this.sphere) {
+    if (Math.abs(this.sin_p12 - 1) <= EPSLN) {
+      //North Pole case
+      p.x = this.x0 + this.a * (HALF_PI - lat) * Math.sin(dlon);
+      p.y = this.y0 - this.a * (HALF_PI - lat) * Math.cos(dlon);
+      return p;
+    }
+    else if (Math.abs(this.sin_p12 + 1) <= EPSLN) {
+      //South Pole case
+      p.x = this.x0 + this.a * (HALF_PI + lat) * Math.sin(dlon);
+      p.y = this.y0 + this.a * (HALF_PI + lat) * Math.cos(dlon);
+      return p;
+    }
+    else {
+      //default case
+      cos_c = this.sin_p12 * sinphi + this.cos_p12 * cosphi * Math.cos(dlon);
+      c = Math.acos(cos_c);
+      kp = c ? c / Math.sin(c) : 1;
+      p.x = this.x0 + this.a * kp * cosphi * Math.sin(dlon);
+      p.y = this.y0 + this.a * kp * (this.cos_p12 * sinphi - this.sin_p12 * cosphi * Math.cos(dlon));
+      return p;
+    }
+  }
+  else {
+    e0 = e0fn(this.es);
+    e1 = e1fn(this.es);
+    e2 = e2fn(this.es);
+    e3 = e3fn(this.es);
+    if (Math.abs(this.sin_p12 - 1) <= EPSLN) {
+      //North Pole case
+      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
+      Ml = this.a * mlfn(e0, e1, e2, e3, lat);
+      p.x = this.x0 + (Mlp - Ml) * Math.sin(dlon);
+      p.y = this.y0 - (Mlp - Ml) * Math.cos(dlon);
+      return p;
+    }
+    else if (Math.abs(this.sin_p12 + 1) <= EPSLN) {
+      //South Pole case
+      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
+      Ml = this.a * mlfn(e0, e1, e2, e3, lat);
+      p.x = this.x0 + (Mlp + Ml) * Math.sin(dlon);
+      p.y = this.y0 + (Mlp + Ml) * Math.cos(dlon);
+      return p;
+    }
+    else {
+      //Default case
+      tanphi = sinphi / cosphi;
+      Nl1 = gN(this.a, this.e, this.sin_p12);
+      Nl = gN(this.a, this.e, sinphi);
+      psi = Math.atan((1 - this.es) * tanphi + this.es * Nl1 * this.sin_p12 / (Nl * cosphi));
+      Az = Math.atan2(Math.sin(dlon), this.cos_p12 * Math.tan(psi) - this.sin_p12 * Math.cos(dlon));
+      if (Az === 0) {
+        s = Math.asin(this.cos_p12 * Math.sin(psi) - this.sin_p12 * Math.cos(psi));
+      }
+      else if (Math.abs(Math.abs(Az) - Math.PI) <= EPSLN) {
+        s = -Math.asin(this.cos_p12 * Math.sin(psi) - this.sin_p12 * Math.cos(psi));
+      }
+      else {
+        s = Math.asin(Math.sin(dlon) * Math.cos(psi) / Math.sin(Az));
+      }
+      G = this.e * this.sin_p12 / Math.sqrt(1 - this.es);
+      H = this.e * this.cos_p12 * Math.cos(Az) / Math.sqrt(1 - this.es);
+      GH = G * H;
+      Hs = H * H;
+      s2 = s * s;
+      s3 = s2 * s;
+      s4 = s3 * s;
+      s5 = s4 * s;
+      c = Nl1 * s * (1 - s2 * Hs * (1 - Hs) / 6 + s3 / 8 * GH * (1 - 2 * Hs) + s4 / 120 * (Hs * (4 - 7 * Hs) - 3 * G * G * (1 - 7 * Hs)) - s5 / 48 * GH);
+      p.x = this.x0 + c * Math.sin(Az);
+      p.y = this.y0 + c * Math.cos(Az);
+      return p;
+    }
+  }
+
+
+}
+
+function aeqd_inverse(p) {
+  p.x -= this.x0;
+  p.y -= this.y0;
+  var rh, z, sinz, cosz, lon, lat, con, e0, e1, e2, e3, Mlp, M, N1, psi, Az, cosAz, tmp, A, B, D, Ee, F, sinpsi;
+  if (this.sphere) {
+    rh = Math.sqrt(p.x * p.x + p.y * p.y);
+    if (rh > (2 * HALF_PI * this.a)) {
+      return;
+    }
+    z = rh / this.a;
+
+    sinz = Math.sin(z);
+    cosz = Math.cos(z);
+
+    lon = this.long0;
+    if (Math.abs(rh) <= EPSLN) {
+      lat = this.lat0;
+    }
+    else {
+      lat = asinz(cosz * this.sin_p12 + (p.y * sinz * this.cos_p12) / rh);
+      con = Math.abs(this.lat0) - HALF_PI;
+      if (Math.abs(con) <= EPSLN) {
+        if (this.lat0 >= 0) {
+          lon = adjust_lon(this.long0 + Math.atan2(p.x, - p.y));
+        }
+        else {
+          lon = adjust_lon(this.long0 - Math.atan2(-p.x, p.y));
+        }
+      }
+      else {
+        /*con = cosz - this.sin_p12 * Math.sin(lat);
+        if ((Math.abs(con) < EPSLN) && (Math.abs(p.x) < EPSLN)) {
+          //no-op, just keep the lon value as is
+        } else {
+          var temp = Math.atan2((p.x * sinz * this.cos_p12), (con * rh));
+          lon = adjust_lon(this.long0 + Math.atan2((p.x * sinz * this.cos_p12), (con * rh)));
+        }*/
+        lon = adjust_lon(this.long0 + Math.atan2(p.x * sinz, rh * this.cos_p12 * cosz - p.y * this.sin_p12 * sinz));
+      }
+    }
+
+    p.x = lon;
+    p.y = lat;
+    return p;
+  }
+  else {
+    e0 = e0fn(this.es);
+    e1 = e1fn(this.es);
+    e2 = e2fn(this.es);
+    e3 = e3fn(this.es);
+    if (Math.abs(this.sin_p12 - 1) <= EPSLN) {
+      //North pole case
+      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
+      rh = Math.sqrt(p.x * p.x + p.y * p.y);
+      M = Mlp - rh;
+      lat = imlfn(M / this.a, e0, e1, e2, e3);
+      lon = adjust_lon(this.long0 + Math.atan2(p.x, - 1 * p.y));
+      p.x = lon;
+      p.y = lat;
+      return p;
+    }
+    else if (Math.abs(this.sin_p12 + 1) <= EPSLN) {
+      //South pole case
+      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
+      rh = Math.sqrt(p.x * p.x + p.y * p.y);
+      M = rh - Mlp;
+
+      lat = imlfn(M / this.a, e0, e1, e2, e3);
+      lon = adjust_lon(this.long0 + Math.atan2(p.x, p.y));
+      p.x = lon;
+      p.y = lat;
+      return p;
+    }
+    else {
+      //default case
+      rh = Math.sqrt(p.x * p.x + p.y * p.y);
+      Az = Math.atan2(p.x, p.y);
+      N1 = gN(this.a, this.e, this.sin_p12);
+      cosAz = Math.cos(Az);
+      tmp = this.e * this.cos_p12 * cosAz;
+      A = -tmp * tmp / (1 - this.es);
+      B = 3 * this.es * (1 - A) * this.sin_p12 * this.cos_p12 * cosAz / (1 - this.es);
+      D = rh / N1;
+      Ee = D - A * (1 + A) * Math.pow(D, 3) / 6 - B * (1 + 3 * A) * Math.pow(D, 4) / 24;
+      F = 1 - A * Ee * Ee / 2 - D * Ee * Ee * Ee / 6;
+      psi = Math.asin(this.sin_p12 * Math.cos(Ee) + this.cos_p12 * Math.sin(Ee) * cosAz);
+      lon = adjust_lon(this.long0 + Math.asin(Math.sin(Az) * Math.sin(Ee) / Math.cos(psi)));
+      sinpsi = Math.sin(psi);
+      lat = Math.atan2((sinpsi - this.es * F * this.sin_p12) * Math.tan(psi), sinpsi * (1 - this.es));
+      p.x = lon;
+      p.y = lat;
+      return p;
+    }
+  }
+
+}
+
+var aeqd_names = ["Azimuthal_Equidistant", "aeqd"];
+/* harmony default export */ var aeqd = ({
+  init: aeqd_init,
+  forward: aeqd_forward,
+  inverse: aeqd_inverse,
+  names: aeqd_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/ortho.js
+
+
+
+
+function ortho_init() {
+  //double temp;      /* temporary variable    */
+
+  /* Place parameters in static storage for common use
+      -------------------------------------------------*/
+  this.sin_p14 = Math.sin(this.lat0);
+  this.cos_p14 = Math.cos(this.lat0);
+}
+
+/* Orthographic forward equations--mapping lat,long to x,y
+    ---------------------------------------------------*/
+function ortho_forward(p) {
+  var sinphi, cosphi; /* sin and cos value        */
+  var dlon; /* delta longitude value      */
+  var coslon; /* cos of longitude        */
+  var ksp; /* scale factor          */
+  var g, x, y;
+  var lon = p.x;
+  var lat = p.y;
+  /* Forward equations
+      -----------------*/
+  dlon = adjust_lon(lon - this.long0);
+
+  sinphi = Math.sin(lat);
+  cosphi = Math.cos(lat);
+
+  coslon = Math.cos(dlon);
+  g = this.sin_p14 * sinphi + this.cos_p14 * cosphi * coslon;
+  ksp = 1;
+  if ((g > 0) || (Math.abs(g) <= EPSLN)) {
+    x = this.a * ksp * cosphi * Math.sin(dlon);
+    y = this.y0 + this.a * ksp * (this.cos_p14 * sinphi - this.sin_p14 * cosphi * coslon);
+  }
+  p.x = x;
+  p.y = y;
+  return p;
+}
+
+function ortho_inverse(p) {
+  var rh; /* height above ellipsoid      */
+  var z; /* angle          */
+  var sinz, cosz; /* sin of z and cos of z      */
+  var con;
+  var lon, lat;
+  /* Inverse equations
+      -----------------*/
+  p.x -= this.x0;
+  p.y -= this.y0;
+  rh = Math.sqrt(p.x * p.x + p.y * p.y);
+  z = asinz(rh / this.a);
+
+  sinz = Math.sin(z);
+  cosz = Math.cos(z);
+
+  lon = this.long0;
+  if (Math.abs(rh) <= EPSLN) {
+    lat = this.lat0;
+    p.x = lon;
+    p.y = lat;
+    return p;
+  }
+  lat = asinz(cosz * this.sin_p14 + (p.y * sinz * this.cos_p14) / rh);
+  con = Math.abs(this.lat0) - HALF_PI;
+  if (Math.abs(con) <= EPSLN) {
+    if (this.lat0 >= 0) {
+      lon = adjust_lon(this.long0 + Math.atan2(p.x, - p.y));
+    }
+    else {
+      lon = adjust_lon(this.long0 - Math.atan2(-p.x, p.y));
+    }
+    p.x = lon;
+    p.y = lat;
+    return p;
+  }
+  lon = adjust_lon(this.long0 + Math.atan2((p.x * sinz), rh * this.cos_p14 * cosz - p.y * this.sin_p14 * sinz));
+  p.x = lon;
+  p.y = lat;
+  return p;
+}
+
+var ortho_names = ["ortho"];
+/* harmony default export */ var ortho = ({
+  init: ortho_init,
+  forward: ortho_forward,
+  inverse: ortho_inverse,
+  names: ortho_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/qsc.js
+// QSC projection rewritten from the original PROJ4
+// https://github.com/OSGeo/proj.4/blob/master/src/PJ_qsc.c
+
+
+
+/* constants */
+var FACE_ENUM = {
+    FRONT: 1,
+    RIGHT: 2,
+    BACK: 3,
+    LEFT: 4,
+    TOP: 5,
+    BOTTOM: 6
+};
+
+var AREA_ENUM = {
+    AREA_0: 1,
+    AREA_1: 2,
+    AREA_2: 3,
+    AREA_3: 4
+};
+
+function qsc_init() {
+
+  this.x0 = this.x0 || 0;
+  this.y0 = this.y0 || 0;
+  this.lat0 = this.lat0 || 0;
+  this.long0 = this.long0 || 0;
+  this.lat_ts = this.lat_ts || 0;
+  this.title = this.title || "Quadrilateralized Spherical Cube";
+
+  /* Determine the cube face from the center of projection. */
+  if (this.lat0 >= HALF_PI - FORTPI / 2.0) {
+    this.face = FACE_ENUM.TOP;
+  } else if (this.lat0 <= -(HALF_PI - FORTPI / 2.0)) {
+    this.face = FACE_ENUM.BOTTOM;
+  } else if (Math.abs(this.long0) <= FORTPI) {
+    this.face = FACE_ENUM.FRONT;
+  } else if (Math.abs(this.long0) <= HALF_PI + FORTPI) {
+    this.face = this.long0 > 0.0 ? FACE_ENUM.RIGHT : FACE_ENUM.LEFT;
+  } else {
+    this.face = FACE_ENUM.BACK;
+  }
+
+  /* Fill in useful values for the ellipsoid <-> sphere shift
+   * described in [LK12]. */
+  if (this.es !== 0) {
+    this.one_minus_f = 1 - (this.a - this.b) / this.a;
+    this.one_minus_f_squared = this.one_minus_f * this.one_minus_f;
+  }
+}
+
+// QSC forward equations--mapping lat,long to x,y
+// -----------------------------------------------------------------
+function qsc_forward(p) {
+  var xy = {x: 0, y: 0};
+  var lat, lon;
+  var theta, phi;
+  var t, mu;
+  /* nu; */
+  var area = {value: 0};
+
+  // move lon according to projection's lon
+  p.x -= this.long0;
+
+  /* Convert the geodetic latitude to a geocentric latitude.
+   * This corresponds to the shift from the ellipsoid to the sphere
+   * described in [LK12]. */
+  if (this.es !== 0) {//if (P->es != 0) {
+    lat = Math.atan(this.one_minus_f_squared * Math.tan(p.y));
+  } else {
+    lat = p.y;
+  }
+
+  /* Convert the input lat, lon into theta, phi as used by QSC.
+   * This depends on the cube face and the area on it.
+   * For the top and bottom face, we can compute theta and phi
+   * directly from phi, lam. For the other faces, we must use
+   * unit sphere cartesian coordinates as an intermediate step. */
+  lon = p.x; //lon = lp.lam;
+  if (this.face === FACE_ENUM.TOP) {
+    phi = HALF_PI - lat;
+    if (lon >= FORTPI && lon <= HALF_PI + FORTPI) {
+      area.value = AREA_ENUM.AREA_0;
+      theta = lon - HALF_PI;
+    } else if (lon > HALF_PI + FORTPI || lon <= -(HALF_PI + FORTPI)) {
+      area.value = AREA_ENUM.AREA_1;
+      theta = (lon > 0.0 ? lon - SPI : lon + SPI);
+    } else if (lon > -(HALF_PI + FORTPI) && lon <= -FORTPI) {
+      area.value = AREA_ENUM.AREA_2;
+      theta = lon + HALF_PI;
+    } else {
+      area.value = AREA_ENUM.AREA_3;
+      theta = lon;
+    }
+  } else if (this.face === FACE_ENUM.BOTTOM) {
+    phi = HALF_PI + lat;
+    if (lon >= FORTPI && lon <= HALF_PI + FORTPI) {
+      area.value = AREA_ENUM.AREA_0;
+      theta = -lon + HALF_PI;
+    } else if (lon < FORTPI && lon >= -FORTPI) {
+      area.value = AREA_ENUM.AREA_1;
+      theta = -lon;
+    } else if (lon < -FORTPI && lon >= -(HALF_PI + FORTPI)) {
+      area.value = AREA_ENUM.AREA_2;
+      theta = -lon - HALF_PI;
+    } else {
+      area.value = AREA_ENUM.AREA_3;
+      theta = (lon > 0.0 ? -lon + SPI : -lon - SPI);
+    }
+  } else {
+    var q, r, s;
+    var sinlat, coslat;
+    var sinlon, coslon;
+
+    if (this.face === FACE_ENUM.RIGHT) {
+      lon = qsc_shift_lon_origin(lon, +HALF_PI);
+    } else if (this.face === FACE_ENUM.BACK) {
+      lon = qsc_shift_lon_origin(lon, +SPI);
+    } else if (this.face === FACE_ENUM.LEFT) {
+      lon = qsc_shift_lon_origin(lon, -HALF_PI);
+    }
+    sinlat = Math.sin(lat);
+    coslat = Math.cos(lat);
+    sinlon = Math.sin(lon);
+    coslon = Math.cos(lon);
+    q = coslat * coslon;
+    r = coslat * sinlon;
+    s = sinlat;
+
+    if (this.face === FACE_ENUM.FRONT) {
+      phi = Math.acos(q);
+      theta = qsc_fwd_equat_face_theta(phi, s, r, area);
+    } else if (this.face === FACE_ENUM.RIGHT) {
+      phi = Math.acos(r);
+      theta = qsc_fwd_equat_face_theta(phi, s, -q, area);
+    } else if (this.face === FACE_ENUM.BACK) {
+      phi = Math.acos(-q);
+      theta = qsc_fwd_equat_face_theta(phi, s, -r, area);
+    } else if (this.face === FACE_ENUM.LEFT) {
+      phi = Math.acos(-r);
+      theta = qsc_fwd_equat_face_theta(phi, s, q, area);
+    } else {
+      /* Impossible */
+      phi = theta = 0;
+      area.value = AREA_ENUM.AREA_0;
+    }
+  }
+
+  /* Compute mu and nu for the area of definition.
+   * For mu, see Eq. (3-21) in [OL76], but note the typos:
+   * compare with Eq. (3-14). For nu, see Eq. (3-38). */
+  mu = Math.atan((12 / SPI) * (theta + Math.acos(Math.sin(theta) * Math.cos(FORTPI)) - HALF_PI));
+  t = Math.sqrt((1 - Math.cos(phi)) / (Math.cos(mu) * Math.cos(mu)) / (1 - Math.cos(Math.atan(1 / Math.cos(theta)))));
+
+  /* Apply the result to the real area. */
+  if (area.value === AREA_ENUM.AREA_1) {
+    mu += HALF_PI;
+  } else if (area.value === AREA_ENUM.AREA_2) {
+    mu += SPI;
+  } else if (area.value === AREA_ENUM.AREA_3) {
+    mu += 1.5 * SPI;
+  }
+
+  /* Now compute x, y from mu and nu */
+  xy.x = t * Math.cos(mu);
+  xy.y = t * Math.sin(mu);
+  xy.x = xy.x * this.a + this.x0;
+  xy.y = xy.y * this.a + this.y0;
+
+  p.x = xy.x;
+  p.y = xy.y;
+  return p;
+}
+
+// QSC inverse equations--mapping x,y to lat/long
+// -----------------------------------------------------------------
+function qsc_inverse(p) {
+  var lp = {lam: 0, phi: 0};
+  var mu, nu, cosmu, tannu;
+  var tantheta, theta, cosphi, phi;
+  var t;
+  var area = {value: 0};
+
+  /* de-offset */
+  p.x = (p.x - this.x0) / this.a;
+  p.y = (p.y - this.y0) / this.a;
+
+  /* Convert the input x, y to the mu and nu angles as used by QSC.
+   * This depends on the area of the cube face. */
+  nu = Math.atan(Math.sqrt(p.x * p.x + p.y * p.y));
+  mu = Math.atan2(p.y, p.x);
+  if (p.x >= 0.0 && p.x >= Math.abs(p.y)) {
+    area.value = AREA_ENUM.AREA_0;
+  } else if (p.y >= 0.0 && p.y >= Math.abs(p.x)) {
+    area.value = AREA_ENUM.AREA_1;
+    mu -= HALF_PI;
+  } else if (p.x < 0.0 && -p.x >= Math.abs(p.y)) {
+    area.value = AREA_ENUM.AREA_2;
+    mu = (mu < 0.0 ? mu + SPI : mu - SPI);
+  } else {
+    area.value = AREA_ENUM.AREA_3;
+    mu += HALF_PI;
+  }
+
+  /* Compute phi and theta for the area of definition.
+   * The inverse projection is not described in the original paper, but some
+   * good hints can be found here (as of 2011-12-14):
+   * http://fits.gsfc.nasa.gov/fitsbits/saf.93/saf.9302
+   * (search for "Message-Id: <9302181759.AA25477 at fits.cv.nrao.edu>") */
+  t = (SPI / 12) * Math.tan(mu);
+  tantheta = Math.sin(t) / (Math.cos(t) - (1 / Math.sqrt(2)));
+  theta = Math.atan(tantheta);
+  cosmu = Math.cos(mu);
+  tannu = Math.tan(nu);
+  cosphi = 1 - cosmu * cosmu * tannu * tannu * (1 - Math.cos(Math.atan(1 / Math.cos(theta))));
+  if (cosphi < -1) {
+    cosphi = -1;
+  } else if (cosphi > +1) {
+    cosphi = +1;
+  }
+
+  /* Apply the result to the real area on the cube face.
+   * For the top and bottom face, we can compute phi and lam directly.
+   * For the other faces, we must use unit sphere cartesian coordinates
+   * as an intermediate step. */
+  if (this.face === FACE_ENUM.TOP) {
+    phi = Math.acos(cosphi);
+    lp.phi = HALF_PI - phi;
+    if (area.value === AREA_ENUM.AREA_0) {
+      lp.lam = theta + HALF_PI;
+    } else if (area.value === AREA_ENUM.AREA_1) {
+      lp.lam = (theta < 0.0 ? theta + SPI : theta - SPI);
+    } else if (area.value === AREA_ENUM.AREA_2) {
+      lp.lam = theta - HALF_PI;
+    } else /* area.value == AREA_ENUM.AREA_3 */ {
+      lp.lam = theta;
+    }
+  } else if (this.face === FACE_ENUM.BOTTOM) {
+    phi = Math.acos(cosphi);
+    lp.phi = phi - HALF_PI;
+    if (area.value === AREA_ENUM.AREA_0) {
+      lp.lam = -theta + HALF_PI;
+    } else if (area.value === AREA_ENUM.AREA_1) {
+      lp.lam = -theta;
+    } else if (area.value === AREA_ENUM.AREA_2) {
+      lp.lam = -theta - HALF_PI;
+    } else /* area.value == AREA_ENUM.AREA_3 */ {
+      lp.lam = (theta < 0.0 ? -theta - SPI : -theta + SPI);
+    }
+  } else {
+    /* Compute phi and lam via cartesian unit sphere coordinates. */
+    var q, r, s;
+    q = cosphi;
+    t = q * q;
+    if (t >= 1) {
+      s = 0;
+    } else {
+      s = Math.sqrt(1 - t) * Math.sin(theta);
+    }
+    t += s * s;
+    if (t >= 1) {
+      r = 0;
+    } else {
+      r = Math.sqrt(1 - t);
+    }
+    /* Rotate q,r,s into the correct area. */
+    if (area.value === AREA_ENUM.AREA_1) {
+      t = r;
+      r = -s;
+      s = t;
+    } else if (area.value === AREA_ENUM.AREA_2) {
+      r = -r;
+      s = -s;
+    } else if (area.value === AREA_ENUM.AREA_3) {
+      t = r;
+      r = s;
+      s = -t;
+    }
+    /* Rotate q,r,s into the correct cube face. */
+    if (this.face === FACE_ENUM.RIGHT) {
+      t = q;
+      q = -r;
+      r = t;
+    } else if (this.face === FACE_ENUM.BACK) {
+      q = -q;
+      r = -r;
+    } else if (this.face === FACE_ENUM.LEFT) {
+      t = q;
+      q = r;
+      r = -t;
+    }
+    /* Now compute phi and lam from the unit sphere coordinates. */
+    lp.phi = Math.acos(-s) - HALF_PI;
+    lp.lam = Math.atan2(r, q);
+    if (this.face === FACE_ENUM.RIGHT) {
+      lp.lam = qsc_shift_lon_origin(lp.lam, -HALF_PI);
+    } else if (this.face === FACE_ENUM.BACK) {
+      lp.lam = qsc_shift_lon_origin(lp.lam, -SPI);
+    } else if (this.face === FACE_ENUM.LEFT) {
+      lp.lam = qsc_shift_lon_origin(lp.lam, +HALF_PI);
+    }
+  }
+
+  /* Apply the shift from the sphere to the ellipsoid as described
+   * in [LK12]. */
+  if (this.es !== 0) {
+    var invert_sign;
+    var tanphi, xa;
+    invert_sign = (lp.phi < 0 ? 1 : 0);
+    tanphi = Math.tan(lp.phi);
+    xa = this.b / Math.sqrt(tanphi * tanphi + this.one_minus_f_squared);
+    lp.phi = Math.atan(Math.sqrt(this.a * this.a - xa * xa) / (this.one_minus_f * xa));
+    if (invert_sign) {
+      lp.phi = -lp.phi;
+    }
+  }
+
+  lp.lam += this.long0;
+  p.x = lp.lam;
+  p.y = lp.phi;
+  return p;
+}
+
+/* Helper function for forward projection: compute the theta angle
+ * and determine the area number. */
+function qsc_fwd_equat_face_theta(phi, y, x, area) {
+  var theta;
+  if (phi < EPSLN) {
+    area.value = AREA_ENUM.AREA_0;
+    theta = 0.0;
+  } else {
+    theta = Math.atan2(y, x);
+    if (Math.abs(theta) <= FORTPI) {
+      area.value = AREA_ENUM.AREA_0;
+    } else if (theta > FORTPI && theta <= HALF_PI + FORTPI) {
+      area.value = AREA_ENUM.AREA_1;
+      theta -= HALF_PI;
+    } else if (theta > HALF_PI + FORTPI || theta <= -(HALF_PI + FORTPI)) {
+      area.value = AREA_ENUM.AREA_2;
+      theta = (theta >= 0.0 ? theta - SPI : theta + SPI);
+    } else {
+      area.value = AREA_ENUM.AREA_3;
+      theta += HALF_PI;
+    }
+  }
+  return theta;
+}
+
+/* Helper function: shift the longitude. */
+function qsc_shift_lon_origin(lon, offset) {
+  var slon = lon + offset;
+  if (slon < -SPI) {
+    slon += TWO_PI;
+  } else if (slon > +SPI) {
+    slon -= TWO_PI;
+  }
+  return slon;
+}
+
+var qsc_names = ["Quadrilateralized Spherical Cube", "Quadrilateralized_Spherical_Cube", "qsc"];
+/* harmony default export */ var qsc = ({
+  init: qsc_init,
+  forward: qsc_forward,
+  inverse: qsc_inverse,
+  names: qsc_names
+});
+
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/robin.js
+// Robinson projection
+// Based on https://github.com/OSGeo/proj.4/blob/master/src/PJ_robin.c
+// Polynomial coeficients from http://article.gmane.org/gmane.comp.gis.proj-4.devel/6039
+
+
+
+
+var COEFS_X = [
+    [1.0000, 2.2199e-17, -7.15515e-05, 3.1103e-06],
+    [0.9986, -0.000482243, -2.4897e-05, -1.3309e-06],
+    [0.9954, -0.00083103, -4.48605e-05, -9.86701e-07],
+    [0.9900, -0.00135364, -5.9661e-05, 3.6777e-06],
+    [0.9822, -0.00167442, -4.49547e-06, -5.72411e-06],
+    [0.9730, -0.00214868, -9.03571e-05, 1.8736e-08],
+    [0.9600, -0.00305085, -9.00761e-05, 1.64917e-06],
+    [0.9427, -0.00382792, -6.53386e-05, -2.6154e-06],
+    [0.9216, -0.00467746, -0.00010457, 4.81243e-06],
+    [0.8962, -0.00536223, -3.23831e-05, -5.43432e-06],
+    [0.8679, -0.00609363, -0.000113898, 3.32484e-06],
+    [0.8350, -0.00698325, -6.40253e-05, 9.34959e-07],
+    [0.7986, -0.00755338, -5.00009e-05, 9.35324e-07],
+    [0.7597, -0.00798324, -3.5971e-05, -2.27626e-06],
+    [0.7186, -0.00851367, -7.01149e-05, -8.6303e-06],
+    [0.6732, -0.00986209, -0.000199569, 1.91974e-05],
+    [0.6213, -0.010418, 8.83923e-05, 6.24051e-06],
+    [0.5722, -0.00906601, 0.000182, 6.24051e-06],
+    [0.5322, -0.00677797, 0.000275608, 6.24051e-06]
+];
+
+var COEFS_Y = [
+    [-5.20417e-18, 0.0124, 1.21431e-18, -8.45284e-11],
+    [0.0620, 0.0124, -1.26793e-09, 4.22642e-10],
+    [0.1240, 0.0124, 5.07171e-09, -1.60604e-09],
+    [0.1860, 0.0123999, -1.90189e-08, 6.00152e-09],
+    [0.2480, 0.0124002, 7.10039e-08, -2.24e-08],
+    [0.3100, 0.0123992, -2.64997e-07, 8.35986e-08],
+    [0.3720, 0.0124029, 9.88983e-07, -3.11994e-07],
+    [0.4340, 0.0123893, -3.69093e-06, -4.35621e-07],
+    [0.4958, 0.0123198, -1.02252e-05, -3.45523e-07],
+    [0.5571, 0.0121916, -1.54081e-05, -5.82288e-07],
+    [0.6176, 0.0119938, -2.41424e-05, -5.25327e-07],
+    [0.6769, 0.011713, -3.20223e-05, -5.16405e-07],
+    [0.7346, 0.0113541, -3.97684e-05, -6.09052e-07],
+    [0.7903, 0.0109107, -4.89042e-05, -1.04739e-06],
+    [0.8435, 0.0103431, -6.4615e-05, -1.40374e-09],
+    [0.8936, 0.00969686, -6.4636e-05, -8.547e-06],
+    [0.9394, 0.00840947, -0.000192841, -4.2106e-06],
+    [0.9761, 0.00616527, -0.000256, -4.2106e-06],
+    [1.0000, 0.00328947, -0.000319159, -4.2106e-06]
+];
+
+var FXC = 0.8487;
+var FYC = 1.3523;
+var C1 = R2D/5; // rad to 5-degree interval
+var RC1 = 1/C1;
+var NODES = 18;
+
+var poly3_val = function(coefs, x) {
+    return coefs[0] + x * (coefs[1] + x * (coefs[2] + x * coefs[3]));
+};
+
+var poly3_der = function(coefs, x) {
+    return coefs[1] + x * (2 * coefs[2] + x * 3 * coefs[3]);
+};
+
+function newton_rapshon(f_df, start, max_err, iters) {
+    var x = start;
+    for (; iters; --iters) {
+        var upd = f_df(x);
+        x -= upd;
+        if (Math.abs(upd) < max_err) {
+            break;
+        }
+    }
+    return x;
+}
+
+function robin_init() {
+    this.x0 = this.x0 || 0;
+    this.y0 = this.y0 || 0;
+    this.long0 = this.long0 || 0;
+    this.es = 0;
+    this.title = this.title || "Robinson";
+}
+
+function robin_forward(ll) {
+    var lon = adjust_lon(ll.x - this.long0);
+
+    var dphi = Math.abs(ll.y);
+    var i = Math.floor(dphi * C1);
+    if (i < 0) {
+        i = 0;
+    } else if (i >= NODES) {
+        i = NODES - 1;
+    }
+    dphi = R2D * (dphi - RC1 * i);
+    var xy = {
+        x: poly3_val(COEFS_X[i], dphi) * lon,
+        y: poly3_val(COEFS_Y[i], dphi)
+    };
+    if (ll.y < 0) {
+        xy.y = -xy.y;
+    }
+
+    xy.x = xy.x * this.a * FXC + this.x0;
+    xy.y = xy.y * this.a * FYC + this.y0;
+    return xy;
+}
+
+function robin_inverse(xy) {
+    var ll = {
+        x: (xy.x - this.x0) / (this.a * FXC),
+        y: Math.abs(xy.y - this.y0) / (this.a * FYC)
+    };
+
+    if (ll.y >= 1) { // pathologic case
+        ll.x /= COEFS_X[NODES][0];
+        ll.y = xy.y < 0 ? -HALF_PI : HALF_PI;
+    } else {
+        // find table interval
+        var i = Math.floor(ll.y * NODES);
+        if (i < 0) {
+            i = 0;
+        } else if (i >= NODES) {
+            i = NODES - 1;
+        }
+        for (;;) {
+            if (COEFS_Y[i][0] > ll.y) {
+                --i;
+            } else if (COEFS_Y[i+1][0] <= ll.y) {
+                ++i;
+            } else {
+                break;
+            }
+        }
+        // linear interpolation in 5 degree interval
+        var coefs = COEFS_Y[i];
+        var t = 5 * (ll.y - coefs[0]) / (COEFS_Y[i+1][0] - coefs[0]);
+        // find t so that poly3_val(coefs, t) = ll.y
+        t = newton_rapshon(function(x) {
+            return (poly3_val(coefs, x) - ll.y) / poly3_der(coefs, x);
+        }, t, EPSLN, 100);
+
+        ll.x /= poly3_val(COEFS_X[i], t);
+        ll.y = (5 * i + t) * D2R;
+        if (xy.y < 0) {
+            ll.y = -ll.y;
+        }
+    }
+
+    ll.x = adjust_lon(ll.x + this.long0);
+    return ll;
+}
+
+var robin_names = ["Robinson", "robin"];
+/* harmony default export */ var robin = ({
+  init: robin_init,
+  forward: robin_forward,
+  inverse: robin_inverse,
+  names: robin_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/geocent.js
+
+
+function geocent_init() {
+    this.name = 'geocent';
+
+}
+
+function geocent_forward(p) {
+    var point = geodeticToGeocentric(p, this.es, this.a);
+    return point;
+}
+
+function geocent_inverse(p) {
+    var point = geocentricToGeodetic(p, this.es, this.a, this.b);
+    return point;
+}
+
+var geocent_names = ["Geocentric", 'geocentric', "geocent", "Geocent"];
+/* harmony default export */ var geocent = ({
+    init: geocent_init,
+    forward: geocent_forward,
+    inverse: geocent_inverse,
+    names: geocent_names
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/tpers.js
+
+var mode = {
+  N_POLE: 0,
+  S_POLE: 1,
+  EQUIT: 2,
+  OBLIQ: 3
+};
+
+
+
+
+var tpers_params = {
+  h:     { def: 100000, num: true },           // default is Karman line, no default in PROJ.7
+  azi:   { def: 0, num: true, degrees: true }, // default is North
+  tilt:  { def: 0, num: true, degrees: true }, // default is Nadir
+  long0: { def: 0, num: true },                // default is Greenwich, conversion to rad is automatic
+  lat0:  { def: 0, num: true }                 // default is Equator, conversion to rad is automatic
+};
+
+function tpers_init() {
+  Object.keys(tpers_params).forEach(function (p) {
+    if (typeof this[p] === "undefined") {
+      this[p] = tpers_params[p].def;
+    } else if (tpers_params[p].num && isNaN(this[p])) {
+      throw new Error("Invalid parameter value, must be numeric " + p + " = " + this[p]);
+    } else if (tpers_params[p].num) {
+      this[p] = parseFloat(this[p]);
+    }
+    if (tpers_params[p].degrees) {
+      this[p] = this[p] * D2R;
+    }
+  }.bind(this));
+
+  if (Math.abs((Math.abs(this.lat0) - HALF_PI)) < EPSLN) {
+    this.mode = this.lat0 < 0 ? mode.S_POLE : mode.N_POLE;
+  } else if (Math.abs(this.lat0) < EPSLN) {
+    this.mode = mode.EQUIT;
+  } else {
+    this.mode = mode.OBLIQ;
+    this.sinph0 = Math.sin(this.lat0);
+    this.cosph0 = Math.cos(this.lat0);
+  }
+
+  this.pn1 = this.h / this.a;  // Normalize relative to the Earth's radius
+
+  if (this.pn1 <= 0 || this.pn1 > 1e10) {
+    throw new Error("Invalid height");
+  }
+  
+  this.p = 1 + this.pn1;
+  this.rp = 1 / this.p;
+  this.h1 = 1 / this.pn1;
+  this.pfact = (this.p + 1) * this.h1;
+  this.es = 0;
+
+  var omega = this.tilt;
+  var gamma = this.azi;
+  this.cg = Math.cos(gamma);
+  this.sg = Math.sin(gamma);
+  this.cw = Math.cos(omega);
+  this.sw = Math.sin(omega);
+}
+
+function tpers_forward(p) {
+  p.x -= this.long0;
+  var sinphi = Math.sin(p.y);
+  var cosphi = Math.cos(p.y);
+  var coslam = Math.cos(p.x);
+  var x, y;
+  switch (this.mode) {
+    case mode.OBLIQ:
+      y = this.sinph0 * sinphi + this.cosph0 * cosphi * coslam;
+      break;
+    case mode.EQUIT:
+      y = cosphi * coslam;
+      break;
+    case mode.S_POLE:
+      y = -sinphi;
+      break;
+    case mode.N_POLE:
+      y = sinphi;
+      break;
+  }
+  y = this.pn1 / (this.p - y);
+  x = y * cosphi * Math.sin(p.x);
+
+  switch (this.mode) {
+    case mode.OBLIQ:
+      y *= this.cosph0 * sinphi - this.sinph0 * cosphi * coslam;
+      break;
+    case mode.EQUIT:
+      y *= sinphi;
+      break;
+    case mode.N_POLE:
+      y *= -(cosphi * coslam);
+      break;
+    case mode.S_POLE:
+      y *= cosphi * coslam;
+      break;
+  }
+
+  // Tilt 
+  var yt, ba;
+  yt = y * this.cg + x * this.sg;
+  ba = 1 / (yt * this.sw * this.h1 + this.cw);
+  x = (x * this.cg - y * this.sg) * this.cw * ba;
+  y = yt * ba;
+
+  p.x = x * this.a;
+  p.y = y * this.a;
+  return p;
+}
+
+function tpers_inverse(p) {
+  p.x /= this.a;
+  p.y /= this.a;
+  var r = { x: p.x, y: p.y };
+
+  // Un-Tilt
+  var bm, bq, yt;
+  yt = 1 / (this.pn1 - p.y * this.sw);
+  bm = this.pn1 * p.x * yt;
+  bq = this.pn1 * p.y * this.cw * yt;
+  p.x = bm * this.cg + bq * this.sg;
+  p.y = bq * this.cg - bm * this.sg;
+
+  var rh = hypot(p.x, p.y);
+  if (Math.abs(rh) < EPSLN) {
+    r.x = 0;
+    r.y = p.y;
+  } else {
+    var cosz, sinz;
+    sinz = 1 - rh * rh * this.pfact;
+    sinz = (this.p - Math.sqrt(sinz)) / (this.pn1 / rh + rh / this.pn1);
+    cosz = Math.sqrt(1 - sinz * sinz);
+    switch (this.mode) {
+      case mode.OBLIQ:
+        r.y = Math.asin(cosz * this.sinph0 + p.y * sinz * this.cosph0 / rh);
+        p.y = (cosz - this.sinph0 * Math.sin(r.y)) * rh;
+        p.x *= sinz * this.cosph0;
+        break;
+      case mode.EQUIT:
+        r.y = Math.asin(p.y * sinz / rh);
+        p.y = cosz * rh;
+        p.x *= sinz;
+        break;
+      case mode.N_POLE:
+        r.y = Math.asin(cosz);
+        p.y = -p.y;
+        break;
+      case mode.S_POLE:
+        r.y = -Math.asin(cosz);
+        break;
+    }
+    r.x = Math.atan2(p.x, p.y);
+  }
+
+  p.x = r.x + this.long0;
+  p.y = r.y;
+  return p;
+}
+
+var tpers_names = ["Tilted_Perspective", "tpers"];
+/* harmony default export */ var tpers = ({
+  init: tpers_init,
+  forward: tpers_forward,
+  inverse: tpers_inverse,
+  names: tpers_names
+});
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/geos.js
+
+
+function geos_init() {
+    this.flip_axis = (this.sweep === 'x' ? 1 : 0);
+    this.h = Number(this.h);
+    this.radius_g_1 = this.h / this.a;
+
+    if (this.radius_g_1 <= 0 || this.radius_g_1 > 1e10) {
+        throw new Error();
+    }
+
+    this.radius_g = 1.0 + this.radius_g_1;
+    this.C = this.radius_g * this.radius_g - 1.0;
+
+    if (this.es !== 0.0) {
+        var one_es = 1.0 - this.es;
+        var rone_es = 1 / one_es;
+
+        this.radius_p = Math.sqrt(one_es);
+        this.radius_p2 = one_es;
+        this.radius_p_inv2 = rone_es;
+
+        this.shape = 'ellipse'; // Use as a condition in the forward and inverse functions.
+    } else {
+        this.radius_p = 1.0;
+        this.radius_p2 = 1.0;
+        this.radius_p_inv2 = 1.0;
+
+        this.shape = 'sphere';  // Use as a condition in the forward and inverse functions.
+    }
+
+    if (!this.title) {
+        this.title = "Geostationary Satellite View";
+    }
+}
+
+function geos_forward(p) {
+    var lon = p.x;
+    var lat = p.y;
+    var tmp, v_x, v_y, v_z;
+    lon = lon - this.long0;
+
+    if (this.shape === 'ellipse') {
+        lat = Math.atan(this.radius_p2 * Math.tan(lat));
+        var r = this.radius_p / hypot(this.radius_p * Math.cos(lat), Math.sin(lat));
+
+        v_x = r * Math.cos(lon) * Math.cos(lat);
+        v_y = r * Math.sin(lon) * Math.cos(lat);
+        v_z = r * Math.sin(lat);
+
+        if (((this.radius_g - v_x) * v_x - v_y * v_y - v_z * v_z * this.radius_p_inv2) < 0.0) {
+            p.x = Number.NaN;
+            p.y = Number.NaN;
+            return p;
+        }
+
+        tmp = this.radius_g - v_x;
+        if (this.flip_axis) {
+            p.x = this.radius_g_1 * Math.atan(v_y / hypot(v_z, tmp));
+            p.y = this.radius_g_1 * Math.atan(v_z / tmp);
+        } else {
+            p.x = this.radius_g_1 * Math.atan(v_y / tmp);
+            p.y = this.radius_g_1 * Math.atan(v_z / hypot(v_y, tmp));
+        }
+    } else if (this.shape === 'sphere') {
+        tmp = Math.cos(lat);
+        v_x = Math.cos(lon) * tmp;
+        v_y = Math.sin(lon) * tmp;
+        v_z = Math.sin(lat);
+        tmp = this.radius_g - v_x;
+
+        if (this.flip_axis) {
+            p.x = this.radius_g_1 * Math.atan(v_y / hypot(v_z, tmp));
+            p.y = this.radius_g_1 * Math.atan(v_z / tmp);
+        } else {
+            p.x = this.radius_g_1 * Math.atan(v_y / tmp);
+            p.y = this.radius_g_1 * Math.atan(v_z / hypot(v_y, tmp));
+        }
+    }
+    p.x = p.x * this.a;
+    p.y = p.y * this.a;
+    return p;
+}
+
+function geos_inverse(p) {
+    var v_x = -1.0;
+    var v_y = 0.0;
+    var v_z = 0.0;
+    var a, b, det, k;
+
+    p.x = p.x / this.a;
+    p.y = p.y / this.a;
+
+    if (this.shape === 'ellipse') {
+        if (this.flip_axis) {
+            v_z = Math.tan(p.y / this.radius_g_1);
+            v_y = Math.tan(p.x / this.radius_g_1) * hypot(1.0, v_z);
+        } else {
+            v_y = Math.tan(p.x / this.radius_g_1);
+            v_z = Math.tan(p.y / this.radius_g_1) * hypot(1.0, v_y);
+        }
+
+        var v_zp = v_z / this.radius_p;
+        a = v_y * v_y + v_zp * v_zp + v_x * v_x;
+        b = 2 * this.radius_g * v_x;
+        det = (b * b) - 4 * a * this.C;
+
+        if (det < 0.0) {
+            p.x = Number.NaN;
+            p.y = Number.NaN;
+            return p;
+        }
+
+        k = (-b - Math.sqrt(det)) / (2.0 * a);
+        v_x = this.radius_g + k * v_x;
+        v_y *= k;
+        v_z *= k;
+
+        p.x = Math.atan2(v_y, v_x);
+        p.y = Math.atan(v_z * Math.cos(p.x) / v_x);
+        p.y = Math.atan(this.radius_p_inv2 * Math.tan(p.y));
+    } else if (this.shape === 'sphere') {
+        if (this.flip_axis) {
+            v_z = Math.tan(p.y / this.radius_g_1);
+            v_y = Math.tan(p.x / this.radius_g_1) * Math.sqrt(1.0 + v_z * v_z);
+        } else {
+            v_y = Math.tan(p.x / this.radius_g_1);
+            v_z = Math.tan(p.y / this.radius_g_1) * Math.sqrt(1.0 + v_y * v_y);
+        }
+
+        a = v_y * v_y + v_z * v_z + v_x * v_x;
+        b = 2 * this.radius_g * v_x;
+        det = (b * b) - 4 * a * this.C;
+        if (det < 0.0) {
+            p.x = Number.NaN;
+            p.y = Number.NaN;
+            return p;
+        }
+
+        k = (-b - Math.sqrt(det)) / (2.0 * a);
+        v_x = this.radius_g + k * v_x;
+        v_y *= k;
+        v_z *= k;
+
+        p.x = Math.atan2(v_y, v_x);
+        p.y = Math.atan(v_z * Math.cos(p.x) / v_x);
+    }
+    p.x = p.x + this.long0;
+    return p;
+}
+
+var geos_names = ["Geostationary Satellite View", "Geostationary_Satellite", "geos"];
+/* harmony default export */ var geos = ({
+    init: geos_init,
+    forward: geos_forward,
+    inverse: geos_inverse,
+    names: geos_names,
+});
+
+
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/eqearth.js
+/**
+ * Copyright 2018 Bernie Jenny, Monash University, Melbourne, Australia.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Equal Earth is a projection inspired by the Robinson projection, but unlike
+ * the Robinson projection retains the relative size of areas. The projection
+ * was designed in 2018 by Bojan Savric, Tom Patterson and Bernhard Jenny.
+ *
+ * Publication:
+ * Bojan Savric, Tom Patterson & Bernhard Jenny (2018). The Equal Earth map
+ * projection, International Journal of Geographical Information Science,
+ * DOI: 10.1080/13658816.2018.1504949
+ *
+ * Code released August 2018
+ * Ported to JavaScript and adapted for mapshaper-proj by Matthew Bloch August 2018
+ * Modified for proj4js by Andreas Hocevar by Andreas Hocevar March 2024
+ */
+
+
+
+var A1 = 1.340264,
+    A2 = -0.081106,
+    A3 = 0.000893,
+    A4 = 0.003796,
+    eqearth_M = Math.sqrt(3) / 2.0;
+
+function eqearth_init() {
+  this.es = 0;
+  this.long0 = this.long0 !== undefined ? this.long0 : 0;
+}
+
+function eqearth_forward(p) {
+  var lam = adjust_lon(p.x - this.long0);
+  var phi = p.y;
+  var paramLat = Math.asin(eqearth_M * Math.sin(phi)),
+  paramLatSq = paramLat * paramLat,
+  paramLatPow6 = paramLatSq * paramLatSq * paramLatSq;
+  p.x = lam * Math.cos(paramLat) /
+  (eqearth_M * (A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq)));
+  p.y = paramLat * (A1 + A2 * paramLatSq + paramLatPow6 * (A3 + A4 * paramLatSq));
+
+  p.x = this.a * p.x + this.x0;
+  p.y = this.a * p.y + this.y0;
+  return p;
+}
+
+function eqearth_inverse(p) {
+  p.x = (p.x - this.x0) / this.a;
+  p.y = (p.y - this.y0) / this.a;
+
+  var EPS = 1e-9,
+      NITER = 12,
+      paramLat = p.y,
+      paramLatSq, paramLatPow6, fy, fpy, dlat, i;
+
+  for (i = 0; i < NITER; ++i) {
+    paramLatSq = paramLat * paramLat;
+    paramLatPow6 = paramLatSq * paramLatSq * paramLatSq;
+    fy = paramLat * (A1 + A2 * paramLatSq + paramLatPow6 * (A3 + A4 * paramLatSq)) - p.y;
+    fpy = A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq);
+    paramLat -= dlat = fy / fpy;
+    if (Math.abs(dlat) < EPS) {
+        break;
+    }
+  }
+  paramLatSq = paramLat * paramLat;
+  paramLatPow6 = paramLatSq * paramLatSq * paramLatSq;
+  p.x = eqearth_M * p.x * (A1 + 3 * A2 * paramLatSq + paramLatPow6 * (7 * A3 + 9 * A4 * paramLatSq)) /
+          Math.cos(paramLat);
+  p.y = Math.asin(Math.sin(paramLat) / eqearth_M);
+
+  p.x = adjust_lon(p.x + this.long0);
+  return p;
+}
+
+var eqearth_names = ["eqearth", "Equal Earth", "Equal_Earth"];
+/* harmony default export */ var eqearth = ({
+  init: eqearth_init,
+  forward: eqearth_forward,
+  inverse: eqearth_inverse,
+  names: eqearth_names
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/bonne.js
+
+
+
+
+
+
+
+
+var EPS10 = 1e-10;
+
+function bonne_init() {
+  var c;
+
+  this.phi1 = this.lat1;
+  if (Math.abs(this.phi1) < EPS10) {
+    throw new Error();
+  }
+  if (this.es) {
+    this.en = pj_enfn(this.es);
+    this.m1 = pj_mlfn(this.phi1, this.am1 = Math.sin(this.phi1),
+      c = Math.cos(this.phi1), this.en);
+    this.am1 = c / (Math.sqrt(1 - this.es * this.am1 * this.am1) * this.am1);
+    this.inverse = e_inv;
+    this.forward = e_fwd;
+  } else {
+    if (Math.abs(this.phi1) + EPS10 >= HALF_PI) {
+      this.cphi1 = 0;
+    }
+    else {
+      this.cphi1 = 1 / Math.tan(this.phi1);
+    }
+    this.inverse = s_inv;
+    this.forward = s_fwd;
+  }
+}
+
+function e_fwd(p) {
+  var lam = adjust_lon(p.x - (this.long0 || 0));
+  var phi = p.y;
+  var rh, E, c;
+  rh = this.am1 + this.m1 - pj_mlfn(phi, E = Math.sin(phi), c = Math.cos(phi), this.en);
+  E = c * lam / (rh * Math.sqrt(1 - this.es * E * E));
+  p.x = rh * Math.sin(E);
+  p.y = this.am1 - rh * Math.cos(E);
+
+  p.x = this.a * p.x + (this.x0 || 0);
+  p.y = this.a * p.y + (this.y0 || 0);
+  return p;
+}
+
+function e_inv(p) {
+  p.x = (p.x - (this.x0 || 0)) / this.a;
+  p.y = (p.y - (this.y0 || 0)) / this.a;
+
+  var s, rh, lam, phi;
+  rh = hypot(p.x, p.y = this.am1 - p.y);
+  phi = pj_inv_mlfn(this.am1 + this.m1 - rh, this.es, this.en);
+  if ((s = Math.abs(phi)) < HALF_PI) {
+    s = Math.sin(phi);
+    lam = rh * Math.atan2(p.x, p.y) * Math.sqrt(1 - this.es * s * s) / Math.cos(phi);
+  } else if (Math.abs(s - HALF_PI) <= EPS10) {
+    lam = 0;
+  }
+  else {
+    throw new Error();
+  }
+  p.x = adjust_lon(lam + (this.long0 || 0));
+  p.y = adjust_lat(phi);
+  return p;
+}
+
+function s_fwd(p) {
+  var lam = adjust_lon(p.x - (this.long0 || 0));
+  var phi = p.y;
+  var E, rh;
+  rh = this.cphi1 + this.phi1 - phi;
+  if (Math.abs(rh) > EPS10) {
+    p.x = rh * Math.sin(E = lam * Math.cos(phi) / rh);
+    p.y = this.cphi1 - rh * Math.cos(E);
+  } else {
+    p.x = p.y = 0;
+  }
+
+  p.x = this.a * p.x + (this.x0 || 0);
+  p.y = this.a * p.y + (this.y0 || 0);
+  return p;
+}
+
+function s_inv(p) {
+  p.x = (p.x - (this.x0 || 0)) / this.a;
+  p.y = (p.y - (this.y0 || 0)) / this.a;
+
+  var lam, phi;
+  var rh = hypot(p.x, p.y = this.cphi1 - p.y);
+  phi = this.cphi1 + this.phi1 - rh;
+  if (Math.abs(phi) > HALF_PI) {
+    throw new Error();
+  }
+  if (Math.abs(Math.abs(phi) - HALF_PI) <= EPS10) {
+    lam = 0;
+  } else {
+    lam = rh * Math.atan2(p.x, p.y) / Math.cos(phi);
+  }
+  p.x = adjust_lon(lam + (this.long0 || 0));
+  p.y = adjust_lat(phi);
+  return p;
+}
+
+var bonne_names = ["bonne", "Bonne (Werner lat_1=90)"];
+/* harmony default export */ var bonne = ({
+  init: bonne_init,
+  names: bonne_names
+});
+// CONCATENATED MODULE: ./node_modules/proj4/projs.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* harmony default export */ var proj4_projs = (function(proj4){
+  proj4.Proj.projections.add(tmerc);
+  proj4.Proj.projections.add(etmerc);
+  proj4.Proj.projections.add(utm);
+  proj4.Proj.projections.add(sterea);
+  proj4.Proj.projections.add(stere);
+  proj4.Proj.projections.add(somerc);
+  proj4.Proj.projections.add(omerc);
+  proj4.Proj.projections.add(lcc);
+  proj4.Proj.projections.add(krovak);
+  proj4.Proj.projections.add(cass);
+  proj4.Proj.projections.add(laea);
+  proj4.Proj.projections.add(aea);
+  proj4.Proj.projections.add(gnom);
+  proj4.Proj.projections.add(cea);
+  proj4.Proj.projections.add(eqc);
+  proj4.Proj.projections.add(poly);
+  proj4.Proj.projections.add(nzmg);
+  proj4.Proj.projections.add(mill);
+  proj4.Proj.projections.add(sinu);
+  proj4.Proj.projections.add(moll);
+  proj4.Proj.projections.add(eqdc);
+  proj4.Proj.projections.add(vandg);
+  proj4.Proj.projections.add(aeqd);
+  proj4.Proj.projections.add(ortho);
+  proj4.Proj.projections.add(qsc);
+  proj4.Proj.projections.add(robin);
+  proj4.Proj.projections.add(geocent);
+  proj4.Proj.projections.add(tpers);
+  proj4.Proj.projections.add(geos);
+  proj4.Proj.projections.add(eqearth);
+  proj4.Proj.projections.add(bonne);
+});
+// CONCATENATED MODULE: ./node_modules/proj4/lib/index.js
+
+
+
+
+
+
+
+
+
+
+core.defaultDatum = 'WGS84'; //default datum
+core.Proj = Proj;
+core.WGS84 = new core.Proj('WGS84');
+core.Point = lib_Point;
+core.toPoint = toPoint;
+core.defs = lib_defs;
+core.nadgrid = nadgrid;
+core.transform = transform;
+core.mgrs = mgrs;
+core.version = '__VERSION__';
+proj4_projs(core);
+/* harmony default export */ var lib = (core);
+
+// CONCATENATED MODULE: ./src/proj4.js
+
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { defineProperty_default()(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+
+
+
+// China Geodetic Coordinate System 2000
+lib.defs("EPSG:4490", "+proj=longlat +ellps=GRS80 +no_defs");
+
+// Zone横坐标前加带号， 6度分带
+
+// CGCS2000 / Gauss-Kruger zone 13, bounds : 73.62 35.42 78.01 41.07
+lib.defs("EPSG:4491", "+proj=tmerc +lat_0=0 +lon_0=75 +k=1 +x_0=13500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 14, bounds : 77.98 29.16 84.0 47.23
+lib.defs("EPSG:4492", "+proj=tmerc +lat_0=0 +lon_0=81 +k=1 +x_0=14500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 15, bounds :84.0 27.32 90.0 49.18
+lib.defs("EPSG:4493", "+proj=tmerc +lat_0=0 +lon_0=87 +k=1 +x_0=15500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 16, bounds :90.0 27.71 96.01 47.9
+lib.defs("EPSG:4494", "+proj=tmerc +lat_0=0 +lon_0=93 +k=1 +x_0=16500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 17
+lib.defs("EPSG:4495", "+proj=tmerc +lat_0=0 +lon_0=99 +k=1 +x_0=17500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 18
+lib.defs("EPSG:4496", "+proj=tmerc +lat_0=0 +lon_0=105 +k=1 +x_0=18500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 19
+lib.defs("EPSG:4497", "+proj=tmerc +lat_0=0 +lon_0=111 +k=1 +x_0=19500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 20
+lib.defs("EPSG:4498", "+proj=tmerc +lat_0=0 +lon_0=117 +k=1 +x_0=20500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 21
+lib.defs("EPSG:4499", "+proj=tmerc +lat_0=0 +lon_0=123 +k=1 +x_0=21500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 22
+lib.defs("EPSG:4500", "+proj=tmerc +lat_0=0 +lon_0=129 +k=1 +x_0=22500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger zone 23
+lib.defs("EPSG:4501", "+proj=tmerc +lat_0=0 +lon_0=135 +k=1 +x_0=23500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+
+// Zone 横坐标前加带号， 3度分带
+
+// CGCS2000 / 3-degree Gauss-Kruger zone 25 , bounds:  73.62 35.81  76.5 40.65
+lib.defs("EPSG:4513", "+proj=tmerc +lat_0=0 +lon_0=75 +k=1 +x_0=25500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 26 , bounds:  76.5 31.03  79.5 41.83
+lib.defs("EPSG:4514", "+proj=tmerc +lat_0=0 +lon_0=78 +k=1 +x_0=26500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 27 , bounds:  79.5 29.95 82.51 45.88
+lib.defs("EPSG:4515", "+proj=tmerc +lat_0=0 +lon_0=81 +k=1 +x_0=27500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 28
+lib.defs("EPSG:4516", "+proj=tmerc +lat_0=0 +lon_0=84 +k=1 +x_0=28500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 29
+lib.defs("EPSG:4517", "+proj=tmerc +lat_0=0 +lon_0=87 +k=1 +x_0=29500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 30
+lib.defs("EPSG:4518", "+proj=tmerc +lat_0=0 +lon_0=90 +k=1 +x_0=30500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 31
+lib.defs("EPSG:4519", "+proj=tmerc +lat_0=0 +lon_0=93 +k=1 +x_0=31500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 32
+lib.defs("EPSG:4520", "+proj=tmerc +lat_0=0 +lon_0=96 +k=1 +x_0=32500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 33
+lib.defs("EPSG:4521", "+proj=tmerc +lat_0=0 +lon_0=99 +k=1 +x_0=33500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 34
+lib.defs("EPSG:4522", "+proj=tmerc +lat_0=0 +lon_0=102 +k=1 +x_0=34500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 35
+lib.defs("EPSG:4523", "+proj=tmerc +lat_0=0 +lon_0=105 +k=1 +x_0=35500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 36
+lib.defs("EPSG:4524", "+proj=tmerc +lat_0=0 +lon_0=108 +k=1 +x_0=36500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 37
+lib.defs("EPSG:4525", "+proj=tmerc +lat_0=0 +lon_0=111 +k=1 +x_0=37500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 38
+lib.defs("EPSG:4526", "+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=38500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 39
+lib.defs("EPSG:4527", "+proj=tmerc +lat_0=0 +lon_0=117 +k=1 +x_0=39500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 40
+lib.defs("EPSG:4528", "+proj=tmerc +lat_0=0 +lon_0=120 +k=1 +x_0=40500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 41
+lib.defs("EPSG:4529", "+proj=tmerc +lat_0=0 +lon_0=123 +k=1 +x_0=41500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 42
+lib.defs("EPSG:4530", "+proj=tmerc +lat_0=0 +lon_0=126 +k=1 +x_0=42500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 43
+lib.defs("EPSG:4531", "+proj=tmerc +lat_0=0 +lon_0=129 +k=1 +x_0=43500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 44
+lib.defs("EPSG:4532", "+proj=tmerc +lat_0=0 +lon_0=132 +k=1 +x_0=44500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger zone 45
+lib.defs("EPSG:4533", "+proj=tmerc +lat_0=0 +lon_0=135 +k=1 +x_0=45500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+
+// CM 横坐标前不加带号， 6度分带
+
+// CGCS2000 / Gauss-Kruger CM 75E
+lib.defs("EPSG:4502", "+proj=tmerc +lat_0=0 +lon_0=75 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 81E
+lib.defs("EPSG:4503", "+proj=tmerc +lat_0=0 +lon_0=81 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 87E
+lib.defs("EPSG:4504", "+proj=tmerc +lat_0=0 +lon_0=87 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 93E
+lib.defs("EPSG:4505", "+proj=tmerc +lat_0=0 +lon_0=93 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 99E
+lib.defs("EPSG:4506", "+proj=tmerc +lat_0=0 +lon_0=99 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 105E
+lib.defs("EPSG:4507", "+proj=tmerc +lat_0=0 +lon_0=105 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 111E
+lib.defs("EPSG:4508", "+proj=tmerc +lat_0=0 +lon_0=111 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 117E
+lib.defs("EPSG:4509", "+proj=tmerc +lat_0=0 +lon_0=117 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 123E
+lib.defs("EPSG:4510", "+proj=tmerc +lat_0=0 +lon_0=123 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 129E
+lib.defs("EPSG:4511", "+proj=tmerc +lat_0=0 +lon_0=129 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / Gauss-Kruger CM 135E
+lib.defs("EPSG:4512", "+proj=tmerc +lat_0=0 +lon_0=135 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+
+// CM 横坐标前不加带号， 3度分带
+
+// CGCS2000 / 3-degree Gauss-Kruger CM 75E, bounds: 73.62 35.81 76.5 40.65
+lib.defs("EPSG:4534", "+proj=tmerc +lat_0=0 +lon_0=75 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 78E, bounds: 76.5 31.03 79.5 41.83
+lib.defs("EPSG:4535", "+proj=tmerc +lat_0=0 +lon_0=78 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 81E, bounds: 79.5 29.95 82.51 45.88
+lib.defs("EPSG:4536", "+proj=tmerc +lat_0=0 +lon_0=81 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 84E
+lib.defs("EPSG:4537", "+proj=tmerc +lat_0=0 +lon_0=84 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 87E
+lib.defs("EPSG:4538", "+proj=tmerc +lat_0=0 +lon_0=87 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 90E
+lib.defs("EPSG:4539", "+proj=tmerc +lat_0=0 +lon_0=90 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 93E
+lib.defs("EPSG:4540", "+proj=tmerc +lat_0=0 +lon_0=93 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 96E
+lib.defs("EPSG:4541", "+proj=tmerc +lat_0=0 +lon_0=96 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 99E
+lib.defs("EPSG:4542", "+proj=tmerc +lat_0=0 +lon_0=99 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 102E
+lib.defs("EPSG:4543", "+proj=tmerc +lat_0=0 +lon_0=102 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 105E
+lib.defs("EPSG:4544", "+proj=tmerc +lat_0=0 +lon_0=105 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 108E
+lib.defs("EPSG:4545", "+proj=tmerc +lat_0=0 +lon_0=108 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 111E
+lib.defs("EPSG:4546", "+proj=tmerc +lat_0=0 +lon_0=111 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 114E
+lib.defs("EPSG:4547", "+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 117E
+lib.defs("EPSG:4548", "+proj=tmerc +lat_0=0 +lon_0=117 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 120E
+lib.defs("EPSG:4549", "+proj=tmerc +lat_0=0 +lon_0=120 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 123E
+lib.defs("EPSG:4550", "+proj=tmerc +lat_0=0 +lon_0=123 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 126E
+lib.defs("EPSG:4551", "+proj=tmerc +lat_0=0 +lon_0=126 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 129E
+lib.defs("EPSG:4552", "+proj=tmerc +lat_0=0 +lon_0=129 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 132E
+lib.defs("EPSG:4553", "+proj=tmerc +lat_0=0 +lon_0=132 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+// CGCS2000 / 3-degree Gauss-Kruger CM 135E
+lib.defs("EPSG:4554", "+proj=tmerc +lat_0=0 +lon_0=135 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
+function getProj4(value) {
+  if (window.proj4) {
+    return window.proj4(value);
+  }
+  if (window.mars3d && window.mars3d.proj4) {
+    return window.mars3d.proj4(value);
+  }
+  return lib(value);
+}
+
+// 获取内部支持的坐标系列表
+function getCrsList() {
+  var arr = [];
+  for (var key in lib.defs) {
+    if (key.startsWith("EPSG:")) {
+      arr.push(_objectSpread({
+        crs: key
+      }, lib.defs[key]));
+    }
+  }
+  return arr;
+}
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -2178,39 +10347,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    if (superCtor) {
-      ctor.super_ = superCtor
-      ctor.prototype = Object.create(superCtor.prototype, {
-        constructor: {
-          value: ctor,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      })
-    }
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    if (superCtor) {
-      ctor.super_ = superCtor
-      var TempCtor = function () {}
-      TempCtor.prototype = superCtor.prototype
-      ctor.prototype = new TempCtor()
-      ctor.prototype.constructor = ctor
-    }
-  }
-}
-
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2245,7 +10381,7 @@ if (typeof Object.create === 'function') {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(12);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -2260,12 +10396,12 @@ var objectKeys = Object.keys || function (obj) {
 module.exports = Duplex;
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(8));
-util.inherits = __webpack_require__(5);
+var util = Object.create(__webpack_require__(9));
+util.inherits = __webpack_require__(10);
 /*</replacement>*/
 
-var Readable = __webpack_require__(20);
-var Writable = __webpack_require__(24);
+var Readable = __webpack_require__(28);
+var Writable = __webpack_require__(32);
 
 util.inherits(Duplex, Readable);
 
@@ -2349,6 +10485,372 @@ Duplex.prototype._destroy = function (err, cb) {
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var undefined;
+
+var $Error = __webpack_require__(75);
+var $EvalError = __webpack_require__(76);
+var $RangeError = __webpack_require__(77);
+var $ReferenceError = __webpack_require__(78);
+var $SyntaxError = __webpack_require__(35);
+var $TypeError = __webpack_require__(11);
+var $URIError = __webpack_require__(79);
+
+var $Function = Function;
+
+// eslint-disable-next-line consistent-return
+var getEvalledConstructor = function (expressionSyntax) {
+	try {
+		return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
+	} catch (e) {}
+};
+
+var $gOPD = Object.getOwnPropertyDescriptor;
+if ($gOPD) {
+	try {
+		$gOPD({}, '');
+	} catch (e) {
+		$gOPD = null; // this is IE 8, which has a broken gOPD
+	}
+}
+
+var throwTypeError = function () {
+	throw new $TypeError();
+};
+var ThrowTypeError = $gOPD
+	? (function () {
+		try {
+			// eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
+			arguments.callee; // IE 8 does not throw here
+			return throwTypeError;
+		} catch (calleeThrows) {
+			try {
+				// IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
+				return $gOPD(arguments, 'callee').get;
+			} catch (gOPDthrows) {
+				return throwTypeError;
+			}
+		}
+	}())
+	: throwTypeError;
+
+var hasSymbols = __webpack_require__(80)();
+var hasProto = __webpack_require__(82)();
+
+var getProto = Object.getPrototypeOf || (
+	hasProto
+		? function (x) { return x.__proto__; } // eslint-disable-line no-proto
+		: null
+);
+
+var needsEval = {};
+
+var TypedArray = typeof Uint8Array === 'undefined' || !getProto ? undefined : getProto(Uint8Array);
+
+var INTRINSICS = {
+	__proto__: null,
+	'%AggregateError%': typeof AggregateError === 'undefined' ? undefined : AggregateError,
+	'%Array%': Array,
+	'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined : ArrayBuffer,
+	'%ArrayIteratorPrototype%': hasSymbols && getProto ? getProto([][Symbol.iterator]()) : undefined,
+	'%AsyncFromSyncIteratorPrototype%': undefined,
+	'%AsyncFunction%': needsEval,
+	'%AsyncGenerator%': needsEval,
+	'%AsyncGeneratorFunction%': needsEval,
+	'%AsyncIteratorPrototype%': needsEval,
+	'%Atomics%': typeof Atomics === 'undefined' ? undefined : Atomics,
+	'%BigInt%': typeof BigInt === 'undefined' ? undefined : BigInt,
+	'%BigInt64Array%': typeof BigInt64Array === 'undefined' ? undefined : BigInt64Array,
+	'%BigUint64Array%': typeof BigUint64Array === 'undefined' ? undefined : BigUint64Array,
+	'%Boolean%': Boolean,
+	'%DataView%': typeof DataView === 'undefined' ? undefined : DataView,
+	'%Date%': Date,
+	'%decodeURI%': decodeURI,
+	'%decodeURIComponent%': decodeURIComponent,
+	'%encodeURI%': encodeURI,
+	'%encodeURIComponent%': encodeURIComponent,
+	'%Error%': $Error,
+	'%eval%': eval, // eslint-disable-line no-eval
+	'%EvalError%': $EvalError,
+	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined : Float32Array,
+	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined : Float64Array,
+	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined : FinalizationRegistry,
+	'%Function%': $Function,
+	'%GeneratorFunction%': needsEval,
+	'%Int8Array%': typeof Int8Array === 'undefined' ? undefined : Int8Array,
+	'%Int16Array%': typeof Int16Array === 'undefined' ? undefined : Int16Array,
+	'%Int32Array%': typeof Int32Array === 'undefined' ? undefined : Int32Array,
+	'%isFinite%': isFinite,
+	'%isNaN%': isNaN,
+	'%IteratorPrototype%': hasSymbols && getProto ? getProto(getProto([][Symbol.iterator]())) : undefined,
+	'%JSON%': typeof JSON === 'object' ? JSON : undefined,
+	'%Map%': typeof Map === 'undefined' ? undefined : Map,
+	'%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols || !getProto ? undefined : getProto(new Map()[Symbol.iterator]()),
+	'%Math%': Math,
+	'%Number%': Number,
+	'%Object%': Object,
+	'%parseFloat%': parseFloat,
+	'%parseInt%': parseInt,
+	'%Promise%': typeof Promise === 'undefined' ? undefined : Promise,
+	'%Proxy%': typeof Proxy === 'undefined' ? undefined : Proxy,
+	'%RangeError%': $RangeError,
+	'%ReferenceError%': $ReferenceError,
+	'%Reflect%': typeof Reflect === 'undefined' ? undefined : Reflect,
+	'%RegExp%': RegExp,
+	'%Set%': typeof Set === 'undefined' ? undefined : Set,
+	'%SetIteratorPrototype%': typeof Set === 'undefined' || !hasSymbols || !getProto ? undefined : getProto(new Set()[Symbol.iterator]()),
+	'%SharedArrayBuffer%': typeof SharedArrayBuffer === 'undefined' ? undefined : SharedArrayBuffer,
+	'%String%': String,
+	'%StringIteratorPrototype%': hasSymbols && getProto ? getProto(''[Symbol.iterator]()) : undefined,
+	'%Symbol%': hasSymbols ? Symbol : undefined,
+	'%SyntaxError%': $SyntaxError,
+	'%ThrowTypeError%': ThrowTypeError,
+	'%TypedArray%': TypedArray,
+	'%TypeError%': $TypeError,
+	'%Uint8Array%': typeof Uint8Array === 'undefined' ? undefined : Uint8Array,
+	'%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined : Uint8ClampedArray,
+	'%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined : Uint16Array,
+	'%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined : Uint32Array,
+	'%URIError%': $URIError,
+	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined : WeakMap,
+	'%WeakRef%': typeof WeakRef === 'undefined' ? undefined : WeakRef,
+	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined : WeakSet
+};
+
+if (getProto) {
+	try {
+		null.error; // eslint-disable-line no-unused-expressions
+	} catch (e) {
+		// https://github.com/tc39/proposal-shadowrealm/pull/384#issuecomment-1364264229
+		var errorProto = getProto(getProto(e));
+		INTRINSICS['%Error.prototype%'] = errorProto;
+	}
+}
+
+var doEval = function doEval(name) {
+	var value;
+	if (name === '%AsyncFunction%') {
+		value = getEvalledConstructor('async function () {}');
+	} else if (name === '%GeneratorFunction%') {
+		value = getEvalledConstructor('function* () {}');
+	} else if (name === '%AsyncGeneratorFunction%') {
+		value = getEvalledConstructor('async function* () {}');
+	} else if (name === '%AsyncGenerator%') {
+		var fn = doEval('%AsyncGeneratorFunction%');
+		if (fn) {
+			value = fn.prototype;
+		}
+	} else if (name === '%AsyncIteratorPrototype%') {
+		var gen = doEval('%AsyncGenerator%');
+		if (gen && getProto) {
+			value = getProto(gen.prototype);
+		}
+	}
+
+	INTRINSICS[name] = value;
+
+	return value;
+};
+
+var LEGACY_ALIASES = {
+	__proto__: null,
+	'%ArrayBufferPrototype%': ['ArrayBuffer', 'prototype'],
+	'%ArrayPrototype%': ['Array', 'prototype'],
+	'%ArrayProto_entries%': ['Array', 'prototype', 'entries'],
+	'%ArrayProto_forEach%': ['Array', 'prototype', 'forEach'],
+	'%ArrayProto_keys%': ['Array', 'prototype', 'keys'],
+	'%ArrayProto_values%': ['Array', 'prototype', 'values'],
+	'%AsyncFunctionPrototype%': ['AsyncFunction', 'prototype'],
+	'%AsyncGenerator%': ['AsyncGeneratorFunction', 'prototype'],
+	'%AsyncGeneratorPrototype%': ['AsyncGeneratorFunction', 'prototype', 'prototype'],
+	'%BooleanPrototype%': ['Boolean', 'prototype'],
+	'%DataViewPrototype%': ['DataView', 'prototype'],
+	'%DatePrototype%': ['Date', 'prototype'],
+	'%ErrorPrototype%': ['Error', 'prototype'],
+	'%EvalErrorPrototype%': ['EvalError', 'prototype'],
+	'%Float32ArrayPrototype%': ['Float32Array', 'prototype'],
+	'%Float64ArrayPrototype%': ['Float64Array', 'prototype'],
+	'%FunctionPrototype%': ['Function', 'prototype'],
+	'%Generator%': ['GeneratorFunction', 'prototype'],
+	'%GeneratorPrototype%': ['GeneratorFunction', 'prototype', 'prototype'],
+	'%Int8ArrayPrototype%': ['Int8Array', 'prototype'],
+	'%Int16ArrayPrototype%': ['Int16Array', 'prototype'],
+	'%Int32ArrayPrototype%': ['Int32Array', 'prototype'],
+	'%JSONParse%': ['JSON', 'parse'],
+	'%JSONStringify%': ['JSON', 'stringify'],
+	'%MapPrototype%': ['Map', 'prototype'],
+	'%NumberPrototype%': ['Number', 'prototype'],
+	'%ObjectPrototype%': ['Object', 'prototype'],
+	'%ObjProto_toString%': ['Object', 'prototype', 'toString'],
+	'%ObjProto_valueOf%': ['Object', 'prototype', 'valueOf'],
+	'%PromisePrototype%': ['Promise', 'prototype'],
+	'%PromiseProto_then%': ['Promise', 'prototype', 'then'],
+	'%Promise_all%': ['Promise', 'all'],
+	'%Promise_reject%': ['Promise', 'reject'],
+	'%Promise_resolve%': ['Promise', 'resolve'],
+	'%RangeErrorPrototype%': ['RangeError', 'prototype'],
+	'%ReferenceErrorPrototype%': ['ReferenceError', 'prototype'],
+	'%RegExpPrototype%': ['RegExp', 'prototype'],
+	'%SetPrototype%': ['Set', 'prototype'],
+	'%SharedArrayBufferPrototype%': ['SharedArrayBuffer', 'prototype'],
+	'%StringPrototype%': ['String', 'prototype'],
+	'%SymbolPrototype%': ['Symbol', 'prototype'],
+	'%SyntaxErrorPrototype%': ['SyntaxError', 'prototype'],
+	'%TypedArrayPrototype%': ['TypedArray', 'prototype'],
+	'%TypeErrorPrototype%': ['TypeError', 'prototype'],
+	'%Uint8ArrayPrototype%': ['Uint8Array', 'prototype'],
+	'%Uint8ClampedArrayPrototype%': ['Uint8ClampedArray', 'prototype'],
+	'%Uint16ArrayPrototype%': ['Uint16Array', 'prototype'],
+	'%Uint32ArrayPrototype%': ['Uint32Array', 'prototype'],
+	'%URIErrorPrototype%': ['URIError', 'prototype'],
+	'%WeakMapPrototype%': ['WeakMap', 'prototype'],
+	'%WeakSetPrototype%': ['WeakSet', 'prototype']
+};
+
+var bind = __webpack_require__(16);
+var hasOwn = __webpack_require__(84);
+var $concat = bind.call(Function.call, Array.prototype.concat);
+var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
+var $replace = bind.call(Function.call, String.prototype.replace);
+var $strSlice = bind.call(Function.call, String.prototype.slice);
+var $exec = bind.call(Function.call, RegExp.prototype.exec);
+
+/* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
+var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
+var reEscapeChar = /\\(\\)?/g; /** Used to match backslashes in property paths. */
+var stringToPath = function stringToPath(string) {
+	var first = $strSlice(string, 0, 1);
+	var last = $strSlice(string, -1);
+	if (first === '%' && last !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected closing `%`');
+	} else if (last === '%' && first !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected opening `%`');
+	}
+	var result = [];
+	$replace(string, rePropName, function (match, number, quote, subString) {
+		result[result.length] = quote ? $replace(subString, reEscapeChar, '$1') : number || match;
+	});
+	return result;
+};
+/* end adaptation */
+
+var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
+	var intrinsicName = name;
+	var alias;
+	if (hasOwn(LEGACY_ALIASES, intrinsicName)) {
+		alias = LEGACY_ALIASES[intrinsicName];
+		intrinsicName = '%' + alias[0] + '%';
+	}
+
+	if (hasOwn(INTRINSICS, intrinsicName)) {
+		var value = INTRINSICS[intrinsicName];
+		if (value === needsEval) {
+			value = doEval(intrinsicName);
+		}
+		if (typeof value === 'undefined' && !allowMissing) {
+			throw new $TypeError('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
+		}
+
+		return {
+			alias: alias,
+			name: intrinsicName,
+			value: value
+		};
+	}
+
+	throw new $SyntaxError('intrinsic ' + name + ' does not exist!');
+};
+
+module.exports = function GetIntrinsic(name, allowMissing) {
+	if (typeof name !== 'string' || name.length === 0) {
+		throw new $TypeError('intrinsic name must be a non-empty string');
+	}
+	if (arguments.length > 1 && typeof allowMissing !== 'boolean') {
+		throw new $TypeError('"allowMissing" argument must be a boolean');
+	}
+
+	if ($exec(/^%?[^%]*%?$/, name) === null) {
+		throw new $SyntaxError('`%` may not be present anywhere but at the beginning and end of the intrinsic name');
+	}
+	var parts = stringToPath(name);
+	var intrinsicBaseName = parts.length > 0 ? parts[0] : '';
+
+	var intrinsic = getBaseIntrinsic('%' + intrinsicBaseName + '%', allowMissing);
+	var intrinsicRealName = intrinsic.name;
+	var value = intrinsic.value;
+	var skipFurtherCaching = false;
+
+	var alias = intrinsic.alias;
+	if (alias) {
+		intrinsicBaseName = alias[0];
+		$spliceApply(parts, $concat([0, 1], alias));
+	}
+
+	for (var i = 1, isOwn = true; i < parts.length; i += 1) {
+		var part = parts[i];
+		var first = $strSlice(part, 0, 1);
+		var last = $strSlice(part, -1);
+		if (
+			(
+				(first === '"' || first === "'" || first === '`')
+				|| (last === '"' || last === "'" || last === '`')
+			)
+			&& first !== last
+		) {
+			throw new $SyntaxError('property names with quotes must have matching quotes');
+		}
+		if (part === 'constructor' || !isOwn) {
+			skipFurtherCaching = true;
+		}
+
+		intrinsicBaseName += '.' + part;
+		intrinsicRealName = '%' + intrinsicBaseName + '%';
+
+		if (hasOwn(INTRINSICS, intrinsicRealName)) {
+			value = INTRINSICS[intrinsicRealName];
+		} else if (value != null) {
+			if (!(part in value)) {
+				if (!allowMissing) {
+					throw new $TypeError('base intrinsic for ' + name + ' exists, but the property is not available.');
+				}
+				return void undefined;
+			}
+			if ($gOPD && (i + 1) >= parts.length) {
+				var desc = $gOPD(value, part);
+				isOwn = !!desc;
+
+				// By convention, when a data property is converted to an accessor
+				// property to emulate a data property that does not suffer from
+				// the override mistake, that accessor's getter is marked with
+				// an `originalValue` property. Here, when we detect this, we
+				// uphold the illusion by pretending to see that original data
+				// property, i.e., returning the value rather than the getter
+				// itself.
+				if (isOwn && 'get' in desc && !('originalValue' in desc.get)) {
+					value = desc.get;
+				} else {
+					value = value[part];
+				}
+			} else {
+				isOwn = hasOwn(value, part);
+				value = value[part];
+			}
+
+			if (isOwn && !skipFurtherCaching) {
+				INTRINSICS[intrinsicRealName] = value;
+			}
+		}
+	}
+	return value;
+};
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2361,30 +10863,23 @@ function combine(base, type) {
   if (!type) {
     return base;
   }
-
   var url = new URL(base);
   url.pathname = "".concat(url.pathname, ".").concat(type);
   return url.href;
 }
 // CONCATENATED MODULE: ./src/binaryajax.js
-var Promise = __webpack_require__(14);
-
-var http = __webpack_require__(16);
-
-var https = __webpack_require__(65);
-
+var Promise = __webpack_require__(21);
+var http = __webpack_require__(23);
+var https = __webpack_require__(93);
 var Buffer = __webpack_require__(2).Buffer;
-
 
 function binaryAjax(_url, type) {
   return new Promise(function (resolve, reject) {
     var url = combine(_url, type);
     var method = http;
-
     if (url.startsWith('https:')) {
       method = https;
     }
-
     method.get(url, function (res) {
       var len = 0;
       var buffers = [];
@@ -2403,9 +10898,7 @@ function binaryAjax(_url, type) {
             return reject(new Error(Buffer.concat(buffers, len).toString()));
           }
         }
-
         var buffer = Buffer.concat(buffers, len);
-
         if (type === 'prj') {
           resolve(buffer.toString());
         } else {
@@ -2419,7 +10912,7 @@ function binaryAjax(_url, type) {
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -2532,7 +11025,51 @@ function objectToString(o) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
+  }
+}
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/** @type {import('./type')} */
+module.exports = TypeError;
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2582,10 +11119,25 @@ function nextTick(fn, arg1, arg2, arg3) {
 }
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
 
 /***/ }),
-/* 10 */
+/* 13 */
+/***/ (function(module, exports) {
+
+function _typeof(o) {
+  "@babel/helpers - typeof";
+
+  return module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _typeof(o);
+}
+module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2614,7 +11166,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(42).Buffer;
+var Buffer = __webpack_require__(53).Buffer;
 /*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
@@ -2887,7 +11439,7 @@ function simpleEnd(buf) {
 }
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable node/no-deprecated-api */
@@ -2955,25 +11507,85 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 
 /***/ }),
-/* 12 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(30);
+"use strict";
 
-var iterableToArrayLimit = __webpack_require__(31);
 
-var unsupportedIterableToArray = __webpack_require__(32);
+var implementation = __webpack_require__(83);
 
-var nonIterableRest = __webpack_require__(34);
+module.exports = Function.prototype.bind || implementation;
 
-function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(7);
+
+/** @type {import('.')} */
+var $defineProperty = GetIntrinsic('%Object.defineProperty%', true) || false;
+if ($defineProperty) {
+	try {
+		$defineProperty({}, 'a', { value: 1 });
+	} catch (e) {
+		// IE 8 has a broken defineProperty
+		$defineProperty = false;
+	}
 }
 
+module.exports = $defineProperty;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var replace = String.prototype.replace;
+var percentTwenties = /%20/g;
+
+var Format = {
+    RFC1738: 'RFC1738',
+    RFC3986: 'RFC3986'
+};
+
+module.exports = {
+    'default': Format.RFC3986,
+    formatters: {
+        RFC1738: function (value) {
+            return replace.call(value, percentTwenties, '+');
+        },
+        RFC3986: function (value) {
+            return String(value);
+        }
+    },
+    RFC1738: Format.RFC1738,
+    RFC3986: Format.RFC3986
+};
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(42);
+var iterableToArrayLimit = __webpack_require__(43);
+var unsupportedIterableToArray = __webpack_require__(44);
+var nonIterableRest = __webpack_require__(46);
+function _slicedToArray(r, e) {
+  return arrayWithHoles(r) || iterableToArrayLimit(r, e) || unsupportedIterableToArray(r, e) || nonIterableRest();
+}
 module.exports = _slicedToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 13 */
+/* 20 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -2984,12 +11596,12 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 14 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var immediate = __webpack_require__(45);
+var immediate = __webpack_require__(56);
 
 /* istanbul ignore next */
 function INTERNAL() {}
@@ -3264,7 +11876,7 @@ function race(iterable) {
 
 
 /***/ }),
-/* 15 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -3320,7 +11932,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(48);
+__webpack_require__(59);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -3334,14 +11946,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)))
 
 /***/ }),
-/* 16 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(50)
-var response = __webpack_require__(18)
-var extend = __webpack_require__(57)
-var statusCodes = __webpack_require__(58)
-var url = __webpack_require__(26)
+/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(61)
+var response = __webpack_require__(26)
+var extend = __webpack_require__(68)
+var statusCodes = __webpack_require__(69)
+var url = __webpack_require__(34)
 
 var http = exports
 
@@ -3425,7 +12037,7 @@ http.METHODS = [
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)))
 
 /***/ }),
-/* 17 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
@@ -3505,12 +12117,41 @@ xhr = null // Help gc
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)))
 
 /***/ }),
-/* 18 */
+/* 25 */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(17)
-var inherits = __webpack_require__(5)
-var stream = __webpack_require__(19)
+/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(24)
+var inherits = __webpack_require__(25)
+var stream = __webpack_require__(27)
 
 var rStates = exports.readyStates = {
 	UNSENT: 0,
@@ -3733,23 +12374,23 @@ IncomingMessage.prototype._onXHRProgress = function () {
 	}
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4), __webpack_require__(2).Buffer, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(2).Buffer, __webpack_require__(1)))
 
 /***/ }),
-/* 19 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(20);
+exports = module.exports = __webpack_require__(28);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(24);
+exports.Writable = __webpack_require__(32);
 exports.Duplex = __webpack_require__(6);
-exports.Transform = __webpack_require__(25);
-exports.PassThrough = __webpack_require__(55);
+exports.Transform = __webpack_require__(33);
+exports.PassThrough = __webpack_require__(66);
 
 
 /***/ }),
-/* 20 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3778,13 +12419,13 @@ exports.PassThrough = __webpack_require__(55);
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(12);
 /*</replacement>*/
 
 module.exports = Readable;
 
 /*<replacement>*/
-var isArray = __webpack_require__(13);
+var isArray = __webpack_require__(20);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -3794,7 +12435,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(21).EventEmitter;
+var EE = __webpack_require__(29).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -3802,13 +12443,13 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(22);
+var Stream = __webpack_require__(30);
 /*</replacement>*/
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(11).Buffer;
-var OurUint8Array = global.Uint8Array || function () {};
+var Buffer = __webpack_require__(15).Buffer;
+var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
 }
@@ -3819,12 +12460,12 @@ function _isUint8Array(obj) {
 /*</replacement>*/
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(8));
-util.inherits = __webpack_require__(5);
+var util = Object.create(__webpack_require__(9));
+util.inherits = __webpack_require__(10);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(51);
+var debugUtil = __webpack_require__(62);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -3833,8 +12474,8 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(52);
-var destroyImpl = __webpack_require__(23);
+var BufferList = __webpack_require__(63);
+var destroyImpl = __webpack_require__(31);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -3924,7 +12565,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(10).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(14).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -4080,7 +12721,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(10).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(14).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -4378,8 +13019,8 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
       // also returned false.
       // => Check whether `dest` is still a piping destination.
       if ((state.pipesCount === 1 && state.pipes === dest || state.pipesCount > 1 && indexOf(state.pipes, dest) !== -1) && !cleanedUp) {
-        debug('false write response, pause', src._readableState.awaitDrain);
-        src._readableState.awaitDrain++;
+        debug('false write response, pause', state.awaitDrain);
+        state.awaitDrain++;
         increasedAwaitDrain = true;
       }
       src.pause();
@@ -4473,7 +13114,7 @@ Readable.prototype.unpipe = function (dest) {
     state.flowing = false;
 
     for (var i = 0; i < len; i++) {
-      dests[i].emit('unpipe', this, unpipeInfo);
+      dests[i].emit('unpipe', this, { hasUnpiped: false });
     }return this;
   }
 
@@ -4772,10 +13413,10 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1), __webpack_require__(5)))
 
 /***/ }),
-/* 21 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5279,14 +13920,14 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 
 /***/ }),
-/* 22 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(21).EventEmitter;
+module.exports = __webpack_require__(29).EventEmitter;
 
 
 /***/ }),
-/* 23 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5294,7 +13935,7 @@ module.exports = __webpack_require__(21).EventEmitter;
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(12);
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -5307,9 +13948,15 @@ function destroy(err, cb) {
   if (readableDestroyed || writableDestroyed) {
     if (cb) {
       cb(err);
-    } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
-      pna.nextTick(emitErrorNT, this, err);
+    } else if (err) {
+      if (!this._writableState) {
+        pna.nextTick(emitErrorNT, this, err);
+      } else if (!this._writableState.errorEmitted) {
+        this._writableState.errorEmitted = true;
+        pna.nextTick(emitErrorNT, this, err);
+      }
     }
+
     return this;
   }
 
@@ -5327,9 +13974,11 @@ function destroy(err, cb) {
 
   this._destroy(err || null, function (err) {
     if (!cb && err) {
-      pna.nextTick(emitErrorNT, _this, err);
-      if (_this._writableState) {
+      if (!_this._writableState) {
+        pna.nextTick(emitErrorNT, _this, err);
+      } else if (!_this._writableState.errorEmitted) {
         _this._writableState.errorEmitted = true;
+        pna.nextTick(emitErrorNT, _this, err);
       }
     } else if (cb) {
       cb(err);
@@ -5351,6 +14000,8 @@ function undestroy() {
     this._writableState.destroyed = false;
     this._writableState.ended = false;
     this._writableState.ending = false;
+    this._writableState.finalCalled = false;
+    this._writableState.prefinished = false;
     this._writableState.finished = false;
     this._writableState.errorEmitted = false;
   }
@@ -5366,7 +14017,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 24 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5399,7 +14050,7 @@ module.exports = {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(12);
 /*</replacement>*/
 
 module.exports = Writable;
@@ -5436,24 +14087,24 @@ var Duplex;
 Writable.WritableState = WritableState;
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(8));
-util.inherits = __webpack_require__(5);
+var util = Object.create(__webpack_require__(9));
+util.inherits = __webpack_require__(10);
 /*</replacement>*/
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(54)
+  deprecate: __webpack_require__(65)
 };
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(22);
+var Stream = __webpack_require__(30);
 /*</replacement>*/
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(11).Buffer;
-var OurUint8Array = global.Uint8Array || function () {};
+var Buffer = __webpack_require__(15).Buffer;
+var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
 }
@@ -5463,7 +14114,7 @@ function _isUint8Array(obj) {
 
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(23);
+var destroyImpl = __webpack_require__(31);
 
 util.inherits(Writable, Stream);
 
@@ -5721,7 +14372,7 @@ Writable.prototype.uncork = function () {
   if (state.corked) {
     state.corked--;
 
-    if (!state.writing && !state.corked && !state.finished && !state.bufferProcessing && state.bufferedRequest) clearBuffer(this, state);
+    if (!state.writing && !state.corked && !state.bufferProcessing && state.bufferedRequest) clearBuffer(this, state);
   }
 };
 
@@ -5963,7 +14614,7 @@ Writable.prototype.end = function (chunk, encoding, cb) {
   }
 
   // ignore unnecessary end() calls.
-  if (!state.ending && !state.finished) endWritable(this, state, cb);
+  if (!state.ending) endWritable(this, state, cb);
 };
 
 function needFinish(state) {
@@ -6024,11 +14675,9 @@ function onCorkedFinish(corkReq, state, err) {
     cb(err);
     entry = entry.next;
   }
-  if (state.corkedRequestsFree) {
-    state.corkedRequestsFree.next = corkReq;
-  } else {
-    state.corkedRequestsFree = corkReq;
-  }
+
+  // reuse the free corkReq.
+  state.corkedRequestsFree.next = corkReq;
 }
 
 Object.defineProperty(Writable.prototype, 'destroyed', {
@@ -6057,10 +14706,10 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4), __webpack_require__(15).setImmediate, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5), __webpack_require__(22).setImmediate, __webpack_require__(1)))
 
 /***/ }),
-/* 25 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6134,8 +14783,8 @@ module.exports = Transform;
 var Duplex = __webpack_require__(6);
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(8));
-util.inherits = __webpack_require__(5);
+var util = Object.create(__webpack_require__(9));
+util.inherits = __webpack_require__(10);
 /*</replacement>*/
 
 util.inherits(Transform, Duplex);
@@ -6280,42 +14929,36 @@ function done(stream, er, data) {
 }
 
 /***/ }),
-/* 26 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
+/*
+ * Copyright Joyent, Inc. and other Node contributors.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 
 
-var punycode = __webpack_require__(59);
-var util = __webpack_require__(61);
-
-exports.parse = urlParse;
-exports.resolve = urlResolve;
-exports.resolveObject = urlResolveObject;
-exports.format = urlFormat;
-
-exports.Url = Url;
+var punycode = __webpack_require__(70);
 
 function Url() {
   this.protocol = null;
@@ -6334,85 +14977,102 @@ function Url() {
 
 // Reference: RFC 3986, RFC 1808, RFC 2396
 
-// define these here so at least they only have to be
-// compiled once on the first module load.
+/*
+ * define these here so at least they only have to be
+ * compiled once on the first module load.
+ */
 var protocolPattern = /^([a-z0-9.+-]+:)/i,
-    portPattern = /:[0-9]*$/,
+  portPattern = /:[0-9]*$/,
 
-    // Special case for a simple path URL
-    simplePathPattern = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/,
+  // Special case for a simple path URL
+  simplePathPattern = /^(\/\/?(?!\/)[^?\s]*)(\?[^\s]*)?$/,
 
-    // RFC 2396: characters reserved for delimiting URLs.
-    // We actually just auto-escape these.
-    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
+  /*
+   * RFC 2396: characters reserved for delimiting URLs.
+   * We actually just auto-escape these.
+   */
+  delims = [
+    '<', '>', '"', '`', ' ', '\r', '\n', '\t'
+  ],
 
-    // RFC 2396: characters not allowed for various reasons.
-    unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
+  // RFC 2396: characters not allowed for various reasons.
+  unwise = [
+    '{', '}', '|', '\\', '^', '`'
+  ].concat(delims),
 
-    // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
-    autoEscape = ['\''].concat(unwise),
-    // Characters that are never ever allowed in a hostname.
-    // Note that any invalid chars are also handled, but these
-    // are the ones that are *expected* to be seen, so we fast-path
-    // them.
-    nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
-    hostEndingChars = ['/', '?', '#'],
-    hostnameMaxLen = 255,
-    hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/,
-    hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
-    // protocols that can allow "unsafe" and "unwise" chars.
-    unsafeProtocol = {
-      'javascript': true,
-      'javascript:': true
-    },
-    // protocols that never have a hostname.
-    hostlessProtocol = {
-      'javascript': true,
-      'javascript:': true
-    },
-    // protocols that always contain a // bit.
-    slashedProtocol = {
-      'http': true,
-      'https': true,
-      'ftp': true,
-      'gopher': true,
-      'file': true,
-      'http:': true,
-      'https:': true,
-      'ftp:': true,
-      'gopher:': true,
-      'file:': true
-    },
-    querystring = __webpack_require__(62);
+  // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
+  autoEscape = ['\''].concat(unwise),
+  /*
+   * Characters that are never ever allowed in a hostname.
+   * Note that any invalid chars are also handled, but these
+   * are the ones that are *expected* to be seen, so we fast-path
+   * them.
+   */
+  nonHostChars = [
+    '%', '/', '?', ';', '#'
+  ].concat(autoEscape),
+  hostEndingChars = [
+    '/', '?', '#'
+  ],
+  hostnameMaxLen = 255,
+  hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/,
+  hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
+  // protocols that can allow "unsafe" and "unwise" chars.
+  unsafeProtocol = {
+    javascript: true,
+    'javascript:': true
+  },
+  // protocols that never have a hostname.
+  hostlessProtocol = {
+    javascript: true,
+    'javascript:': true
+  },
+  // protocols that always contain a // bit.
+  slashedProtocol = {
+    http: true,
+    https: true,
+    ftp: true,
+    gopher: true,
+    file: true,
+    'http:': true,
+    'https:': true,
+    'ftp:': true,
+    'gopher:': true,
+    'file:': true
+  },
+  querystring = __webpack_require__(72);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
-  if (url && util.isObject(url) && url instanceof Url) return url;
+  if (url && typeof url === 'object' && url instanceof Url) { return url; }
 
-  var u = new Url;
+  var u = new Url();
   u.parse(url, parseQueryString, slashesDenoteHost);
   return u;
 }
 
-Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
-  if (!util.isString(url)) {
+Url.prototype.parse = function (url, parseQueryString, slashesDenoteHost) {
+  if (typeof url !== 'string') {
     throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
   }
 
-  // Copy chrome, IE, opera backslash-handling behavior.
-  // Back slashes before the query string get converted to forward slashes
-  // See: https://code.google.com/p/chromium/issues/detail?id=25916
+  /*
+   * Copy chrome, IE, opera backslash-handling behavior.
+   * Back slashes before the query string get converted to forward slashes
+   * See: https://code.google.com/p/chromium/issues/detail?id=25916
+   */
   var queryIndex = url.indexOf('?'),
-      splitter =
-          (queryIndex !== -1 && queryIndex < url.indexOf('#')) ? '?' : '#',
-      uSplit = url.split(splitter),
-      slashRegex = /\\/g;
+    splitter = queryIndex !== -1 && queryIndex < url.indexOf('#') ? '?' : '#',
+    uSplit = url.split(splitter),
+    slashRegex = /\\/g;
   uSplit[0] = uSplit[0].replace(slashRegex, '/');
   url = uSplit.join(splitter);
 
   var rest = url;
 
-  // trim before proceeding.
-  // This is to support parse stuff like "  http://foo.com  \n"
+  /*
+   * trim before proceeding.
+   * This is to support parse stuff like "  http://foo.com  \n"
+   */
   rest = rest.trim();
 
   if (!slashesDenoteHost && url.split('#').length === 1) {
@@ -6445,11 +15105,13 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     rest = rest.substr(proto.length);
   }
 
-  // figure out if it's got a host
-  // user@server is *always* interpreted as a hostname, and url
-  // resolution will treat //foo/bar as host=foo,path=bar because that's
-  // how the browser resolves relative URLs.
-  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@\/]+@[^@\/]+/)) {
+  /*
+   * figure out if it's got a host
+   * user@server is *always* interpreted as a hostname, and url
+   * resolution will treat //foo/bar as host=foo,path=bar because that's
+   * how the browser resolves relative URLs.
+   */
+  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@/]+@[^@/]+/)) {
     var slashes = rest.substr(0, 2) === '//';
     if (slashes && !(proto && hostlessProtocol[proto])) {
       rest = rest.substr(2);
@@ -6457,46 +15119,54 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     }
   }
 
-  if (!hostlessProtocol[proto] &&
-      (slashes || (proto && !slashedProtocol[proto]))) {
+  if (!hostlessProtocol[proto] && (slashes || (proto && !slashedProtocol[proto]))) {
 
-    // there's a hostname.
-    // the first instance of /, ?, ;, or # ends the host.
-    //
-    // If there is an @ in the hostname, then non-host chars *are* allowed
-    // to the left of the last @ sign, unless some host-ending character
-    // comes *before* the @-sign.
-    // URLs are obnoxious.
-    //
-    // ex:
-    // http://a@b@c/ => user:a@b host:c
-    // http://a@b?@c => user:a host:c path:/?@c
+    /*
+     * there's a hostname.
+     * the first instance of /, ?, ;, or # ends the host.
+     *
+     * If there is an @ in the hostname, then non-host chars *are* allowed
+     * to the left of the last @ sign, unless some host-ending character
+     * comes *before* the @-sign.
+     * URLs are obnoxious.
+     *
+     * ex:
+     * http://a@b@c/ => user:a@b host:c
+     * http://a@b?@c => user:a host:c path:/?@c
+     */
 
-    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
-    // Review our test case against browsers more comprehensively.
+    /*
+     * v0.12 TODO(isaacs): This is not quite how Chrome does things.
+     * Review our test case against browsers more comprehensively.
+     */
 
     // find the first instance of any hostEndingChars
     var hostEnd = -1;
     for (var i = 0; i < hostEndingChars.length; i++) {
       var hec = rest.indexOf(hostEndingChars[i]);
-      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
-        hostEnd = hec;
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd)) { hostEnd = hec; }
     }
 
-    // at this point, either we have an explicit point where the
-    // auth portion cannot go past, or the last @ char is the decider.
+    /*
+     * at this point, either we have an explicit point where the
+     * auth portion cannot go past, or the last @ char is the decider.
+     */
     var auth, atSign;
     if (hostEnd === -1) {
       // atSign can be anywhere.
       atSign = rest.lastIndexOf('@');
     } else {
-      // atSign must be in auth portion.
-      // http://a@b/c@d => host:b auth:a path:/c@d
+      /*
+       * atSign must be in auth portion.
+       * http://a@b/c@d => host:b auth:a path:/c@d
+       */
       atSign = rest.lastIndexOf('@', hostEnd);
     }
 
-    // Now we have a portion which is definitely the auth.
-    // Pull that off.
+    /*
+     * Now we have a portion which is definitely the auth.
+     * Pull that off.
+     */
     if (atSign !== -1) {
       auth = rest.slice(0, atSign);
       rest = rest.slice(atSign + 1);
@@ -6507,12 +15177,10 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     hostEnd = -1;
     for (var i = 0; i < nonHostChars.length; i++) {
       var hec = rest.indexOf(nonHostChars[i]);
-      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
-        hostEnd = hec;
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd)) { hostEnd = hec; }
     }
     // if we still have not hit it, then the entire thing is a host.
-    if (hostEnd === -1)
-      hostEnd = rest.length;
+    if (hostEnd === -1) { hostEnd = rest.length; }
 
     this.host = rest.slice(0, hostEnd);
     rest = rest.slice(hostEnd);
@@ -6520,28 +15188,33 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     // pull out port.
     this.parseHost();
 
-    // we've indicated that there is a hostname,
-    // so even if it's empty, it has to be present.
+    /*
+     * we've indicated that there is a hostname,
+     * so even if it's empty, it has to be present.
+     */
     this.hostname = this.hostname || '';
 
-    // if hostname begins with [ and ends with ]
-    // assume that it's an IPv6 address.
-    var ipv6Hostname = this.hostname[0] === '[' &&
-        this.hostname[this.hostname.length - 1] === ']';
+    /*
+     * if hostname begins with [ and ends with ]
+     * assume that it's an IPv6 address.
+     */
+    var ipv6Hostname = this.hostname[0] === '[' && this.hostname[this.hostname.length - 1] === ']';
 
     // validate a little.
     if (!ipv6Hostname) {
       var hostparts = this.hostname.split(/\./);
       for (var i = 0, l = hostparts.length; i < l; i++) {
         var part = hostparts[i];
-        if (!part) continue;
+        if (!part) { continue; }
         if (!part.match(hostnamePartPattern)) {
           var newpart = '';
           for (var j = 0, k = part.length; j < k; j++) {
             if (part.charCodeAt(j) > 127) {
-              // we replace non-ASCII char with a temporary placeholder
-              // we need this to make sure size of hostname is not
-              // broken by replacing non-ASCII by nothing
+              /*
+               * we replace non-ASCII char with a temporary placeholder
+               * we need this to make sure size of hostname is not
+               * broken by replacing non-ASCII by nothing
+               */
               newpart += 'x';
             } else {
               newpart += part[j];
@@ -6574,10 +15247,12 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     }
 
     if (!ipv6Hostname) {
-      // IDNA Support: Returns a punycoded representation of "domain".
-      // It only converts parts of the domain name that
-      // have non-ASCII characters, i.e. it doesn't matter if
-      // you call it with a domain that already is ASCII-only.
+      /*
+       * IDNA Support: Returns a punycoded representation of "domain".
+       * It only converts parts of the domain name that
+       * have non-ASCII characters, i.e. it doesn't matter if
+       * you call it with a domain that already is ASCII-only.
+       */
       this.hostname = punycode.toASCII(this.hostname);
     }
 
@@ -6586,8 +15261,10 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     this.host = h + p;
     this.href += this.host;
 
-    // strip [ and ] from the hostname
-    // the host field still retains them, though
+    /*
+     * strip [ and ] from the hostname
+     * the host field still retains them, though
+     */
     if (ipv6Hostname) {
       this.hostname = this.hostname.substr(1, this.hostname.length - 2);
       if (rest[0] !== '/') {
@@ -6596,17 +15273,20 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     }
   }
 
-  // now rest is set to the post-host stuff.
-  // chop off any delim chars.
+  /*
+   * now rest is set to the post-host stuff.
+   * chop off any delim chars.
+   */
   if (!unsafeProtocol[lowerProto]) {
 
-    // First, make 100% sure that any "autoEscape" chars get
-    // escaped, even if encodeURIComponent doesn't think they
-    // need to be.
+    /*
+     * First, make 100% sure that any "autoEscape" chars get
+     * escaped, even if encodeURIComponent doesn't think they
+     * need to be.
+     */
     for (var i = 0, l = autoEscape.length; i < l; i++) {
       var ae = autoEscape[i];
-      if (rest.indexOf(ae) === -1)
-        continue;
+      if (rest.indexOf(ae) === -1) { continue; }
       var esc = encodeURIComponent(ae);
       if (esc === ae) {
         esc = escape(ae);
@@ -6614,7 +15294,6 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
       rest = rest.split(ae).join(esc);
     }
   }
-
 
   // chop off from the tail first.
   var hash = rest.indexOf('#');
@@ -6636,13 +15315,12 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     this.search = '';
     this.query = {};
   }
-  if (rest) this.pathname = rest;
-  if (slashedProtocol[lowerProto] &&
-      this.hostname && !this.pathname) {
+  if (rest) { this.pathname = rest; }
+  if (slashedProtocol[lowerProto] && this.hostname && !this.pathname) {
     this.pathname = '/';
   }
 
-  //to support http.request
+  // to support http.request
   if (this.pathname || this.search) {
     var p = this.pathname || '';
     var s = this.search || '';
@@ -6656,16 +15334,18 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
 
 // format a parsed object into a url string
 function urlFormat(obj) {
-  // ensure it's an object, and not a string url.
-  // If it's an obj, this is a no-op.
-  // this way, you can call url_format() on strings
-  // to clean up potentially wonky urls.
-  if (util.isString(obj)) obj = urlParse(obj);
-  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
+  /*
+   * ensure it's an object, and not a string url.
+   * If it's an obj, this is a no-op.
+   * this way, you can call url_format() on strings
+   * to clean up potentially wonky urls.
+   */
+  if (typeof obj === 'string') { obj = urlParse(obj); }
+  if (!(obj instanceof Url)) { return Url.prototype.format.call(obj); }
   return obj.format();
 }
 
-Url.prototype.format = function() {
+Url.prototype.format = function () {
   var auth = this.auth || '';
   if (auth) {
     auth = encodeURIComponent(auth);
@@ -6674,46 +15354,46 @@ Url.prototype.format = function() {
   }
 
   var protocol = this.protocol || '',
-      pathname = this.pathname || '',
-      hash = this.hash || '',
-      host = false,
-      query = '';
+    pathname = this.pathname || '',
+    hash = this.hash || '',
+    host = false,
+    query = '';
 
   if (this.host) {
     host = auth + this.host;
   } else if (this.hostname) {
-    host = auth + (this.hostname.indexOf(':') === -1 ?
-        this.hostname :
-        '[' + this.hostname + ']');
+    host = auth + (this.hostname.indexOf(':') === -1 ? this.hostname : '[' + this.hostname + ']');
     if (this.port) {
       host += ':' + this.port;
     }
   }
 
-  if (this.query &&
-      util.isObject(this.query) &&
-      Object.keys(this.query).length) {
-    query = querystring.stringify(this.query);
+  if (this.query && typeof this.query === 'object' && Object.keys(this.query).length) {
+    query = querystring.stringify(this.query, {
+      arrayFormat: 'repeat',
+      addQueryPrefix: false
+    });
   }
 
   var search = this.search || (query && ('?' + query)) || '';
 
-  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
+  if (protocol && protocol.substr(-1) !== ':') { protocol += ':'; }
 
-  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
-  // unless they had them to begin with.
-  if (this.slashes ||
-      (!protocol || slashedProtocol[protocol]) && host !== false) {
+  /*
+   * only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
+   * unless they had them to begin with.
+   */
+  if (this.slashes || (!protocol || slashedProtocol[protocol]) && host !== false) {
     host = '//' + (host || '');
-    if (pathname && pathname.charAt(0) !== '/') pathname = '/' + pathname;
+    if (pathname && pathname.charAt(0) !== '/') { pathname = '/' + pathname; }
   } else if (!host) {
     host = '';
   }
 
-  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
-  if (search && search.charAt(0) !== '?') search = '?' + search;
+  if (hash && hash.charAt(0) !== '#') { hash = '#' + hash; }
+  if (search && search.charAt(0) !== '?') { search = '?' + search; }
 
-  pathname = pathname.replace(/[?#]/g, function(match) {
+  pathname = pathname.replace(/[?#]/g, function (match) {
     return encodeURIComponent(match);
   });
   search = search.replace('#', '%23');
@@ -6725,17 +15405,17 @@ function urlResolve(source, relative) {
   return urlParse(source, false, true).resolve(relative);
 }
 
-Url.prototype.resolve = function(relative) {
+Url.prototype.resolve = function (relative) {
   return this.resolveObject(urlParse(relative, false, true)).format();
 };
 
 function urlResolveObject(source, relative) {
-  if (!source) return relative;
+  if (!source) { return relative; }
   return urlParse(source, false, true).resolveObject(relative);
 }
 
-Url.prototype.resolveObject = function(relative) {
-  if (util.isString(relative)) {
+Url.prototype.resolveObject = function (relative) {
+  if (typeof relative === 'string') {
     var rel = new Url();
     rel.parse(relative, false, true);
     relative = rel;
@@ -6748,8 +15428,10 @@ Url.prototype.resolveObject = function(relative) {
     result[tkey] = this[tkey];
   }
 
-  // hash is always overridden, no matter what.
-  // even href="" will remove it.
+  /*
+   * hash is always overridden, no matter what.
+   * even href="" will remove it.
+   */
   result.hash = relative.hash;
 
   // if the relative url is empty, then there's nothing left to do here.
@@ -6764,14 +15446,13 @@ Url.prototype.resolveObject = function(relative) {
     var rkeys = Object.keys(relative);
     for (var rk = 0; rk < rkeys.length; rk++) {
       var rkey = rkeys[rk];
-      if (rkey !== 'protocol')
-        result[rkey] = relative[rkey];
+      if (rkey !== 'protocol') { result[rkey] = relative[rkey]; }
     }
 
-    //urlParse appends trailing / to urls like http://www.example.com
-    if (slashedProtocol[result.protocol] &&
-        result.hostname && !result.pathname) {
-      result.path = result.pathname = '/';
+    // urlParse appends trailing / to urls like http://www.example.com
+    if (slashedProtocol[result.protocol] && result.hostname && !result.pathname) {
+      result.pathname = '/';
+      result.path = result.pathname;
     }
 
     result.href = result.format();
@@ -6779,14 +15460,16 @@ Url.prototype.resolveObject = function(relative) {
   }
 
   if (relative.protocol && relative.protocol !== result.protocol) {
-    // if it's a known url protocol, then changing
-    // the protocol does weird things
-    // first, if it's not file:, then we MUST have a host,
-    // and if there was a path
-    // to begin with, then we MUST have a path.
-    // if it is file:, then the host is dropped,
-    // because that's known to be hostless.
-    // anything else is assumed to be absolute.
+    /*
+     * if it's a known url protocol, then changing
+     * the protocol does weird things
+     * first, if it's not file:, then we MUST have a host,
+     * and if there was a path
+     * to begin with, then we MUST have a path.
+     * if it is file:, then the host is dropped,
+     * because that's known to be hostless.
+     * anything else is assumed to be absolute.
+     */
     if (!slashedProtocol[relative.protocol]) {
       var keys = Object.keys(relative);
       for (var v = 0; v < keys.length; v++) {
@@ -6800,11 +15483,11 @@ Url.prototype.resolveObject = function(relative) {
     result.protocol = relative.protocol;
     if (!relative.host && !hostlessProtocol[relative.protocol]) {
       var relPath = (relative.pathname || '').split('/');
-      while (relPath.length && !(relative.host = relPath.shift()));
-      if (!relative.host) relative.host = '';
-      if (!relative.hostname) relative.hostname = '';
-      if (relPath[0] !== '') relPath.unshift('');
-      if (relPath.length < 2) relPath.unshift('');
+      while (relPath.length && !(relative.host = relPath.shift())) { }
+      if (!relative.host) { relative.host = ''; }
+      if (!relative.hostname) { relative.hostname = ''; }
+      if (relPath[0] !== '') { relPath.unshift(''); }
+      if (relPath.length < 2) { relPath.unshift(''); }
       result.pathname = relPath.join('/');
     } else {
       result.pathname = relative.pathname;
@@ -6826,37 +15509,33 @@ Url.prototype.resolveObject = function(relative) {
     return result;
   }
 
-  var isSourceAbs = (result.pathname && result.pathname.charAt(0) === '/'),
-      isRelAbs = (
-          relative.host ||
-          relative.pathname && relative.pathname.charAt(0) === '/'
-      ),
-      mustEndAbs = (isRelAbs || isSourceAbs ||
-                    (result.host && relative.pathname)),
-      removeAllDots = mustEndAbs,
-      srcPath = result.pathname && result.pathname.split('/') || [],
-      relPath = relative.pathname && relative.pathname.split('/') || [],
-      psychotic = result.protocol && !slashedProtocol[result.protocol];
+  var isSourceAbs = result.pathname && result.pathname.charAt(0) === '/',
+    isRelAbs = relative.host || relative.pathname && relative.pathname.charAt(0) === '/',
+    mustEndAbs = isRelAbs || isSourceAbs || (result.host && relative.pathname),
+    removeAllDots = mustEndAbs,
+    srcPath = result.pathname && result.pathname.split('/') || [],
+    relPath = relative.pathname && relative.pathname.split('/') || [],
+    psychotic = result.protocol && !slashedProtocol[result.protocol];
 
-  // if the url is a non-slashed url, then relative
-  // links like ../.. should be able
-  // to crawl up to the hostname, as well.  This is strange.
-  // result.protocol has already been set by now.
-  // Later on, put the first path part into the host field.
+  /*
+   * if the url is a non-slashed url, then relative
+   * links like ../.. should be able
+   * to crawl up to the hostname, as well.  This is strange.
+   * result.protocol has already been set by now.
+   * Later on, put the first path part into the host field.
+   */
   if (psychotic) {
     result.hostname = '';
     result.port = null;
     if (result.host) {
-      if (srcPath[0] === '') srcPath[0] = result.host;
-      else srcPath.unshift(result.host);
+      if (srcPath[0] === '') { srcPath[0] = result.host; } else { srcPath.unshift(result.host); }
     }
     result.host = '';
     if (relative.protocol) {
       relative.hostname = null;
       relative.port = null;
       if (relative.host) {
-        if (relPath[0] === '') relPath[0] = relative.host;
-        else relPath.unshift(relative.host);
+        if (relPath[0] === '') { relPath[0] = relative.host; } else { relPath.unshift(relative.host); }
       }
       relative.host = null;
     }
@@ -6865,54 +15544,60 @@ Url.prototype.resolveObject = function(relative) {
 
   if (isRelAbs) {
     // it's absolute.
-    result.host = (relative.host || relative.host === '') ?
-                  relative.host : result.host;
-    result.hostname = (relative.hostname || relative.hostname === '') ?
-                      relative.hostname : result.hostname;
+    result.host = relative.host || relative.host === '' ? relative.host : result.host;
+    result.hostname = relative.hostname || relative.hostname === '' ? relative.hostname : result.hostname;
     result.search = relative.search;
     result.query = relative.query;
     srcPath = relPath;
     // fall through to the dot-handling below.
   } else if (relPath.length) {
-    // it's relative
-    // throw away the existing file, and take the new path instead.
-    if (!srcPath) srcPath = [];
+    /*
+     * it's relative
+     * throw away the existing file, and take the new path instead.
+     */
+    if (!srcPath) { srcPath = []; }
     srcPath.pop();
     srcPath = srcPath.concat(relPath);
     result.search = relative.search;
     result.query = relative.query;
-  } else if (!util.isNullOrUndefined(relative.search)) {
-    // just pull out the search.
-    // like href='?foo'.
-    // Put this after the other two cases because it simplifies the booleans
+  } else if (relative.search != null) {
+    /*
+     * just pull out the search.
+     * like href='?foo'.
+     * Put this after the other two cases because it simplifies the booleans
+     */
     if (psychotic) {
-      result.hostname = result.host = srcPath.shift();
-      //occationaly the auth can get stuck only in host
-      //this especially happens in cases like
-      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
-      var authInHost = result.host && result.host.indexOf('@') > 0 ?
-                       result.host.split('@') : false;
+      result.host = srcPath.shift();
+      result.hostname = result.host;
+      /*
+       * occationaly the auth can get stuck only in host
+       * this especially happens in cases like
+       * url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+       */
+      var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
       if (authInHost) {
         result.auth = authInHost.shift();
-        result.host = result.hostname = authInHost.shift();
+        result.hostname = authInHost.shift();
+        result.host = result.hostname;
       }
     }
     result.search = relative.search;
     result.query = relative.query;
-    //to support http.request
-    if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
-      result.path = (result.pathname ? result.pathname : '') +
-                    (result.search ? result.search : '');
+    // to support http.request
+    if (result.pathname !== null || result.search !== null) {
+      result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
     }
     result.href = result.format();
     return result;
   }
 
   if (!srcPath.length) {
-    // no path at all.  easy.
-    // we've already handled the other stuff above.
+    /*
+     * no path at all.  easy.
+     * we've already handled the other stuff above.
+     */
     result.pathname = null;
-    //to support http.request
+    // to support http.request
     if (result.search) {
       result.path = '/' + result.search;
     } else {
@@ -6922,16 +15607,18 @@ Url.prototype.resolveObject = function(relative) {
     return result;
   }
 
-  // if a url ENDs in . or .., then it must get a trailing slash.
-  // however, if it ends in anything else non-slashy,
-  // then it must NOT get a trailing slash.
+  /*
+   * if a url ENDs in . or .., then it must get a trailing slash.
+   * however, if it ends in anything else non-slashy,
+   * then it must NOT get a trailing slash.
+   */
   var last = srcPath.slice(-1)[0];
-  var hasTrailingSlash = (
-      (result.host || relative.host || srcPath.length > 1) &&
-      (last === '.' || last === '..') || last === '');
+  var hasTrailingSlash = (result.host || relative.host || srcPath.length > 1) && (last === '.' || last === '..') || last === '';
 
-  // strip single dots, resolve double dots to parent dir
-  // if the path tries to go above the root, `up` ends up > 0
+  /*
+   * strip single dots, resolve double dots to parent dir
+   * if the path tries to go above the root, `up` ends up > 0
+   */
   var up = 0;
   for (var i = srcPath.length; i >= 0; i--) {
     last = srcPath[i];
@@ -6953,8 +15640,7 @@ Url.prototype.resolveObject = function(relative) {
     }
   }
 
-  if (mustEndAbs && srcPath[0] !== '' &&
-      (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
+  if (mustEndAbs && srcPath[0] !== '' && (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
     srcPath.unshift('');
   }
 
@@ -6962,21 +15648,22 @@ Url.prototype.resolveObject = function(relative) {
     srcPath.push('');
   }
 
-  var isAbsolute = srcPath[0] === '' ||
-      (srcPath[0] && srcPath[0].charAt(0) === '/');
+  var isAbsolute = srcPath[0] === '' || (srcPath[0] && srcPath[0].charAt(0) === '/');
 
   // put the host back
   if (psychotic) {
-    result.hostname = result.host = isAbsolute ? '' :
-                                    srcPath.length ? srcPath.shift() : '';
-    //occationaly the auth can get stuck only in host
-    //this especially happens in cases like
-    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
-    var authInHost = result.host && result.host.indexOf('@') > 0 ?
-                     result.host.split('@') : false;
+    result.hostname = isAbsolute ? '' : srcPath.length ? srcPath.shift() : '';
+    result.host = result.hostname;
+    /*
+     * occationaly the auth can get stuck only in host
+     * this especially happens in cases like
+     * url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+     */
+    var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
     if (authInHost) {
       result.auth = authInHost.shift();
-      result.host = result.hostname = authInHost.shift();
+      result.hostname = authInHost.shift();
+      result.host = result.hostname;
     }
   }
 
@@ -6986,17 +15673,16 @@ Url.prototype.resolveObject = function(relative) {
     srcPath.unshift('');
   }
 
-  if (!srcPath.length) {
+  if (srcPath.length > 0) {
+    result.pathname = srcPath.join('/');
+  } else {
     result.pathname = null;
     result.path = null;
-  } else {
-    result.pathname = srcPath.join('/');
   }
 
-  //to support request.http
-  if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
-    result.path = (result.pathname ? result.pathname : '') +
-                  (result.search ? result.search : '');
+  // to support request.http
+  if (result.pathname !== null || result.search !== null) {
+    result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
   }
   result.auth = relative.auth || result.auth;
   result.slashes = result.slashes || relative.slashes;
@@ -7004,7 +15690,7 @@ Url.prototype.resolveObject = function(relative) {
   return result;
 };
 
-Url.prototype.parseHost = function() {
+Url.prototype.parseHost = function () {
   var host = this.host;
   var port = portPattern.exec(host);
   if (port) {
@@ -7014,12 +15700,325 @@ Url.prototype.parseHost = function() {
     }
     host = host.substr(0, host.length - port.length);
   }
-  if (host) this.hostname = host;
+  if (host) { this.hostname = host; }
+};
+
+exports.parse = urlParse;
+exports.resolve = urlResolve;
+exports.resolveObject = urlResolveObject;
+exports.format = urlFormat;
+
+exports.Url = Url;
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/** @type {import('./syntax')} */
+module.exports = SyntaxError;
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(7);
+
+var $gOPD = GetIntrinsic('%Object.getOwnPropertyDescriptor%', true);
+
+if ($gOPD) {
+	try {
+		$gOPD([], 'length');
+	} catch (e) {
+		// IE 8 has a broken gOPD
+		$gOPD = null;
+	}
+}
+
+module.exports = $gOPD;
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var formats = __webpack_require__(18);
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var hexTable = (function () {
+    var array = [];
+    for (var i = 0; i < 256; ++i) {
+        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
+    }
+
+    return array;
+}());
+
+var compactQueue = function compactQueue(queue) {
+    while (queue.length > 1) {
+        var item = queue.pop();
+        var obj = item.obj[item.prop];
+
+        if (isArray(obj)) {
+            var compacted = [];
+
+            for (var j = 0; j < obj.length; ++j) {
+                if (typeof obj[j] !== 'undefined') {
+                    compacted.push(obj[j]);
+                }
+            }
+
+            item.obj[item.prop] = compacted;
+        }
+    }
+};
+
+var arrayToObject = function arrayToObject(source, options) {
+    var obj = options && options.plainObjects ? Object.create(null) : {};
+    for (var i = 0; i < source.length; ++i) {
+        if (typeof source[i] !== 'undefined') {
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+var merge = function merge(target, source, options) {
+    /* eslint no-param-reassign: 0 */
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (isArray(target)) {
+            target.push(source);
+        } else if (target && typeof target === 'object') {
+            if ((options && (options.plainObjects || options.allowPrototypes)) || !has.call(Object.prototype, source)) {
+                target[source] = true;
+            }
+        } else {
+            return [target, source];
+        }
+
+        return target;
+    }
+
+    if (!target || typeof target !== 'object') {
+        return [target].concat(source);
+    }
+
+    var mergeTarget = target;
+    if (isArray(target) && !isArray(source)) {
+        mergeTarget = arrayToObject(target, options);
+    }
+
+    if (isArray(target) && isArray(source)) {
+        source.forEach(function (item, i) {
+            if (has.call(target, i)) {
+                var targetItem = target[i];
+                if (targetItem && typeof targetItem === 'object' && item && typeof item === 'object') {
+                    target[i] = merge(targetItem, item, options);
+                } else {
+                    target.push(item);
+                }
+            } else {
+                target[i] = item;
+            }
+        });
+        return target;
+    }
+
+    return Object.keys(source).reduce(function (acc, key) {
+        var value = source[key];
+
+        if (has.call(acc, key)) {
+            acc[key] = merge(acc[key], value, options);
+        } else {
+            acc[key] = value;
+        }
+        return acc;
+    }, mergeTarget);
+};
+
+var assign = function assignSingleSource(target, source) {
+    return Object.keys(source).reduce(function (acc, key) {
+        acc[key] = source[key];
+        return acc;
+    }, target);
+};
+
+var decode = function (str, decoder, charset) {
+    var strWithoutPlus = str.replace(/\+/g, ' ');
+    if (charset === 'iso-8859-1') {
+        // unescape never throws, no try...catch needed:
+        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+    }
+    // utf-8
+    try {
+        return decodeURIComponent(strWithoutPlus);
+    } catch (e) {
+        return strWithoutPlus;
+    }
+};
+
+var limit = 1024;
+
+/* eslint operator-linebreak: [2, "before"] */
+
+var encode = function encode(str, defaultEncoder, charset, kind, format) {
+    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
+    // It has been adapted here for stricter adherence to RFC 3986
+    if (str.length === 0) {
+        return str;
+    }
+
+    var string = str;
+    if (typeof str === 'symbol') {
+        string = Symbol.prototype.toString.call(str);
+    } else if (typeof str !== 'string') {
+        string = String(str);
+    }
+
+    if (charset === 'iso-8859-1') {
+        return escape(string).replace(/%u[0-9a-f]{4}/gi, function ($0) {
+            return '%26%23' + parseInt($0.slice(2), 16) + '%3B';
+        });
+    }
+
+    var out = '';
+    for (var j = 0; j < string.length; j += limit) {
+        var segment = string.length >= limit ? string.slice(j, j + limit) : string;
+        var arr = [];
+
+        for (var i = 0; i < segment.length; ++i) {
+            var c = segment.charCodeAt(i);
+            if (
+                c === 0x2D // -
+                || c === 0x2E // .
+                || c === 0x5F // _
+                || c === 0x7E // ~
+                || (c >= 0x30 && c <= 0x39) // 0-9
+                || (c >= 0x41 && c <= 0x5A) // a-z
+                || (c >= 0x61 && c <= 0x7A) // A-Z
+                || (format === formats.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
+            ) {
+                arr[arr.length] = segment.charAt(i);
+                continue;
+            }
+
+            if (c < 0x80) {
+                arr[arr.length] = hexTable[c];
+                continue;
+            }
+
+            if (c < 0x800) {
+                arr[arr.length] = hexTable[0xC0 | (c >> 6)]
+                    + hexTable[0x80 | (c & 0x3F)];
+                continue;
+            }
+
+            if (c < 0xD800 || c >= 0xE000) {
+                arr[arr.length] = hexTable[0xE0 | (c >> 12)]
+                    + hexTable[0x80 | ((c >> 6) & 0x3F)]
+                    + hexTable[0x80 | (c & 0x3F)];
+                continue;
+            }
+
+            i += 1;
+            c = 0x10000 + (((c & 0x3FF) << 10) | (segment.charCodeAt(i) & 0x3FF));
+
+            arr[arr.length] = hexTable[0xF0 | (c >> 18)]
+                + hexTable[0x80 | ((c >> 12) & 0x3F)]
+                + hexTable[0x80 | ((c >> 6) & 0x3F)]
+                + hexTable[0x80 | (c & 0x3F)];
+        }
+
+        out += arr.join('');
+    }
+
+    return out;
+};
+
+var compact = function compact(value) {
+    var queue = [{ obj: { o: value }, prop: 'o' }];
+    var refs = [];
+
+    for (var i = 0; i < queue.length; ++i) {
+        var item = queue[i];
+        var obj = item.obj[item.prop];
+
+        var keys = Object.keys(obj);
+        for (var j = 0; j < keys.length; ++j) {
+            var key = keys[j];
+            var val = obj[key];
+            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
+                queue.push({ obj: obj, prop: key });
+                refs.push(val);
+            }
+        }
+    }
+
+    compactQueue(queue);
+
+    return value;
+};
+
+var isRegExp = function isRegExp(obj) {
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+var isBuffer = function isBuffer(obj) {
+    if (!obj || typeof obj !== 'object') {
+        return false;
+    }
+
+    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
+};
+
+var combine = function combine(a, b) {
+    return [].concat(a, b);
+};
+
+var maybeMap = function maybeMap(val, fn) {
+    if (isArray(val)) {
+        var mapped = [];
+        for (var i = 0; i < val.length; i += 1) {
+            mapped.push(fn(val[i]));
+        }
+        return mapped;
+    }
+    return fn(val);
+};
+
+module.exports = {
+    arrayToObject: arrayToObject,
+    assign: assign,
+    combine: combine,
+    compact: compact,
+    decode: decode,
+    encode: encode,
+    isBuffer: isBuffer,
+    isRegExp: isRegExp,
+    maybeMap: maybeMap,
+    merge: merge
 };
 
 
 /***/ }),
-/* 27 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7030,78 +16029,61 @@ Url.prototype.parseHost = function() {
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
 
 
-
-var JSZip = __webpack_require__(47);
-
+var JSZip = __webpack_require__(58);
 function unzip(_x) {
   return _unzip.apply(this, arguments);
 }
-
 function _unzip() {
-  _unzip = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee2(buffer) {
+  _unzip = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee2(buffer) {
     var zip, files, out;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            zip = new JSZip();
-            _context2.next = 3;
-            return zip.loadAsync(buffer);
-
-          case 3:
-            files = zip.file(/.+/);
-            out = {};
-            _context2.next = 7;
-            return Promise.all(files.map( /*#__PURE__*/function () {
-              var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee(a) {
-                var result;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context) {
-                  while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        if (!(a.name.slice(-3).toLowerCase() === 'shp' || a.name.slice(-3).toLowerCase() === 'dbf')) {
-                          _context.next = 6;
-                          break;
-                        }
-
-                        _context.next = 3;
-                        return a.async('nodebuffer');
-
-                      case 3:
-                        result = _context.sent;
-                        _context.next = 9;
-                        break;
-
-                      case 6:
-                        _context.next = 8;
-                        return a.async('text');
-
-                      case 8:
-                        result = _context.sent;
-
-                      case 9:
-                        out[a.name] = result;
-
-                      case 10:
-                      case "end":
-                        return _context.stop();
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          zip = new JSZip();
+          _context2.next = 3;
+          return zip.loadAsync(buffer);
+        case 3:
+          files = zip.file(/.+/);
+          out = {};
+          _context2.next = 7;
+          return Promise.all(files.map(/*#__PURE__*/function () {
+            var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee(a) {
+              var result;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context) {
+                while (1) switch (_context.prev = _context.next) {
+                  case 0:
+                    if (!(a.name.slice(-3).toLowerCase() === 'shp' || a.name.slice(-3).toLowerCase() === 'dbf')) {
+                      _context.next = 6;
+                      break;
                     }
-                  }
-                }, _callee);
-              }));
-
-              return function (_x2) {
-                return _ref.apply(this, arguments);
-              };
-            }()));
-
-          case 7:
-            return _context2.abrupt("return", out);
-
-          case 8:
-          case "end":
-            return _context2.stop();
-        }
+                    _context.next = 3;
+                    return a.async('nodebuffer');
+                  case 3:
+                    result = _context.sent;
+                    _context.next = 9;
+                    break;
+                  case 6:
+                    _context.next = 8;
+                    return a.async('text');
+                  case 8:
+                    result = _context.sent;
+                  case 9:
+                    out[a.name] = result;
+                  case 10:
+                  case "end":
+                    return _context.stop();
+                }
+              }, _callee);
+            }));
+            return function (_x2) {
+              return _ref.apply(this, arguments);
+            };
+          }()));
+        case 7:
+          return _context2.abrupt("return", out);
+        case 8:
+        case "end":
+          return _context2.stop();
       }
     }, _callee2);
   }));
@@ -7109,7 +16091,7 @@ function _unzip() {
 }
 
 /***/ }),
-/* 28 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7119,121 +16101,95 @@ function isClockWise(array) {
   var i = 1;
   var len = array.length;
   var prev, cur;
-
   while (i < len) {
     prev = cur || array[0];
     cur = array[i];
     sum += (cur[0] - prev[0]) * (cur[1] + prev[1]);
     i++;
   }
-
   return sum > 0;
 }
-
 function polyReduce(a, b) {
   if (isClockWise(b) || !a.length) {
     a.push([b]);
   } else {
     a[a.length - 1].push(b);
   }
-
   return a;
 }
-
 ParseShp.prototype.parsePoint = function (data) {
   return {
     type: 'Point',
     coordinates: this.parseCoord(data, 0)
   };
 };
-
 ParseShp.prototype.parseZPoint = function (data) {
   var pointXY = this.parsePoint(data);
   pointXY.coordinates.push(data.readDoubleLE(16));
   return pointXY;
 };
-
 ParseShp.prototype.parsePointArray = function (data, offset, num) {
   var out = [];
   var done = 0;
-
   while (done < num) {
     out.push(this.parseCoord(data, offset));
     offset += 16;
     done++;
   }
-
   return out;
 };
-
 ParseShp.prototype.parseZPointArray = function (data, zOffset, num, coordinates) {
   var i = 0;
-
   while (i < num) {
     coordinates[i].push(data.readDoubleLE(zOffset));
     i++;
     zOffset += 8;
   }
-
   return coordinates;
 };
-
 ParseShp.prototype.parseArrayGroup = function (data, offset, partOffset, num, tot) {
   var out = [];
   var done = 0;
   var curNum;
   var nextNum = 0;
   var pointNumber;
-
   while (done < num) {
     done++;
     partOffset += 4;
     curNum = nextNum;
-
     if (done === num) {
       nextNum = tot;
     } else {
       nextNum = data.readInt32LE(partOffset);
     }
-
     pointNumber = nextNum - curNum;
-
     if (!pointNumber) {
       continue;
     }
-
     out.push(this.parsePointArray(data, offset, pointNumber));
     offset += pointNumber << 4;
   }
-
   return out;
 };
-
 ParseShp.prototype.parseZArrayGroup = function (data, zOffset, num, coordinates) {
   var i = 0;
-
   while (i < num) {
     coordinates[i] = this.parseZPointArray(data, zOffset, coordinates[i].length, coordinates[i]);
     zOffset += coordinates[i].length << 3;
     i++;
   }
-
   return coordinates;
 };
-
 ParseShp.prototype.parseMultiPoint = function (data) {
   var out = {};
   var num = data.readInt32LE(32, true);
-
   if (!num) {
     return null;
   }
-
   var mins = this.parseCoord(data, 0);
   var maxs = this.parseCoord(data, 16);
   out.bbox = [mins[0], mins[1], maxs[0], maxs[1]];
   var offset = 36;
-
   if (num === 1) {
     out.type = 'Point';
     out.coordinates = this.parseCoord(data, offset);
@@ -7241,45 +16197,35 @@ ParseShp.prototype.parseMultiPoint = function (data) {
     out.type = 'MultiPoint';
     out.coordinates = this.parsePointArray(data, offset, num);
   }
-
   return out;
 };
-
 ParseShp.prototype.parseZMultiPoint = function (data) {
   var geoJson = this.parseMultiPoint(data);
-
   if (!geoJson) {
     return null;
   }
-
   var num;
-
   if (geoJson.type === 'Point') {
     geoJson.coordinates.push(data.readDoubleLE(72));
     return geoJson;
   } else {
     num = geoJson.coordinates.length;
   }
-
   var zOffset = 52 + (num << 4);
   geoJson.coordinates = this.parseZPointArray(data, zOffset, num, geoJson.coordinates);
   return geoJson;
 };
-
 ParseShp.prototype.parsePolyline = function (data) {
   var out = {};
   var numParts = data.readInt32LE(32);
-
   if (!numParts) {
     return null;
   }
-
   var mins = this.parseCoord(data, 0);
   var maxs = this.parseCoord(data, 16);
   out.bbox = [mins[0], mins[1], maxs[0], maxs[1]];
   var num = data.readInt32LE(36);
   var offset, partOffset;
-
   if (numParts === 1) {
     out.type = 'LineString';
     offset = 44;
@@ -7290,20 +16236,15 @@ ParseShp.prototype.parsePolyline = function (data) {
     partOffset = 40;
     out.coordinates = this.parseArrayGroup(data, offset, partOffset, numParts, num);
   }
-
   return out;
 };
-
 ParseShp.prototype.parseZPolyline = function (data) {
   var geoJson = this.parsePolyline(data);
-
   if (!geoJson) {
     return null;
   }
-
   var num = geoJson.coordinates.length;
   var zOffset;
-
   if (geoJson.type === 'LineString') {
     zOffset = 60 + (num << 4);
     geoJson.coordinates = this.parseZPointArray(data, zOffset, num, geoJson.coordinates);
@@ -7317,19 +16258,16 @@ ParseShp.prototype.parseZPolyline = function (data) {
     return geoJson;
   }
 };
-
 ParseShp.prototype.polyFuncs = function (out) {
   if (!out) {
     return out;
   }
-
   if (out.type === 'LineString') {
     out.type = 'Polygon';
     out.coordinates = [out.coordinates];
     return out;
   } else {
     out.coordinates = out.coordinates.reduce(polyReduce, []);
-
     if (out.coordinates.length === 1) {
       out.type = 'Polygon';
       out.coordinates = out.coordinates[0];
@@ -7340,15 +16278,12 @@ ParseShp.prototype.polyFuncs = function (out) {
     }
   }
 };
-
 ParseShp.prototype.parsePolygon = function (data) {
   return this.polyFuncs(this.parsePolyline(data));
 };
-
 ParseShp.prototype.parseZPolygon = function (data) {
   return this.polyFuncs(this.parseZPolyline(data));
 };
-
 var shpFuncObj = {
   1: 'parsePoint',
   3: 'parsePolyline',
@@ -7359,7 +16294,6 @@ var shpFuncObj = {
   15: 'parseZPolygon',
   18: 'parseZMultiPoint'
 };
-
 function makeParseCoord(trans) {
   if (trans) {
     return function (data, offset) {
@@ -7372,42 +16306,32 @@ function makeParseCoord(trans) {
     };
   }
 }
-
 function ParseShp(buffer, trans) {
   if (!(this instanceof ParseShp)) {
     return new ParseShp(buffer, trans);
   }
-
   this.buffer = buffer;
   this.headers = this.parseHeader();
-
   if (this.headers.length < this.buffer.byteLength) {
     this.buffer = this.buffer.slice(0, this.headers.length);
   }
-
   this.shpFuncs(trans);
   this.rows = this.getRows();
 }
-
 ParseShp.prototype.shpFuncs = function (tran) {
   var num = this.headers.shpCode;
-
   if (num > 20) {
     num -= 20;
   }
-
   if (!(num in shpFuncObj)) {
     throw new Error("I don't know that shp type");
   }
-
   this.parseFunc = this[shpFuncObj[num]];
   this.parseCoord = makeParseCoord(tran);
 };
-
 ParseShp.prototype.getShpCode = function () {
   return this.parseHeader().shpCode;
 };
-
 ParseShp.prototype.parseHeader = function () {
   var view = this.buffer.slice(0, 100);
   return {
@@ -7417,38 +16341,30 @@ ParseShp.prototype.parseHeader = function () {
     bbox: [view.readDoubleLE(9 << 2), view.readDoubleLE(11 << 2), view.readDoubleLE(13 << 2), view.readDoubleLE(13 << 2)]
   };
 };
-
 ParseShp.prototype.getRows = function () {
   var offset = 100;
   var len = this.buffer.byteLength;
   var out = [];
   var current;
-
   while (offset < len) {
     current = this.getRow(offset);
-
     if (!current) {
       break;
     }
-
     offset += 8;
     offset += current.len;
-
     if (current.type) {
       out.push(this.parseFunc(current.data));
     } else {
       out.push(null);
     }
   }
-
   return out;
 };
-
 ParseShp.prototype.getRow = function (offset) {
   var view = this.buffer.slice(offset, offset + 12);
   var len = view.readInt32BE(4) << 1;
   var id = view.readInt32BE(0);
-
   if (len === 0) {
     return {
       id: id,
@@ -7456,7 +16372,6 @@ ParseShp.prototype.getRow = function (offset) {
       type: 0
     };
   }
-
   return {
     id: id,
     len: len,
@@ -7464,13 +16379,27 @@ ParseShp.prototype.getRow = function (offset) {
     type: view.readInt32LE(8)
   };
 };
-
 function parseShp(buffer, trans) {
   return new ParseShp(buffer, trans).rows;
 }
 
 /***/ }),
-/* 29 */
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toPropertyKey = __webpack_require__(94);
+function _defineProperty(e, r, t) {
+  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7484,105 +16413,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseDbf", function() { return parseDbf; });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _unzip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27);
-/* harmony import */ var _binaryajax__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7);
-/* harmony import */ var _parseShp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28);
+/* harmony import */ var _unzip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(38);
+/* harmony import */ var _binaryajax__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8);
+/* harmony import */ var _parseShp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(39);
+/* harmony import */ var _proj4__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "proj4", function() { return _proj4__WEBPACK_IMPORTED_MODULE_6__["c"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getCrsList", function() { return _proj4__WEBPACK_IMPORTED_MODULE_6__["a"]; });
 
 
 
 
-var proj4 = __webpack_require__(66);
-
-var _parseDbf = __webpack_require__(37);
-
-var Promise = __webpack_require__(14);
-
-var Cache = __webpack_require__(46);
-
+var _parseDbf = __webpack_require__(48);
+var Promise = __webpack_require__(21);
+var Cache = __webpack_require__(57);
 var Buffer = __webpack_require__(2).Buffer;
 
 
 
 
 
-if (proj4["default"]) {
-  proj4 = proj4["default"];
-}
-
-function getProj4(value) {
-  if (window.proj4) {
-    return window.proj4(value);
-  }
-
-  if (window.mars3d && window.mars3d.proj4) {
-    return window.mars3d.proj4(value);
-  }
-
-  return proj4(value);
-}
-
 var cache = new Cache({
   max: 20
 });
-
 function toBuffer(b) {
   if (!b) {
     throw new Error('forgot to pass buffer');
   }
-
   if (Buffer.isBuffer(b)) {
     return b;
   }
-
   if (isArrayBuffer(b)) {
     return Buffer.from(b);
   }
-
   if (isArrayBuffer(b.buffer)) {
     if (b.BYTES_PER_ELEMENT === 1) {
       return Buffer.from(b);
     }
-
     return Buffer.from(b.buffer);
   }
 }
-
 function isArrayBuffer(subject) {
   return subject instanceof global.ArrayBuffer || Object.prototype.toString.call(subject) === '[object ArrayBuffer]';
 }
-
 function toGeoJSON(base, whiteList, encoding, crs) {
   if (typeof base === 'string' && cache.has(base)) {
     return Promise.resolve(cache.get(base));
   }
-
   return getShapefile(base, whiteList, encoding, crs).then(function (resp) {
     if (typeof base === 'string') {
       cache.set(base, resp);
     }
-
     return resp;
   });
 }
 function combine(_ref) {
   var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_ref, 2),
-      shp = _ref2[0],
-      dbf = _ref2[1];
-
+    shp = _ref2[0],
+    dbf = _ref2[1];
   var out = {};
   out.type = 'FeatureCollection';
   out.features = [];
   var i = 0;
   var len = shp.length;
-
   if (!dbf) {
     dbf = [];
   }
-
   while (i < len) {
     out.features.push({
       type: 'Feature',
@@ -7591,290 +16491,228 @@ function combine(_ref) {
     });
     i++;
   }
-
   return out;
 }
 function parseZip(_x, _x2, _x3, _x4) {
   return _parseZip.apply(this, arguments);
 }
-
 function _parseZip() {
-  _parseZip = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee(buffer, whiteList, encoding, crs) {
+  _parseZip = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee(buffer, whiteList, encoding, crs) {
     var key, zip, names, nowProj, geojson;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            buffer = toBuffer(buffer);
-            _context.next = 3;
-            return Object(_unzip__WEBPACK_IMPORTED_MODULE_3__[/* unzip */ "a"])(buffer);
-
-          case 3:
-            zip = _context.sent;
-            names = [];
-            whiteList = whiteList || [];
-            _context.t0 = _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.keys(zip);
-
-          case 7:
-            if ((_context.t1 = _context.t0()).done) {
-              _context.next = 14;
-              break;
-            }
-
-            key = _context.t1.value;
-
-            if (!(key.indexOf('__MACOSX') !== -1)) {
-              _context.next = 11;
-              break;
-            }
-
-            return _context.abrupt("continue", 7);
-
-          case 11:
-            if (key.slice(-3).toLowerCase() === 'shp') {
-              names.push(key.slice(0, -4));
-              zip[key.slice(0, -3) + key.slice(-3).toLowerCase()] = zip[key];
-            } else if (key.slice(-3).toLowerCase() === 'prj') {
-              nowProj = void 0;
-
-              try {
-                nowProj = getProj4(crs || zip[key]);
-              } catch (e) {
-                console.error('该坐标系proj4未解析,将原样转出', e);
-                nowProj = getProj4('EPSG:4326');
-              }
-
-              zip[key.slice(0, -3) + key.slice(-3).toLowerCase()] = nowProj;
-            } else if (key.slice(-4).toLowerCase() === 'json' || whiteList.indexOf(key.split('.').pop()) > -1) {
-              names.push(key.slice(0, -3) + key.slice(-3).toLowerCase());
-            } else if (key.slice(-3).toLowerCase() === 'dbf' || key.slice(-3).toLowerCase() === 'cpg') {
-              zip[key.slice(0, -3) + key.slice(-3).toLowerCase()] = zip[key];
-            }
-
-            _context.next = 7;
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          buffer = toBuffer(buffer);
+          _context.next = 3;
+          return Object(_unzip__WEBPACK_IMPORTED_MODULE_3__[/* unzip */ "a"])(buffer);
+        case 3:
+          zip = _context.sent;
+          names = [];
+          whiteList = whiteList || [];
+          _context.t0 = _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.keys(zip);
+        case 7:
+          if ((_context.t1 = _context.t0()).done) {
+            _context.next = 14;
             break;
-
-          case 14:
-            if (names.length) {
-              _context.next = 16;
-              break;
+          }
+          key = _context.t1.value;
+          if (!(key.indexOf('__MACOSX') !== -1)) {
+            _context.next = 11;
+            break;
+          }
+          return _context.abrupt("continue", 7);
+        case 11:
+          if (key.slice(-3).toLowerCase() === 'shp') {
+            names.push(key.slice(0, -4));
+            zip[key.slice(0, -3) + key.slice(-3).toLowerCase()] = zip[key];
+          } else if (key.slice(-3).toLowerCase() === 'prj') {
+            nowProj = void 0;
+            try {
+              nowProj = Object(_proj4__WEBPACK_IMPORTED_MODULE_6__[/* getProj4 */ "b"])(crs || zip[key]);
+            } catch (e) {
+              console.error('该坐标系proj4未解析,将原样转出', e);
+              nowProj = Object(_proj4__WEBPACK_IMPORTED_MODULE_6__[/* getProj4 */ "b"])('EPSG:4326');
             }
-
-            throw new Error('no layers founds');
-
-          case 16:
-            geojson = names.map(function (name) {
-              var parsed, dbf;
-              var lastDotIdx = name.lastIndexOf('.');
-
-              if (lastDotIdx > -1 && name.slice(lastDotIdx).indexOf('json') > -1) {
-                parsed = JSON.parse(zip[name]);
-                parsed.fileName = name.slice(0, lastDotIdx);
-              } else if (whiteList.indexOf(name.slice(lastDotIdx + 1)) > -1) {
-                parsed = zip[name];
-                parsed.fileName = name;
-              } else {
-                if (zip[name + '.dbf']) {
-                  dbf = parseDbf(zip[name + '.dbf'], encoding || zip[name + '.cpg']);
-                }
-
-                parsed = combine([parseShp(zip[name + '.shp'], zip[name + '.prj']), dbf]);
-                parsed.fileName = name;
+            zip[key.slice(0, -3) + key.slice(-3).toLowerCase()] = nowProj;
+          } else if (key.slice(-4).toLowerCase() === 'json' || whiteList.indexOf(key.split('.').pop()) > -1) {
+            names.push(key.slice(0, -3) + key.slice(-3).toLowerCase());
+          } else if (key.slice(-3).toLowerCase() === 'dbf' || key.slice(-3).toLowerCase() === 'cpg') {
+            zip[key.slice(0, -3) + key.slice(-3).toLowerCase()] = zip[key];
+          }
+          _context.next = 7;
+          break;
+        case 14:
+          if (names.length) {
+            _context.next = 16;
+            break;
+          }
+          throw new Error('no layers founds');
+        case 16:
+          geojson = names.map(function (name) {
+            var parsed, dbf;
+            var lastDotIdx = name.lastIndexOf('.');
+            if (lastDotIdx > -1 && name.slice(lastDotIdx).indexOf('json') > -1) {
+              parsed = JSON.parse(zip[name]);
+              parsed.fileName = name.slice(0, lastDotIdx);
+            } else if (whiteList.indexOf(name.slice(lastDotIdx + 1)) > -1) {
+              parsed = zip[name];
+              parsed.fileName = name;
+            } else {
+              if (zip[name + '.dbf']) {
+                dbf = parseDbf(zip[name + '.dbf'], encoding || zip[name + '.cpg']);
               }
-
-              return parsed;
-            });
-
-            if (!(geojson.length === 1)) {
-              _context.next = 21;
-              break;
+              parsed = combine([parseShp(zip[name + '.shp'], zip[name + '.prj']), dbf]);
+              parsed.fileName = name;
             }
-
-            return _context.abrupt("return", geojson[0]);
-
-          case 21:
-            return _context.abrupt("return", geojson);
-
-          case 22:
-          case "end":
-            return _context.stop();
-        }
+            return parsed;
+          });
+          if (!(geojson.length === 1)) {
+            _context.next = 21;
+            break;
+          }
+          return _context.abrupt("return", geojson[0]);
+        case 21:
+          return _context.abrupt("return", geojson);
+        case 22:
+        case "end":
+          return _context.stop();
       }
     }, _callee);
   }));
   return _parseZip.apply(this, arguments);
 }
-
 function getZip(_x5, _x6, _x7, _x8) {
   return _getZip.apply(this, arguments);
 }
-
 function _getZip() {
-  _getZip = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee2(base, whiteList, encoding, crs) {
+  _getZip = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee2(base, whiteList, encoding, crs) {
     var a;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.next = 2;
-            return Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base);
-
-          case 2:
-            a = _context2.sent;
-            return _context2.abrupt("return", parseZip(a, whiteList, encoding, crs));
-
-          case 4:
-          case "end":
-            return _context2.stop();
-        }
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base);
+        case 2:
+          a = _context2.sent;
+          return _context2.abrupt("return", parseZip(a, whiteList, encoding, crs));
+        case 4:
+        case "end":
+          return _context2.stop();
       }
     }, _callee2);
   }));
   return _getZip.apply(this, arguments);
 }
-
 function handleShp(_x9) {
   return _handleShp.apply(this, arguments);
 }
-
 function _handleShp() {
-  _handleShp = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee3(base) {
+  _handleShp = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee3(base) {
     var args, prj;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.next = 2;
-            return Promise.all([Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'shp'), Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'prj')]);
-
-          case 2:
-            args = _context3.sent;
-            prj = false;
-
-            try {
-              if (args[1]) {
-                prj = getProj4(args[1]);
-              }
-            } catch (e) {
-              prj = false;
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.next = 2;
+          return Promise.all([Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'shp'), Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'prj')]);
+        case 2:
+          args = _context3.sent;
+          prj = false;
+          try {
+            if (args[1]) {
+              prj = Object(_proj4__WEBPACK_IMPORTED_MODULE_6__[/* getProj4 */ "b"])(args[1]);
             }
-
-            return _context3.abrupt("return", parseShp(args[0], prj));
-
-          case 6:
-          case "end":
-            return _context3.stop();
-        }
+          } catch (e) {
+            prj = false;
+          }
+          return _context3.abrupt("return", parseShp(args[0], prj));
+        case 6:
+        case "end":
+          return _context3.stop();
       }
     }, _callee3);
   }));
   return _handleShp.apply(this, arguments);
 }
-
 function handleDbf(_x10) {
   return _handleDbf.apply(this, arguments);
 }
-
 function _handleDbf() {
-  _handleDbf = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee4(base) {
+  _handleDbf = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee4(base) {
     var _yield$Promise$all, _yield$Promise$all2, dbf, cpg;
-
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.next = 2;
-            return Promise.all([Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'dbf'), Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'cpg')]);
-
-          case 2:
-            _yield$Promise$all = _context4.sent;
-            _yield$Promise$all2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_yield$Promise$all, 2);
-            dbf = _yield$Promise$all2[0];
-            cpg = _yield$Promise$all2[1];
-
-            if (dbf) {
-              _context4.next = 8;
-              break;
-            }
-
-            return _context4.abrupt("return");
-
-          case 8:
-            return _context4.abrupt("return", parseDbf(dbf, cpg));
-
-          case 9:
-          case "end":
-            return _context4.stop();
-        }
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.next = 2;
+          return Promise.all([Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'dbf'), Object(_binaryajax__WEBPACK_IMPORTED_MODULE_4__[/* binaryAjax */ "a"])(base, 'cpg')]);
+        case 2:
+          _yield$Promise$all = _context4.sent;
+          _yield$Promise$all2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_yield$Promise$all, 2);
+          dbf = _yield$Promise$all2[0];
+          cpg = _yield$Promise$all2[1];
+          if (dbf) {
+            _context4.next = 8;
+            break;
+          }
+          return _context4.abrupt("return");
+        case 8:
+          return _context4.abrupt("return", parseDbf(dbf, cpg));
+        case 9:
+        case "end":
+          return _context4.stop();
       }
     }, _callee4);
   }));
   return _handleDbf.apply(this, arguments);
 }
-
 function checkSuffix(base, suffix) {
   return base.toLowerCase().endsWith(suffix);
 }
-
 function getShapefile(_x11, _x12, _x13, _x14) {
   return _getShapefile.apply(this, arguments);
 }
-
 function _getShapefile() {
-  _getShapefile = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee5(base, whiteList, encoding, crs) {
+  _getShapefile = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee5(base, whiteList, encoding, crs) {
     var results;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            if (!(typeof base !== 'string')) {
-              _context5.next = 2;
-              break;
-            }
-
-            return _context5.abrupt("return", parseZip(base, whiteList, encoding, crs));
-
-          case 2:
-            if (!checkSuffix(base, '.zip')) {
-              _context5.next = 4;
-              break;
-            }
-
-            return _context5.abrupt("return", getZip(base, whiteList, encoding, crs));
-
-          case 4:
-            _context5.next = 6;
-            return Promise.all([handleShp(base), handleDbf(base)]);
-
-          case 6:
-            results = _context5.sent;
-            return _context5.abrupt("return", combine(results));
-
-          case 8:
-          case "end":
-            return _context5.stop();
-        }
+      while (1) switch (_context5.prev = _context5.next) {
+        case 0:
+          if (!(typeof base !== 'string')) {
+            _context5.next = 2;
+            break;
+          }
+          return _context5.abrupt("return", parseZip(base, whiteList, encoding, crs));
+        case 2:
+          if (!checkSuffix(base, '.zip')) {
+            _context5.next = 4;
+            break;
+          }
+          return _context5.abrupt("return", getZip(base, whiteList, encoding, crs));
+        case 4:
+          _context5.next = 6;
+          return Promise.all([handleShp(base), handleDbf(base)]);
+        case 6:
+          results = _context5.sent;
+          return _context5.abrupt("return", combine(results));
+        case 8:
+        case "end":
+          return _context5.stop();
       }
     }, _callee5);
   }));
   return _getShapefile.apply(this, arguments);
 }
-
 function parseShp(shp, prj) {
   shp = toBuffer(shp);
-
   if (Buffer.isBuffer(prj)) {
     prj = prj.toString();
   }
-
   if (typeof prj === 'string') {
     try {
-      prj = getProj4(prj);
+      prj = Object(_proj4__WEBPACK_IMPORTED_MODULE_6__[/* getProj4 */ "b"])(prj);
     } catch (e) {
       prj = false;
     }
   }
-
   return Object(_parseShp__WEBPACK_IMPORTED_MODULE_5__[/* parseShp */ "a"])(shp, prj);
 }
 function parseDbf(dbf, cpg) {
@@ -7884,474 +16722,395 @@ function parseDbf(dbf, cpg) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)))
 
 /***/ }),
-/* 30 */
+/* 42 */
 /***/ (function(module, exports) {
 
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
+function _arrayWithHoles(r) {
+  if (Array.isArray(r)) return r;
 }
-
 module.exports = _arrayWithHoles, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 31 */
+/* 43 */
 /***/ (function(module, exports) {
 
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-
-  var _s, _e;
-
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = !0,
+      o = !1;
     try {
-      if (!_n && _i["return"] != null) _i["return"]();
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = !0, n = r;
     } finally {
-      if (_d) throw _e;
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
     }
+    return a;
   }
-
-  return _arr;
 }
-
 module.exports = _iterableToArrayLimit, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 32 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeToArray = __webpack_require__(33);
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+var arrayLikeToArray = __webpack_require__(45);
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? arrayLikeToArray(r, a) : void 0;
+  }
 }
-
 module.exports = _unsupportedIterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 33 */
+/* 45 */
 /***/ (function(module, exports) {
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
 }
-
 module.exports = _arrayLikeToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 34 */
+/* 46 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-
 module.exports = _nonIterableRest, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 35 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(36)["default"];
-
+var _typeof = __webpack_require__(13)["default"];
 function _regeneratorRuntime() {
-  "use strict";
-  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
-
+  "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
   module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
-    return exports;
+    return e;
   }, module.exports.__esModule = true, module.exports["default"] = module.exports;
-  var exports = {},
-      Op = Object.prototype,
-      hasOwn = Op.hasOwnProperty,
-      $Symbol = "function" == typeof Symbol ? Symbol : {},
-      iteratorSymbol = $Symbol.iterator || "@@iterator",
-      asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
-      toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function define(obj, key, value) {
-    return Object.defineProperty(obj, key, {
-      value: value,
+  var t,
+    e = {},
+    r = Object.prototype,
+    n = r.hasOwnProperty,
+    o = Object.defineProperty || function (t, e, r) {
+      t[e] = r.value;
+    },
+    i = "function" == typeof Symbol ? Symbol : {},
+    a = i.iterator || "@@iterator",
+    c = i.asyncIterator || "@@asyncIterator",
+    u = i.toStringTag || "@@toStringTag";
+  function define(t, e, r) {
+    return Object.defineProperty(t, e, {
+      value: r,
       enumerable: !0,
       configurable: !0,
       writable: !0
-    }), obj[key];
+    }), t[e];
   }
-
   try {
     define({}, "");
-  } catch (err) {
-    define = function define(obj, key, value) {
-      return obj[key] = value;
+  } catch (t) {
+    define = function define(t, e, r) {
+      return t[e] = r;
     };
   }
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
-        generator = Object.create(protoGenerator.prototype),
-        context = new Context(tryLocsList || []);
-    return generator._invoke = function (innerFn, self, context) {
-      var state = "suspendedStart";
-      return function (method, arg) {
-        if ("executing" === state) throw new Error("Generator is already running");
-
-        if ("completed" === state) {
-          if ("throw" === method) throw arg;
-          return doneResult();
-        }
-
-        for (context.method = method, context.arg = arg;;) {
-          var delegate = context.delegate;
-
-          if (delegate) {
-            var delegateResult = maybeInvokeDelegate(delegate, context);
-
-            if (delegateResult) {
-              if (delegateResult === ContinueSentinel) continue;
-              return delegateResult;
-            }
-          }
-
-          if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
-            if ("suspendedStart" === state) throw state = "completed", context.arg;
-            context.dispatchException(context.arg);
-          } else "return" === context.method && context.abrupt("return", context.arg);
-          state = "executing";
-          var record = tryCatch(innerFn, self, context);
-
-          if ("normal" === record.type) {
-            if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
-            return {
-              value: record.arg,
-              done: context.done
-            };
-          }
-
-          "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
-        }
-      };
-    }(innerFn, self, context), generator;
+  function wrap(t, e, r, n) {
+    var i = e && e.prototype instanceof Generator ? e : Generator,
+      a = Object.create(i.prototype),
+      c = new Context(n || []);
+    return o(a, "_invoke", {
+      value: makeInvokeMethod(t, r, c)
+    }), a;
   }
-
-  function tryCatch(fn, obj, arg) {
+  function tryCatch(t, e, r) {
     try {
       return {
         type: "normal",
-        arg: fn.call(obj, arg)
+        arg: t.call(e, r)
       };
-    } catch (err) {
+    } catch (t) {
       return {
         type: "throw",
-        arg: err
+        arg: t
       };
     }
   }
-
-  exports.wrap = wrap;
-  var ContinueSentinel = {};
-
+  e.wrap = wrap;
+  var h = "suspendedStart",
+    l = "suspendedYield",
+    f = "executing",
+    s = "completed",
+    y = {};
   function Generator() {}
-
   function GeneratorFunction() {}
-
   function GeneratorFunctionPrototype() {}
-
-  var IteratorPrototype = {};
-  define(IteratorPrototype, iteratorSymbol, function () {
+  var p = {};
+  define(p, a, function () {
     return this;
   });
-  var getProto = Object.getPrototypeOf,
-      NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
-  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
-
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function (method) {
-      define(prototype, method, function (arg) {
-        return this._invoke(method, arg);
+  var d = Object.getPrototypeOf,
+    v = d && d(d(values([])));
+  v && v !== r && n.call(v, a) && (p = v);
+  var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p);
+  function defineIteratorMethods(t) {
+    ["next", "throw", "return"].forEach(function (e) {
+      define(t, e, function (t) {
+        return this._invoke(e, t);
       });
     });
   }
-
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-
-      if ("throw" !== record.type) {
-        var result = record.arg,
-            value = result.value;
-        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
-          invoke("next", value, resolve, reject);
-        }, function (err) {
-          invoke("throw", err, resolve, reject);
-        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
-          result.value = unwrapped, resolve(result);
-        }, function (error) {
-          return invoke("throw", error, resolve, reject);
+  function AsyncIterator(t, e) {
+    function invoke(r, o, i, a) {
+      var c = tryCatch(t[r], t, o);
+      if ("throw" !== c.type) {
+        var u = c.arg,
+          h = u.value;
+        return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) {
+          invoke("next", t, i, a);
+        }, function (t) {
+          invoke("throw", t, i, a);
+        }) : e.resolve(h).then(function (t) {
+          u.value = t, i(u);
+        }, function (t) {
+          return invoke("throw", t, i, a);
         });
       }
-
-      reject(record.arg);
+      a(c.arg);
     }
-
-    var previousPromise;
-
-    this._invoke = function (method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function (resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
+    var r;
+    o(this, "_invoke", {
+      value: function value(t, n) {
+        function callInvokeWithMethodAndArg() {
+          return new e(function (e, r) {
+            invoke(t, n, e, r);
+          });
+        }
+        return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
       }
-
-      return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+    });
+  }
+  function makeInvokeMethod(e, r, n) {
+    var o = h;
+    return function (i, a) {
+      if (o === f) throw Error("Generator is already running");
+      if (o === s) {
+        if ("throw" === i) throw a;
+        return {
+          value: t,
+          done: !0
+        };
+      }
+      for (n.method = i, n.arg = a;;) {
+        var c = n.delegate;
+        if (c) {
+          var u = maybeInvokeDelegate(c, n);
+          if (u) {
+            if (u === y) continue;
+            return u;
+          }
+        }
+        if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) {
+          if (o === h) throw o = s, n.arg;
+          n.dispatchException(n.arg);
+        } else "return" === n.method && n.abrupt("return", n.arg);
+        o = f;
+        var p = tryCatch(e, r, n);
+        if ("normal" === p.type) {
+          if (o = n.done ? s : l, p.arg === y) continue;
+          return {
+            value: p.arg,
+            done: n.done
+          };
+        }
+        "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg);
+      }
     };
   }
-
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-
-    if (undefined === method) {
-      if (context.delegate = null, "throw" === context.method) {
-        if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
-        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
-    var info = record.arg;
-    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  function maybeInvokeDelegate(e, r) {
+    var n = r.method,
+      o = e.iterator[n];
+    if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y;
+    var i = tryCatch(o, e.iterator, r.arg);
+    if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y;
+    var a = i.arg;
+    return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y);
   }
-
-  function pushTryEntry(locs) {
-    var entry = {
-      tryLoc: locs[0]
+  function pushTryEntry(t) {
+    var e = {
+      tryLoc: t[0]
     };
-    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+    1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e);
   }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal", delete record.arg, entry.completion = record;
+  function resetTryEntry(t) {
+    var e = t.completion || {};
+    e.type = "normal", delete e.arg, t.completion = e;
   }
-
-  function Context(tryLocsList) {
+  function Context(t) {
     this.tryEntries = [{
       tryLoc: "root"
-    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
+    }], t.forEach(pushTryEntry, this), this.reset(!0);
   }
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) return iteratorMethod.call(iterable);
-      if ("function" == typeof iterable.next) return iterable;
-
-      if (!isNaN(iterable.length)) {
-        var i = -1,
-            next = function next() {
-          for (; ++i < iterable.length;) {
-            if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
-          }
-
-          return next.value = undefined, next.done = !0, next;
-        };
-
-        return next.next = next;
+  function values(e) {
+    if (e || "" === e) {
+      var r = e[a];
+      if (r) return r.call(e);
+      if ("function" == typeof e.next) return e;
+      if (!isNaN(e.length)) {
+        var o = -1,
+          i = function next() {
+            for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next;
+            return next.value = t, next.done = !0, next;
+          };
+        return i.next = i;
       }
     }
-
-    return {
-      next: doneResult
-    };
+    throw new TypeError(_typeof(e) + " is not iterable");
   }
-
-  function doneResult() {
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", {
+    value: GeneratorFunctionPrototype,
+    configurable: !0
+  }), o(GeneratorFunctionPrototype, "constructor", {
+    value: GeneratorFunction,
+    configurable: !0
+  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) {
+    var e = "function" == typeof t && t.constructor;
+    return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name));
+  }, e.mark = function (t) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t;
+  }, e.awrap = function (t) {
     return {
-      value: undefined,
-      done: !0
+      __await: t
     };
-  }
-
-  return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
-    var ctor = "function" == typeof genFun && genFun.constructor;
-    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
-  }, exports.mark = function (genFun) {
-    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
-  }, exports.awrap = function (arg) {
-    return {
-      __await: arg
-    };
-  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () {
     return this;
-  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    void 0 === PromiseImpl && (PromiseImpl = Promise);
-    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
-    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
-      return result.done ? result.value : iter.next();
+  }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) {
+    void 0 === i && (i = Promise);
+    var a = new AsyncIterator(wrap(t, r, n, o), i);
+    return e.isGeneratorFunction(r) ? a : a.next().then(function (t) {
+      return t.done ? t.value : a.next();
     });
-  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+  }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () {
     return this;
-  }), define(Gp, "toString", function () {
+  }), define(g, "toString", function () {
     return "[object Generator]";
-  }), exports.keys = function (object) {
-    var keys = [];
-
-    for (var key in object) {
-      keys.push(key);
-    }
-
-    return keys.reverse(), function next() {
-      for (; keys.length;) {
-        var key = keys.pop();
-        if (key in object) return next.value = key, next.done = !1, next;
+  }), e.keys = function (t) {
+    var e = Object(t),
+      r = [];
+    for (var n in e) r.push(n);
+    return r.reverse(), function next() {
+      for (; r.length;) {
+        var t = r.pop();
+        if (t in e) return next.value = t, next.done = !1, next;
       }
-
       return next.done = !0, next;
     };
-  }, exports.values = values, Context.prototype = {
+  }, e.values = values, Context.prototype = {
     constructor: Context,
-    reset: function reset(skipTempReset) {
-      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) {
-        "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
-      }
+    reset: function reset(e) {
+      if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t);
     },
     stop: function stop() {
       this.done = !0;
-      var rootRecord = this.tryEntries[0].completion;
-      if ("throw" === rootRecord.type) throw rootRecord.arg;
+      var t = this.tryEntries[0].completion;
+      if ("throw" === t.type) throw t.arg;
       return this.rval;
     },
-    dispatchException: function dispatchException(exception) {
-      if (this.done) throw exception;
-      var context = this;
-
-      function handle(loc, caught) {
-        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+    dispatchException: function dispatchException(e) {
+      if (this.done) throw e;
+      var r = this;
+      function handle(n, o) {
+        return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o;
       }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i],
-            record = entry.completion;
-        if ("root" === entry.tryLoc) return handle("end");
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc"),
-              hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
-            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+      for (var o = this.tryEntries.length - 1; o >= 0; --o) {
+        var i = this.tryEntries[o],
+          a = i.completion;
+        if ("root" === i.tryLoc) return handle("end");
+        if (i.tryLoc <= this.prev) {
+          var c = n.call(i, "catchLoc"),
+            u = n.call(i, "finallyLoc");
+          if (c && u) {
+            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
+            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
+          } else if (c) {
+            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
           } else {
-            if (!hasFinally) throw new Error("try statement without catch or finally");
-            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+            if (!u) throw Error("try statement without catch or finally");
+            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
           }
         }
       }
     },
-    abrupt: function abrupt(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-
-        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
+    abrupt: function abrupt(t, e) {
+      for (var r = this.tryEntries.length - 1; r >= 0; --r) {
+        var o = this.tryEntries[r];
+        if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) {
+          var i = o;
           break;
         }
       }
-
-      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
-      var record = finallyEntry ? finallyEntry.completion : {};
-      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+      i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null);
+      var a = i ? i.completion : {};
+      return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a);
     },
-    complete: function complete(record, afterLoc) {
-      if ("throw" === record.type) throw record.arg;
-      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+    complete: function complete(t, e) {
+      if ("throw" === t.type) throw t.arg;
+      return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y;
     },
-    finish: function finish(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+    finish: function finish(t) {
+      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
+        var r = this.tryEntries[e];
+        if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y;
       }
     },
-    "catch": function _catch(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-
-          if ("throw" === record.type) {
-            var thrown = record.arg;
-            resetTryEntry(entry);
+    "catch": function _catch(t) {
+      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
+        var r = this.tryEntries[e];
+        if (r.tryLoc === t) {
+          var n = r.completion;
+          if ("throw" === n.type) {
+            var o = n.arg;
+            resetTryEntry(r);
           }
-
-          return thrown;
+          return o;
         }
       }
-
-      throw new Error("illegal catch attempt");
+      throw Error("illegal catch attempt");
     },
-    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+    delegateYield: function delegateYield(e, r, n) {
       return this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+        iterator: values(e),
+        resultName: r,
+        nextLoc: n
+      }, "next" === this.method && (this.arg = t), y;
     }
-  }, exports;
+  }, e;
 }
-
 module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports) {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
-}
-
-module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-/* 37 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createDecoder = __webpack_require__(38);
+var createDecoder = __webpack_require__(49);
 function dbfHeader(data) {
   var out = {};
   out.lastUpdated = new Date(data.readUInt8(1) + 1900, data.readUInt8(2), data.readUInt8(3));
@@ -8434,11 +17193,11 @@ module.exports = function(buffer, encoding) {
 
 
 /***/ }),
-/* 38 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(39);
-var StringDecoder = __webpack_require__(10).StringDecoder;
+__webpack_require__(50);
+var StringDecoder = __webpack_require__(14).StringDecoder;
 function defaultDecoder(data) {
   var decoder = new StringDecoder();
   var out = decoder.write(data) + decoder.end();
@@ -8472,17 +17231,17 @@ function createDecoder(encoding, second) {
 
 
 /***/ }),
-/* 39 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // This is free and unencumbered software released into the public domain.
 // See LICENSE.md for more information.
 
-module.exports = __webpack_require__(40);
+module.exports = __webpack_require__(51);
 
 
 /***/ }),
-/* 40 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // This is free and unencumbered software released into the public domain.
@@ -8498,7 +17257,7 @@ module.exports = __webpack_require__(40);
   // If we're in node require encoding-indexes and attach it to the global.
   if ( true && module.exports &&
     !global["encoding-indexes"]) {
-      __webpack_require__(41);
+      __webpack_require__(52);
   }
 
   //
@@ -11800,13 +20559,13 @@ module.exports = __webpack_require__(40);
 
 
 /***/ }),
-/* 41 */
+/* 52 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 42 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -11877,7 +20636,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 
 /***/ }),
-/* 43 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12034,7 +20793,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 44 */
+/* 55 */
 /***/ (function(module, exports) {
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -12125,7 +20884,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 45 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12202,10 +20961,12 @@ function immediate(task) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)))
 
 /***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 57 */
+/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(process) {const perf =
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const perf =
   typeof performance === 'object' &&
   performance &&
   typeof performance.now === 'function'
@@ -12224,8 +20985,13 @@ const AC = hasAbortController
       constructor() {
         this.signal = new AS()
       }
-      abort() {
-        this.signal.dispatchEvent('abort')
+      abort(reason = new Error('This operation was aborted')) {
+        this.signal.reason = this.signal.reason || reason
+        this.signal.aborted = true
+        this.signal.dispatchEvent({
+          type: 'abort',
+          target: this.signal,
+        })
       }
     }
 
@@ -12238,13 +21004,13 @@ const AS = hasAbortSignal
   ? AC.AbortController
   : class AbortSignal {
       constructor() {
+        this.reason = undefined
         this.aborted = false
         this._listeners = []
       }
-      dispatchEvent(type) {
-        if (type === 'abort') {
+      dispatchEvent(e) {
+        if (e.type === 'abort') {
           this.aborted = true
-          const e = { type, target: this }
           this.onabort(e)
           this._listeners.forEach(f => f(e), this)
         }
@@ -12370,6 +21136,9 @@ class LRUCache {
       fetchContext,
       noDeleteOnFetchRejection,
       noDeleteOnStaleGet,
+      allowStaleOnFetchRejection,
+      allowStaleOnFetchAbort,
+      ignoreFetchAbort,
     } = options
 
     // deprecated options, don't trigger a warning for getting them if
@@ -12439,6 +21208,9 @@ class LRUCache {
     this.noDisposeOnSet = !!noDisposeOnSet
     this.noUpdateTTL = !!noUpdateTTL
     this.noDeleteOnFetchRejection = !!noDeleteOnFetchRejection
+    this.allowStaleOnFetchRejection = !!allowStaleOnFetchRejection
+    this.allowStaleOnFetchAbort = !!allowStaleOnFetchAbort
+    this.ignoreFetchAbort = !!ignoreFetchAbort
 
     // NB: maxEntrySize is set to maxSize if it's set
     if (this.maxEntrySize !== 0) {
@@ -12532,6 +21304,15 @@ class LRUCache {
       this.starts[index] = this.ttls[index] !== 0 ? perf.now() : 0
     }
 
+    this.statusTTL = (status, index) => {
+      if (status) {
+        status.ttl = this.ttls[index]
+        status.start = this.starts[index]
+        status.now = cachedNow || getNow()
+        status.remainingTTL = status.now + status.ttl - status.start
+      }
+    }
+
     // debounce calls to perf.now() to 1s so we're not hitting
     // that costly call repeatedly.
     let cachedNow = 0
@@ -12572,9 +21353,10 @@ class LRUCache {
       )
     }
   }
-  updateItemAge(index) {}
-  setItemTTL(index, ttl, start) {}
-  isStale(index) {
+  updateItemAge(_index) {}
+  statusTTL(_status, _index) {}
+  setItemTTL(_index, _ttl, _start) {}
+  isStale(_index) {
     return false
   }
 
@@ -12604,13 +21386,15 @@ class LRUCache {
           }
         } else {
           throw new TypeError(
-            'invalid size value (must be positive integer)'
+            'invalid size value (must be positive integer). ' +
+              'When maxSize or maxEntrySize is used, sizeCalculation or size ' +
+              'must be set.'
           )
         }
       }
       return size
     }
-    this.addItemSize = (index, size) => {
+    this.addItemSize = (index, size, status) => {
       this.sizes[index] = size
       if (this.maxSize) {
         const maxSize = this.maxSize - this.sizes[index]
@@ -12619,11 +21403,15 @@ class LRUCache {
         }
       }
       this.calculatedSize += this.sizes[index]
+      if (status) {
+        status.entrySize = size
+        status.totalCalculatedSize = this.calculatedSize
+      }
     }
   }
-  removeItemSize(index) {}
-  addItemSize(index, size) {}
-  requireSize(k, v, size, sizeCalculation) {
+  removeItemSize(_index) {}
+  addItemSize(_index, _size) {}
+  requireSize(_k, _v, size, sizeCalculation) {
     if (size || sizeCalculation) {
       throw new TypeError(
         'cannot set size without setting maxSize or maxEntrySize on cache'
@@ -12668,39 +21456,74 @@ class LRUCache {
   }
 
   isValidIndex(index) {
-    return this.keyMap.get(this.keyList[index]) === index
+    return (
+      index !== undefined &&
+      this.keyMap.get(this.keyList[index]) === index
+    )
   }
 
   *entries() {
     for (const i of this.indexes()) {
-      yield [this.keyList[i], this.valList[i]]
+      if (
+        this.valList[i] !== undefined &&
+        this.keyList[i] !== undefined &&
+        !this.isBackgroundFetch(this.valList[i])
+      ) {
+        yield [this.keyList[i], this.valList[i]]
+      }
     }
   }
   *rentries() {
     for (const i of this.rindexes()) {
-      yield [this.keyList[i], this.valList[i]]
+      if (
+        this.valList[i] !== undefined &&
+        this.keyList[i] !== undefined &&
+        !this.isBackgroundFetch(this.valList[i])
+      ) {
+        yield [this.keyList[i], this.valList[i]]
+      }
     }
   }
 
   *keys() {
     for (const i of this.indexes()) {
-      yield this.keyList[i]
+      if (
+        this.keyList[i] !== undefined &&
+        !this.isBackgroundFetch(this.valList[i])
+      ) {
+        yield this.keyList[i]
+      }
     }
   }
   *rkeys() {
     for (const i of this.rindexes()) {
-      yield this.keyList[i]
+      if (
+        this.keyList[i] !== undefined &&
+        !this.isBackgroundFetch(this.valList[i])
+      ) {
+        yield this.keyList[i]
+      }
     }
   }
 
   *values() {
     for (const i of this.indexes()) {
-      yield this.valList[i]
+      if (
+        this.valList[i] !== undefined &&
+        !this.isBackgroundFetch(this.valList[i])
+      ) {
+        yield this.valList[i]
+      }
     }
   }
   *rvalues() {
     for (const i of this.rindexes()) {
-      yield this.valList[i]
+      if (
+        this.valList[i] !== undefined &&
+        !this.isBackgroundFetch(this.valList[i])
+      ) {
+        yield this.valList[i]
+      }
     }
   }
 
@@ -12708,9 +21531,14 @@ class LRUCache {
     return this.entries()
   }
 
-  find(fn, getOptions = {}) {
+  find(fn, getOptions) {
     for (const i of this.indexes()) {
-      if (fn(this.valList[i], this.keyList[i], this)) {
+      const v = this.valList[i]
+      const value = this.isBackgroundFetch(v)
+        ? v.__staleWhileFetching
+        : v
+      if (value === undefined) continue
+      if (fn(value, this.keyList[i], this)) {
         return this.get(this.keyList[i], getOptions)
       }
     }
@@ -12718,13 +21546,23 @@ class LRUCache {
 
   forEach(fn, thisp = this) {
     for (const i of this.indexes()) {
-      fn.call(thisp, this.valList[i], this.keyList[i], this)
+      const v = this.valList[i]
+      const value = this.isBackgroundFetch(v)
+        ? v.__staleWhileFetching
+        : v
+      if (value === undefined) continue
+      fn.call(thisp, value, this.keyList[i], this)
     }
   }
 
   rforEach(fn, thisp = this) {
     for (const i of this.rindexes()) {
-      fn.call(thisp, this.valList[i], this.keyList[i], this)
+      const v = this.valList[i]
+      const value = this.isBackgroundFetch(v)
+        ? v.__staleWhileFetching
+        : v
+      if (value === undefined) continue
+      fn.call(thisp, value, this.keyList[i], this)
     }
   }
 
@@ -12752,6 +21590,7 @@ class LRUCache {
       const value = this.isBackgroundFetch(v)
         ? v.__staleWhileFetching
         : v
+      if (value === undefined) continue
       const entry = { value }
       if (this.ttls) {
         entry.ttl = this.ttls[i]
@@ -12782,7 +21621,7 @@ class LRUCache {
     }
   }
 
-  dispose(v, k, reason) {}
+  dispose(_v, _k, _reason) {}
 
   set(
     k,
@@ -12794,12 +21633,17 @@ class LRUCache {
       size = 0,
       sizeCalculation = this.sizeCalculation,
       noUpdateTTL = this.noUpdateTTL,
+      status,
     } = {}
   ) {
     size = this.requireSize(k, v, size, sizeCalculation)
     // if the item doesn't fit, don't do anything
     // NB: maxEntrySize set to maxSize by default
     if (this.maxEntrySize && size > this.maxEntrySize) {
+      if (status) {
+        status.set = 'miss'
+        status.maxEntrySizeExceeded = true
+      }
       // have to delete, in case a background fetch is there already.
       // in non-async cases, this is a no-op
       this.delete(k)
@@ -12816,14 +21660,18 @@ class LRUCache {
       this.prev[index] = this.tail
       this.tail = index
       this.size++
-      this.addItemSize(index, size)
+      this.addItemSize(index, size, status)
+      if (status) {
+        status.set = 'add'
+      }
       noUpdateTTL = false
     } else {
       // update
+      this.moveToTail(index)
       const oldVal = this.valList[index]
       if (v !== oldVal) {
         if (this.isBackgroundFetch(oldVal)) {
-          oldVal.__abortController.abort()
+          oldVal.__abortController.abort(new Error('replaced'))
         } else {
           if (!noDisposeOnSet) {
             this.dispose(oldVal, k, 'set')
@@ -12834,9 +21682,18 @@ class LRUCache {
         }
         this.removeItemSize(index)
         this.valList[index] = v
-        this.addItemSize(index, size)
+        this.addItemSize(index, size, status)
+        if (status) {
+          status.set = 'replace'
+          const oldValue =
+            oldVal && this.isBackgroundFetch(oldVal)
+              ? oldVal.__staleWhileFetching
+              : oldVal
+          if (oldValue !== undefined) status.oldValue = oldValue
+        }
+      } else if (status) {
+        status.set = 'update'
       }
-      this.moveToTail(index)
     }
     if (ttl !== 0 && this.ttl === 0 && !this.ttls) {
       this.initializeTTLTracking()
@@ -12844,6 +21701,7 @@ class LRUCache {
     if (!noUpdateTTL) {
       this.setItemTTL(index, ttl, start)
     }
+    this.statusTTL(status, index)
     if (this.disposeAfter) {
       while (this.disposed.length) {
         this.disposeAfter(...this.disposed.shift())
@@ -12879,7 +21737,7 @@ class LRUCache {
     const k = this.keyList[head]
     const v = this.valList[head]
     if (this.isBackgroundFetch(v)) {
-      v.__abortController.abort()
+      v.__abortController.abort(new Error('evicted'))
     } else {
       this.dispose(v, k, 'evict')
       if (this.disposeAfter) {
@@ -12899,15 +21757,22 @@ class LRUCache {
     return head
   }
 
-  has(k, { updateAgeOnHas = this.updateAgeOnHas } = {}) {
+  has(k, { updateAgeOnHas = this.updateAgeOnHas, status } = {}) {
     const index = this.keyMap.get(k)
     if (index !== undefined) {
       if (!this.isStale(index)) {
         if (updateAgeOnHas) {
           this.updateItemAge(index)
         }
+        if (status) status.has = 'hit'
+        this.statusTTL(status, index)
         return true
+      } else if (status) {
+        status.has = 'stale'
+        this.statusTTL(status, index)
       }
+    } else if (status) {
+      status.has = 'miss'
     }
     return false
   }
@@ -12928,41 +21793,109 @@ class LRUCache {
       return v
     }
     const ac = new AC()
+    if (options.signal) {
+      options.signal.addEventListener('abort', () =>
+        ac.abort(options.signal.reason)
+      )
+    }
     const fetchOpts = {
       signal: ac.signal,
       options,
       context,
     }
-    const cb = v => {
-      if (!ac.signal.aborted) {
-        this.set(k, v, fetchOpts.options)
+    const cb = (v, updateCache = false) => {
+      const { aborted } = ac.signal
+      const ignoreAbort = options.ignoreFetchAbort && v !== undefined
+      if (options.status) {
+        if (aborted && !updateCache) {
+          options.status.fetchAborted = true
+          options.status.fetchError = ac.signal.reason
+          if (ignoreAbort) options.status.fetchAbortIgnored = true
+        } else {
+          options.status.fetchResolved = true
+        }
+      }
+      if (aborted && !ignoreAbort && !updateCache) {
+        return fetchFail(ac.signal.reason)
+      }
+      // either we didn't abort, and are still here, or we did, and ignored
+      if (this.valList[index] === p) {
+        if (v === undefined) {
+          if (p.__staleWhileFetching) {
+            this.valList[index] = p.__staleWhileFetching
+          } else {
+            this.delete(k)
+          }
+        } else {
+          if (options.status) options.status.fetchUpdated = true
+          this.set(k, v, fetchOpts.options)
+        }
       }
       return v
     }
     const eb = er => {
+      if (options.status) {
+        options.status.fetchRejected = true
+        options.status.fetchError = er
+      }
+      return fetchFail(er)
+    }
+    const fetchFail = er => {
+      const { aborted } = ac.signal
+      const allowStaleAborted =
+        aborted && options.allowStaleOnFetchAbort
+      const allowStale =
+        allowStaleAborted || options.allowStaleOnFetchRejection
+      const noDelete = allowStale || options.noDeleteOnFetchRejection
       if (this.valList[index] === p) {
-        const del =
-          !options.noDeleteOnFetchRejection ||
-          p.__staleWhileFetching === undefined
+        // if we allow stale on fetch rejections, then we need to ensure that
+        // the stale value is not removed from the cache when the fetch fails.
+        const del = !noDelete || p.__staleWhileFetching === undefined
         if (del) {
           this.delete(k)
-        } else {
+        } else if (!allowStaleAborted) {
           // still replace the *promise* with the stale value,
           // since we are done with the promise at this point.
+          // leave it untouched if we're still waiting for an
+          // aborted background fetch that hasn't yet returned.
           this.valList[index] = p.__staleWhileFetching
         }
       }
-      if (p.__returned === p) {
+      if (allowStale) {
+        if (options.status && p.__staleWhileFetching !== undefined) {
+          options.status.returnedStale = true
+        }
+        return p.__staleWhileFetching
+      } else if (p.__returned === p) {
         throw er
       }
     }
-    const pcall = res => res(this.fetchMethod(k, v, fetchOpts))
+    const pcall = (res, rej) => {
+      this.fetchMethod(k, v, fetchOpts).then(v => res(v), rej)
+      // ignored, we go until we finish, regardless.
+      // defer check until we are actually aborting,
+      // so fetchMethod can override.
+      ac.signal.addEventListener('abort', () => {
+        if (
+          !options.ignoreFetchAbort ||
+          options.allowStaleOnFetchAbort
+        ) {
+          res()
+          // when it eventually resolves, update the cache.
+          if (options.allowStaleOnFetchAbort) {
+            res = v => cb(v, true)
+          }
+        }
+      })
+    }
+    if (options.status) options.status.fetchDispatched = true
     const p = new Promise(pcall).then(cb, eb)
     p.__abortController = ac
     p.__staleWhileFetching = v
     p.__returned = null
     if (index === undefined) {
-      this.set(k, p, fetchOpts.options)
+      // internal, don't expose status.
+      this.set(k, p, { ...fetchOpts.options, status: undefined })
       index = this.keyMap.get(k)
     } else {
       this.valList[index] = p
@@ -13000,15 +21933,22 @@ class LRUCache {
       noUpdateTTL = this.noUpdateTTL,
       // fetch exclusive options
       noDeleteOnFetchRejection = this.noDeleteOnFetchRejection,
+      allowStaleOnFetchRejection = this.allowStaleOnFetchRejection,
+      ignoreFetchAbort = this.ignoreFetchAbort,
+      allowStaleOnFetchAbort = this.allowStaleOnFetchAbort,
       fetchContext = this.fetchContext,
       forceRefresh = false,
+      status,
+      signal,
     } = {}
   ) {
     if (!this.fetchMethod) {
+      if (status) status.fetch = 'get'
       return this.get(k, {
         allowStale,
         updateAgeOnGet,
         noDeleteOnStaleGet,
+        status,
       })
     }
 
@@ -13022,37 +21962,54 @@ class LRUCache {
       sizeCalculation,
       noUpdateTTL,
       noDeleteOnFetchRejection,
+      allowStaleOnFetchRejection,
+      allowStaleOnFetchAbort,
+      ignoreFetchAbort,
+      status,
+      signal,
     }
 
     let index = this.keyMap.get(k)
     if (index === undefined) {
+      if (status) status.fetch = 'miss'
       const p = this.backgroundFetch(k, index, options, fetchContext)
       return (p.__returned = p)
     } else {
       // in cache, maybe already fetching
       const v = this.valList[index]
       if (this.isBackgroundFetch(v)) {
-        return allowStale && v.__staleWhileFetching !== undefined
-          ? v.__staleWhileFetching
-          : (v.__returned = v)
+        const stale =
+          allowStale && v.__staleWhileFetching !== undefined
+        if (status) {
+          status.fetch = 'inflight'
+          if (stale) status.returnedStale = true
+        }
+        return stale ? v.__staleWhileFetching : (v.__returned = v)
       }
 
       // if we force a refresh, that means do NOT serve the cached value,
       // unless we are already in the process of refreshing the cache.
-      if (!forceRefresh && !this.isStale(index)) {
+      const isStale = this.isStale(index)
+      if (!forceRefresh && !isStale) {
+        if (status) status.fetch = 'hit'
         this.moveToTail(index)
         if (updateAgeOnGet) {
           this.updateItemAge(index)
         }
+        this.statusTTL(status, index)
         return v
       }
 
       // ok, it is stale or a forced refresh, and not already fetching.
       // refresh the cache.
       const p = this.backgroundFetch(k, index, options, fetchContext)
-      return allowStale && p.__staleWhileFetching !== undefined
-        ? p.__staleWhileFetching
-        : (p.__returned = p)
+      const hasStale = p.__staleWhileFetching !== undefined
+      const staleVal = hasStale && allowStale
+      if (status) {
+        status.fetch = hasStale && isStale ? 'stale' : 'refresh'
+        if (staleVal && isStale) status.returnedStale = true
+      }
+      return staleVal ? p.__staleWhileFetching : (p.__returned = p)
     }
   }
 
@@ -13062,28 +22019,39 @@ class LRUCache {
       allowStale = this.allowStale,
       updateAgeOnGet = this.updateAgeOnGet,
       noDeleteOnStaleGet = this.noDeleteOnStaleGet,
+      status,
     } = {}
   ) {
     const index = this.keyMap.get(k)
     if (index !== undefined) {
       const value = this.valList[index]
       const fetching = this.isBackgroundFetch(value)
+      this.statusTTL(status, index)
       if (this.isStale(index)) {
+        if (status) status.get = 'stale'
         // delete only if not an in-flight background fetch
         if (!fetching) {
           if (!noDeleteOnStaleGet) {
             this.delete(k)
           }
+          if (status) status.returnedStale = allowStale
           return allowStale ? value : undefined
         } else {
+          if (status) {
+            status.returnedStale =
+              allowStale && value.__staleWhileFetching !== undefined
+          }
           return allowStale ? value.__staleWhileFetching : undefined
         }
       } else {
+        if (status) status.get = 'hit'
         // if we're currently fetching it, we don't actually have it yet
-        // it's not stale, which means this isn't a staleWhileRefetching,
-        // so we just return undefined
+        // it's not stale, which means this isn't a staleWhileRefetching.
+        // If it's not stale, and fetching, AND has a __staleWhileFetching
+        // value, then that means the user fetched with {forceRefresh:true},
+        // so it's safe to return that value.
         if (fetching) {
-          return undefined
+          return value.__staleWhileFetching
         }
         this.moveToTail(index)
         if (updateAgeOnGet) {
@@ -13091,6 +22059,8 @@ class LRUCache {
         }
         return value
       }
+    } else if (status) {
+      status.get = 'miss'
     }
   }
 
@@ -13136,7 +22106,7 @@ class LRUCache {
           this.removeItemSize(index)
           const v = this.valList[index]
           if (this.isBackgroundFetch(v)) {
-            v.__abortController.abort()
+            v.__abortController.abort(new Error('deleted'))
           } else {
             this.dispose(v, k, 'delete')
             if (this.disposeAfter) {
@@ -13171,7 +22141,7 @@ class LRUCache {
     for (const index of this.rindexes({ allowStale: true })) {
       const v = this.valList[index]
       if (this.isBackgroundFetch(v)) {
-        v.__abortController.abort()
+        v.__abortController.abort(new Error('deleted'))
       } else {
         const k = this.keyList[index]
         this.dispose(v, k, 'delete')
@@ -13222,17 +22192,16 @@ class LRUCache {
   }
 }
 
-module.exports = LRUCache
+/* harmony default export */ __webpack_exports__["default"] = (LRUCache);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
 
 /***/ }),
-/* 47 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, setImmediate, global, process) {var require;var require;/*!
 
-JSZip v3.10.0 - A JavaScript class for generating and reading zip files
+JSZip v3.10.1 - A JavaScript class for generating and reading zip files
 <http://stuartk.com/jszip>
 
 (c) 2009-2016 Stuart Knightley <stuart [at] stuartk.com>
@@ -13242,11 +22211,11 @@ JSZip uses the library pako released under the MIT license :
 https://github.com/nodeca/pako/blob/main/LICENSE
 */
 
-!function(e){if(true)module.exports=e();else {}}(function(){return function s(a,o,h){function u(r,e){if(!o[r]){if(!a[r]){var t="function"==typeof require&&require;if(!e&&__webpack_require__(49))return require(r,!0);if(l)return l(r,!0);var n=new Error("Cannot find module '"+r+"'");throw n.code="MODULE_NOT_FOUND",n}var i=o[r]={exports:{}};a[r][0].call(i.exports,function(e){var t=a[r][1][e];return u(t||e)},i,i.exports,s,a,o,h)}return o[r].exports}for(var l="function"==typeof require&&require,e=0;e<h.length;e++)u(h[e]);return u}({1:[function(e,t,r){"use strict";var d=e("./utils"),c=e("./support"),p="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";r.encode=function(e){for(var t,r,n,i,s,a,o,h=[],u=0,l=e.length,f=l,c="string"!==d.getTypeOf(e);u<e.length;)f=l-u,n=c?(t=e[u++],r=u<l?e[u++]:0,u<l?e[u++]:0):(t=e.charCodeAt(u++),r=u<l?e.charCodeAt(u++):0,u<l?e.charCodeAt(u++):0),i=t>>2,s=(3&t)<<4|r>>4,a=1<f?(15&r)<<2|n>>6:64,o=2<f?63&n:64,h.push(p.charAt(i)+p.charAt(s)+p.charAt(a)+p.charAt(o));return h.join("")},r.decode=function(e){var t,r,n,i,s,a,o=0,h=0,u="data:";if(e.substr(0,u.length)===u)throw new Error("Invalid base64 input, it looks like a data url.");var l,f=3*(e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"")).length/4;if(e.charAt(e.length-1)===p.charAt(64)&&f--,e.charAt(e.length-2)===p.charAt(64)&&f--,f%1!=0)throw new Error("Invalid base64 input, bad content length.");for(l=c.uint8array?new Uint8Array(0|f):new Array(0|f);o<e.length;)t=p.indexOf(e.charAt(o++))<<2|(i=p.indexOf(e.charAt(o++)))>>4,r=(15&i)<<4|(s=p.indexOf(e.charAt(o++)))>>2,n=(3&s)<<6|(a=p.indexOf(e.charAt(o++))),l[h++]=t,64!==s&&(l[h++]=r),64!==a&&(l[h++]=n);return l}},{"./support":30,"./utils":32}],2:[function(e,t,r){"use strict";var n=e("./external"),i=e("./stream/DataWorker"),s=e("./stream/Crc32Probe"),a=e("./stream/DataLengthProbe");function o(e,t,r,n,i){this.compressedSize=e,this.uncompressedSize=t,this.crc32=r,this.compression=n,this.compressedContent=i}o.prototype={getContentWorker:function(){var e=new i(n.Promise.resolve(this.compressedContent)).pipe(this.compression.uncompressWorker()).pipe(new a("data_length")),t=this;return e.on("end",function(){if(this.streamInfo.data_length!==t.uncompressedSize)throw new Error("Bug : uncompressed data size mismatch")}),e},getCompressedWorker:function(){return new i(n.Promise.resolve(this.compressedContent)).withStreamInfo("compressedSize",this.compressedSize).withStreamInfo("uncompressedSize",this.uncompressedSize).withStreamInfo("crc32",this.crc32).withStreamInfo("compression",this.compression)}},o.createWorkerFrom=function(e,t,r){return e.pipe(new s).pipe(new a("uncompressedSize")).pipe(t.compressWorker(r)).pipe(new a("compressedSize")).withStreamInfo("compression",t)},t.exports=o},{"./external":6,"./stream/Crc32Probe":25,"./stream/DataLengthProbe":26,"./stream/DataWorker":27}],3:[function(e,t,r){"use strict";var n=e("./stream/GenericWorker");r.STORE={magic:"\0\0",compressWorker:function(e){return new n("STORE compression")},uncompressWorker:function(){return new n("STORE decompression")}},r.DEFLATE=e("./flate")},{"./flate":7,"./stream/GenericWorker":28}],4:[function(e,t,r){"use strict";var n=e("./utils");var o=function(){for(var e,t=[],r=0;r<256;r++){e=r;for(var n=0;n<8;n++)e=1&e?3988292384^e>>>1:e>>>1;t[r]=e}return t}();t.exports=function(e,t){return void 0!==e&&e.length?"string"!==n.getTypeOf(e)?function(e,t,r,n){var i=o,s=n+r;e^=-1;for(var a=n;a<s;a++)e=e>>>8^i[255&(e^t[a])];return-1^e}(0|t,e,e.length,0):function(e,t,r,n){var i=o,s=n+r;e^=-1;for(var a=n;a<s;a++)e=e>>>8^i[255&(e^t.charCodeAt(a))];return-1^e}(0|t,e,e.length,0):0}},{"./utils":32}],5:[function(e,t,r){"use strict";r.base64=!1,r.binary=!1,r.dir=!1,r.createFolders=!0,r.date=null,r.compression=null,r.compressionOptions=null,r.comment=null,r.unixPermissions=null,r.dosPermissions=null},{}],6:[function(e,t,r){"use strict";var n=null;n="undefined"!=typeof Promise?Promise:e("lie"),t.exports={Promise:n}},{lie:37}],7:[function(e,t,r){"use strict";var n="undefined"!=typeof Uint8Array&&"undefined"!=typeof Uint16Array&&"undefined"!=typeof Uint32Array,i=e("pako"),s=e("./utils"),a=e("./stream/GenericWorker"),o=n?"uint8array":"array";function h(e,t){a.call(this,"FlateWorker/"+e),this._pako=null,this._pakoAction=e,this._pakoOptions=t,this.meta={}}r.magic="\b\0",s.inherits(h,a),h.prototype.processChunk=function(e){this.meta=e.meta,null===this._pako&&this._createPako(),this._pako.push(s.transformTo(o,e.data),!1)},h.prototype.flush=function(){a.prototype.flush.call(this),null===this._pako&&this._createPako(),this._pako.push([],!0)},h.prototype.cleanUp=function(){a.prototype.cleanUp.call(this),this._pako=null},h.prototype._createPako=function(){this._pako=new i[this._pakoAction]({raw:!0,level:this._pakoOptions.level||-1});var t=this;this._pako.onData=function(e){t.push({data:e,meta:t.meta})}},r.compressWorker=function(e){return new h("Deflate",e)},r.uncompressWorker=function(){return new h("Inflate",{})}},{"./stream/GenericWorker":28,"./utils":32,pako:38}],8:[function(e,t,r){"use strict";function A(e,t){var r,n="";for(r=0;r<t;r++)n+=String.fromCharCode(255&e),e>>>=8;return n}function n(e,t,r,n,i,s){var a,o,h=e.file,u=e.compression,l=s!==O.utf8encode,f=I.transformTo("string",s(h.name)),c=I.transformTo("string",O.utf8encode(h.name)),d=h.comment,p=I.transformTo("string",s(d)),m=I.transformTo("string",O.utf8encode(d)),_=c.length!==h.name.length,g=m.length!==d.length,b="",v="",y="",w=h.dir,k=h.date,x={crc32:0,compressedSize:0,uncompressedSize:0};t&&!r||(x.crc32=e.crc32,x.compressedSize=e.compressedSize,x.uncompressedSize=e.uncompressedSize);var S=0;t&&(S|=8),l||!_&&!g||(S|=2048);var z=0,C=0;w&&(z|=16),"UNIX"===i?(C=798,z|=function(e,t){var r=e;return e||(r=t?16893:33204),(65535&r)<<16}(h.unixPermissions,w)):(C=20,z|=function(e){return 63&(e||0)}(h.dosPermissions)),a=k.getUTCHours(),a<<=6,a|=k.getUTCMinutes(),a<<=5,a|=k.getUTCSeconds()/2,o=k.getUTCFullYear()-1980,o<<=4,o|=k.getUTCMonth()+1,o<<=5,o|=k.getUTCDate(),_&&(v=A(1,1)+A(B(f),4)+c,b+="up"+A(v.length,2)+v),g&&(y=A(1,1)+A(B(p),4)+m,b+="uc"+A(y.length,2)+y);var E="";return E+="\n\0",E+=A(S,2),E+=u.magic,E+=A(a,2),E+=A(o,2),E+=A(x.crc32,4),E+=A(x.compressedSize,4),E+=A(x.uncompressedSize,4),E+=A(f.length,2),E+=A(b.length,2),{fileRecord:R.LOCAL_FILE_HEADER+E+f+b,dirRecord:R.CENTRAL_FILE_HEADER+A(C,2)+E+A(p.length,2)+"\0\0\0\0"+A(z,4)+A(n,4)+f+b+p}}var I=e("../utils"),i=e("../stream/GenericWorker"),O=e("../utf8"),B=e("../crc32"),R=e("../signature");function s(e,t,r,n){i.call(this,"ZipFileWorker"),this.bytesWritten=0,this.zipComment=t,this.zipPlatform=r,this.encodeFileName=n,this.streamFiles=e,this.accumulate=!1,this.contentBuffer=[],this.dirRecords=[],this.currentSourceOffset=0,this.entriesCount=0,this.currentFile=null,this._sources=[]}I.inherits(s,i),s.prototype.push=function(e){var t=e.meta.percent||0,r=this.entriesCount,n=this._sources.length;this.accumulate?this.contentBuffer.push(e):(this.bytesWritten+=e.data.length,i.prototype.push.call(this,{data:e.data,meta:{currentFile:this.currentFile,percent:r?(t+100*(r-n-1))/r:100}}))},s.prototype.openedSource=function(e){this.currentSourceOffset=this.bytesWritten,this.currentFile=e.file.name;var t=this.streamFiles&&!e.file.dir;if(t){var r=n(e,t,!1,this.currentSourceOffset,this.zipPlatform,this.encodeFileName);this.push({data:r.fileRecord,meta:{percent:0}})}else this.accumulate=!0},s.prototype.closedSource=function(e){this.accumulate=!1;var t=this.streamFiles&&!e.file.dir,r=n(e,t,!0,this.currentSourceOffset,this.zipPlatform,this.encodeFileName);if(this.dirRecords.push(r.dirRecord),t)this.push({data:function(e){return R.DATA_DESCRIPTOR+A(e.crc32,4)+A(e.compressedSize,4)+A(e.uncompressedSize,4)}(e),meta:{percent:100}});else for(this.push({data:r.fileRecord,meta:{percent:0}});this.contentBuffer.length;)this.push(this.contentBuffer.shift());this.currentFile=null},s.prototype.flush=function(){for(var e=this.bytesWritten,t=0;t<this.dirRecords.length;t++)this.push({data:this.dirRecords[t],meta:{percent:100}});var r=this.bytesWritten-e,n=function(e,t,r,n,i){var s=I.transformTo("string",i(n));return R.CENTRAL_DIRECTORY_END+"\0\0\0\0"+A(e,2)+A(e,2)+A(t,4)+A(r,4)+A(s.length,2)+s}(this.dirRecords.length,r,e,this.zipComment,this.encodeFileName);this.push({data:n,meta:{percent:100}})},s.prototype.prepareNextSource=function(){this.previous=this._sources.shift(),this.openedSource(this.previous.streamInfo),this.isPaused?this.previous.pause():this.previous.resume()},s.prototype.registerPrevious=function(e){this._sources.push(e);var t=this;return e.on("data",function(e){t.processChunk(e)}),e.on("end",function(){t.closedSource(t.previous.streamInfo),t._sources.length?t.prepareNextSource():t.end()}),e.on("error",function(e){t.error(e)}),this},s.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(!this.previous&&this._sources.length?(this.prepareNextSource(),!0):this.previous||this._sources.length||this.generatedError?void 0:(this.end(),!0))},s.prototype.error=function(e){var t=this._sources;if(!i.prototype.error.call(this,e))return!1;for(var r=0;r<t.length;r++)try{t[r].error(e)}catch(e){}return!0},s.prototype.lock=function(){i.prototype.lock.call(this);for(var e=this._sources,t=0;t<e.length;t++)e[t].lock()},t.exports=s},{"../crc32":4,"../signature":23,"../stream/GenericWorker":28,"../utf8":31,"../utils":32}],9:[function(e,t,r){"use strict";var u=e("../compressions"),n=e("./ZipFileWorker");r.generateWorker=function(e,a,t){var o=new n(a.streamFiles,t,a.platform,a.encodeFileName),h=0;try{e.forEach(function(e,t){h++;var r=function(e,t){var r=e||t,n=u[r];if(!n)throw new Error(r+" is not a valid compression method !");return n}(t.options.compression,a.compression),n=t.options.compressionOptions||a.compressionOptions||{},i=t.dir,s=t.date;t._compressWorker(r,n).withStreamInfo("file",{name:e,dir:i,date:s,comment:t.comment||"",unixPermissions:t.unixPermissions,dosPermissions:t.dosPermissions}).pipe(o)}),o.entriesCount=h}catch(e){o.error(e)}return o}},{"../compressions":3,"./ZipFileWorker":8}],10:[function(e,t,r){"use strict";function n(){if(!(this instanceof n))return new n;if(arguments.length)throw new Error("The constructor with parameters has been removed in JSZip 3.0, please check the upgrade guide.");this.files=Object.create(null),this.comment=null,this.root="",this.clone=function(){var e=new n;for(var t in this)"function"!=typeof this[t]&&(e[t]=this[t]);return e}}(n.prototype=e("./object")).loadAsync=e("./load"),n.support=e("./support"),n.defaults=e("./defaults"),n.version="3.10.0",n.loadAsync=function(e,t){return(new n).loadAsync(e,t)},n.external=e("./external"),t.exports=n},{"./defaults":5,"./external":6,"./load":11,"./object":15,"./support":30}],11:[function(e,t,r){"use strict";var u=e("./utils"),i=e("./external"),n=e("./utf8"),s=e("./zipEntries"),a=e("./stream/Crc32Probe"),l=e("./nodejsUtils");function f(n){return new i.Promise(function(e,t){var r=n.decompressed.getContentWorker().pipe(new a);r.on("error",function(e){t(e)}).on("end",function(){r.streamInfo.crc32!==n.decompressed.crc32?t(new Error("Corrupted zip : CRC32 mismatch")):e()}).resume()})}t.exports=function(e,o){var h=this;return o=u.extend(o||{},{base64:!1,checkCRC32:!1,optimizedBinaryString:!1,createFolders:!1,decodeFileName:n.utf8decode}),l.isNode&&l.isStream(e)?i.Promise.reject(new Error("JSZip can't accept a stream when loading a zip file.")):u.prepareContent("the loaded zip file",e,!0,o.optimizedBinaryString,o.base64).then(function(e){var t=new s(o);return t.load(e),t}).then(function(e){var t=[i.Promise.resolve(e)],r=e.files;if(o.checkCRC32)for(var n=0;n<r.length;n++)t.push(f(r[n]));return i.Promise.all(t)}).then(function(e){for(var t=e.shift(),r=t.files,n=0;n<r.length;n++){var i=r[n],s=i.fileNameStr,a=u.resolve(i.fileNameStr);h.file(a,i.decompressed,{binary:!0,optimizedBinaryString:!0,date:i.date,dir:i.dir,comment:i.fileCommentStr.length?i.fileCommentStr:null,unixPermissions:i.unixPermissions,dosPermissions:i.dosPermissions,createFolders:o.createFolders}),i.dir||(h.file(a).unsafeOriginalName=s)}return t.zipComment.length&&(h.comment=t.zipComment),h})}},{"./external":6,"./nodejsUtils":14,"./stream/Crc32Probe":25,"./utf8":31,"./utils":32,"./zipEntries":33}],12:[function(e,t,r){"use strict";var n=e("../utils"),i=e("../stream/GenericWorker");function s(e,t){i.call(this,"Nodejs stream input adapter for "+e),this._upstreamEnded=!1,this._bindStream(t)}n.inherits(s,i),s.prototype._bindStream=function(e){var t=this;(this._stream=e).pause(),e.on("data",function(e){t.push({data:e,meta:{percent:0}})}).on("error",function(e){t.isPaused?this.generatedError=e:t.error(e)}).on("end",function(){t.isPaused?t._upstreamEnded=!0:t.end()})},s.prototype.pause=function(){return!!i.prototype.pause.call(this)&&(this._stream.pause(),!0)},s.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(this._upstreamEnded?this.end():this._stream.resume(),!0)},t.exports=s},{"../stream/GenericWorker":28,"../utils":32}],13:[function(e,t,r){"use strict";var i=e("readable-stream").Readable;function n(e,t,r){i.call(this,t),this._helper=e;var n=this;e.on("data",function(e,t){n.push(e)||n._helper.pause(),r&&r(t)}).on("error",function(e){n.emit("error",e)}).on("end",function(){n.push(null)})}e("../utils").inherits(n,i),n.prototype._read=function(){this._helper.resume()},t.exports=n},{"../utils":32,"readable-stream":16}],14:[function(e,t,r){"use strict";t.exports={isNode:"undefined"!=typeof Buffer,newBufferFrom:function(e,t){if(Buffer.from&&Buffer.from!==Uint8Array.from)return Buffer.from(e,t);if("number"==typeof e)throw new Error('The "data" argument must not be a number');return new Buffer(e,t)},allocBuffer:function(e){if(Buffer.alloc)return Buffer.alloc(e);var t=new Buffer(e);return t.fill(0),t},isBuffer:function(e){return Buffer.isBuffer(e)},isStream:function(e){return e&&"function"==typeof e.on&&"function"==typeof e.pause&&"function"==typeof e.resume}}},{}],15:[function(e,t,r){"use strict";function s(e,t,r){var n,i=u.getTypeOf(t),s=u.extend(r||{},f);s.date=s.date||new Date,null!==s.compression&&(s.compression=s.compression.toUpperCase()),"string"==typeof s.unixPermissions&&(s.unixPermissions=parseInt(s.unixPermissions,8)),s.unixPermissions&&16384&s.unixPermissions&&(s.dir=!0),s.dosPermissions&&16&s.dosPermissions&&(s.dir=!0),s.dir&&(e=g(e)),s.createFolders&&(n=_(e))&&b.call(this,n,!0);var a="string"===i&&!1===s.binary&&!1===s.base64;r&&void 0!==r.binary||(s.binary=!a),(t instanceof c&&0===t.uncompressedSize||s.dir||!t||0===t.length)&&(s.base64=!1,s.binary=!0,t="",s.compression="STORE",i="string");var o=null;o=t instanceof c||t instanceof l?t:p.isNode&&p.isStream(t)?new m(e,t):u.prepareContent(e,t,s.binary,s.optimizedBinaryString,s.base64);var h=new d(e,o,s);this.files[e]=h}var i=e("./utf8"),u=e("./utils"),l=e("./stream/GenericWorker"),a=e("./stream/StreamHelper"),f=e("./defaults"),c=e("./compressedObject"),d=e("./zipObject"),o=e("./generate"),p=e("./nodejsUtils"),m=e("./nodejs/NodejsStreamInputAdapter"),_=function(e){"/"===e.slice(-1)&&(e=e.substring(0,e.length-1));var t=e.lastIndexOf("/");return 0<t?e.substring(0,t):""},g=function(e){return"/"!==e.slice(-1)&&(e+="/"),e},b=function(e,t){return t=void 0!==t?t:f.createFolders,e=g(e),this.files[e]||s.call(this,e,null,{dir:!0,createFolders:t}),this.files[e]};function h(e){return"[object RegExp]"===Object.prototype.toString.call(e)}var n={load:function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},forEach:function(e){var t,r,n;for(t in this.files)n=this.files[t],(r=t.slice(this.root.length,t.length))&&t.slice(0,this.root.length)===this.root&&e(r,n)},filter:function(r){var n=[];return this.forEach(function(e,t){r(e,t)&&n.push(t)}),n},file:function(e,t,r){if(1!==arguments.length)return e=this.root+e,s.call(this,e,t,r),this;if(h(e)){var n=e;return this.filter(function(e,t){return!t.dir&&n.test(e)})}var i=this.files[this.root+e];return i&&!i.dir?i:null},folder:function(r){if(!r)return this;if(h(r))return this.filter(function(e,t){return t.dir&&r.test(e)});var e=this.root+r,t=b.call(this,e),n=this.clone();return n.root=t.name,n},remove:function(r){r=this.root+r;var e=this.files[r];if(e||("/"!==r.slice(-1)&&(r+="/"),e=this.files[r]),e&&!e.dir)delete this.files[r];else for(var t=this.filter(function(e,t){return t.name.slice(0,r.length)===r}),n=0;n<t.length;n++)delete this.files[t[n].name];return this},generate:function(e){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},generateInternalStream:function(e){var t,r={};try{if((r=u.extend(e||{},{streamFiles:!1,compression:"STORE",compressionOptions:null,type:"",platform:"DOS",comment:null,mimeType:"application/zip",encodeFileName:i.utf8encode})).type=r.type.toLowerCase(),r.compression=r.compression.toUpperCase(),"binarystring"===r.type&&(r.type="string"),!r.type)throw new Error("No output type specified.");u.checkSupport(r.type),"darwin"!==r.platform&&"freebsd"!==r.platform&&"linux"!==r.platform&&"sunos"!==r.platform||(r.platform="UNIX"),"win32"===r.platform&&(r.platform="DOS");var n=r.comment||this.comment||"";t=o.generateWorker(this,r,n)}catch(e){(t=new l("error")).error(e)}return new a(t,r.type||"string",r.mimeType)},generateAsync:function(e,t){return this.generateInternalStream(e).accumulate(t)},generateNodeStream:function(e,t){return(e=e||{}).type||(e.type="nodebuffer"),this.generateInternalStream(e).toNodejsStream(t)}};t.exports=n},{"./compressedObject":2,"./defaults":5,"./generate":9,"./nodejs/NodejsStreamInputAdapter":12,"./nodejsUtils":14,"./stream/GenericWorker":28,"./stream/StreamHelper":29,"./utf8":31,"./utils":32,"./zipObject":35}],16:[function(e,t,r){t.exports=e("stream")},{stream:void 0}],17:[function(e,t,r){"use strict";var n=e("./DataReader");function i(e){n.call(this,e);for(var t=0;t<this.data.length;t++)e[t]=255&e[t]}e("../utils").inherits(i,n),i.prototype.byteAt=function(e){return this.data[this.zero+e]},i.prototype.lastIndexOfSignature=function(e){for(var t=e.charCodeAt(0),r=e.charCodeAt(1),n=e.charCodeAt(2),i=e.charCodeAt(3),s=this.length-4;0<=s;--s)if(this.data[s]===t&&this.data[s+1]===r&&this.data[s+2]===n&&this.data[s+3]===i)return s-this.zero;return-1},i.prototype.readAndCheckSignature=function(e){var t=e.charCodeAt(0),r=e.charCodeAt(1),n=e.charCodeAt(2),i=e.charCodeAt(3),s=this.readData(4);return t===s[0]&&r===s[1]&&n===s[2]&&i===s[3]},i.prototype.readData=function(e){if(this.checkOffset(e),0===e)return[];var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./DataReader":18}],18:[function(e,t,r){"use strict";var n=e("../utils");function i(e){this.data=e,this.length=e.length,this.index=0,this.zero=0}i.prototype={checkOffset:function(e){this.checkIndex(this.index+e)},checkIndex:function(e){if(this.length<this.zero+e||e<0)throw new Error("End of data reached (data length = "+this.length+", asked index = "+e+"). Corrupted zip ?")},setIndex:function(e){this.checkIndex(e),this.index=e},skip:function(e){this.setIndex(this.index+e)},byteAt:function(e){},readInt:function(e){var t,r=0;for(this.checkOffset(e),t=this.index+e-1;t>=this.index;t--)r=(r<<8)+this.byteAt(t);return this.index+=e,r},readString:function(e){return n.transformTo("string",this.readData(e))},readData:function(e){},lastIndexOfSignature:function(e){},readAndCheckSignature:function(e){},readDate:function(){var e=this.readInt(4);return new Date(Date.UTC(1980+(e>>25&127),(e>>21&15)-1,e>>16&31,e>>11&31,e>>5&63,(31&e)<<1))}},t.exports=i},{"../utils":32}],19:[function(e,t,r){"use strict";var n=e("./Uint8ArrayReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.readData=function(e){this.checkOffset(e);var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./Uint8ArrayReader":21}],20:[function(e,t,r){"use strict";var n=e("./DataReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.byteAt=function(e){return this.data.charCodeAt(this.zero+e)},i.prototype.lastIndexOfSignature=function(e){return this.data.lastIndexOf(e)-this.zero},i.prototype.readAndCheckSignature=function(e){return e===this.readData(4)},i.prototype.readData=function(e){this.checkOffset(e);var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./DataReader":18}],21:[function(e,t,r){"use strict";var n=e("./ArrayReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.readData=function(e){if(this.checkOffset(e),0===e)return new Uint8Array(0);var t=this.data.subarray(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./ArrayReader":17}],22:[function(e,t,r){"use strict";var n=e("../utils"),i=e("../support"),s=e("./ArrayReader"),a=e("./StringReader"),o=e("./NodeBufferReader"),h=e("./Uint8ArrayReader");t.exports=function(e){var t=n.getTypeOf(e);return n.checkSupport(t),"string"!==t||i.uint8array?"nodebuffer"===t?new o(e):i.uint8array?new h(n.transformTo("uint8array",e)):new s(n.transformTo("array",e)):new a(e)}},{"../support":30,"../utils":32,"./ArrayReader":17,"./NodeBufferReader":19,"./StringReader":20,"./Uint8ArrayReader":21}],23:[function(e,t,r){"use strict";r.LOCAL_FILE_HEADER="PK",r.CENTRAL_FILE_HEADER="PK",r.CENTRAL_DIRECTORY_END="PK",r.ZIP64_CENTRAL_DIRECTORY_LOCATOR="PK",r.ZIP64_CENTRAL_DIRECTORY_END="PK",r.DATA_DESCRIPTOR="PK\b"},{}],24:[function(e,t,r){"use strict";var n=e("./GenericWorker"),i=e("../utils");function s(e){n.call(this,"ConvertWorker to "+e),this.destType=e}i.inherits(s,n),s.prototype.processChunk=function(e){this.push({data:i.transformTo(this.destType,e.data),meta:e.meta})},t.exports=s},{"../utils":32,"./GenericWorker":28}],25:[function(e,t,r){"use strict";var n=e("./GenericWorker"),i=e("../crc32");function s(){n.call(this,"Crc32Probe"),this.withStreamInfo("crc32",0)}e("../utils").inherits(s,n),s.prototype.processChunk=function(e){this.streamInfo.crc32=i(e.data,this.streamInfo.crc32||0),this.push(e)},t.exports=s},{"../crc32":4,"../utils":32,"./GenericWorker":28}],26:[function(e,t,r){"use strict";var n=e("../utils"),i=e("./GenericWorker");function s(e){i.call(this,"DataLengthProbe for "+e),this.propName=e,this.withStreamInfo(e,0)}n.inherits(s,i),s.prototype.processChunk=function(e){if(e){var t=this.streamInfo[this.propName]||0;this.streamInfo[this.propName]=t+e.data.length}i.prototype.processChunk.call(this,e)},t.exports=s},{"../utils":32,"./GenericWorker":28}],27:[function(e,t,r){"use strict";var n=e("../utils"),i=e("./GenericWorker");function s(e){i.call(this,"DataWorker");var t=this;this.dataIsReady=!1,this.index=0,this.max=0,this.data=null,this.type="",this._tickScheduled=!1,e.then(function(e){t.dataIsReady=!0,t.data=e,t.max=e&&e.length||0,t.type=n.getTypeOf(e),t.isPaused||t._tickAndRepeat()},function(e){t.error(e)})}n.inherits(s,i),s.prototype.cleanUp=function(){i.prototype.cleanUp.call(this),this.data=null},s.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(!this._tickScheduled&&this.dataIsReady&&(this._tickScheduled=!0,n.delay(this._tickAndRepeat,[],this)),!0)},s.prototype._tickAndRepeat=function(){this._tickScheduled=!1,this.isPaused||this.isFinished||(this._tick(),this.isFinished||(n.delay(this._tickAndRepeat,[],this),this._tickScheduled=!0))},s.prototype._tick=function(){if(this.isPaused||this.isFinished)return!1;var e=null,t=Math.min(this.max,this.index+16384);if(this.index>=this.max)return this.end();switch(this.type){case"string":e=this.data.substring(this.index,t);break;case"uint8array":e=this.data.subarray(this.index,t);break;case"array":case"nodebuffer":e=this.data.slice(this.index,t)}return this.index=t,this.push({data:e,meta:{percent:this.max?this.index/this.max*100:0}})},t.exports=s},{"../utils":32,"./GenericWorker":28}],28:[function(e,t,r){"use strict";function n(e){this.name=e||"default",this.streamInfo={},this.generatedError=null,this.extraStreamInfo={},this.isPaused=!0,this.isFinished=!1,this.isLocked=!1,this._listeners={data:[],end:[],error:[]},this.previous=null}n.prototype={push:function(e){this.emit("data",e)},end:function(){if(this.isFinished)return!1;this.flush();try{this.emit("end"),this.cleanUp(),this.isFinished=!0}catch(e){this.emit("error",e)}return!0},error:function(e){return!this.isFinished&&(this.isPaused?this.generatedError=e:(this.isFinished=!0,this.emit("error",e),this.previous&&this.previous.error(e),this.cleanUp()),!0)},on:function(e,t){return this._listeners[e].push(t),this},cleanUp:function(){this.streamInfo=this.generatedError=this.extraStreamInfo=null,this._listeners=[]},emit:function(e,t){if(this._listeners[e])for(var r=0;r<this._listeners[e].length;r++)this._listeners[e][r].call(this,t)},pipe:function(e){return e.registerPrevious(this)},registerPrevious:function(e){if(this.isLocked)throw new Error("The stream '"+this+"' has already been used.");this.streamInfo=e.streamInfo,this.mergeStreamInfo(),this.previous=e;var t=this;return e.on("data",function(e){t.processChunk(e)}),e.on("end",function(){t.end()}),e.on("error",function(e){t.error(e)}),this},pause:function(){return!this.isPaused&&!this.isFinished&&(this.isPaused=!0,this.previous&&this.previous.pause(),!0)},resume:function(){if(!this.isPaused||this.isFinished)return!1;var e=this.isPaused=!1;return this.generatedError&&(this.error(this.generatedError),e=!0),this.previous&&this.previous.resume(),!e},flush:function(){},processChunk:function(e){this.push(e)},withStreamInfo:function(e,t){return this.extraStreamInfo[e]=t,this.mergeStreamInfo(),this},mergeStreamInfo:function(){for(var e in this.extraStreamInfo)this.extraStreamInfo.hasOwnProperty(e)&&(this.streamInfo[e]=this.extraStreamInfo[e])},lock:function(){if(this.isLocked)throw new Error("The stream '"+this+"' has already been used.");this.isLocked=!0,this.previous&&this.previous.lock()},toString:function(){var e="Worker "+this.name;return this.previous?this.previous+" -> "+e:e}},t.exports=n},{}],29:[function(e,t,r){"use strict";var h=e("../utils"),i=e("./ConvertWorker"),s=e("./GenericWorker"),u=e("../base64"),n=e("../support"),a=e("../external"),o=null;if(n.nodestream)try{o=e("../nodejs/NodejsStreamOutputAdapter")}catch(e){}function l(e,o){return new a.Promise(function(t,r){var n=[],i=e._internalType,s=e._outputType,a=e._mimeType;e.on("data",function(e,t){n.push(e),o&&o(t)}).on("error",function(e){n=[],r(e)}).on("end",function(){try{var e=function(e,t,r){switch(e){case"blob":return h.newBlob(h.transformTo("arraybuffer",t),r);case"base64":return u.encode(t);default:return h.transformTo(e,t)}}(s,function(e,t){var r,n=0,i=null,s=0;for(r=0;r<t.length;r++)s+=t[r].length;switch(e){case"string":return t.join("");case"array":return Array.prototype.concat.apply([],t);case"uint8array":for(i=new Uint8Array(s),r=0;r<t.length;r++)i.set(t[r],n),n+=t[r].length;return i;case"nodebuffer":return Buffer.concat(t);default:throw new Error("concat : unsupported type '"+e+"'")}}(i,n),a);t(e)}catch(e){r(e)}n=[]}).resume()})}function f(e,t,r){var n=t;switch(t){case"blob":case"arraybuffer":n="uint8array";break;case"base64":n="string"}try{this._internalType=n,this._outputType=t,this._mimeType=r,h.checkSupport(n),this._worker=e.pipe(new i(n)),e.lock()}catch(e){this._worker=new s("error"),this._worker.error(e)}}f.prototype={accumulate:function(e){return l(this,e)},on:function(e,t){var r=this;return"data"===e?this._worker.on(e,function(e){t.call(r,e.data,e.meta)}):this._worker.on(e,function(){h.delay(t,arguments,r)}),this},resume:function(){return h.delay(this._worker.resume,[],this._worker),this},pause:function(){return this._worker.pause(),this},toNodejsStream:function(e){if(h.checkSupport("nodestream"),"nodebuffer"!==this._outputType)throw new Error(this._outputType+" is not supported by this method");return new o(this,{objectMode:"nodebuffer"!==this._outputType},e)}},t.exports=f},{"../base64":1,"../external":6,"../nodejs/NodejsStreamOutputAdapter":13,"../support":30,"../utils":32,"./ConvertWorker":24,"./GenericWorker":28}],30:[function(e,t,r){"use strict";if(r.base64=!0,r.array=!0,r.string=!0,r.arraybuffer="undefined"!=typeof ArrayBuffer&&"undefined"!=typeof Uint8Array,r.nodebuffer="undefined"!=typeof Buffer,r.uint8array="undefined"!=typeof Uint8Array,"undefined"==typeof ArrayBuffer)r.blob=!1;else{var n=new ArrayBuffer(0);try{r.blob=0===new Blob([n],{type:"application/zip"}).size}catch(e){try{var i=new(self.BlobBuilder||self.WebKitBlobBuilder||self.MozBlobBuilder||self.MSBlobBuilder);i.append(n),r.blob=0===i.getBlob("application/zip").size}catch(e){r.blob=!1}}}try{r.nodestream=!!e("readable-stream").Readable}catch(e){r.nodestream=!1}},{"readable-stream":16}],31:[function(e,t,s){"use strict";for(var o=e("./utils"),h=e("./support"),r=e("./nodejsUtils"),n=e("./stream/GenericWorker"),u=new Array(256),i=0;i<256;i++)u[i]=252<=i?6:248<=i?5:240<=i?4:224<=i?3:192<=i?2:1;u[254]=u[254]=1;function a(){n.call(this,"utf-8 decode"),this.leftOver=null}function l(){n.call(this,"utf-8 encode")}s.utf8encode=function(e){return h.nodebuffer?r.newBufferFrom(e,"utf-8"):function(e){var t,r,n,i,s,a=e.length,o=0;for(i=0;i<a;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),o+=r<128?1:r<2048?2:r<65536?3:4;for(t=h.uint8array?new Uint8Array(o):new Array(o),i=s=0;s<o;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),r<128?t[s++]=r:(r<2048?t[s++]=192|r>>>6:(r<65536?t[s++]=224|r>>>12:(t[s++]=240|r>>>18,t[s++]=128|r>>>12&63),t[s++]=128|r>>>6&63),t[s++]=128|63&r);return t}(e)},s.utf8decode=function(e){return h.nodebuffer?o.transformTo("nodebuffer",e).toString("utf-8"):function(e){var t,r,n,i,s=e.length,a=new Array(2*s);for(t=r=0;t<s;)if((n=e[t++])<128)a[r++]=n;else if(4<(i=u[n]))a[r++]=65533,t+=i-1;else{for(n&=2===i?31:3===i?15:7;1<i&&t<s;)n=n<<6|63&e[t++],i--;1<i?a[r++]=65533:n<65536?a[r++]=n:(n-=65536,a[r++]=55296|n>>10&1023,a[r++]=56320|1023&n)}return a.length!==r&&(a.subarray?a=a.subarray(0,r):a.length=r),o.applyFromCharCode(a)}(e=o.transformTo(h.uint8array?"uint8array":"array",e))},o.inherits(a,n),a.prototype.processChunk=function(e){var t=o.transformTo(h.uint8array?"uint8array":"array",e.data);if(this.leftOver&&this.leftOver.length){if(h.uint8array){var r=t;(t=new Uint8Array(r.length+this.leftOver.length)).set(this.leftOver,0),t.set(r,this.leftOver.length)}else t=this.leftOver.concat(t);this.leftOver=null}var n=function(e,t){var r;for((t=t||e.length)>e.length&&(t=e.length),r=t-1;0<=r&&128==(192&e[r]);)r--;return r<0?t:0===r?t:r+u[e[r]]>t?r:t}(t),i=t;n!==t.length&&(h.uint8array?(i=t.subarray(0,n),this.leftOver=t.subarray(n,t.length)):(i=t.slice(0,n),this.leftOver=t.slice(n,t.length))),this.push({data:s.utf8decode(i),meta:e.meta})},a.prototype.flush=function(){this.leftOver&&this.leftOver.length&&(this.push({data:s.utf8decode(this.leftOver),meta:{}}),this.leftOver=null)},s.Utf8DecodeWorker=a,o.inherits(l,n),l.prototype.processChunk=function(e){this.push({data:s.utf8encode(e.data),meta:e.meta})},s.Utf8EncodeWorker=l},{"./nodejsUtils":14,"./stream/GenericWorker":28,"./support":30,"./utils":32}],32:[function(e,t,a){"use strict";var o=e("./support"),h=e("./base64"),r=e("./nodejsUtils"),u=e("./external");function n(e){return e}function l(e,t){for(var r=0;r<e.length;++r)t[r]=255&e.charCodeAt(r);return t}e("setimmediate"),a.newBlob=function(t,r){a.checkSupport("blob");try{return new Blob([t],{type:r})}catch(e){try{var n=new(self.BlobBuilder||self.WebKitBlobBuilder||self.MozBlobBuilder||self.MSBlobBuilder);return n.append(t),n.getBlob(r)}catch(e){throw new Error("Bug : can't construct the Blob.")}}};var i={stringifyByChunk:function(e,t,r){var n=[],i=0,s=e.length;if(s<=r)return String.fromCharCode.apply(null,e);for(;i<s;)"array"===t||"nodebuffer"===t?n.push(String.fromCharCode.apply(null,e.slice(i,Math.min(i+r,s)))):n.push(String.fromCharCode.apply(null,e.subarray(i,Math.min(i+r,s)))),i+=r;return n.join("")},stringifyByChar:function(e){for(var t="",r=0;r<e.length;r++)t+=String.fromCharCode(e[r]);return t},applyCanBeUsed:{uint8array:function(){try{return o.uint8array&&1===String.fromCharCode.apply(null,new Uint8Array(1)).length}catch(e){return!1}}(),nodebuffer:function(){try{return o.nodebuffer&&1===String.fromCharCode.apply(null,r.allocBuffer(1)).length}catch(e){return!1}}()}};function s(e){var t=65536,r=a.getTypeOf(e),n=!0;if("uint8array"===r?n=i.applyCanBeUsed.uint8array:"nodebuffer"===r&&(n=i.applyCanBeUsed.nodebuffer),n)for(;1<t;)try{return i.stringifyByChunk(e,r,t)}catch(e){t=Math.floor(t/2)}return i.stringifyByChar(e)}function f(e,t){for(var r=0;r<e.length;r++)t[r]=e[r];return t}a.applyFromCharCode=s;var c={};c.string={string:n,array:function(e){return l(e,new Array(e.length))},arraybuffer:function(e){return c.string.uint8array(e).buffer},uint8array:function(e){return l(e,new Uint8Array(e.length))},nodebuffer:function(e){return l(e,r.allocBuffer(e.length))}},c.array={string:s,array:n,arraybuffer:function(e){return new Uint8Array(e).buffer},uint8array:function(e){return new Uint8Array(e)},nodebuffer:function(e){return r.newBufferFrom(e)}},c.arraybuffer={string:function(e){return s(new Uint8Array(e))},array:function(e){return f(new Uint8Array(e),new Array(e.byteLength))},arraybuffer:n,uint8array:function(e){return new Uint8Array(e)},nodebuffer:function(e){return r.newBufferFrom(new Uint8Array(e))}},c.uint8array={string:s,array:function(e){return f(e,new Array(e.length))},arraybuffer:function(e){return e.buffer},uint8array:n,nodebuffer:function(e){return r.newBufferFrom(e)}},c.nodebuffer={string:s,array:function(e){return f(e,new Array(e.length))},arraybuffer:function(e){return c.nodebuffer.uint8array(e).buffer},uint8array:function(e){return f(e,new Uint8Array(e.length))},nodebuffer:n},a.transformTo=function(e,t){if(t=t||"",!e)return t;a.checkSupport(e);var r=a.getTypeOf(t);return c[r][e](t)},a.resolve=function(e){for(var t=e.split("/"),r=[],n=0;n<t.length;n++){var i=t[n];"."===i||""===i&&0!==n&&n!==t.length-1||(".."===i?r.pop():r.push(i))}return r.join("/")},a.getTypeOf=function(e){return"string"==typeof e?"string":"[object Array]"===Object.prototype.toString.call(e)?"array":o.nodebuffer&&r.isBuffer(e)?"nodebuffer":o.uint8array&&e instanceof Uint8Array?"uint8array":o.arraybuffer&&e instanceof ArrayBuffer?"arraybuffer":void 0},a.checkSupport=function(e){if(!o[e.toLowerCase()])throw new Error(e+" is not supported by this platform")},a.MAX_VALUE_16BITS=65535,a.MAX_VALUE_32BITS=-1,a.pretty=function(e){var t,r,n="";for(r=0;r<(e||"").length;r++)n+="\\x"+((t=e.charCodeAt(r))<16?"0":"")+t.toString(16).toUpperCase();return n},a.delay=function(e,t,r){setImmediate(function(){e.apply(r||null,t||[])})},a.inherits=function(e,t){function r(){}r.prototype=t.prototype,e.prototype=new r},a.extend=function(){var e,t,r={};for(e=0;e<arguments.length;e++)for(t in arguments[e])arguments[e].hasOwnProperty(t)&&void 0===r[t]&&(r[t]=arguments[e][t]);return r},a.prepareContent=function(r,e,n,i,s){return u.Promise.resolve(e).then(function(n){return o.blob&&(n instanceof Blob||-1!==["[object File]","[object Blob]"].indexOf(Object.prototype.toString.call(n)))&&"undefined"!=typeof FileReader?new u.Promise(function(t,r){var e=new FileReader;e.onload=function(e){t(e.target.result)},e.onerror=function(e){r(e.target.error)},e.readAsArrayBuffer(n)}):n}).then(function(e){var t=a.getTypeOf(e);return t?("arraybuffer"===t?e=a.transformTo("uint8array",e):"string"===t&&(s?e=h.decode(e):n&&!0!==i&&(e=function(e){return l(e,o.uint8array?new Uint8Array(e.length):new Array(e.length))}(e))),e):u.Promise.reject(new Error("Can't read the data of '"+r+"'. Is it in a supported JavaScript type (String, Blob, ArrayBuffer, etc) ?"))})}},{"./base64":1,"./external":6,"./nodejsUtils":14,"./support":30,setimmediate:54}],33:[function(e,t,r){"use strict";var n=e("./reader/readerFor"),i=e("./utils"),s=e("./signature"),a=e("./zipEntry"),o=(e("./utf8"),e("./support"));function h(e){this.files=[],this.loadOptions=e}h.prototype={checkSignature:function(e){if(!this.reader.readAndCheckSignature(e)){this.reader.index-=4;var t=this.reader.readString(4);throw new Error("Corrupted zip or bug: unexpected signature ("+i.pretty(t)+", expected "+i.pretty(e)+")")}},isSignature:function(e,t){var r=this.reader.index;this.reader.setIndex(e);var n=this.reader.readString(4)===t;return this.reader.setIndex(r),n},readBlockEndOfCentral:function(){this.diskNumber=this.reader.readInt(2),this.diskWithCentralDirStart=this.reader.readInt(2),this.centralDirRecordsOnThisDisk=this.reader.readInt(2),this.centralDirRecords=this.reader.readInt(2),this.centralDirSize=this.reader.readInt(4),this.centralDirOffset=this.reader.readInt(4),this.zipCommentLength=this.reader.readInt(2);var e=this.reader.readData(this.zipCommentLength),t=o.uint8array?"uint8array":"array",r=i.transformTo(t,e);this.zipComment=this.loadOptions.decodeFileName(r)},readBlockZip64EndOfCentral:function(){this.zip64EndOfCentralSize=this.reader.readInt(8),this.reader.skip(4),this.diskNumber=this.reader.readInt(4),this.diskWithCentralDirStart=this.reader.readInt(4),this.centralDirRecordsOnThisDisk=this.reader.readInt(8),this.centralDirRecords=this.reader.readInt(8),this.centralDirSize=this.reader.readInt(8),this.centralDirOffset=this.reader.readInt(8),this.zip64ExtensibleData={};for(var e,t,r,n=this.zip64EndOfCentralSize-44;0<n;)e=this.reader.readInt(2),t=this.reader.readInt(4),r=this.reader.readData(t),this.zip64ExtensibleData[e]={id:e,length:t,value:r}},readBlockZip64EndOfCentralLocator:function(){if(this.diskWithZip64CentralDirStart=this.reader.readInt(4),this.relativeOffsetEndOfZip64CentralDir=this.reader.readInt(8),this.disksCount=this.reader.readInt(4),1<this.disksCount)throw new Error("Multi-volumes zip are not supported")},readLocalFiles:function(){var e,t;for(e=0;e<this.files.length;e++)t=this.files[e],this.reader.setIndex(t.localHeaderOffset),this.checkSignature(s.LOCAL_FILE_HEADER),t.readLocalPart(this.reader),t.handleUTF8(),t.processAttributes()},readCentralDir:function(){var e;for(this.reader.setIndex(this.centralDirOffset);this.reader.readAndCheckSignature(s.CENTRAL_FILE_HEADER);)(e=new a({zip64:this.zip64},this.loadOptions)).readCentralPart(this.reader),this.files.push(e);if(this.centralDirRecords!==this.files.length&&0!==this.centralDirRecords&&0===this.files.length)throw new Error("Corrupted zip or bug: expected "+this.centralDirRecords+" records in central dir, got "+this.files.length)},readEndOfCentral:function(){var e=this.reader.lastIndexOfSignature(s.CENTRAL_DIRECTORY_END);if(e<0)throw!this.isSignature(0,s.LOCAL_FILE_HEADER)?new Error("Can't find end of central directory : is this a zip file ? If it is, see https://stuk.github.io/jszip/documentation/howto/read_zip.html"):new Error("Corrupted zip: can't find end of central directory");this.reader.setIndex(e);var t=e;if(this.checkSignature(s.CENTRAL_DIRECTORY_END),this.readBlockEndOfCentral(),this.diskNumber===i.MAX_VALUE_16BITS||this.diskWithCentralDirStart===i.MAX_VALUE_16BITS||this.centralDirRecordsOnThisDisk===i.MAX_VALUE_16BITS||this.centralDirRecords===i.MAX_VALUE_16BITS||this.centralDirSize===i.MAX_VALUE_32BITS||this.centralDirOffset===i.MAX_VALUE_32BITS){if(this.zip64=!0,(e=this.reader.lastIndexOfSignature(s.ZIP64_CENTRAL_DIRECTORY_LOCATOR))<0)throw new Error("Corrupted zip: can't find the ZIP64 end of central directory locator");if(this.reader.setIndex(e),this.checkSignature(s.ZIP64_CENTRAL_DIRECTORY_LOCATOR),this.readBlockZip64EndOfCentralLocator(),!this.isSignature(this.relativeOffsetEndOfZip64CentralDir,s.ZIP64_CENTRAL_DIRECTORY_END)&&(this.relativeOffsetEndOfZip64CentralDir=this.reader.lastIndexOfSignature(s.ZIP64_CENTRAL_DIRECTORY_END),this.relativeOffsetEndOfZip64CentralDir<0))throw new Error("Corrupted zip: can't find the ZIP64 end of central directory");this.reader.setIndex(this.relativeOffsetEndOfZip64CentralDir),this.checkSignature(s.ZIP64_CENTRAL_DIRECTORY_END),this.readBlockZip64EndOfCentral()}var r=this.centralDirOffset+this.centralDirSize;this.zip64&&(r+=20,r+=12+this.zip64EndOfCentralSize);var n=t-r;if(0<n)this.isSignature(t,s.CENTRAL_FILE_HEADER)||(this.reader.zero=n);else if(n<0)throw new Error("Corrupted zip: missing "+Math.abs(n)+" bytes.")},prepareReader:function(e){this.reader=n(e)},load:function(e){this.prepareReader(e),this.readEndOfCentral(),this.readCentralDir(),this.readLocalFiles()}},t.exports=h},{"./reader/readerFor":22,"./signature":23,"./support":30,"./utf8":31,"./utils":32,"./zipEntry":34}],34:[function(e,t,r){"use strict";var n=e("./reader/readerFor"),s=e("./utils"),i=e("./compressedObject"),a=e("./crc32"),o=e("./utf8"),h=e("./compressions"),u=e("./support");function l(e,t){this.options=e,this.loadOptions=t}l.prototype={isEncrypted:function(){return 1==(1&this.bitFlag)},useUTF8:function(){return 2048==(2048&this.bitFlag)},readLocalPart:function(e){var t,r;if(e.skip(22),this.fileNameLength=e.readInt(2),r=e.readInt(2),this.fileName=e.readData(this.fileNameLength),e.skip(r),-1===this.compressedSize||-1===this.uncompressedSize)throw new Error("Bug or corrupted zip : didn't get enough information from the central directory (compressedSize === -1 || uncompressedSize === -1)");if(null===(t=function(e){for(var t in h)if(h.hasOwnProperty(t)&&h[t].magic===e)return h[t];return null}(this.compressionMethod)))throw new Error("Corrupted zip : compression "+s.pretty(this.compressionMethod)+" unknown (inner file : "+s.transformTo("string",this.fileName)+")");this.decompressed=new i(this.compressedSize,this.uncompressedSize,this.crc32,t,e.readData(this.compressedSize))},readCentralPart:function(e){this.versionMadeBy=e.readInt(2),e.skip(2),this.bitFlag=e.readInt(2),this.compressionMethod=e.readString(2),this.date=e.readDate(),this.crc32=e.readInt(4),this.compressedSize=e.readInt(4),this.uncompressedSize=e.readInt(4);var t=e.readInt(2);if(this.extraFieldsLength=e.readInt(2),this.fileCommentLength=e.readInt(2),this.diskNumberStart=e.readInt(2),this.internalFileAttributes=e.readInt(2),this.externalFileAttributes=e.readInt(4),this.localHeaderOffset=e.readInt(4),this.isEncrypted())throw new Error("Encrypted zip are not supported");e.skip(t),this.readExtraFields(e),this.parseZIP64ExtraField(e),this.fileComment=e.readData(this.fileCommentLength)},processAttributes:function(){this.unixPermissions=null,this.dosPermissions=null;var e=this.versionMadeBy>>8;this.dir=!!(16&this.externalFileAttributes),0==e&&(this.dosPermissions=63&this.externalFileAttributes),3==e&&(this.unixPermissions=this.externalFileAttributes>>16&65535),this.dir||"/"!==this.fileNameStr.slice(-1)||(this.dir=!0)},parseZIP64ExtraField:function(e){if(this.extraFields[1]){var t=n(this.extraFields[1].value);this.uncompressedSize===s.MAX_VALUE_32BITS&&(this.uncompressedSize=t.readInt(8)),this.compressedSize===s.MAX_VALUE_32BITS&&(this.compressedSize=t.readInt(8)),this.localHeaderOffset===s.MAX_VALUE_32BITS&&(this.localHeaderOffset=t.readInt(8)),this.diskNumberStart===s.MAX_VALUE_32BITS&&(this.diskNumberStart=t.readInt(4))}},readExtraFields:function(e){var t,r,n,i=e.index+this.extraFieldsLength;for(this.extraFields||(this.extraFields={});e.index+4<i;)t=e.readInt(2),r=e.readInt(2),n=e.readData(r),this.extraFields[t]={id:t,length:r,value:n};e.setIndex(i)},handleUTF8:function(){var e=u.uint8array?"uint8array":"array";if(this.useUTF8())this.fileNameStr=o.utf8decode(this.fileName),this.fileCommentStr=o.utf8decode(this.fileComment);else{var t=this.findExtraFieldUnicodePath();if(null!==t)this.fileNameStr=t;else{var r=s.transformTo(e,this.fileName);this.fileNameStr=this.loadOptions.decodeFileName(r)}var n=this.findExtraFieldUnicodeComment();if(null!==n)this.fileCommentStr=n;else{var i=s.transformTo(e,this.fileComment);this.fileCommentStr=this.loadOptions.decodeFileName(i)}}},findExtraFieldUnicodePath:function(){var e=this.extraFields[28789];if(e){var t=n(e.value);return 1!==t.readInt(1)?null:a(this.fileName)!==t.readInt(4)?null:o.utf8decode(t.readData(e.length-5))}return null},findExtraFieldUnicodeComment:function(){var e=this.extraFields[25461];if(e){var t=n(e.value);return 1!==t.readInt(1)?null:a(this.fileComment)!==t.readInt(4)?null:o.utf8decode(t.readData(e.length-5))}return null}},t.exports=l},{"./compressedObject":2,"./compressions":3,"./crc32":4,"./reader/readerFor":22,"./support":30,"./utf8":31,"./utils":32}],35:[function(e,t,r){"use strict";function n(e,t,r){this.name=e,this.dir=r.dir,this.date=r.date,this.comment=r.comment,this.unixPermissions=r.unixPermissions,this.dosPermissions=r.dosPermissions,this._data=t,this._dataBinary=r.binary,this.options={compression:r.compression,compressionOptions:r.compressionOptions}}var s=e("./stream/StreamHelper"),i=e("./stream/DataWorker"),a=e("./utf8"),o=e("./compressedObject"),h=e("./stream/GenericWorker");n.prototype={internalStream:function(e){var t=null,r="string";try{if(!e)throw new Error("No output type specified.");var n="string"===(r=e.toLowerCase())||"text"===r;"binarystring"!==r&&"text"!==r||(r="string"),t=this._decompressWorker();var i=!this._dataBinary;i&&!n&&(t=t.pipe(new a.Utf8EncodeWorker)),!i&&n&&(t=t.pipe(new a.Utf8DecodeWorker))}catch(e){(t=new h("error")).error(e)}return new s(t,r,"")},async:function(e,t){return this.internalStream(e).accumulate(t)},nodeStream:function(e,t){return this.internalStream(e||"nodebuffer").toNodejsStream(t)},_compressWorker:function(e,t){if(this._data instanceof o&&this._data.compression.magic===e.magic)return this._data.getCompressedWorker();var r=this._decompressWorker();return this._dataBinary||(r=r.pipe(new a.Utf8EncodeWorker)),o.createWorkerFrom(r,e,t)},_decompressWorker:function(){return this._data instanceof o?this._data.getContentWorker():this._data instanceof h?this._data:new i(this._data)}};for(var u=["asText","asBinary","asNodeBuffer","asUint8Array","asArrayBuffer"],l=function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},f=0;f<u.length;f++)n.prototype[u[f]]=l;t.exports=n},{"./compressedObject":2,"./stream/DataWorker":27,"./stream/GenericWorker":28,"./stream/StreamHelper":29,"./utf8":31}],36:[function(e,l,t){(function(t){"use strict";var r,n,e=t.MutationObserver||t.WebKitMutationObserver;if(e){var i=0,s=new e(u),a=t.document.createTextNode("");s.observe(a,{characterData:!0}),r=function(){a.data=i=++i%2}}else if(t.setImmediate||void 0===t.MessageChannel)r="document"in t&&"onreadystatechange"in t.document.createElement("script")?function(){var e=t.document.createElement("script");e.onreadystatechange=function(){u(),e.onreadystatechange=null,e.parentNode.removeChild(e),e=null},t.document.documentElement.appendChild(e)}:function(){setTimeout(u,0)};else{var o=new t.MessageChannel;o.port1.onmessage=u,r=function(){o.port2.postMessage(0)}}var h=[];function u(){var e,t;n=!0;for(var r=h.length;r;){for(t=h,h=[],e=-1;++e<r;)t[e]();r=h.length}n=!1}l.exports=function(e){1!==h.push(e)||n||r()}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],37:[function(e,t,r){"use strict";var i=e("immediate");function u(){}var l={},s=["REJECTED"],a=["FULFILLED"],n=["PENDING"];function o(e){if("function"!=typeof e)throw new TypeError("resolver must be a function");this.state=n,this.queue=[],this.outcome=void 0,e!==u&&d(this,e)}function h(e,t,r){this.promise=e,"function"==typeof t&&(this.onFulfilled=t,this.callFulfilled=this.otherCallFulfilled),"function"==typeof r&&(this.onRejected=r,this.callRejected=this.otherCallRejected)}function f(t,r,n){i(function(){var e;try{e=r(n)}catch(e){return l.reject(t,e)}e===t?l.reject(t,new TypeError("Cannot resolve promise with itself")):l.resolve(t,e)})}function c(e){var t=e&&e.then;if(e&&("object"==typeof e||"function"==typeof e)&&"function"==typeof t)return function(){t.apply(e,arguments)}}function d(t,e){var r=!1;function n(e){r||(r=!0,l.reject(t,e))}function i(e){r||(r=!0,l.resolve(t,e))}var s=p(function(){e(i,n)});"error"===s.status&&n(s.value)}function p(e,t){var r={};try{r.value=e(t),r.status="success"}catch(e){r.status="error",r.value=e}return r}(t.exports=o).prototype.finally=function(t){if("function"!=typeof t)return this;var r=this.constructor;return this.then(function(e){return r.resolve(t()).then(function(){return e})},function(e){return r.resolve(t()).then(function(){throw e})})},o.prototype.catch=function(e){return this.then(null,e)},o.prototype.then=function(e,t){if("function"!=typeof e&&this.state===a||"function"!=typeof t&&this.state===s)return this;var r=new this.constructor(u);this.state!==n?f(r,this.state===a?e:t,this.outcome):this.queue.push(new h(r,e,t));return r},h.prototype.callFulfilled=function(e){l.resolve(this.promise,e)},h.prototype.otherCallFulfilled=function(e){f(this.promise,this.onFulfilled,e)},h.prototype.callRejected=function(e){l.reject(this.promise,e)},h.prototype.otherCallRejected=function(e){f(this.promise,this.onRejected,e)},l.resolve=function(e,t){var r=p(c,t);if("error"===r.status)return l.reject(e,r.value);var n=r.value;if(n)d(e,n);else{e.state=a,e.outcome=t;for(var i=-1,s=e.queue.length;++i<s;)e.queue[i].callFulfilled(t)}return e},l.reject=function(e,t){e.state=s,e.outcome=t;for(var r=-1,n=e.queue.length;++r<n;)e.queue[r].callRejected(t);return e},o.resolve=function(e){if(e instanceof this)return e;return l.resolve(new this(u),e)},o.reject=function(e){var t=new this(u);return l.reject(t,e)},o.all=function(e){var r=this;if("[object Array]"!==Object.prototype.toString.call(e))return this.reject(new TypeError("must be an array"));var n=e.length,i=!1;if(!n)return this.resolve([]);var s=new Array(n),a=0,t=-1,o=new this(u);for(;++t<n;)h(e[t],t);return o;function h(e,t){r.resolve(e).then(function(e){s[t]=e,++a!==n||i||(i=!0,l.resolve(o,s))},function(e){i||(i=!0,l.reject(o,e))})}},o.race=function(e){var t=this;if("[object Array]"!==Object.prototype.toString.call(e))return this.reject(new TypeError("must be an array"));var r=e.length,n=!1;if(!r)return this.resolve([]);var i=-1,s=new this(u);for(;++i<r;)a=e[i],t.resolve(a).then(function(e){n||(n=!0,l.resolve(s,e))},function(e){n||(n=!0,l.reject(s,e))});var a;return s}},{immediate:36}],38:[function(e,t,r){"use strict";var n={};(0,e("./lib/utils/common").assign)(n,e("./lib/deflate"),e("./lib/inflate"),e("./lib/zlib/constants")),t.exports=n},{"./lib/deflate":39,"./lib/inflate":40,"./lib/utils/common":41,"./lib/zlib/constants":44}],39:[function(e,t,r){"use strict";var a=e("./zlib/deflate"),o=e("./utils/common"),h=e("./utils/strings"),i=e("./zlib/messages"),s=e("./zlib/zstream"),u=Object.prototype.toString,l=0,f=-1,c=0,d=8;function p(e){if(!(this instanceof p))return new p(e);this.options=o.assign({level:f,method:d,chunkSize:16384,windowBits:15,memLevel:8,strategy:c,to:""},e||{});var t=this.options;t.raw&&0<t.windowBits?t.windowBits=-t.windowBits:t.gzip&&0<t.windowBits&&t.windowBits<16&&(t.windowBits+=16),this.err=0,this.msg="",this.ended=!1,this.chunks=[],this.strm=new s,this.strm.avail_out=0;var r=a.deflateInit2(this.strm,t.level,t.method,t.windowBits,t.memLevel,t.strategy);if(r!==l)throw new Error(i[r]);if(t.header&&a.deflateSetHeader(this.strm,t.header),t.dictionary){var n;if(n="string"==typeof t.dictionary?h.string2buf(t.dictionary):"[object ArrayBuffer]"===u.call(t.dictionary)?new Uint8Array(t.dictionary):t.dictionary,(r=a.deflateSetDictionary(this.strm,n))!==l)throw new Error(i[r]);this._dict_set=!0}}function n(e,t){var r=new p(t);if(r.push(e,!0),r.err)throw r.msg||i[r.err];return r.result}p.prototype.push=function(e,t){var r,n,i=this.strm,s=this.options.chunkSize;if(this.ended)return!1;n=t===~~t?t:!0===t?4:0,"string"==typeof e?i.input=h.string2buf(e):"[object ArrayBuffer]"===u.call(e)?i.input=new Uint8Array(e):i.input=e,i.next_in=0,i.avail_in=i.input.length;do{if(0===i.avail_out&&(i.output=new o.Buf8(s),i.next_out=0,i.avail_out=s),1!==(r=a.deflate(i,n))&&r!==l)return this.onEnd(r),!(this.ended=!0);0!==i.avail_out&&(0!==i.avail_in||4!==n&&2!==n)||("string"===this.options.to?this.onData(h.buf2binstring(o.shrinkBuf(i.output,i.next_out))):this.onData(o.shrinkBuf(i.output,i.next_out)))}while((0<i.avail_in||0===i.avail_out)&&1!==r);return 4===n?(r=a.deflateEnd(this.strm),this.onEnd(r),this.ended=!0,r===l):2!==n||(this.onEnd(l),!(i.avail_out=0))},p.prototype.onData=function(e){this.chunks.push(e)},p.prototype.onEnd=function(e){e===l&&("string"===this.options.to?this.result=this.chunks.join(""):this.result=o.flattenChunks(this.chunks)),this.chunks=[],this.err=e,this.msg=this.strm.msg},r.Deflate=p,r.deflate=n,r.deflateRaw=function(e,t){return(t=t||{}).raw=!0,n(e,t)},r.gzip=function(e,t){return(t=t||{}).gzip=!0,n(e,t)}},{"./utils/common":41,"./utils/strings":42,"./zlib/deflate":46,"./zlib/messages":51,"./zlib/zstream":53}],40:[function(e,t,r){"use strict";var c=e("./zlib/inflate"),d=e("./utils/common"),p=e("./utils/strings"),m=e("./zlib/constants"),n=e("./zlib/messages"),i=e("./zlib/zstream"),s=e("./zlib/gzheader"),_=Object.prototype.toString;function a(e){if(!(this instanceof a))return new a(e);this.options=d.assign({chunkSize:16384,windowBits:0,to:""},e||{});var t=this.options;t.raw&&0<=t.windowBits&&t.windowBits<16&&(t.windowBits=-t.windowBits,0===t.windowBits&&(t.windowBits=-15)),!(0<=t.windowBits&&t.windowBits<16)||e&&e.windowBits||(t.windowBits+=32),15<t.windowBits&&t.windowBits<48&&0==(15&t.windowBits)&&(t.windowBits|=15),this.err=0,this.msg="",this.ended=!1,this.chunks=[],this.strm=new i,this.strm.avail_out=0;var r=c.inflateInit2(this.strm,t.windowBits);if(r!==m.Z_OK)throw new Error(n[r]);this.header=new s,c.inflateGetHeader(this.strm,this.header)}function o(e,t){var r=new a(t);if(r.push(e,!0),r.err)throw r.msg||n[r.err];return r.result}a.prototype.push=function(e,t){var r,n,i,s,a,o,h=this.strm,u=this.options.chunkSize,l=this.options.dictionary,f=!1;if(this.ended)return!1;n=t===~~t?t:!0===t?m.Z_FINISH:m.Z_NO_FLUSH,"string"==typeof e?h.input=p.binstring2buf(e):"[object ArrayBuffer]"===_.call(e)?h.input=new Uint8Array(e):h.input=e,h.next_in=0,h.avail_in=h.input.length;do{if(0===h.avail_out&&(h.output=new d.Buf8(u),h.next_out=0,h.avail_out=u),(r=c.inflate(h,m.Z_NO_FLUSH))===m.Z_NEED_DICT&&l&&(o="string"==typeof l?p.string2buf(l):"[object ArrayBuffer]"===_.call(l)?new Uint8Array(l):l,r=c.inflateSetDictionary(this.strm,o)),r===m.Z_BUF_ERROR&&!0===f&&(r=m.Z_OK,f=!1),r!==m.Z_STREAM_END&&r!==m.Z_OK)return this.onEnd(r),!(this.ended=!0);h.next_out&&(0!==h.avail_out&&r!==m.Z_STREAM_END&&(0!==h.avail_in||n!==m.Z_FINISH&&n!==m.Z_SYNC_FLUSH)||("string"===this.options.to?(i=p.utf8border(h.output,h.next_out),s=h.next_out-i,a=p.buf2string(h.output,i),h.next_out=s,h.avail_out=u-s,s&&d.arraySet(h.output,h.output,i,s,0),this.onData(a)):this.onData(d.shrinkBuf(h.output,h.next_out)))),0===h.avail_in&&0===h.avail_out&&(f=!0)}while((0<h.avail_in||0===h.avail_out)&&r!==m.Z_STREAM_END);return r===m.Z_STREAM_END&&(n=m.Z_FINISH),n===m.Z_FINISH?(r=c.inflateEnd(this.strm),this.onEnd(r),this.ended=!0,r===m.Z_OK):n!==m.Z_SYNC_FLUSH||(this.onEnd(m.Z_OK),!(h.avail_out=0))},a.prototype.onData=function(e){this.chunks.push(e)},a.prototype.onEnd=function(e){e===m.Z_OK&&("string"===this.options.to?this.result=this.chunks.join(""):this.result=d.flattenChunks(this.chunks)),this.chunks=[],this.err=e,this.msg=this.strm.msg},r.Inflate=a,r.inflate=o,r.inflateRaw=function(e,t){return(t=t||{}).raw=!0,o(e,t)},r.ungzip=o},{"./utils/common":41,"./utils/strings":42,"./zlib/constants":44,"./zlib/gzheader":47,"./zlib/inflate":49,"./zlib/messages":51,"./zlib/zstream":53}],41:[function(e,t,r){"use strict";var n="undefined"!=typeof Uint8Array&&"undefined"!=typeof Uint16Array&&"undefined"!=typeof Int32Array;r.assign=function(e){for(var t=Array.prototype.slice.call(arguments,1);t.length;){var r=t.shift();if(r){if("object"!=typeof r)throw new TypeError(r+"must be non-object");for(var n in r)r.hasOwnProperty(n)&&(e[n]=r[n])}}return e},r.shrinkBuf=function(e,t){return e.length===t?e:e.subarray?e.subarray(0,t):(e.length=t,e)};var i={arraySet:function(e,t,r,n,i){if(t.subarray&&e.subarray)e.set(t.subarray(r,r+n),i);else for(var s=0;s<n;s++)e[i+s]=t[r+s]},flattenChunks:function(e){var t,r,n,i,s,a;for(t=n=0,r=e.length;t<r;t++)n+=e[t].length;for(a=new Uint8Array(n),t=i=0,r=e.length;t<r;t++)s=e[t],a.set(s,i),i+=s.length;return a}},s={arraySet:function(e,t,r,n,i){for(var s=0;s<n;s++)e[i+s]=t[r+s]},flattenChunks:function(e){return[].concat.apply([],e)}};r.setTyped=function(e){e?(r.Buf8=Uint8Array,r.Buf16=Uint16Array,r.Buf32=Int32Array,r.assign(r,i)):(r.Buf8=Array,r.Buf16=Array,r.Buf32=Array,r.assign(r,s))},r.setTyped(n)},{}],42:[function(e,t,r){"use strict";var h=e("./common"),i=!0,s=!0;try{String.fromCharCode.apply(null,[0])}catch(e){i=!1}try{String.fromCharCode.apply(null,new Uint8Array(1))}catch(e){s=!1}for(var u=new h.Buf8(256),n=0;n<256;n++)u[n]=252<=n?6:248<=n?5:240<=n?4:224<=n?3:192<=n?2:1;function l(e,t){if(t<65537&&(e.subarray&&s||!e.subarray&&i))return String.fromCharCode.apply(null,h.shrinkBuf(e,t));for(var r="",n=0;n<t;n++)r+=String.fromCharCode(e[n]);return r}u[254]=u[254]=1,r.string2buf=function(e){var t,r,n,i,s,a=e.length,o=0;for(i=0;i<a;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),o+=r<128?1:r<2048?2:r<65536?3:4;for(t=new h.Buf8(o),i=s=0;s<o;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),r<128?t[s++]=r:(r<2048?t[s++]=192|r>>>6:(r<65536?t[s++]=224|r>>>12:(t[s++]=240|r>>>18,t[s++]=128|r>>>12&63),t[s++]=128|r>>>6&63),t[s++]=128|63&r);return t},r.buf2binstring=function(e){return l(e,e.length)},r.binstring2buf=function(e){for(var t=new h.Buf8(e.length),r=0,n=t.length;r<n;r++)t[r]=e.charCodeAt(r);return t},r.buf2string=function(e,t){var r,n,i,s,a=t||e.length,o=new Array(2*a);for(r=n=0;r<a;)if((i=e[r++])<128)o[n++]=i;else if(4<(s=u[i]))o[n++]=65533,r+=s-1;else{for(i&=2===s?31:3===s?15:7;1<s&&r<a;)i=i<<6|63&e[r++],s--;1<s?o[n++]=65533:i<65536?o[n++]=i:(i-=65536,o[n++]=55296|i>>10&1023,o[n++]=56320|1023&i)}return l(o,n)},r.utf8border=function(e,t){var r;for((t=t||e.length)>e.length&&(t=e.length),r=t-1;0<=r&&128==(192&e[r]);)r--;return r<0?t:0===r?t:r+u[e[r]]>t?r:t}},{"./common":41}],43:[function(e,t,r){"use strict";t.exports=function(e,t,r,n){for(var i=65535&e|0,s=e>>>16&65535|0,a=0;0!==r;){for(r-=a=2e3<r?2e3:r;s=s+(i=i+t[n++]|0)|0,--a;);i%=65521,s%=65521}return i|s<<16|0}},{}],44:[function(e,t,r){"use strict";t.exports={Z_NO_FLUSH:0,Z_PARTIAL_FLUSH:1,Z_SYNC_FLUSH:2,Z_FULL_FLUSH:3,Z_FINISH:4,Z_BLOCK:5,Z_TREES:6,Z_OK:0,Z_STREAM_END:1,Z_NEED_DICT:2,Z_ERRNO:-1,Z_STREAM_ERROR:-2,Z_DATA_ERROR:-3,Z_BUF_ERROR:-5,Z_NO_COMPRESSION:0,Z_BEST_SPEED:1,Z_BEST_COMPRESSION:9,Z_DEFAULT_COMPRESSION:-1,Z_FILTERED:1,Z_HUFFMAN_ONLY:2,Z_RLE:3,Z_FIXED:4,Z_DEFAULT_STRATEGY:0,Z_BINARY:0,Z_TEXT:1,Z_UNKNOWN:2,Z_DEFLATED:8}},{}],45:[function(e,t,r){"use strict";var o=function(){for(var e,t=[],r=0;r<256;r++){e=r;for(var n=0;n<8;n++)e=1&e?3988292384^e>>>1:e>>>1;t[r]=e}return t}();t.exports=function(e,t,r,n){var i=o,s=n+r;e^=-1;for(var a=n;a<s;a++)e=e>>>8^i[255&(e^t[a])];return-1^e}},{}],46:[function(e,t,r){"use strict";var h,c=e("../utils/common"),u=e("./trees"),d=e("./adler32"),p=e("./crc32"),n=e("./messages"),l=0,f=4,m=0,_=-2,g=-1,b=4,i=2,v=8,y=9,s=286,a=30,o=19,w=2*s+1,k=15,x=3,S=258,z=S+x+1,C=42,E=113,A=1,I=2,O=3,B=4;function R(e,t){return e.msg=n[t],t}function T(e){return(e<<1)-(4<e?9:0)}function D(e){for(var t=e.length;0<=--t;)e[t]=0}function F(e){var t=e.state,r=t.pending;r>e.avail_out&&(r=e.avail_out),0!==r&&(c.arraySet(e.output,t.pending_buf,t.pending_out,r,e.next_out),e.next_out+=r,t.pending_out+=r,e.total_out+=r,e.avail_out-=r,t.pending-=r,0===t.pending&&(t.pending_out=0))}function N(e,t){u._tr_flush_block(e,0<=e.block_start?e.block_start:-1,e.strstart-e.block_start,t),e.block_start=e.strstart,F(e.strm)}function U(e,t){e.pending_buf[e.pending++]=t}function P(e,t){e.pending_buf[e.pending++]=t>>>8&255,e.pending_buf[e.pending++]=255&t}function L(e,t){var r,n,i=e.max_chain_length,s=e.strstart,a=e.prev_length,o=e.nice_match,h=e.strstart>e.w_size-z?e.strstart-(e.w_size-z):0,u=e.window,l=e.w_mask,f=e.prev,c=e.strstart+S,d=u[s+a-1],p=u[s+a];e.prev_length>=e.good_match&&(i>>=2),o>e.lookahead&&(o=e.lookahead);do{if(u[(r=t)+a]===p&&u[r+a-1]===d&&u[r]===u[s]&&u[++r]===u[s+1]){s+=2,r++;do{}while(u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&s<c);if(n=S-(c-s),s=c-S,a<n){if(e.match_start=t,o<=(a=n))break;d=u[s+a-1],p=u[s+a]}}}while((t=f[t&l])>h&&0!=--i);return a<=e.lookahead?a:e.lookahead}function j(e){var t,r,n,i,s,a,o,h,u,l,f=e.w_size;do{if(i=e.window_size-e.lookahead-e.strstart,e.strstart>=f+(f-z)){for(c.arraySet(e.window,e.window,f,f,0),e.match_start-=f,e.strstart-=f,e.block_start-=f,t=r=e.hash_size;n=e.head[--t],e.head[t]=f<=n?n-f:0,--r;);for(t=r=f;n=e.prev[--t],e.prev[t]=f<=n?n-f:0,--r;);i+=f}if(0===e.strm.avail_in)break;if(a=e.strm,o=e.window,h=e.strstart+e.lookahead,u=i,l=void 0,l=a.avail_in,u<l&&(l=u),r=0===l?0:(a.avail_in-=l,c.arraySet(o,a.input,a.next_in,l,h),1===a.state.wrap?a.adler=d(a.adler,o,l,h):2===a.state.wrap&&(a.adler=p(a.adler,o,l,h)),a.next_in+=l,a.total_in+=l,l),e.lookahead+=r,e.lookahead+e.insert>=x)for(s=e.strstart-e.insert,e.ins_h=e.window[s],e.ins_h=(e.ins_h<<e.hash_shift^e.window[s+1])&e.hash_mask;e.insert&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[s+x-1])&e.hash_mask,e.prev[s&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=s,s++,e.insert--,!(e.lookahead+e.insert<x)););}while(e.lookahead<z&&0!==e.strm.avail_in)}function Z(e,t){for(var r,n;;){if(e.lookahead<z){if(j(e),e.lookahead<z&&t===l)return A;if(0===e.lookahead)break}if(r=0,e.lookahead>=x&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),0!==r&&e.strstart-r<=e.w_size-z&&(e.match_length=L(e,r)),e.match_length>=x)if(n=u._tr_tally(e,e.strstart-e.match_start,e.match_length-x),e.lookahead-=e.match_length,e.match_length<=e.max_lazy_match&&e.lookahead>=x){for(e.match_length--;e.strstart++,e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart,0!=--e.match_length;);e.strstart++}else e.strstart+=e.match_length,e.match_length=0,e.ins_h=e.window[e.strstart],e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+1])&e.hash_mask;else n=u._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++;if(n&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=e.strstart<x-1?e.strstart:x-1,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}function W(e,t){for(var r,n,i;;){if(e.lookahead<z){if(j(e),e.lookahead<z&&t===l)return A;if(0===e.lookahead)break}if(r=0,e.lookahead>=x&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),e.prev_length=e.match_length,e.prev_match=e.match_start,e.match_length=x-1,0!==r&&e.prev_length<e.max_lazy_match&&e.strstart-r<=e.w_size-z&&(e.match_length=L(e,r),e.match_length<=5&&(1===e.strategy||e.match_length===x&&4096<e.strstart-e.match_start)&&(e.match_length=x-1)),e.prev_length>=x&&e.match_length<=e.prev_length){for(i=e.strstart+e.lookahead-x,n=u._tr_tally(e,e.strstart-1-e.prev_match,e.prev_length-x),e.lookahead-=e.prev_length-1,e.prev_length-=2;++e.strstart<=i&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),0!=--e.prev_length;);if(e.match_available=0,e.match_length=x-1,e.strstart++,n&&(N(e,!1),0===e.strm.avail_out))return A}else if(e.match_available){if((n=u._tr_tally(e,0,e.window[e.strstart-1]))&&N(e,!1),e.strstart++,e.lookahead--,0===e.strm.avail_out)return A}else e.match_available=1,e.strstart++,e.lookahead--}return e.match_available&&(n=u._tr_tally(e,0,e.window[e.strstart-1]),e.match_available=0),e.insert=e.strstart<x-1?e.strstart:x-1,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}function M(e,t,r,n,i){this.good_length=e,this.max_lazy=t,this.nice_length=r,this.max_chain=n,this.func=i}function H(){this.strm=null,this.status=0,this.pending_buf=null,this.pending_buf_size=0,this.pending_out=0,this.pending=0,this.wrap=0,this.gzhead=null,this.gzindex=0,this.method=v,this.last_flush=-1,this.w_size=0,this.w_bits=0,this.w_mask=0,this.window=null,this.window_size=0,this.prev=null,this.head=null,this.ins_h=0,this.hash_size=0,this.hash_bits=0,this.hash_mask=0,this.hash_shift=0,this.block_start=0,this.match_length=0,this.prev_match=0,this.match_available=0,this.strstart=0,this.match_start=0,this.lookahead=0,this.prev_length=0,this.max_chain_length=0,this.max_lazy_match=0,this.level=0,this.strategy=0,this.good_match=0,this.nice_match=0,this.dyn_ltree=new c.Buf16(2*w),this.dyn_dtree=new c.Buf16(2*(2*a+1)),this.bl_tree=new c.Buf16(2*(2*o+1)),D(this.dyn_ltree),D(this.dyn_dtree),D(this.bl_tree),this.l_desc=null,this.d_desc=null,this.bl_desc=null,this.bl_count=new c.Buf16(k+1),this.heap=new c.Buf16(2*s+1),D(this.heap),this.heap_len=0,this.heap_max=0,this.depth=new c.Buf16(2*s+1),D(this.depth),this.l_buf=0,this.lit_bufsize=0,this.last_lit=0,this.d_buf=0,this.opt_len=0,this.static_len=0,this.matches=0,this.insert=0,this.bi_buf=0,this.bi_valid=0}function G(e){var t;return e&&e.state?(e.total_in=e.total_out=0,e.data_type=i,(t=e.state).pending=0,t.pending_out=0,t.wrap<0&&(t.wrap=-t.wrap),t.status=t.wrap?C:E,e.adler=2===t.wrap?0:1,t.last_flush=l,u._tr_init(t),m):R(e,_)}function K(e){var t=G(e);return t===m&&function(e){e.window_size=2*e.w_size,D(e.head),e.max_lazy_match=h[e.level].max_lazy,e.good_match=h[e.level].good_length,e.nice_match=h[e.level].nice_length,e.max_chain_length=h[e.level].max_chain,e.strstart=0,e.block_start=0,e.lookahead=0,e.insert=0,e.match_length=e.prev_length=x-1,e.match_available=0,e.ins_h=0}(e.state),t}function Y(e,t,r,n,i,s){if(!e)return _;var a=1;if(t===g&&(t=6),n<0?(a=0,n=-n):15<n&&(a=2,n-=16),i<1||y<i||r!==v||n<8||15<n||t<0||9<t||s<0||b<s)return R(e,_);8===n&&(n=9);var o=new H;return(e.state=o).strm=e,o.wrap=a,o.gzhead=null,o.w_bits=n,o.w_size=1<<o.w_bits,o.w_mask=o.w_size-1,o.hash_bits=i+7,o.hash_size=1<<o.hash_bits,o.hash_mask=o.hash_size-1,o.hash_shift=~~((o.hash_bits+x-1)/x),o.window=new c.Buf8(2*o.w_size),o.head=new c.Buf16(o.hash_size),o.prev=new c.Buf16(o.w_size),o.lit_bufsize=1<<i+6,o.pending_buf_size=4*o.lit_bufsize,o.pending_buf=new c.Buf8(o.pending_buf_size),o.d_buf=1*o.lit_bufsize,o.l_buf=3*o.lit_bufsize,o.level=t,o.strategy=s,o.method=r,K(e)}h=[new M(0,0,0,0,function(e,t){var r=65535;for(r>e.pending_buf_size-5&&(r=e.pending_buf_size-5);;){if(e.lookahead<=1){if(j(e),0===e.lookahead&&t===l)return A;if(0===e.lookahead)break}e.strstart+=e.lookahead,e.lookahead=0;var n=e.block_start+r;if((0===e.strstart||e.strstart>=n)&&(e.lookahead=e.strstart-n,e.strstart=n,N(e,!1),0===e.strm.avail_out))return A;if(e.strstart-e.block_start>=e.w_size-z&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=0,t===f?(N(e,!0),0===e.strm.avail_out?O:B):(e.strstart>e.block_start&&(N(e,!1),e.strm.avail_out),A)}),new M(4,4,8,4,Z),new M(4,5,16,8,Z),new M(4,6,32,32,Z),new M(4,4,16,16,W),new M(8,16,32,32,W),new M(8,16,128,128,W),new M(8,32,128,256,W),new M(32,128,258,1024,W),new M(32,258,258,4096,W)],r.deflateInit=function(e,t){return Y(e,t,v,15,8,0)},r.deflateInit2=Y,r.deflateReset=K,r.deflateResetKeep=G,r.deflateSetHeader=function(e,t){return e&&e.state?2!==e.state.wrap?_:(e.state.gzhead=t,m):_},r.deflate=function(e,t){var r,n,i,s;if(!e||!e.state||5<t||t<0)return e?R(e,_):_;if(n=e.state,!e.output||!e.input&&0!==e.avail_in||666===n.status&&t!==f)return R(e,0===e.avail_out?-5:_);if(n.strm=e,r=n.last_flush,n.last_flush=t,n.status===C)if(2===n.wrap)e.adler=0,U(n,31),U(n,139),U(n,8),n.gzhead?(U(n,(n.gzhead.text?1:0)+(n.gzhead.hcrc?2:0)+(n.gzhead.extra?4:0)+(n.gzhead.name?8:0)+(n.gzhead.comment?16:0)),U(n,255&n.gzhead.time),U(n,n.gzhead.time>>8&255),U(n,n.gzhead.time>>16&255),U(n,n.gzhead.time>>24&255),U(n,9===n.level?2:2<=n.strategy||n.level<2?4:0),U(n,255&n.gzhead.os),n.gzhead.extra&&n.gzhead.extra.length&&(U(n,255&n.gzhead.extra.length),U(n,n.gzhead.extra.length>>8&255)),n.gzhead.hcrc&&(e.adler=p(e.adler,n.pending_buf,n.pending,0)),n.gzindex=0,n.status=69):(U(n,0),U(n,0),U(n,0),U(n,0),U(n,0),U(n,9===n.level?2:2<=n.strategy||n.level<2?4:0),U(n,3),n.status=E);else{var a=v+(n.w_bits-8<<4)<<8;a|=(2<=n.strategy||n.level<2?0:n.level<6?1:6===n.level?2:3)<<6,0!==n.strstart&&(a|=32),a+=31-a%31,n.status=E,P(n,a),0!==n.strstart&&(P(n,e.adler>>>16),P(n,65535&e.adler)),e.adler=1}if(69===n.status)if(n.gzhead.extra){for(i=n.pending;n.gzindex<(65535&n.gzhead.extra.length)&&(n.pending!==n.pending_buf_size||(n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),F(e),i=n.pending,n.pending!==n.pending_buf_size));)U(n,255&n.gzhead.extra[n.gzindex]),n.gzindex++;n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),n.gzindex===n.gzhead.extra.length&&(n.gzindex=0,n.status=73)}else n.status=73;if(73===n.status)if(n.gzhead.name){i=n.pending;do{if(n.pending===n.pending_buf_size&&(n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),F(e),i=n.pending,n.pending===n.pending_buf_size)){s=1;break}s=n.gzindex<n.gzhead.name.length?255&n.gzhead.name.charCodeAt(n.gzindex++):0,U(n,s)}while(0!==s);n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),0===s&&(n.gzindex=0,n.status=91)}else n.status=91;if(91===n.status)if(n.gzhead.comment){i=n.pending;do{if(n.pending===n.pending_buf_size&&(n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),F(e),i=n.pending,n.pending===n.pending_buf_size)){s=1;break}s=n.gzindex<n.gzhead.comment.length?255&n.gzhead.comment.charCodeAt(n.gzindex++):0,U(n,s)}while(0!==s);n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),0===s&&(n.status=103)}else n.status=103;if(103===n.status&&(n.gzhead.hcrc?(n.pending+2>n.pending_buf_size&&F(e),n.pending+2<=n.pending_buf_size&&(U(n,255&e.adler),U(n,e.adler>>8&255),e.adler=0,n.status=E)):n.status=E),0!==n.pending){if(F(e),0===e.avail_out)return n.last_flush=-1,m}else if(0===e.avail_in&&T(t)<=T(r)&&t!==f)return R(e,-5);if(666===n.status&&0!==e.avail_in)return R(e,-5);if(0!==e.avail_in||0!==n.lookahead||t!==l&&666!==n.status){var o=2===n.strategy?function(e,t){for(var r;;){if(0===e.lookahead&&(j(e),0===e.lookahead)){if(t===l)return A;break}if(e.match_length=0,r=u._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++,r&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=0,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}(n,t):3===n.strategy?function(e,t){for(var r,n,i,s,a=e.window;;){if(e.lookahead<=S){if(j(e),e.lookahead<=S&&t===l)return A;if(0===e.lookahead)break}if(e.match_length=0,e.lookahead>=x&&0<e.strstart&&(n=a[i=e.strstart-1])===a[++i]&&n===a[++i]&&n===a[++i]){s=e.strstart+S;do{}while(n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&i<s);e.match_length=S-(s-i),e.match_length>e.lookahead&&(e.match_length=e.lookahead)}if(e.match_length>=x?(r=u._tr_tally(e,1,e.match_length-x),e.lookahead-=e.match_length,e.strstart+=e.match_length,e.match_length=0):(r=u._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++),r&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=0,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}(n,t):h[n.level].func(n,t);if(o!==O&&o!==B||(n.status=666),o===A||o===O)return 0===e.avail_out&&(n.last_flush=-1),m;if(o===I&&(1===t?u._tr_align(n):5!==t&&(u._tr_stored_block(n,0,0,!1),3===t&&(D(n.head),0===n.lookahead&&(n.strstart=0,n.block_start=0,n.insert=0))),F(e),0===e.avail_out))return n.last_flush=-1,m}return t!==f?m:n.wrap<=0?1:(2===n.wrap?(U(n,255&e.adler),U(n,e.adler>>8&255),U(n,e.adler>>16&255),U(n,e.adler>>24&255),U(n,255&e.total_in),U(n,e.total_in>>8&255),U(n,e.total_in>>16&255),U(n,e.total_in>>24&255)):(P(n,e.adler>>>16),P(n,65535&e.adler)),F(e),0<n.wrap&&(n.wrap=-n.wrap),0!==n.pending?m:1)},r.deflateEnd=function(e){var t;return e&&e.state?(t=e.state.status)!==C&&69!==t&&73!==t&&91!==t&&103!==t&&t!==E&&666!==t?R(e,_):(e.state=null,t===E?R(e,-3):m):_},r.deflateSetDictionary=function(e,t){var r,n,i,s,a,o,h,u,l=t.length;if(!e||!e.state)return _;if(2===(s=(r=e.state).wrap)||1===s&&r.status!==C||r.lookahead)return _;for(1===s&&(e.adler=d(e.adler,t,l,0)),r.wrap=0,l>=r.w_size&&(0===s&&(D(r.head),r.strstart=0,r.block_start=0,r.insert=0),u=new c.Buf8(r.w_size),c.arraySet(u,t,l-r.w_size,r.w_size,0),t=u,l=r.w_size),a=e.avail_in,o=e.next_in,h=e.input,e.avail_in=l,e.next_in=0,e.input=t,j(r);r.lookahead>=x;){for(n=r.strstart,i=r.lookahead-(x-1);r.ins_h=(r.ins_h<<r.hash_shift^r.window[n+x-1])&r.hash_mask,r.prev[n&r.w_mask]=r.head[r.ins_h],r.head[r.ins_h]=n,n++,--i;);r.strstart=n,r.lookahead=x-1,j(r)}return r.strstart+=r.lookahead,r.block_start=r.strstart,r.insert=r.lookahead,r.lookahead=0,r.match_length=r.prev_length=x-1,r.match_available=0,e.next_in=o,e.input=h,e.avail_in=a,r.wrap=s,m},r.deflateInfo="pako deflate (from Nodeca project)"},{"../utils/common":41,"./adler32":43,"./crc32":45,"./messages":51,"./trees":52}],47:[function(e,t,r){"use strict";t.exports=function(){this.text=0,this.time=0,this.xflags=0,this.os=0,this.extra=null,this.extra_len=0,this.name="",this.comment="",this.hcrc=0,this.done=!1}},{}],48:[function(e,t,r){"use strict";t.exports=function(e,t){var r,n,i,s,a,o,h,u,l,f,c,d,p,m,_,g,b,v,y,w,k,x,S,z,C;r=e.state,n=e.next_in,z=e.input,i=n+(e.avail_in-5),s=e.next_out,C=e.output,a=s-(t-e.avail_out),o=s+(e.avail_out-257),h=r.dmax,u=r.wsize,l=r.whave,f=r.wnext,c=r.window,d=r.hold,p=r.bits,m=r.lencode,_=r.distcode,g=(1<<r.lenbits)-1,b=(1<<r.distbits)-1;e:do{p<15&&(d+=z[n++]<<p,p+=8,d+=z[n++]<<p,p+=8),v=m[d&g];t:for(;;){if(d>>>=y=v>>>24,p-=y,0===(y=v>>>16&255))C[s++]=65535&v;else{if(!(16&y)){if(0==(64&y)){v=m[(65535&v)+(d&(1<<y)-1)];continue t}if(32&y){r.mode=12;break e}e.msg="invalid literal/length code",r.mode=30;break e}w=65535&v,(y&=15)&&(p<y&&(d+=z[n++]<<p,p+=8),w+=d&(1<<y)-1,d>>>=y,p-=y),p<15&&(d+=z[n++]<<p,p+=8,d+=z[n++]<<p,p+=8),v=_[d&b];r:for(;;){if(d>>>=y=v>>>24,p-=y,!(16&(y=v>>>16&255))){if(0==(64&y)){v=_[(65535&v)+(d&(1<<y)-1)];continue r}e.msg="invalid distance code",r.mode=30;break e}if(k=65535&v,p<(y&=15)&&(d+=z[n++]<<p,(p+=8)<y&&(d+=z[n++]<<p,p+=8)),h<(k+=d&(1<<y)-1)){e.msg="invalid distance too far back",r.mode=30;break e}if(d>>>=y,p-=y,(y=s-a)<k){if(l<(y=k-y)&&r.sane){e.msg="invalid distance too far back",r.mode=30;break e}if(S=c,(x=0)===f){if(x+=u-y,y<w){for(w-=y;C[s++]=c[x++],--y;);x=s-k,S=C}}else if(f<y){if(x+=u+f-y,(y-=f)<w){for(w-=y;C[s++]=c[x++],--y;);if(x=0,f<w){for(w-=y=f;C[s++]=c[x++],--y;);x=s-k,S=C}}}else if(x+=f-y,y<w){for(w-=y;C[s++]=c[x++],--y;);x=s-k,S=C}for(;2<w;)C[s++]=S[x++],C[s++]=S[x++],C[s++]=S[x++],w-=3;w&&(C[s++]=S[x++],1<w&&(C[s++]=S[x++]))}else{for(x=s-k;C[s++]=C[x++],C[s++]=C[x++],C[s++]=C[x++],2<(w-=3););w&&(C[s++]=C[x++],1<w&&(C[s++]=C[x++]))}break}}break}}while(n<i&&s<o);n-=w=p>>3,d&=(1<<(p-=w<<3))-1,e.next_in=n,e.next_out=s,e.avail_in=n<i?i-n+5:5-(n-i),e.avail_out=s<o?o-s+257:257-(s-o),r.hold=d,r.bits=p}},{}],49:[function(e,t,r){"use strict";var I=e("../utils/common"),O=e("./adler32"),B=e("./crc32"),R=e("./inffast"),T=e("./inftrees"),D=1,F=2,N=0,U=-2,P=1,n=852,i=592;function L(e){return(e>>>24&255)+(e>>>8&65280)+((65280&e)<<8)+((255&e)<<24)}function s(){this.mode=0,this.last=!1,this.wrap=0,this.havedict=!1,this.flags=0,this.dmax=0,this.check=0,this.total=0,this.head=null,this.wbits=0,this.wsize=0,this.whave=0,this.wnext=0,this.window=null,this.hold=0,this.bits=0,this.length=0,this.offset=0,this.extra=0,this.lencode=null,this.distcode=null,this.lenbits=0,this.distbits=0,this.ncode=0,this.nlen=0,this.ndist=0,this.have=0,this.next=null,this.lens=new I.Buf16(320),this.work=new I.Buf16(288),this.lendyn=null,this.distdyn=null,this.sane=0,this.back=0,this.was=0}function a(e){var t;return e&&e.state?(t=e.state,e.total_in=e.total_out=t.total=0,e.msg="",t.wrap&&(e.adler=1&t.wrap),t.mode=P,t.last=0,t.havedict=0,t.dmax=32768,t.head=null,t.hold=0,t.bits=0,t.lencode=t.lendyn=new I.Buf32(n),t.distcode=t.distdyn=new I.Buf32(i),t.sane=1,t.back=-1,N):U}function o(e){var t;return e&&e.state?((t=e.state).wsize=0,t.whave=0,t.wnext=0,a(e)):U}function h(e,t){var r,n;return e&&e.state?(n=e.state,t<0?(r=0,t=-t):(r=1+(t>>4),t<48&&(t&=15)),t&&(t<8||15<t)?U:(null!==n.window&&n.wbits!==t&&(n.window=null),n.wrap=r,n.wbits=t,o(e))):U}function u(e,t){var r,n;return e?(n=new s,(e.state=n).window=null,(r=h(e,t))!==N&&(e.state=null),r):U}var l,f,c=!0;function j(e){if(c){var t;for(l=new I.Buf32(512),f=new I.Buf32(32),t=0;t<144;)e.lens[t++]=8;for(;t<256;)e.lens[t++]=9;for(;t<280;)e.lens[t++]=7;for(;t<288;)e.lens[t++]=8;for(T(D,e.lens,0,288,l,0,e.work,{bits:9}),t=0;t<32;)e.lens[t++]=5;T(F,e.lens,0,32,f,0,e.work,{bits:5}),c=!1}e.lencode=l,e.lenbits=9,e.distcode=f,e.distbits=5}function Z(e,t,r,n){var i,s=e.state;return null===s.window&&(s.wsize=1<<s.wbits,s.wnext=0,s.whave=0,s.window=new I.Buf8(s.wsize)),n>=s.wsize?(I.arraySet(s.window,t,r-s.wsize,s.wsize,0),s.wnext=0,s.whave=s.wsize):(n<(i=s.wsize-s.wnext)&&(i=n),I.arraySet(s.window,t,r-n,i,s.wnext),(n-=i)?(I.arraySet(s.window,t,r-n,n,0),s.wnext=n,s.whave=s.wsize):(s.wnext+=i,s.wnext===s.wsize&&(s.wnext=0),s.whave<s.wsize&&(s.whave+=i))),0}r.inflateReset=o,r.inflateReset2=h,r.inflateResetKeep=a,r.inflateInit=function(e){return u(e,15)},r.inflateInit2=u,r.inflate=function(e,t){var r,n,i,s,a,o,h,u,l,f,c,d,p,m,_,g,b,v,y,w,k,x,S,z,C=0,E=new I.Buf8(4),A=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15];if(!e||!e.state||!e.output||!e.input&&0!==e.avail_in)return U;12===(r=e.state).mode&&(r.mode=13),a=e.next_out,i=e.output,h=e.avail_out,s=e.next_in,n=e.input,o=e.avail_in,u=r.hold,l=r.bits,f=o,c=h,x=N;e:for(;;)switch(r.mode){case P:if(0===r.wrap){r.mode=13;break}for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(2&r.wrap&&35615===u){E[r.check=0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0),l=u=0,r.mode=2;break}if(r.flags=0,r.head&&(r.head.done=!1),!(1&r.wrap)||(((255&u)<<8)+(u>>8))%31){e.msg="incorrect header check",r.mode=30;break}if(8!=(15&u)){e.msg="unknown compression method",r.mode=30;break}if(l-=4,k=8+(15&(u>>>=4)),0===r.wbits)r.wbits=k;else if(k>r.wbits){e.msg="invalid window size",r.mode=30;break}r.dmax=1<<k,e.adler=r.check=1,r.mode=512&u?10:12,l=u=0;break;case 2:for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(r.flags=u,8!=(255&r.flags)){e.msg="unknown compression method",r.mode=30;break}if(57344&r.flags){e.msg="unknown header flags set",r.mode=30;break}r.head&&(r.head.text=u>>8&1),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0)),l=u=0,r.mode=3;case 3:for(;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.head&&(r.head.time=u),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,E[2]=u>>>16&255,E[3]=u>>>24&255,r.check=B(r.check,E,4,0)),l=u=0,r.mode=4;case 4:for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.head&&(r.head.xflags=255&u,r.head.os=u>>8),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0)),l=u=0,r.mode=5;case 5:if(1024&r.flags){for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.length=u,r.head&&(r.head.extra_len=u),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0)),l=u=0}else r.head&&(r.head.extra=null);r.mode=6;case 6:if(1024&r.flags&&(o<(d=r.length)&&(d=o),d&&(r.head&&(k=r.head.extra_len-r.length,r.head.extra||(r.head.extra=new Array(r.head.extra_len)),I.arraySet(r.head.extra,n,s,d,k)),512&r.flags&&(r.check=B(r.check,n,d,s)),o-=d,s+=d,r.length-=d),r.length))break e;r.length=0,r.mode=7;case 7:if(2048&r.flags){if(0===o)break e;for(d=0;k=n[s+d++],r.head&&k&&r.length<65536&&(r.head.name+=String.fromCharCode(k)),k&&d<o;);if(512&r.flags&&(r.check=B(r.check,n,d,s)),o-=d,s+=d,k)break e}else r.head&&(r.head.name=null);r.length=0,r.mode=8;case 8:if(4096&r.flags){if(0===o)break e;for(d=0;k=n[s+d++],r.head&&k&&r.length<65536&&(r.head.comment+=String.fromCharCode(k)),k&&d<o;);if(512&r.flags&&(r.check=B(r.check,n,d,s)),o-=d,s+=d,k)break e}else r.head&&(r.head.comment=null);r.mode=9;case 9:if(512&r.flags){for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(u!==(65535&r.check)){e.msg="header crc mismatch",r.mode=30;break}l=u=0}r.head&&(r.head.hcrc=r.flags>>9&1,r.head.done=!0),e.adler=r.check=0,r.mode=12;break;case 10:for(;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}e.adler=r.check=L(u),l=u=0,r.mode=11;case 11:if(0===r.havedict)return e.next_out=a,e.avail_out=h,e.next_in=s,e.avail_in=o,r.hold=u,r.bits=l,2;e.adler=r.check=1,r.mode=12;case 12:if(5===t||6===t)break e;case 13:if(r.last){u>>>=7&l,l-=7&l,r.mode=27;break}for(;l<3;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}switch(r.last=1&u,l-=1,3&(u>>>=1)){case 0:r.mode=14;break;case 1:if(j(r),r.mode=20,6!==t)break;u>>>=2,l-=2;break e;case 2:r.mode=17;break;case 3:e.msg="invalid block type",r.mode=30}u>>>=2,l-=2;break;case 14:for(u>>>=7&l,l-=7&l;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if((65535&u)!=(u>>>16^65535)){e.msg="invalid stored block lengths",r.mode=30;break}if(r.length=65535&u,l=u=0,r.mode=15,6===t)break e;case 15:r.mode=16;case 16:if(d=r.length){if(o<d&&(d=o),h<d&&(d=h),0===d)break e;I.arraySet(i,n,s,d,a),o-=d,s+=d,h-=d,a+=d,r.length-=d;break}r.mode=12;break;case 17:for(;l<14;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(r.nlen=257+(31&u),u>>>=5,l-=5,r.ndist=1+(31&u),u>>>=5,l-=5,r.ncode=4+(15&u),u>>>=4,l-=4,286<r.nlen||30<r.ndist){e.msg="too many length or distance symbols",r.mode=30;break}r.have=0,r.mode=18;case 18:for(;r.have<r.ncode;){for(;l<3;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.lens[A[r.have++]]=7&u,u>>>=3,l-=3}for(;r.have<19;)r.lens[A[r.have++]]=0;if(r.lencode=r.lendyn,r.lenbits=7,S={bits:r.lenbits},x=T(0,r.lens,0,19,r.lencode,0,r.work,S),r.lenbits=S.bits,x){e.msg="invalid code lengths set",r.mode=30;break}r.have=0,r.mode=19;case 19:for(;r.have<r.nlen+r.ndist;){for(;g=(C=r.lencode[u&(1<<r.lenbits)-1])>>>16&255,b=65535&C,!((_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(b<16)u>>>=_,l-=_,r.lens[r.have++]=b;else{if(16===b){for(z=_+2;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(u>>>=_,l-=_,0===r.have){e.msg="invalid bit length repeat",r.mode=30;break}k=r.lens[r.have-1],d=3+(3&u),u>>>=2,l-=2}else if(17===b){for(z=_+3;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}l-=_,k=0,d=3+(7&(u>>>=_)),u>>>=3,l-=3}else{for(z=_+7;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}l-=_,k=0,d=11+(127&(u>>>=_)),u>>>=7,l-=7}if(r.have+d>r.nlen+r.ndist){e.msg="invalid bit length repeat",r.mode=30;break}for(;d--;)r.lens[r.have++]=k}}if(30===r.mode)break;if(0===r.lens[256]){e.msg="invalid code -- missing end-of-block",r.mode=30;break}if(r.lenbits=9,S={bits:r.lenbits},x=T(D,r.lens,0,r.nlen,r.lencode,0,r.work,S),r.lenbits=S.bits,x){e.msg="invalid literal/lengths set",r.mode=30;break}if(r.distbits=6,r.distcode=r.distdyn,S={bits:r.distbits},x=T(F,r.lens,r.nlen,r.ndist,r.distcode,0,r.work,S),r.distbits=S.bits,x){e.msg="invalid distances set",r.mode=30;break}if(r.mode=20,6===t)break e;case 20:r.mode=21;case 21:if(6<=o&&258<=h){e.next_out=a,e.avail_out=h,e.next_in=s,e.avail_in=o,r.hold=u,r.bits=l,R(e,c),a=e.next_out,i=e.output,h=e.avail_out,s=e.next_in,n=e.input,o=e.avail_in,u=r.hold,l=r.bits,12===r.mode&&(r.back=-1);break}for(r.back=0;g=(C=r.lencode[u&(1<<r.lenbits)-1])>>>16&255,b=65535&C,!((_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(g&&0==(240&g)){for(v=_,y=g,w=b;g=(C=r.lencode[w+((u&(1<<v+y)-1)>>v)])>>>16&255,b=65535&C,!(v+(_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}u>>>=v,l-=v,r.back+=v}if(u>>>=_,l-=_,r.back+=_,r.length=b,0===g){r.mode=26;break}if(32&g){r.back=-1,r.mode=12;break}if(64&g){e.msg="invalid literal/length code",r.mode=30;break}r.extra=15&g,r.mode=22;case 22:if(r.extra){for(z=r.extra;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.length+=u&(1<<r.extra)-1,u>>>=r.extra,l-=r.extra,r.back+=r.extra}r.was=r.length,r.mode=23;case 23:for(;g=(C=r.distcode[u&(1<<r.distbits)-1])>>>16&255,b=65535&C,!((_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(0==(240&g)){for(v=_,y=g,w=b;g=(C=r.distcode[w+((u&(1<<v+y)-1)>>v)])>>>16&255,b=65535&C,!(v+(_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}u>>>=v,l-=v,r.back+=v}if(u>>>=_,l-=_,r.back+=_,64&g){e.msg="invalid distance code",r.mode=30;break}r.offset=b,r.extra=15&g,r.mode=24;case 24:if(r.extra){for(z=r.extra;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.offset+=u&(1<<r.extra)-1,u>>>=r.extra,l-=r.extra,r.back+=r.extra}if(r.offset>r.dmax){e.msg="invalid distance too far back",r.mode=30;break}r.mode=25;case 25:if(0===h)break e;if(d=c-h,r.offset>d){if((d=r.offset-d)>r.whave&&r.sane){e.msg="invalid distance too far back",r.mode=30;break}p=d>r.wnext?(d-=r.wnext,r.wsize-d):r.wnext-d,d>r.length&&(d=r.length),m=r.window}else m=i,p=a-r.offset,d=r.length;for(h<d&&(d=h),h-=d,r.length-=d;i[a++]=m[p++],--d;);0===r.length&&(r.mode=21);break;case 26:if(0===h)break e;i[a++]=r.length,h--,r.mode=21;break;case 27:if(r.wrap){for(;l<32;){if(0===o)break e;o--,u|=n[s++]<<l,l+=8}if(c-=h,e.total_out+=c,r.total+=c,c&&(e.adler=r.check=r.flags?B(r.check,i,c,a-c):O(r.check,i,c,a-c)),c=h,(r.flags?u:L(u))!==r.check){e.msg="incorrect data check",r.mode=30;break}l=u=0}r.mode=28;case 28:if(r.wrap&&r.flags){for(;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(u!==(4294967295&r.total)){e.msg="incorrect length check",r.mode=30;break}l=u=0}r.mode=29;case 29:x=1;break e;case 30:x=-3;break e;case 31:return-4;case 32:default:return U}return e.next_out=a,e.avail_out=h,e.next_in=s,e.avail_in=o,r.hold=u,r.bits=l,(r.wsize||c!==e.avail_out&&r.mode<30&&(r.mode<27||4!==t))&&Z(e,e.output,e.next_out,c-e.avail_out)?(r.mode=31,-4):(f-=e.avail_in,c-=e.avail_out,e.total_in+=f,e.total_out+=c,r.total+=c,r.wrap&&c&&(e.adler=r.check=r.flags?B(r.check,i,c,e.next_out-c):O(r.check,i,c,e.next_out-c)),e.data_type=r.bits+(r.last?64:0)+(12===r.mode?128:0)+(20===r.mode||15===r.mode?256:0),(0==f&&0===c||4===t)&&x===N&&(x=-5),x)},r.inflateEnd=function(e){if(!e||!e.state)return U;var t=e.state;return t.window&&(t.window=null),e.state=null,N},r.inflateGetHeader=function(e,t){var r;return e&&e.state?0==(2&(r=e.state).wrap)?U:((r.head=t).done=!1,N):U},r.inflateSetDictionary=function(e,t){var r,n=t.length;return e&&e.state?0!==(r=e.state).wrap&&11!==r.mode?U:11===r.mode&&O(1,t,n,0)!==r.check?-3:Z(e,t,n,n)?(r.mode=31,-4):(r.havedict=1,N):U},r.inflateInfo="pako inflate (from Nodeca project)"},{"../utils/common":41,"./adler32":43,"./crc32":45,"./inffast":48,"./inftrees":50}],50:[function(e,t,r){"use strict";var D=e("../utils/common"),F=[3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258,0,0],N=[16,16,16,16,16,16,16,16,17,17,17,17,18,18,18,18,19,19,19,19,20,20,20,20,21,21,21,21,16,72,78],U=[1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577,0,0],P=[16,16,16,16,17,17,18,18,19,19,20,20,21,21,22,22,23,23,24,24,25,25,26,26,27,27,28,28,29,29,64,64];t.exports=function(e,t,r,n,i,s,a,o){var h,u,l,f,c,d,p,m,_,g=o.bits,b=0,v=0,y=0,w=0,k=0,x=0,S=0,z=0,C=0,E=0,A=null,I=0,O=new D.Buf16(16),B=new D.Buf16(16),R=null,T=0;for(b=0;b<=15;b++)O[b]=0;for(v=0;v<n;v++)O[t[r+v]]++;for(k=g,w=15;1<=w&&0===O[w];w--);if(w<k&&(k=w),0===w)return i[s++]=20971520,i[s++]=20971520,o.bits=1,0;for(y=1;y<w&&0===O[y];y++);for(k<y&&(k=y),b=z=1;b<=15;b++)if(z<<=1,(z-=O[b])<0)return-1;if(0<z&&(0===e||1!==w))return-1;for(B[1]=0,b=1;b<15;b++)B[b+1]=B[b]+O[b];for(v=0;v<n;v++)0!==t[r+v]&&(a[B[t[r+v]]++]=v);if(d=0===e?(A=R=a,19):1===e?(A=F,I-=257,R=N,T-=257,256):(A=U,R=P,-1),b=y,c=s,S=v=E=0,l=-1,f=(C=1<<(x=k))-1,1===e&&852<C||2===e&&592<C)return 1;for(;;){for(p=b-S,_=a[v]<d?(m=0,a[v]):a[v]>d?(m=R[T+a[v]],A[I+a[v]]):(m=96,0),h=1<<b-S,y=u=1<<x;i[c+(E>>S)+(u-=h)]=p<<24|m<<16|_|0,0!==u;);for(h=1<<b-1;E&h;)h>>=1;if(0!==h?(E&=h-1,E+=h):E=0,v++,0==--O[b]){if(b===w)break;b=t[r+a[v]]}if(k<b&&(E&f)!==l){for(0===S&&(S=k),c+=y,z=1<<(x=b-S);x+S<w&&!((z-=O[x+S])<=0);)x++,z<<=1;if(C+=1<<x,1===e&&852<C||2===e&&592<C)return 1;i[l=E&f]=k<<24|x<<16|c-s|0}}return 0!==E&&(i[c+E]=b-S<<24|64<<16|0),o.bits=k,0}},{"../utils/common":41}],51:[function(e,t,r){"use strict";t.exports={2:"need dictionary",1:"stream end",0:"","-1":"file error","-2":"stream error","-3":"data error","-4":"insufficient memory","-5":"buffer error","-6":"incompatible version"}},{}],52:[function(e,t,r){"use strict";var i=e("../utils/common"),o=0,h=1;function n(e){for(var t=e.length;0<=--t;)e[t]=0}var s=0,a=29,u=256,l=u+1+a,f=30,c=19,_=2*l+1,g=15,d=16,p=7,m=256,b=16,v=17,y=18,w=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],k=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],x=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7],S=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],z=new Array(2*(l+2));n(z);var C=new Array(2*f);n(C);var E=new Array(512);n(E);var A=new Array(256);n(A);var I=new Array(a);n(I);var O,B,R,T=new Array(f);function D(e,t,r,n,i){this.static_tree=e,this.extra_bits=t,this.extra_base=r,this.elems=n,this.max_length=i,this.has_stree=e&&e.length}function F(e,t){this.dyn_tree=e,this.max_code=0,this.stat_desc=t}function N(e){return e<256?E[e]:E[256+(e>>>7)]}function U(e,t){e.pending_buf[e.pending++]=255&t,e.pending_buf[e.pending++]=t>>>8&255}function P(e,t,r){e.bi_valid>d-r?(e.bi_buf|=t<<e.bi_valid&65535,U(e,e.bi_buf),e.bi_buf=t>>d-e.bi_valid,e.bi_valid+=r-d):(e.bi_buf|=t<<e.bi_valid&65535,e.bi_valid+=r)}function L(e,t,r){P(e,r[2*t],r[2*t+1])}function j(e,t){for(var r=0;r|=1&e,e>>>=1,r<<=1,0<--t;);return r>>>1}function Z(e,t,r){var n,i,s=new Array(g+1),a=0;for(n=1;n<=g;n++)s[n]=a=a+r[n-1]<<1;for(i=0;i<=t;i++){var o=e[2*i+1];0!==o&&(e[2*i]=j(s[o]++,o))}}function W(e){var t;for(t=0;t<l;t++)e.dyn_ltree[2*t]=0;for(t=0;t<f;t++)e.dyn_dtree[2*t]=0;for(t=0;t<c;t++)e.bl_tree[2*t]=0;e.dyn_ltree[2*m]=1,e.opt_len=e.static_len=0,e.last_lit=e.matches=0}function M(e){8<e.bi_valid?U(e,e.bi_buf):0<e.bi_valid&&(e.pending_buf[e.pending++]=e.bi_buf),e.bi_buf=0,e.bi_valid=0}function H(e,t,r,n){var i=2*t,s=2*r;return e[i]<e[s]||e[i]===e[s]&&n[t]<=n[r]}function G(e,t,r){for(var n=e.heap[r],i=r<<1;i<=e.heap_len&&(i<e.heap_len&&H(t,e.heap[i+1],e.heap[i],e.depth)&&i++,!H(t,n,e.heap[i],e.depth));)e.heap[r]=e.heap[i],r=i,i<<=1;e.heap[r]=n}function K(e,t,r){var n,i,s,a,o=0;if(0!==e.last_lit)for(;n=e.pending_buf[e.d_buf+2*o]<<8|e.pending_buf[e.d_buf+2*o+1],i=e.pending_buf[e.l_buf+o],o++,0===n?L(e,i,t):(L(e,(s=A[i])+u+1,t),0!==(a=w[s])&&P(e,i-=I[s],a),L(e,s=N(--n),r),0!==(a=k[s])&&P(e,n-=T[s],a)),o<e.last_lit;);L(e,m,t)}function Y(e,t){var r,n,i,s=t.dyn_tree,a=t.stat_desc.static_tree,o=t.stat_desc.has_stree,h=t.stat_desc.elems,u=-1;for(e.heap_len=0,e.heap_max=_,r=0;r<h;r++)0!==s[2*r]?(e.heap[++e.heap_len]=u=r,e.depth[r]=0):s[2*r+1]=0;for(;e.heap_len<2;)s[2*(i=e.heap[++e.heap_len]=u<2?++u:0)]=1,e.depth[i]=0,e.opt_len--,o&&(e.static_len-=a[2*i+1]);for(t.max_code=u,r=e.heap_len>>1;1<=r;r--)G(e,s,r);for(i=h;r=e.heap[1],e.heap[1]=e.heap[e.heap_len--],G(e,s,1),n=e.heap[1],e.heap[--e.heap_max]=r,e.heap[--e.heap_max]=n,s[2*i]=s[2*r]+s[2*n],e.depth[i]=(e.depth[r]>=e.depth[n]?e.depth[r]:e.depth[n])+1,s[2*r+1]=s[2*n+1]=i,e.heap[1]=i++,G(e,s,1),2<=e.heap_len;);e.heap[--e.heap_max]=e.heap[1],function(e,t){var r,n,i,s,a,o,h=t.dyn_tree,u=t.max_code,l=t.stat_desc.static_tree,f=t.stat_desc.has_stree,c=t.stat_desc.extra_bits,d=t.stat_desc.extra_base,p=t.stat_desc.max_length,m=0;for(s=0;s<=g;s++)e.bl_count[s]=0;for(h[2*e.heap[e.heap_max]+1]=0,r=e.heap_max+1;r<_;r++)p<(s=h[2*h[2*(n=e.heap[r])+1]+1]+1)&&(s=p,m++),h[2*n+1]=s,u<n||(e.bl_count[s]++,a=0,d<=n&&(a=c[n-d]),o=h[2*n],e.opt_len+=o*(s+a),f&&(e.static_len+=o*(l[2*n+1]+a)));if(0!==m){do{for(s=p-1;0===e.bl_count[s];)s--;e.bl_count[s]--,e.bl_count[s+1]+=2,e.bl_count[p]--,m-=2}while(0<m);for(s=p;0!==s;s--)for(n=e.bl_count[s];0!==n;)u<(i=e.heap[--r])||(h[2*i+1]!==s&&(e.opt_len+=(s-h[2*i+1])*h[2*i],h[2*i+1]=s),n--)}}(e,t),Z(s,u,e.bl_count)}function X(e,t,r){var n,i,s=-1,a=t[1],o=0,h=7,u=4;for(0===a&&(h=138,u=3),t[2*(r+1)+1]=65535,n=0;n<=r;n++)i=a,a=t[2*(n+1)+1],++o<h&&i===a||(o<u?e.bl_tree[2*i]+=o:0!==i?(i!==s&&e.bl_tree[2*i]++,e.bl_tree[2*b]++):o<=10?e.bl_tree[2*v]++:e.bl_tree[2*y]++,s=i,u=(o=0)===a?(h=138,3):i===a?(h=6,3):(h=7,4))}function V(e,t,r){var n,i,s=-1,a=t[1],o=0,h=7,u=4;for(0===a&&(h=138,u=3),n=0;n<=r;n++)if(i=a,a=t[2*(n+1)+1],!(++o<h&&i===a)){if(o<u)for(;L(e,i,e.bl_tree),0!=--o;);else 0!==i?(i!==s&&(L(e,i,e.bl_tree),o--),L(e,b,e.bl_tree),P(e,o-3,2)):o<=10?(L(e,v,e.bl_tree),P(e,o-3,3)):(L(e,y,e.bl_tree),P(e,o-11,7));s=i,u=(o=0)===a?(h=138,3):i===a?(h=6,3):(h=7,4)}}n(T);var q=!1;function J(e,t,r,n){P(e,(s<<1)+(n?1:0),3),function(e,t,r,n){M(e),n&&(U(e,r),U(e,~r)),i.arraySet(e.pending_buf,e.window,t,r,e.pending),e.pending+=r}(e,t,r,!0)}r._tr_init=function(e){q||(function(){var e,t,r,n,i,s=new Array(g+1);for(n=r=0;n<a-1;n++)for(I[n]=r,e=0;e<1<<w[n];e++)A[r++]=n;for(A[r-1]=n,n=i=0;n<16;n++)for(T[n]=i,e=0;e<1<<k[n];e++)E[i++]=n;for(i>>=7;n<f;n++)for(T[n]=i<<7,e=0;e<1<<k[n]-7;e++)E[256+i++]=n;for(t=0;t<=g;t++)s[t]=0;for(e=0;e<=143;)z[2*e+1]=8,e++,s[8]++;for(;e<=255;)z[2*e+1]=9,e++,s[9]++;for(;e<=279;)z[2*e+1]=7,e++,s[7]++;for(;e<=287;)z[2*e+1]=8,e++,s[8]++;for(Z(z,l+1,s),e=0;e<f;e++)C[2*e+1]=5,C[2*e]=j(e,5);O=new D(z,w,u+1,l,g),B=new D(C,k,0,f,g),R=new D(new Array(0),x,0,c,p)}(),q=!0),e.l_desc=new F(e.dyn_ltree,O),e.d_desc=new F(e.dyn_dtree,B),e.bl_desc=new F(e.bl_tree,R),e.bi_buf=0,e.bi_valid=0,W(e)},r._tr_stored_block=J,r._tr_flush_block=function(e,t,r,n){var i,s,a=0;0<e.level?(2===e.strm.data_type&&(e.strm.data_type=function(e){var t,r=4093624447;for(t=0;t<=31;t++,r>>>=1)if(1&r&&0!==e.dyn_ltree[2*t])return o;if(0!==e.dyn_ltree[18]||0!==e.dyn_ltree[20]||0!==e.dyn_ltree[26])return h;for(t=32;t<u;t++)if(0!==e.dyn_ltree[2*t])return h;return o}(e)),Y(e,e.l_desc),Y(e,e.d_desc),a=function(e){var t;for(X(e,e.dyn_ltree,e.l_desc.max_code),X(e,e.dyn_dtree,e.d_desc.max_code),Y(e,e.bl_desc),t=c-1;3<=t&&0===e.bl_tree[2*S[t]+1];t--);return e.opt_len+=3*(t+1)+5+5+4,t}(e),i=e.opt_len+3+7>>>3,(s=e.static_len+3+7>>>3)<=i&&(i=s)):i=s=r+5,r+4<=i&&-1!==t?J(e,t,r,n):4===e.strategy||s===i?(P(e,2+(n?1:0),3),K(e,z,C)):(P(e,4+(n?1:0),3),function(e,t,r,n){var i;for(P(e,t-257,5),P(e,r-1,5),P(e,n-4,4),i=0;i<n;i++)P(e,e.bl_tree[2*S[i]+1],3);V(e,e.dyn_ltree,t-1),V(e,e.dyn_dtree,r-1)}(e,e.l_desc.max_code+1,e.d_desc.max_code+1,a+1),K(e,e.dyn_ltree,e.dyn_dtree)),W(e),n&&M(e)},r._tr_tally=function(e,t,r){return e.pending_buf[e.d_buf+2*e.last_lit]=t>>>8&255,e.pending_buf[e.d_buf+2*e.last_lit+1]=255&t,e.pending_buf[e.l_buf+e.last_lit]=255&r,e.last_lit++,0===t?e.dyn_ltree[2*r]++:(e.matches++,t--,e.dyn_ltree[2*(A[r]+u+1)]++,e.dyn_dtree[2*N(t)]++),e.last_lit===e.lit_bufsize-1},r._tr_align=function(e){P(e,2,3),L(e,m,z),function(e){16===e.bi_valid?(U(e,e.bi_buf),e.bi_buf=0,e.bi_valid=0):8<=e.bi_valid&&(e.pending_buf[e.pending++]=255&e.bi_buf,e.bi_buf>>=8,e.bi_valid-=8)}(e)}},{"../utils/common":41}],53:[function(e,t,r){"use strict";t.exports=function(){this.input=null,this.next_in=0,this.avail_in=0,this.total_in=0,this.output=null,this.next_out=0,this.avail_out=0,this.total_out=0,this.msg="",this.state=null,this.data_type=2,this.adler=0}},{}],54:[function(e,t,r){(function(e){!function(r,n){"use strict";if(!r.setImmediate){var i,s,t,a,o=1,h={},u=!1,l=r.document,e=Object.getPrototypeOf&&Object.getPrototypeOf(r);e=e&&e.setTimeout?e:r,i="[object process]"==={}.toString.call(r.process)?function(e){process.nextTick(function(){c(e)})}:function(){if(r.postMessage&&!r.importScripts){var e=!0,t=r.onmessage;return r.onmessage=function(){e=!1},r.postMessage("","*"),r.onmessage=t,e}}()?(a="setImmediate$"+Math.random()+"$",r.addEventListener?r.addEventListener("message",d,!1):r.attachEvent("onmessage",d),function(e){r.postMessage(a+e,"*")}):r.MessageChannel?((t=new MessageChannel).port1.onmessage=function(e){c(e.data)},function(e){t.port2.postMessage(e)}):l&&"onreadystatechange"in l.createElement("script")?(s=l.documentElement,function(e){var t=l.createElement("script");t.onreadystatechange=function(){c(e),t.onreadystatechange=null,s.removeChild(t),t=null},s.appendChild(t)}):function(e){setTimeout(c,0,e)},e.setImmediate=function(e){"function"!=typeof e&&(e=new Function(""+e));for(var t=new Array(arguments.length-1),r=0;r<t.length;r++)t[r]=arguments[r+1];var n={callback:e,args:t};return h[o]=n,i(o),o++},e.clearImmediate=f}function f(e){delete h[e]}function c(e){if(u)setTimeout(c,0,e);else{var t=h[e];if(t){u=!0;try{!function(e){var t=e.callback,r=e.args;switch(r.length){case 0:t();break;case 1:t(r[0]);break;case 2:t(r[0],r[1]);break;case 3:t(r[0],r[1],r[2]);break;default:t.apply(n,r)}}(t)}finally{f(e),u=!1}}}}function d(e){e.source===r&&"string"==typeof e.data&&0===e.data.indexOf(a)&&c(+e.data.slice(a.length))}}("undefined"==typeof self?void 0===e?this:e:self)}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}]},{},[10])(10)});
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2).Buffer, __webpack_require__(15).setImmediate, __webpack_require__(1), __webpack_require__(4)))
+!function(e){if(true)module.exports=e();else {}}(function(){return function s(a,o,h){function u(r,e){if(!o[r]){if(!a[r]){var t="function"==typeof require&&require;if(!e&&__webpack_require__(60))return require(r,!0);if(l)return l(r,!0);var n=new Error("Cannot find module '"+r+"'");throw n.code="MODULE_NOT_FOUND",n}var i=o[r]={exports:{}};a[r][0].call(i.exports,function(e){var t=a[r][1][e];return u(t||e)},i,i.exports,s,a,o,h)}return o[r].exports}for(var l="function"==typeof require&&require,e=0;e<h.length;e++)u(h[e]);return u}({1:[function(e,t,r){"use strict";var d=e("./utils"),c=e("./support"),p="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";r.encode=function(e){for(var t,r,n,i,s,a,o,h=[],u=0,l=e.length,f=l,c="string"!==d.getTypeOf(e);u<e.length;)f=l-u,n=c?(t=e[u++],r=u<l?e[u++]:0,u<l?e[u++]:0):(t=e.charCodeAt(u++),r=u<l?e.charCodeAt(u++):0,u<l?e.charCodeAt(u++):0),i=t>>2,s=(3&t)<<4|r>>4,a=1<f?(15&r)<<2|n>>6:64,o=2<f?63&n:64,h.push(p.charAt(i)+p.charAt(s)+p.charAt(a)+p.charAt(o));return h.join("")},r.decode=function(e){var t,r,n,i,s,a,o=0,h=0,u="data:";if(e.substr(0,u.length)===u)throw new Error("Invalid base64 input, it looks like a data url.");var l,f=3*(e=e.replace(/[^A-Za-z0-9+/=]/g,"")).length/4;if(e.charAt(e.length-1)===p.charAt(64)&&f--,e.charAt(e.length-2)===p.charAt(64)&&f--,f%1!=0)throw new Error("Invalid base64 input, bad content length.");for(l=c.uint8array?new Uint8Array(0|f):new Array(0|f);o<e.length;)t=p.indexOf(e.charAt(o++))<<2|(i=p.indexOf(e.charAt(o++)))>>4,r=(15&i)<<4|(s=p.indexOf(e.charAt(o++)))>>2,n=(3&s)<<6|(a=p.indexOf(e.charAt(o++))),l[h++]=t,64!==s&&(l[h++]=r),64!==a&&(l[h++]=n);return l}},{"./support":30,"./utils":32}],2:[function(e,t,r){"use strict";var n=e("./external"),i=e("./stream/DataWorker"),s=e("./stream/Crc32Probe"),a=e("./stream/DataLengthProbe");function o(e,t,r,n,i){this.compressedSize=e,this.uncompressedSize=t,this.crc32=r,this.compression=n,this.compressedContent=i}o.prototype={getContentWorker:function(){var e=new i(n.Promise.resolve(this.compressedContent)).pipe(this.compression.uncompressWorker()).pipe(new a("data_length")),t=this;return e.on("end",function(){if(this.streamInfo.data_length!==t.uncompressedSize)throw new Error("Bug : uncompressed data size mismatch")}),e},getCompressedWorker:function(){return new i(n.Promise.resolve(this.compressedContent)).withStreamInfo("compressedSize",this.compressedSize).withStreamInfo("uncompressedSize",this.uncompressedSize).withStreamInfo("crc32",this.crc32).withStreamInfo("compression",this.compression)}},o.createWorkerFrom=function(e,t,r){return e.pipe(new s).pipe(new a("uncompressedSize")).pipe(t.compressWorker(r)).pipe(new a("compressedSize")).withStreamInfo("compression",t)},t.exports=o},{"./external":6,"./stream/Crc32Probe":25,"./stream/DataLengthProbe":26,"./stream/DataWorker":27}],3:[function(e,t,r){"use strict";var n=e("./stream/GenericWorker");r.STORE={magic:"\0\0",compressWorker:function(){return new n("STORE compression")},uncompressWorker:function(){return new n("STORE decompression")}},r.DEFLATE=e("./flate")},{"./flate":7,"./stream/GenericWorker":28}],4:[function(e,t,r){"use strict";var n=e("./utils");var o=function(){for(var e,t=[],r=0;r<256;r++){e=r;for(var n=0;n<8;n++)e=1&e?3988292384^e>>>1:e>>>1;t[r]=e}return t}();t.exports=function(e,t){return void 0!==e&&e.length?"string"!==n.getTypeOf(e)?function(e,t,r,n){var i=o,s=n+r;e^=-1;for(var a=n;a<s;a++)e=e>>>8^i[255&(e^t[a])];return-1^e}(0|t,e,e.length,0):function(e,t,r,n){var i=o,s=n+r;e^=-1;for(var a=n;a<s;a++)e=e>>>8^i[255&(e^t.charCodeAt(a))];return-1^e}(0|t,e,e.length,0):0}},{"./utils":32}],5:[function(e,t,r){"use strict";r.base64=!1,r.binary=!1,r.dir=!1,r.createFolders=!0,r.date=null,r.compression=null,r.compressionOptions=null,r.comment=null,r.unixPermissions=null,r.dosPermissions=null},{}],6:[function(e,t,r){"use strict";var n=null;n="undefined"!=typeof Promise?Promise:e("lie"),t.exports={Promise:n}},{lie:37}],7:[function(e,t,r){"use strict";var n="undefined"!=typeof Uint8Array&&"undefined"!=typeof Uint16Array&&"undefined"!=typeof Uint32Array,i=e("pako"),s=e("./utils"),a=e("./stream/GenericWorker"),o=n?"uint8array":"array";function h(e,t){a.call(this,"FlateWorker/"+e),this._pako=null,this._pakoAction=e,this._pakoOptions=t,this.meta={}}r.magic="\b\0",s.inherits(h,a),h.prototype.processChunk=function(e){this.meta=e.meta,null===this._pako&&this._createPako(),this._pako.push(s.transformTo(o,e.data),!1)},h.prototype.flush=function(){a.prototype.flush.call(this),null===this._pako&&this._createPako(),this._pako.push([],!0)},h.prototype.cleanUp=function(){a.prototype.cleanUp.call(this),this._pako=null},h.prototype._createPako=function(){this._pako=new i[this._pakoAction]({raw:!0,level:this._pakoOptions.level||-1});var t=this;this._pako.onData=function(e){t.push({data:e,meta:t.meta})}},r.compressWorker=function(e){return new h("Deflate",e)},r.uncompressWorker=function(){return new h("Inflate",{})}},{"./stream/GenericWorker":28,"./utils":32,pako:38}],8:[function(e,t,r){"use strict";function A(e,t){var r,n="";for(r=0;r<t;r++)n+=String.fromCharCode(255&e),e>>>=8;return n}function n(e,t,r,n,i,s){var a,o,h=e.file,u=e.compression,l=s!==O.utf8encode,f=I.transformTo("string",s(h.name)),c=I.transformTo("string",O.utf8encode(h.name)),d=h.comment,p=I.transformTo("string",s(d)),m=I.transformTo("string",O.utf8encode(d)),_=c.length!==h.name.length,g=m.length!==d.length,b="",v="",y="",w=h.dir,k=h.date,x={crc32:0,compressedSize:0,uncompressedSize:0};t&&!r||(x.crc32=e.crc32,x.compressedSize=e.compressedSize,x.uncompressedSize=e.uncompressedSize);var S=0;t&&(S|=8),l||!_&&!g||(S|=2048);var z=0,C=0;w&&(z|=16),"UNIX"===i?(C=798,z|=function(e,t){var r=e;return e||(r=t?16893:33204),(65535&r)<<16}(h.unixPermissions,w)):(C=20,z|=function(e){return 63&(e||0)}(h.dosPermissions)),a=k.getUTCHours(),a<<=6,a|=k.getUTCMinutes(),a<<=5,a|=k.getUTCSeconds()/2,o=k.getUTCFullYear()-1980,o<<=4,o|=k.getUTCMonth()+1,o<<=5,o|=k.getUTCDate(),_&&(v=A(1,1)+A(B(f),4)+c,b+="up"+A(v.length,2)+v),g&&(y=A(1,1)+A(B(p),4)+m,b+="uc"+A(y.length,2)+y);var E="";return E+="\n\0",E+=A(S,2),E+=u.magic,E+=A(a,2),E+=A(o,2),E+=A(x.crc32,4),E+=A(x.compressedSize,4),E+=A(x.uncompressedSize,4),E+=A(f.length,2),E+=A(b.length,2),{fileRecord:R.LOCAL_FILE_HEADER+E+f+b,dirRecord:R.CENTRAL_FILE_HEADER+A(C,2)+E+A(p.length,2)+"\0\0\0\0"+A(z,4)+A(n,4)+f+b+p}}var I=e("../utils"),i=e("../stream/GenericWorker"),O=e("../utf8"),B=e("../crc32"),R=e("../signature");function s(e,t,r,n){i.call(this,"ZipFileWorker"),this.bytesWritten=0,this.zipComment=t,this.zipPlatform=r,this.encodeFileName=n,this.streamFiles=e,this.accumulate=!1,this.contentBuffer=[],this.dirRecords=[],this.currentSourceOffset=0,this.entriesCount=0,this.currentFile=null,this._sources=[]}I.inherits(s,i),s.prototype.push=function(e){var t=e.meta.percent||0,r=this.entriesCount,n=this._sources.length;this.accumulate?this.contentBuffer.push(e):(this.bytesWritten+=e.data.length,i.prototype.push.call(this,{data:e.data,meta:{currentFile:this.currentFile,percent:r?(t+100*(r-n-1))/r:100}}))},s.prototype.openedSource=function(e){this.currentSourceOffset=this.bytesWritten,this.currentFile=e.file.name;var t=this.streamFiles&&!e.file.dir;if(t){var r=n(e,t,!1,this.currentSourceOffset,this.zipPlatform,this.encodeFileName);this.push({data:r.fileRecord,meta:{percent:0}})}else this.accumulate=!0},s.prototype.closedSource=function(e){this.accumulate=!1;var t=this.streamFiles&&!e.file.dir,r=n(e,t,!0,this.currentSourceOffset,this.zipPlatform,this.encodeFileName);if(this.dirRecords.push(r.dirRecord),t)this.push({data:function(e){return R.DATA_DESCRIPTOR+A(e.crc32,4)+A(e.compressedSize,4)+A(e.uncompressedSize,4)}(e),meta:{percent:100}});else for(this.push({data:r.fileRecord,meta:{percent:0}});this.contentBuffer.length;)this.push(this.contentBuffer.shift());this.currentFile=null},s.prototype.flush=function(){for(var e=this.bytesWritten,t=0;t<this.dirRecords.length;t++)this.push({data:this.dirRecords[t],meta:{percent:100}});var r=this.bytesWritten-e,n=function(e,t,r,n,i){var s=I.transformTo("string",i(n));return R.CENTRAL_DIRECTORY_END+"\0\0\0\0"+A(e,2)+A(e,2)+A(t,4)+A(r,4)+A(s.length,2)+s}(this.dirRecords.length,r,e,this.zipComment,this.encodeFileName);this.push({data:n,meta:{percent:100}})},s.prototype.prepareNextSource=function(){this.previous=this._sources.shift(),this.openedSource(this.previous.streamInfo),this.isPaused?this.previous.pause():this.previous.resume()},s.prototype.registerPrevious=function(e){this._sources.push(e);var t=this;return e.on("data",function(e){t.processChunk(e)}),e.on("end",function(){t.closedSource(t.previous.streamInfo),t._sources.length?t.prepareNextSource():t.end()}),e.on("error",function(e){t.error(e)}),this},s.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(!this.previous&&this._sources.length?(this.prepareNextSource(),!0):this.previous||this._sources.length||this.generatedError?void 0:(this.end(),!0))},s.prototype.error=function(e){var t=this._sources;if(!i.prototype.error.call(this,e))return!1;for(var r=0;r<t.length;r++)try{t[r].error(e)}catch(e){}return!0},s.prototype.lock=function(){i.prototype.lock.call(this);for(var e=this._sources,t=0;t<e.length;t++)e[t].lock()},t.exports=s},{"../crc32":4,"../signature":23,"../stream/GenericWorker":28,"../utf8":31,"../utils":32}],9:[function(e,t,r){"use strict";var u=e("../compressions"),n=e("./ZipFileWorker");r.generateWorker=function(e,a,t){var o=new n(a.streamFiles,t,a.platform,a.encodeFileName),h=0;try{e.forEach(function(e,t){h++;var r=function(e,t){var r=e||t,n=u[r];if(!n)throw new Error(r+" is not a valid compression method !");return n}(t.options.compression,a.compression),n=t.options.compressionOptions||a.compressionOptions||{},i=t.dir,s=t.date;t._compressWorker(r,n).withStreamInfo("file",{name:e,dir:i,date:s,comment:t.comment||"",unixPermissions:t.unixPermissions,dosPermissions:t.dosPermissions}).pipe(o)}),o.entriesCount=h}catch(e){o.error(e)}return o}},{"../compressions":3,"./ZipFileWorker":8}],10:[function(e,t,r){"use strict";function n(){if(!(this instanceof n))return new n;if(arguments.length)throw new Error("The constructor with parameters has been removed in JSZip 3.0, please check the upgrade guide.");this.files=Object.create(null),this.comment=null,this.root="",this.clone=function(){var e=new n;for(var t in this)"function"!=typeof this[t]&&(e[t]=this[t]);return e}}(n.prototype=e("./object")).loadAsync=e("./load"),n.support=e("./support"),n.defaults=e("./defaults"),n.version="3.10.1",n.loadAsync=function(e,t){return(new n).loadAsync(e,t)},n.external=e("./external"),t.exports=n},{"./defaults":5,"./external":6,"./load":11,"./object":15,"./support":30}],11:[function(e,t,r){"use strict";var u=e("./utils"),i=e("./external"),n=e("./utf8"),s=e("./zipEntries"),a=e("./stream/Crc32Probe"),l=e("./nodejsUtils");function f(n){return new i.Promise(function(e,t){var r=n.decompressed.getContentWorker().pipe(new a);r.on("error",function(e){t(e)}).on("end",function(){r.streamInfo.crc32!==n.decompressed.crc32?t(new Error("Corrupted zip : CRC32 mismatch")):e()}).resume()})}t.exports=function(e,o){var h=this;return o=u.extend(o||{},{base64:!1,checkCRC32:!1,optimizedBinaryString:!1,createFolders:!1,decodeFileName:n.utf8decode}),l.isNode&&l.isStream(e)?i.Promise.reject(new Error("JSZip can't accept a stream when loading a zip file.")):u.prepareContent("the loaded zip file",e,!0,o.optimizedBinaryString,o.base64).then(function(e){var t=new s(o);return t.load(e),t}).then(function(e){var t=[i.Promise.resolve(e)],r=e.files;if(o.checkCRC32)for(var n=0;n<r.length;n++)t.push(f(r[n]));return i.Promise.all(t)}).then(function(e){for(var t=e.shift(),r=t.files,n=0;n<r.length;n++){var i=r[n],s=i.fileNameStr,a=u.resolve(i.fileNameStr);h.file(a,i.decompressed,{binary:!0,optimizedBinaryString:!0,date:i.date,dir:i.dir,comment:i.fileCommentStr.length?i.fileCommentStr:null,unixPermissions:i.unixPermissions,dosPermissions:i.dosPermissions,createFolders:o.createFolders}),i.dir||(h.file(a).unsafeOriginalName=s)}return t.zipComment.length&&(h.comment=t.zipComment),h})}},{"./external":6,"./nodejsUtils":14,"./stream/Crc32Probe":25,"./utf8":31,"./utils":32,"./zipEntries":33}],12:[function(e,t,r){"use strict";var n=e("../utils"),i=e("../stream/GenericWorker");function s(e,t){i.call(this,"Nodejs stream input adapter for "+e),this._upstreamEnded=!1,this._bindStream(t)}n.inherits(s,i),s.prototype._bindStream=function(e){var t=this;(this._stream=e).pause(),e.on("data",function(e){t.push({data:e,meta:{percent:0}})}).on("error",function(e){t.isPaused?this.generatedError=e:t.error(e)}).on("end",function(){t.isPaused?t._upstreamEnded=!0:t.end()})},s.prototype.pause=function(){return!!i.prototype.pause.call(this)&&(this._stream.pause(),!0)},s.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(this._upstreamEnded?this.end():this._stream.resume(),!0)},t.exports=s},{"../stream/GenericWorker":28,"../utils":32}],13:[function(e,t,r){"use strict";var i=e("readable-stream").Readable;function n(e,t,r){i.call(this,t),this._helper=e;var n=this;e.on("data",function(e,t){n.push(e)||n._helper.pause(),r&&r(t)}).on("error",function(e){n.emit("error",e)}).on("end",function(){n.push(null)})}e("../utils").inherits(n,i),n.prototype._read=function(){this._helper.resume()},t.exports=n},{"../utils":32,"readable-stream":16}],14:[function(e,t,r){"use strict";t.exports={isNode:"undefined"!=typeof Buffer,newBufferFrom:function(e,t){if(Buffer.from&&Buffer.from!==Uint8Array.from)return Buffer.from(e,t);if("number"==typeof e)throw new Error('The "data" argument must not be a number');return new Buffer(e,t)},allocBuffer:function(e){if(Buffer.alloc)return Buffer.alloc(e);var t=new Buffer(e);return t.fill(0),t},isBuffer:function(e){return Buffer.isBuffer(e)},isStream:function(e){return e&&"function"==typeof e.on&&"function"==typeof e.pause&&"function"==typeof e.resume}}},{}],15:[function(e,t,r){"use strict";function s(e,t,r){var n,i=u.getTypeOf(t),s=u.extend(r||{},f);s.date=s.date||new Date,null!==s.compression&&(s.compression=s.compression.toUpperCase()),"string"==typeof s.unixPermissions&&(s.unixPermissions=parseInt(s.unixPermissions,8)),s.unixPermissions&&16384&s.unixPermissions&&(s.dir=!0),s.dosPermissions&&16&s.dosPermissions&&(s.dir=!0),s.dir&&(e=g(e)),s.createFolders&&(n=_(e))&&b.call(this,n,!0);var a="string"===i&&!1===s.binary&&!1===s.base64;r&&void 0!==r.binary||(s.binary=!a),(t instanceof c&&0===t.uncompressedSize||s.dir||!t||0===t.length)&&(s.base64=!1,s.binary=!0,t="",s.compression="STORE",i="string");var o=null;o=t instanceof c||t instanceof l?t:p.isNode&&p.isStream(t)?new m(e,t):u.prepareContent(e,t,s.binary,s.optimizedBinaryString,s.base64);var h=new d(e,o,s);this.files[e]=h}var i=e("./utf8"),u=e("./utils"),l=e("./stream/GenericWorker"),a=e("./stream/StreamHelper"),f=e("./defaults"),c=e("./compressedObject"),d=e("./zipObject"),o=e("./generate"),p=e("./nodejsUtils"),m=e("./nodejs/NodejsStreamInputAdapter"),_=function(e){"/"===e.slice(-1)&&(e=e.substring(0,e.length-1));var t=e.lastIndexOf("/");return 0<t?e.substring(0,t):""},g=function(e){return"/"!==e.slice(-1)&&(e+="/"),e},b=function(e,t){return t=void 0!==t?t:f.createFolders,e=g(e),this.files[e]||s.call(this,e,null,{dir:!0,createFolders:t}),this.files[e]};function h(e){return"[object RegExp]"===Object.prototype.toString.call(e)}var n={load:function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},forEach:function(e){var t,r,n;for(t in this.files)n=this.files[t],(r=t.slice(this.root.length,t.length))&&t.slice(0,this.root.length)===this.root&&e(r,n)},filter:function(r){var n=[];return this.forEach(function(e,t){r(e,t)&&n.push(t)}),n},file:function(e,t,r){if(1!==arguments.length)return e=this.root+e,s.call(this,e,t,r),this;if(h(e)){var n=e;return this.filter(function(e,t){return!t.dir&&n.test(e)})}var i=this.files[this.root+e];return i&&!i.dir?i:null},folder:function(r){if(!r)return this;if(h(r))return this.filter(function(e,t){return t.dir&&r.test(e)});var e=this.root+r,t=b.call(this,e),n=this.clone();return n.root=t.name,n},remove:function(r){r=this.root+r;var e=this.files[r];if(e||("/"!==r.slice(-1)&&(r+="/"),e=this.files[r]),e&&!e.dir)delete this.files[r];else for(var t=this.filter(function(e,t){return t.name.slice(0,r.length)===r}),n=0;n<t.length;n++)delete this.files[t[n].name];return this},generate:function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},generateInternalStream:function(e){var t,r={};try{if((r=u.extend(e||{},{streamFiles:!1,compression:"STORE",compressionOptions:null,type:"",platform:"DOS",comment:null,mimeType:"application/zip",encodeFileName:i.utf8encode})).type=r.type.toLowerCase(),r.compression=r.compression.toUpperCase(),"binarystring"===r.type&&(r.type="string"),!r.type)throw new Error("No output type specified.");u.checkSupport(r.type),"darwin"!==r.platform&&"freebsd"!==r.platform&&"linux"!==r.platform&&"sunos"!==r.platform||(r.platform="UNIX"),"win32"===r.platform&&(r.platform="DOS");var n=r.comment||this.comment||"";t=o.generateWorker(this,r,n)}catch(e){(t=new l("error")).error(e)}return new a(t,r.type||"string",r.mimeType)},generateAsync:function(e,t){return this.generateInternalStream(e).accumulate(t)},generateNodeStream:function(e,t){return(e=e||{}).type||(e.type="nodebuffer"),this.generateInternalStream(e).toNodejsStream(t)}};t.exports=n},{"./compressedObject":2,"./defaults":5,"./generate":9,"./nodejs/NodejsStreamInputAdapter":12,"./nodejsUtils":14,"./stream/GenericWorker":28,"./stream/StreamHelper":29,"./utf8":31,"./utils":32,"./zipObject":35}],16:[function(e,t,r){"use strict";t.exports=e("stream")},{stream:void 0}],17:[function(e,t,r){"use strict";var n=e("./DataReader");function i(e){n.call(this,e);for(var t=0;t<this.data.length;t++)e[t]=255&e[t]}e("../utils").inherits(i,n),i.prototype.byteAt=function(e){return this.data[this.zero+e]},i.prototype.lastIndexOfSignature=function(e){for(var t=e.charCodeAt(0),r=e.charCodeAt(1),n=e.charCodeAt(2),i=e.charCodeAt(3),s=this.length-4;0<=s;--s)if(this.data[s]===t&&this.data[s+1]===r&&this.data[s+2]===n&&this.data[s+3]===i)return s-this.zero;return-1},i.prototype.readAndCheckSignature=function(e){var t=e.charCodeAt(0),r=e.charCodeAt(1),n=e.charCodeAt(2),i=e.charCodeAt(3),s=this.readData(4);return t===s[0]&&r===s[1]&&n===s[2]&&i===s[3]},i.prototype.readData=function(e){if(this.checkOffset(e),0===e)return[];var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./DataReader":18}],18:[function(e,t,r){"use strict";var n=e("../utils");function i(e){this.data=e,this.length=e.length,this.index=0,this.zero=0}i.prototype={checkOffset:function(e){this.checkIndex(this.index+e)},checkIndex:function(e){if(this.length<this.zero+e||e<0)throw new Error("End of data reached (data length = "+this.length+", asked index = "+e+"). Corrupted zip ?")},setIndex:function(e){this.checkIndex(e),this.index=e},skip:function(e){this.setIndex(this.index+e)},byteAt:function(){},readInt:function(e){var t,r=0;for(this.checkOffset(e),t=this.index+e-1;t>=this.index;t--)r=(r<<8)+this.byteAt(t);return this.index+=e,r},readString:function(e){return n.transformTo("string",this.readData(e))},readData:function(){},lastIndexOfSignature:function(){},readAndCheckSignature:function(){},readDate:function(){var e=this.readInt(4);return new Date(Date.UTC(1980+(e>>25&127),(e>>21&15)-1,e>>16&31,e>>11&31,e>>5&63,(31&e)<<1))}},t.exports=i},{"../utils":32}],19:[function(e,t,r){"use strict";var n=e("./Uint8ArrayReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.readData=function(e){this.checkOffset(e);var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./Uint8ArrayReader":21}],20:[function(e,t,r){"use strict";var n=e("./DataReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.byteAt=function(e){return this.data.charCodeAt(this.zero+e)},i.prototype.lastIndexOfSignature=function(e){return this.data.lastIndexOf(e)-this.zero},i.prototype.readAndCheckSignature=function(e){return e===this.readData(4)},i.prototype.readData=function(e){this.checkOffset(e);var t=this.data.slice(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./DataReader":18}],21:[function(e,t,r){"use strict";var n=e("./ArrayReader");function i(e){n.call(this,e)}e("../utils").inherits(i,n),i.prototype.readData=function(e){if(this.checkOffset(e),0===e)return new Uint8Array(0);var t=this.data.subarray(this.zero+this.index,this.zero+this.index+e);return this.index+=e,t},t.exports=i},{"../utils":32,"./ArrayReader":17}],22:[function(e,t,r){"use strict";var n=e("../utils"),i=e("../support"),s=e("./ArrayReader"),a=e("./StringReader"),o=e("./NodeBufferReader"),h=e("./Uint8ArrayReader");t.exports=function(e){var t=n.getTypeOf(e);return n.checkSupport(t),"string"!==t||i.uint8array?"nodebuffer"===t?new o(e):i.uint8array?new h(n.transformTo("uint8array",e)):new s(n.transformTo("array",e)):new a(e)}},{"../support":30,"../utils":32,"./ArrayReader":17,"./NodeBufferReader":19,"./StringReader":20,"./Uint8ArrayReader":21}],23:[function(e,t,r){"use strict";r.LOCAL_FILE_HEADER="PK",r.CENTRAL_FILE_HEADER="PK",r.CENTRAL_DIRECTORY_END="PK",r.ZIP64_CENTRAL_DIRECTORY_LOCATOR="PK",r.ZIP64_CENTRAL_DIRECTORY_END="PK",r.DATA_DESCRIPTOR="PK\b"},{}],24:[function(e,t,r){"use strict";var n=e("./GenericWorker"),i=e("../utils");function s(e){n.call(this,"ConvertWorker to "+e),this.destType=e}i.inherits(s,n),s.prototype.processChunk=function(e){this.push({data:i.transformTo(this.destType,e.data),meta:e.meta})},t.exports=s},{"../utils":32,"./GenericWorker":28}],25:[function(e,t,r){"use strict";var n=e("./GenericWorker"),i=e("../crc32");function s(){n.call(this,"Crc32Probe"),this.withStreamInfo("crc32",0)}e("../utils").inherits(s,n),s.prototype.processChunk=function(e){this.streamInfo.crc32=i(e.data,this.streamInfo.crc32||0),this.push(e)},t.exports=s},{"../crc32":4,"../utils":32,"./GenericWorker":28}],26:[function(e,t,r){"use strict";var n=e("../utils"),i=e("./GenericWorker");function s(e){i.call(this,"DataLengthProbe for "+e),this.propName=e,this.withStreamInfo(e,0)}n.inherits(s,i),s.prototype.processChunk=function(e){if(e){var t=this.streamInfo[this.propName]||0;this.streamInfo[this.propName]=t+e.data.length}i.prototype.processChunk.call(this,e)},t.exports=s},{"../utils":32,"./GenericWorker":28}],27:[function(e,t,r){"use strict";var n=e("../utils"),i=e("./GenericWorker");function s(e){i.call(this,"DataWorker");var t=this;this.dataIsReady=!1,this.index=0,this.max=0,this.data=null,this.type="",this._tickScheduled=!1,e.then(function(e){t.dataIsReady=!0,t.data=e,t.max=e&&e.length||0,t.type=n.getTypeOf(e),t.isPaused||t._tickAndRepeat()},function(e){t.error(e)})}n.inherits(s,i),s.prototype.cleanUp=function(){i.prototype.cleanUp.call(this),this.data=null},s.prototype.resume=function(){return!!i.prototype.resume.call(this)&&(!this._tickScheduled&&this.dataIsReady&&(this._tickScheduled=!0,n.delay(this._tickAndRepeat,[],this)),!0)},s.prototype._tickAndRepeat=function(){this._tickScheduled=!1,this.isPaused||this.isFinished||(this._tick(),this.isFinished||(n.delay(this._tickAndRepeat,[],this),this._tickScheduled=!0))},s.prototype._tick=function(){if(this.isPaused||this.isFinished)return!1;var e=null,t=Math.min(this.max,this.index+16384);if(this.index>=this.max)return this.end();switch(this.type){case"string":e=this.data.substring(this.index,t);break;case"uint8array":e=this.data.subarray(this.index,t);break;case"array":case"nodebuffer":e=this.data.slice(this.index,t)}return this.index=t,this.push({data:e,meta:{percent:this.max?this.index/this.max*100:0}})},t.exports=s},{"../utils":32,"./GenericWorker":28}],28:[function(e,t,r){"use strict";function n(e){this.name=e||"default",this.streamInfo={},this.generatedError=null,this.extraStreamInfo={},this.isPaused=!0,this.isFinished=!1,this.isLocked=!1,this._listeners={data:[],end:[],error:[]},this.previous=null}n.prototype={push:function(e){this.emit("data",e)},end:function(){if(this.isFinished)return!1;this.flush();try{this.emit("end"),this.cleanUp(),this.isFinished=!0}catch(e){this.emit("error",e)}return!0},error:function(e){return!this.isFinished&&(this.isPaused?this.generatedError=e:(this.isFinished=!0,this.emit("error",e),this.previous&&this.previous.error(e),this.cleanUp()),!0)},on:function(e,t){return this._listeners[e].push(t),this},cleanUp:function(){this.streamInfo=this.generatedError=this.extraStreamInfo=null,this._listeners=[]},emit:function(e,t){if(this._listeners[e])for(var r=0;r<this._listeners[e].length;r++)this._listeners[e][r].call(this,t)},pipe:function(e){return e.registerPrevious(this)},registerPrevious:function(e){if(this.isLocked)throw new Error("The stream '"+this+"' has already been used.");this.streamInfo=e.streamInfo,this.mergeStreamInfo(),this.previous=e;var t=this;return e.on("data",function(e){t.processChunk(e)}),e.on("end",function(){t.end()}),e.on("error",function(e){t.error(e)}),this},pause:function(){return!this.isPaused&&!this.isFinished&&(this.isPaused=!0,this.previous&&this.previous.pause(),!0)},resume:function(){if(!this.isPaused||this.isFinished)return!1;var e=this.isPaused=!1;return this.generatedError&&(this.error(this.generatedError),e=!0),this.previous&&this.previous.resume(),!e},flush:function(){},processChunk:function(e){this.push(e)},withStreamInfo:function(e,t){return this.extraStreamInfo[e]=t,this.mergeStreamInfo(),this},mergeStreamInfo:function(){for(var e in this.extraStreamInfo)Object.prototype.hasOwnProperty.call(this.extraStreamInfo,e)&&(this.streamInfo[e]=this.extraStreamInfo[e])},lock:function(){if(this.isLocked)throw new Error("The stream '"+this+"' has already been used.");this.isLocked=!0,this.previous&&this.previous.lock()},toString:function(){var e="Worker "+this.name;return this.previous?this.previous+" -> "+e:e}},t.exports=n},{}],29:[function(e,t,r){"use strict";var h=e("../utils"),i=e("./ConvertWorker"),s=e("./GenericWorker"),u=e("../base64"),n=e("../support"),a=e("../external"),o=null;if(n.nodestream)try{o=e("../nodejs/NodejsStreamOutputAdapter")}catch(e){}function l(e,o){return new a.Promise(function(t,r){var n=[],i=e._internalType,s=e._outputType,a=e._mimeType;e.on("data",function(e,t){n.push(e),o&&o(t)}).on("error",function(e){n=[],r(e)}).on("end",function(){try{var e=function(e,t,r){switch(e){case"blob":return h.newBlob(h.transformTo("arraybuffer",t),r);case"base64":return u.encode(t);default:return h.transformTo(e,t)}}(s,function(e,t){var r,n=0,i=null,s=0;for(r=0;r<t.length;r++)s+=t[r].length;switch(e){case"string":return t.join("");case"array":return Array.prototype.concat.apply([],t);case"uint8array":for(i=new Uint8Array(s),r=0;r<t.length;r++)i.set(t[r],n),n+=t[r].length;return i;case"nodebuffer":return Buffer.concat(t);default:throw new Error("concat : unsupported type '"+e+"'")}}(i,n),a);t(e)}catch(e){r(e)}n=[]}).resume()})}function f(e,t,r){var n=t;switch(t){case"blob":case"arraybuffer":n="uint8array";break;case"base64":n="string"}try{this._internalType=n,this._outputType=t,this._mimeType=r,h.checkSupport(n),this._worker=e.pipe(new i(n)),e.lock()}catch(e){this._worker=new s("error"),this._worker.error(e)}}f.prototype={accumulate:function(e){return l(this,e)},on:function(e,t){var r=this;return"data"===e?this._worker.on(e,function(e){t.call(r,e.data,e.meta)}):this._worker.on(e,function(){h.delay(t,arguments,r)}),this},resume:function(){return h.delay(this._worker.resume,[],this._worker),this},pause:function(){return this._worker.pause(),this},toNodejsStream:function(e){if(h.checkSupport("nodestream"),"nodebuffer"!==this._outputType)throw new Error(this._outputType+" is not supported by this method");return new o(this,{objectMode:"nodebuffer"!==this._outputType},e)}},t.exports=f},{"../base64":1,"../external":6,"../nodejs/NodejsStreamOutputAdapter":13,"../support":30,"../utils":32,"./ConvertWorker":24,"./GenericWorker":28}],30:[function(e,t,r){"use strict";if(r.base64=!0,r.array=!0,r.string=!0,r.arraybuffer="undefined"!=typeof ArrayBuffer&&"undefined"!=typeof Uint8Array,r.nodebuffer="undefined"!=typeof Buffer,r.uint8array="undefined"!=typeof Uint8Array,"undefined"==typeof ArrayBuffer)r.blob=!1;else{var n=new ArrayBuffer(0);try{r.blob=0===new Blob([n],{type:"application/zip"}).size}catch(e){try{var i=new(self.BlobBuilder||self.WebKitBlobBuilder||self.MozBlobBuilder||self.MSBlobBuilder);i.append(n),r.blob=0===i.getBlob("application/zip").size}catch(e){r.blob=!1}}}try{r.nodestream=!!e("readable-stream").Readable}catch(e){r.nodestream=!1}},{"readable-stream":16}],31:[function(e,t,s){"use strict";for(var o=e("./utils"),h=e("./support"),r=e("./nodejsUtils"),n=e("./stream/GenericWorker"),u=new Array(256),i=0;i<256;i++)u[i]=252<=i?6:248<=i?5:240<=i?4:224<=i?3:192<=i?2:1;u[254]=u[254]=1;function a(){n.call(this,"utf-8 decode"),this.leftOver=null}function l(){n.call(this,"utf-8 encode")}s.utf8encode=function(e){return h.nodebuffer?r.newBufferFrom(e,"utf-8"):function(e){var t,r,n,i,s,a=e.length,o=0;for(i=0;i<a;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),o+=r<128?1:r<2048?2:r<65536?3:4;for(t=h.uint8array?new Uint8Array(o):new Array(o),i=s=0;s<o;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),r<128?t[s++]=r:(r<2048?t[s++]=192|r>>>6:(r<65536?t[s++]=224|r>>>12:(t[s++]=240|r>>>18,t[s++]=128|r>>>12&63),t[s++]=128|r>>>6&63),t[s++]=128|63&r);return t}(e)},s.utf8decode=function(e){return h.nodebuffer?o.transformTo("nodebuffer",e).toString("utf-8"):function(e){var t,r,n,i,s=e.length,a=new Array(2*s);for(t=r=0;t<s;)if((n=e[t++])<128)a[r++]=n;else if(4<(i=u[n]))a[r++]=65533,t+=i-1;else{for(n&=2===i?31:3===i?15:7;1<i&&t<s;)n=n<<6|63&e[t++],i--;1<i?a[r++]=65533:n<65536?a[r++]=n:(n-=65536,a[r++]=55296|n>>10&1023,a[r++]=56320|1023&n)}return a.length!==r&&(a.subarray?a=a.subarray(0,r):a.length=r),o.applyFromCharCode(a)}(e=o.transformTo(h.uint8array?"uint8array":"array",e))},o.inherits(a,n),a.prototype.processChunk=function(e){var t=o.transformTo(h.uint8array?"uint8array":"array",e.data);if(this.leftOver&&this.leftOver.length){if(h.uint8array){var r=t;(t=new Uint8Array(r.length+this.leftOver.length)).set(this.leftOver,0),t.set(r,this.leftOver.length)}else t=this.leftOver.concat(t);this.leftOver=null}var n=function(e,t){var r;for((t=t||e.length)>e.length&&(t=e.length),r=t-1;0<=r&&128==(192&e[r]);)r--;return r<0?t:0===r?t:r+u[e[r]]>t?r:t}(t),i=t;n!==t.length&&(h.uint8array?(i=t.subarray(0,n),this.leftOver=t.subarray(n,t.length)):(i=t.slice(0,n),this.leftOver=t.slice(n,t.length))),this.push({data:s.utf8decode(i),meta:e.meta})},a.prototype.flush=function(){this.leftOver&&this.leftOver.length&&(this.push({data:s.utf8decode(this.leftOver),meta:{}}),this.leftOver=null)},s.Utf8DecodeWorker=a,o.inherits(l,n),l.prototype.processChunk=function(e){this.push({data:s.utf8encode(e.data),meta:e.meta})},s.Utf8EncodeWorker=l},{"./nodejsUtils":14,"./stream/GenericWorker":28,"./support":30,"./utils":32}],32:[function(e,t,a){"use strict";var o=e("./support"),h=e("./base64"),r=e("./nodejsUtils"),u=e("./external");function n(e){return e}function l(e,t){for(var r=0;r<e.length;++r)t[r]=255&e.charCodeAt(r);return t}e("setimmediate"),a.newBlob=function(t,r){a.checkSupport("blob");try{return new Blob([t],{type:r})}catch(e){try{var n=new(self.BlobBuilder||self.WebKitBlobBuilder||self.MozBlobBuilder||self.MSBlobBuilder);return n.append(t),n.getBlob(r)}catch(e){throw new Error("Bug : can't construct the Blob.")}}};var i={stringifyByChunk:function(e,t,r){var n=[],i=0,s=e.length;if(s<=r)return String.fromCharCode.apply(null,e);for(;i<s;)"array"===t||"nodebuffer"===t?n.push(String.fromCharCode.apply(null,e.slice(i,Math.min(i+r,s)))):n.push(String.fromCharCode.apply(null,e.subarray(i,Math.min(i+r,s)))),i+=r;return n.join("")},stringifyByChar:function(e){for(var t="",r=0;r<e.length;r++)t+=String.fromCharCode(e[r]);return t},applyCanBeUsed:{uint8array:function(){try{return o.uint8array&&1===String.fromCharCode.apply(null,new Uint8Array(1)).length}catch(e){return!1}}(),nodebuffer:function(){try{return o.nodebuffer&&1===String.fromCharCode.apply(null,r.allocBuffer(1)).length}catch(e){return!1}}()}};function s(e){var t=65536,r=a.getTypeOf(e),n=!0;if("uint8array"===r?n=i.applyCanBeUsed.uint8array:"nodebuffer"===r&&(n=i.applyCanBeUsed.nodebuffer),n)for(;1<t;)try{return i.stringifyByChunk(e,r,t)}catch(e){t=Math.floor(t/2)}return i.stringifyByChar(e)}function f(e,t){for(var r=0;r<e.length;r++)t[r]=e[r];return t}a.applyFromCharCode=s;var c={};c.string={string:n,array:function(e){return l(e,new Array(e.length))},arraybuffer:function(e){return c.string.uint8array(e).buffer},uint8array:function(e){return l(e,new Uint8Array(e.length))},nodebuffer:function(e){return l(e,r.allocBuffer(e.length))}},c.array={string:s,array:n,arraybuffer:function(e){return new Uint8Array(e).buffer},uint8array:function(e){return new Uint8Array(e)},nodebuffer:function(e){return r.newBufferFrom(e)}},c.arraybuffer={string:function(e){return s(new Uint8Array(e))},array:function(e){return f(new Uint8Array(e),new Array(e.byteLength))},arraybuffer:n,uint8array:function(e){return new Uint8Array(e)},nodebuffer:function(e){return r.newBufferFrom(new Uint8Array(e))}},c.uint8array={string:s,array:function(e){return f(e,new Array(e.length))},arraybuffer:function(e){return e.buffer},uint8array:n,nodebuffer:function(e){return r.newBufferFrom(e)}},c.nodebuffer={string:s,array:function(e){return f(e,new Array(e.length))},arraybuffer:function(e){return c.nodebuffer.uint8array(e).buffer},uint8array:function(e){return f(e,new Uint8Array(e.length))},nodebuffer:n},a.transformTo=function(e,t){if(t=t||"",!e)return t;a.checkSupport(e);var r=a.getTypeOf(t);return c[r][e](t)},a.resolve=function(e){for(var t=e.split("/"),r=[],n=0;n<t.length;n++){var i=t[n];"."===i||""===i&&0!==n&&n!==t.length-1||(".."===i?r.pop():r.push(i))}return r.join("/")},a.getTypeOf=function(e){return"string"==typeof e?"string":"[object Array]"===Object.prototype.toString.call(e)?"array":o.nodebuffer&&r.isBuffer(e)?"nodebuffer":o.uint8array&&e instanceof Uint8Array?"uint8array":o.arraybuffer&&e instanceof ArrayBuffer?"arraybuffer":void 0},a.checkSupport=function(e){if(!o[e.toLowerCase()])throw new Error(e+" is not supported by this platform")},a.MAX_VALUE_16BITS=65535,a.MAX_VALUE_32BITS=-1,a.pretty=function(e){var t,r,n="";for(r=0;r<(e||"").length;r++)n+="\\x"+((t=e.charCodeAt(r))<16?"0":"")+t.toString(16).toUpperCase();return n},a.delay=function(e,t,r){setImmediate(function(){e.apply(r||null,t||[])})},a.inherits=function(e,t){function r(){}r.prototype=t.prototype,e.prototype=new r},a.extend=function(){var e,t,r={};for(e=0;e<arguments.length;e++)for(t in arguments[e])Object.prototype.hasOwnProperty.call(arguments[e],t)&&void 0===r[t]&&(r[t]=arguments[e][t]);return r},a.prepareContent=function(r,e,n,i,s){return u.Promise.resolve(e).then(function(n){return o.blob&&(n instanceof Blob||-1!==["[object File]","[object Blob]"].indexOf(Object.prototype.toString.call(n)))&&"undefined"!=typeof FileReader?new u.Promise(function(t,r){var e=new FileReader;e.onload=function(e){t(e.target.result)},e.onerror=function(e){r(e.target.error)},e.readAsArrayBuffer(n)}):n}).then(function(e){var t=a.getTypeOf(e);return t?("arraybuffer"===t?e=a.transformTo("uint8array",e):"string"===t&&(s?e=h.decode(e):n&&!0!==i&&(e=function(e){return l(e,o.uint8array?new Uint8Array(e.length):new Array(e.length))}(e))),e):u.Promise.reject(new Error("Can't read the data of '"+r+"'. Is it in a supported JavaScript type (String, Blob, ArrayBuffer, etc) ?"))})}},{"./base64":1,"./external":6,"./nodejsUtils":14,"./support":30,setimmediate:54}],33:[function(e,t,r){"use strict";var n=e("./reader/readerFor"),i=e("./utils"),s=e("./signature"),a=e("./zipEntry"),o=e("./support");function h(e){this.files=[],this.loadOptions=e}h.prototype={checkSignature:function(e){if(!this.reader.readAndCheckSignature(e)){this.reader.index-=4;var t=this.reader.readString(4);throw new Error("Corrupted zip or bug: unexpected signature ("+i.pretty(t)+", expected "+i.pretty(e)+")")}},isSignature:function(e,t){var r=this.reader.index;this.reader.setIndex(e);var n=this.reader.readString(4)===t;return this.reader.setIndex(r),n},readBlockEndOfCentral:function(){this.diskNumber=this.reader.readInt(2),this.diskWithCentralDirStart=this.reader.readInt(2),this.centralDirRecordsOnThisDisk=this.reader.readInt(2),this.centralDirRecords=this.reader.readInt(2),this.centralDirSize=this.reader.readInt(4),this.centralDirOffset=this.reader.readInt(4),this.zipCommentLength=this.reader.readInt(2);var e=this.reader.readData(this.zipCommentLength),t=o.uint8array?"uint8array":"array",r=i.transformTo(t,e);this.zipComment=this.loadOptions.decodeFileName(r)},readBlockZip64EndOfCentral:function(){this.zip64EndOfCentralSize=this.reader.readInt(8),this.reader.skip(4),this.diskNumber=this.reader.readInt(4),this.diskWithCentralDirStart=this.reader.readInt(4),this.centralDirRecordsOnThisDisk=this.reader.readInt(8),this.centralDirRecords=this.reader.readInt(8),this.centralDirSize=this.reader.readInt(8),this.centralDirOffset=this.reader.readInt(8),this.zip64ExtensibleData={};for(var e,t,r,n=this.zip64EndOfCentralSize-44;0<n;)e=this.reader.readInt(2),t=this.reader.readInt(4),r=this.reader.readData(t),this.zip64ExtensibleData[e]={id:e,length:t,value:r}},readBlockZip64EndOfCentralLocator:function(){if(this.diskWithZip64CentralDirStart=this.reader.readInt(4),this.relativeOffsetEndOfZip64CentralDir=this.reader.readInt(8),this.disksCount=this.reader.readInt(4),1<this.disksCount)throw new Error("Multi-volumes zip are not supported")},readLocalFiles:function(){var e,t;for(e=0;e<this.files.length;e++)t=this.files[e],this.reader.setIndex(t.localHeaderOffset),this.checkSignature(s.LOCAL_FILE_HEADER),t.readLocalPart(this.reader),t.handleUTF8(),t.processAttributes()},readCentralDir:function(){var e;for(this.reader.setIndex(this.centralDirOffset);this.reader.readAndCheckSignature(s.CENTRAL_FILE_HEADER);)(e=new a({zip64:this.zip64},this.loadOptions)).readCentralPart(this.reader),this.files.push(e);if(this.centralDirRecords!==this.files.length&&0!==this.centralDirRecords&&0===this.files.length)throw new Error("Corrupted zip or bug: expected "+this.centralDirRecords+" records in central dir, got "+this.files.length)},readEndOfCentral:function(){var e=this.reader.lastIndexOfSignature(s.CENTRAL_DIRECTORY_END);if(e<0)throw!this.isSignature(0,s.LOCAL_FILE_HEADER)?new Error("Can't find end of central directory : is this a zip file ? If it is, see https://stuk.github.io/jszip/documentation/howto/read_zip.html"):new Error("Corrupted zip: can't find end of central directory");this.reader.setIndex(e);var t=e;if(this.checkSignature(s.CENTRAL_DIRECTORY_END),this.readBlockEndOfCentral(),this.diskNumber===i.MAX_VALUE_16BITS||this.diskWithCentralDirStart===i.MAX_VALUE_16BITS||this.centralDirRecordsOnThisDisk===i.MAX_VALUE_16BITS||this.centralDirRecords===i.MAX_VALUE_16BITS||this.centralDirSize===i.MAX_VALUE_32BITS||this.centralDirOffset===i.MAX_VALUE_32BITS){if(this.zip64=!0,(e=this.reader.lastIndexOfSignature(s.ZIP64_CENTRAL_DIRECTORY_LOCATOR))<0)throw new Error("Corrupted zip: can't find the ZIP64 end of central directory locator");if(this.reader.setIndex(e),this.checkSignature(s.ZIP64_CENTRAL_DIRECTORY_LOCATOR),this.readBlockZip64EndOfCentralLocator(),!this.isSignature(this.relativeOffsetEndOfZip64CentralDir,s.ZIP64_CENTRAL_DIRECTORY_END)&&(this.relativeOffsetEndOfZip64CentralDir=this.reader.lastIndexOfSignature(s.ZIP64_CENTRAL_DIRECTORY_END),this.relativeOffsetEndOfZip64CentralDir<0))throw new Error("Corrupted zip: can't find the ZIP64 end of central directory");this.reader.setIndex(this.relativeOffsetEndOfZip64CentralDir),this.checkSignature(s.ZIP64_CENTRAL_DIRECTORY_END),this.readBlockZip64EndOfCentral()}var r=this.centralDirOffset+this.centralDirSize;this.zip64&&(r+=20,r+=12+this.zip64EndOfCentralSize);var n=t-r;if(0<n)this.isSignature(t,s.CENTRAL_FILE_HEADER)||(this.reader.zero=n);else if(n<0)throw new Error("Corrupted zip: missing "+Math.abs(n)+" bytes.")},prepareReader:function(e){this.reader=n(e)},load:function(e){this.prepareReader(e),this.readEndOfCentral(),this.readCentralDir(),this.readLocalFiles()}},t.exports=h},{"./reader/readerFor":22,"./signature":23,"./support":30,"./utils":32,"./zipEntry":34}],34:[function(e,t,r){"use strict";var n=e("./reader/readerFor"),s=e("./utils"),i=e("./compressedObject"),a=e("./crc32"),o=e("./utf8"),h=e("./compressions"),u=e("./support");function l(e,t){this.options=e,this.loadOptions=t}l.prototype={isEncrypted:function(){return 1==(1&this.bitFlag)},useUTF8:function(){return 2048==(2048&this.bitFlag)},readLocalPart:function(e){var t,r;if(e.skip(22),this.fileNameLength=e.readInt(2),r=e.readInt(2),this.fileName=e.readData(this.fileNameLength),e.skip(r),-1===this.compressedSize||-1===this.uncompressedSize)throw new Error("Bug or corrupted zip : didn't get enough information from the central directory (compressedSize === -1 || uncompressedSize === -1)");if(null===(t=function(e){for(var t in h)if(Object.prototype.hasOwnProperty.call(h,t)&&h[t].magic===e)return h[t];return null}(this.compressionMethod)))throw new Error("Corrupted zip : compression "+s.pretty(this.compressionMethod)+" unknown (inner file : "+s.transformTo("string",this.fileName)+")");this.decompressed=new i(this.compressedSize,this.uncompressedSize,this.crc32,t,e.readData(this.compressedSize))},readCentralPart:function(e){this.versionMadeBy=e.readInt(2),e.skip(2),this.bitFlag=e.readInt(2),this.compressionMethod=e.readString(2),this.date=e.readDate(),this.crc32=e.readInt(4),this.compressedSize=e.readInt(4),this.uncompressedSize=e.readInt(4);var t=e.readInt(2);if(this.extraFieldsLength=e.readInt(2),this.fileCommentLength=e.readInt(2),this.diskNumberStart=e.readInt(2),this.internalFileAttributes=e.readInt(2),this.externalFileAttributes=e.readInt(4),this.localHeaderOffset=e.readInt(4),this.isEncrypted())throw new Error("Encrypted zip are not supported");e.skip(t),this.readExtraFields(e),this.parseZIP64ExtraField(e),this.fileComment=e.readData(this.fileCommentLength)},processAttributes:function(){this.unixPermissions=null,this.dosPermissions=null;var e=this.versionMadeBy>>8;this.dir=!!(16&this.externalFileAttributes),0==e&&(this.dosPermissions=63&this.externalFileAttributes),3==e&&(this.unixPermissions=this.externalFileAttributes>>16&65535),this.dir||"/"!==this.fileNameStr.slice(-1)||(this.dir=!0)},parseZIP64ExtraField:function(){if(this.extraFields[1]){var e=n(this.extraFields[1].value);this.uncompressedSize===s.MAX_VALUE_32BITS&&(this.uncompressedSize=e.readInt(8)),this.compressedSize===s.MAX_VALUE_32BITS&&(this.compressedSize=e.readInt(8)),this.localHeaderOffset===s.MAX_VALUE_32BITS&&(this.localHeaderOffset=e.readInt(8)),this.diskNumberStart===s.MAX_VALUE_32BITS&&(this.diskNumberStart=e.readInt(4))}},readExtraFields:function(e){var t,r,n,i=e.index+this.extraFieldsLength;for(this.extraFields||(this.extraFields={});e.index+4<i;)t=e.readInt(2),r=e.readInt(2),n=e.readData(r),this.extraFields[t]={id:t,length:r,value:n};e.setIndex(i)},handleUTF8:function(){var e=u.uint8array?"uint8array":"array";if(this.useUTF8())this.fileNameStr=o.utf8decode(this.fileName),this.fileCommentStr=o.utf8decode(this.fileComment);else{var t=this.findExtraFieldUnicodePath();if(null!==t)this.fileNameStr=t;else{var r=s.transformTo(e,this.fileName);this.fileNameStr=this.loadOptions.decodeFileName(r)}var n=this.findExtraFieldUnicodeComment();if(null!==n)this.fileCommentStr=n;else{var i=s.transformTo(e,this.fileComment);this.fileCommentStr=this.loadOptions.decodeFileName(i)}}},findExtraFieldUnicodePath:function(){var e=this.extraFields[28789];if(e){var t=n(e.value);return 1!==t.readInt(1)?null:a(this.fileName)!==t.readInt(4)?null:o.utf8decode(t.readData(e.length-5))}return null},findExtraFieldUnicodeComment:function(){var e=this.extraFields[25461];if(e){var t=n(e.value);return 1!==t.readInt(1)?null:a(this.fileComment)!==t.readInt(4)?null:o.utf8decode(t.readData(e.length-5))}return null}},t.exports=l},{"./compressedObject":2,"./compressions":3,"./crc32":4,"./reader/readerFor":22,"./support":30,"./utf8":31,"./utils":32}],35:[function(e,t,r){"use strict";function n(e,t,r){this.name=e,this.dir=r.dir,this.date=r.date,this.comment=r.comment,this.unixPermissions=r.unixPermissions,this.dosPermissions=r.dosPermissions,this._data=t,this._dataBinary=r.binary,this.options={compression:r.compression,compressionOptions:r.compressionOptions}}var s=e("./stream/StreamHelper"),i=e("./stream/DataWorker"),a=e("./utf8"),o=e("./compressedObject"),h=e("./stream/GenericWorker");n.prototype={internalStream:function(e){var t=null,r="string";try{if(!e)throw new Error("No output type specified.");var n="string"===(r=e.toLowerCase())||"text"===r;"binarystring"!==r&&"text"!==r||(r="string"),t=this._decompressWorker();var i=!this._dataBinary;i&&!n&&(t=t.pipe(new a.Utf8EncodeWorker)),!i&&n&&(t=t.pipe(new a.Utf8DecodeWorker))}catch(e){(t=new h("error")).error(e)}return new s(t,r,"")},async:function(e,t){return this.internalStream(e).accumulate(t)},nodeStream:function(e,t){return this.internalStream(e||"nodebuffer").toNodejsStream(t)},_compressWorker:function(e,t){if(this._data instanceof o&&this._data.compression.magic===e.magic)return this._data.getCompressedWorker();var r=this._decompressWorker();return this._dataBinary||(r=r.pipe(new a.Utf8EncodeWorker)),o.createWorkerFrom(r,e,t)},_decompressWorker:function(){return this._data instanceof o?this._data.getContentWorker():this._data instanceof h?this._data:new i(this._data)}};for(var u=["asText","asBinary","asNodeBuffer","asUint8Array","asArrayBuffer"],l=function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},f=0;f<u.length;f++)n.prototype[u[f]]=l;t.exports=n},{"./compressedObject":2,"./stream/DataWorker":27,"./stream/GenericWorker":28,"./stream/StreamHelper":29,"./utf8":31}],36:[function(e,l,t){(function(t){"use strict";var r,n,e=t.MutationObserver||t.WebKitMutationObserver;if(e){var i=0,s=new e(u),a=t.document.createTextNode("");s.observe(a,{characterData:!0}),r=function(){a.data=i=++i%2}}else if(t.setImmediate||void 0===t.MessageChannel)r="document"in t&&"onreadystatechange"in t.document.createElement("script")?function(){var e=t.document.createElement("script");e.onreadystatechange=function(){u(),e.onreadystatechange=null,e.parentNode.removeChild(e),e=null},t.document.documentElement.appendChild(e)}:function(){setTimeout(u,0)};else{var o=new t.MessageChannel;o.port1.onmessage=u,r=function(){o.port2.postMessage(0)}}var h=[];function u(){var e,t;n=!0;for(var r=h.length;r;){for(t=h,h=[],e=-1;++e<r;)t[e]();r=h.length}n=!1}l.exports=function(e){1!==h.push(e)||n||r()}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],37:[function(e,t,r){"use strict";var i=e("immediate");function u(){}var l={},s=["REJECTED"],a=["FULFILLED"],n=["PENDING"];function o(e){if("function"!=typeof e)throw new TypeError("resolver must be a function");this.state=n,this.queue=[],this.outcome=void 0,e!==u&&d(this,e)}function h(e,t,r){this.promise=e,"function"==typeof t&&(this.onFulfilled=t,this.callFulfilled=this.otherCallFulfilled),"function"==typeof r&&(this.onRejected=r,this.callRejected=this.otherCallRejected)}function f(t,r,n){i(function(){var e;try{e=r(n)}catch(e){return l.reject(t,e)}e===t?l.reject(t,new TypeError("Cannot resolve promise with itself")):l.resolve(t,e)})}function c(e){var t=e&&e.then;if(e&&("object"==typeof e||"function"==typeof e)&&"function"==typeof t)return function(){t.apply(e,arguments)}}function d(t,e){var r=!1;function n(e){r||(r=!0,l.reject(t,e))}function i(e){r||(r=!0,l.resolve(t,e))}var s=p(function(){e(i,n)});"error"===s.status&&n(s.value)}function p(e,t){var r={};try{r.value=e(t),r.status="success"}catch(e){r.status="error",r.value=e}return r}(t.exports=o).prototype.finally=function(t){if("function"!=typeof t)return this;var r=this.constructor;return this.then(function(e){return r.resolve(t()).then(function(){return e})},function(e){return r.resolve(t()).then(function(){throw e})})},o.prototype.catch=function(e){return this.then(null,e)},o.prototype.then=function(e,t){if("function"!=typeof e&&this.state===a||"function"!=typeof t&&this.state===s)return this;var r=new this.constructor(u);this.state!==n?f(r,this.state===a?e:t,this.outcome):this.queue.push(new h(r,e,t));return r},h.prototype.callFulfilled=function(e){l.resolve(this.promise,e)},h.prototype.otherCallFulfilled=function(e){f(this.promise,this.onFulfilled,e)},h.prototype.callRejected=function(e){l.reject(this.promise,e)},h.prototype.otherCallRejected=function(e){f(this.promise,this.onRejected,e)},l.resolve=function(e,t){var r=p(c,t);if("error"===r.status)return l.reject(e,r.value);var n=r.value;if(n)d(e,n);else{e.state=a,e.outcome=t;for(var i=-1,s=e.queue.length;++i<s;)e.queue[i].callFulfilled(t)}return e},l.reject=function(e,t){e.state=s,e.outcome=t;for(var r=-1,n=e.queue.length;++r<n;)e.queue[r].callRejected(t);return e},o.resolve=function(e){if(e instanceof this)return e;return l.resolve(new this(u),e)},o.reject=function(e){var t=new this(u);return l.reject(t,e)},o.all=function(e){var r=this;if("[object Array]"!==Object.prototype.toString.call(e))return this.reject(new TypeError("must be an array"));var n=e.length,i=!1;if(!n)return this.resolve([]);var s=new Array(n),a=0,t=-1,o=new this(u);for(;++t<n;)h(e[t],t);return o;function h(e,t){r.resolve(e).then(function(e){s[t]=e,++a!==n||i||(i=!0,l.resolve(o,s))},function(e){i||(i=!0,l.reject(o,e))})}},o.race=function(e){var t=this;if("[object Array]"!==Object.prototype.toString.call(e))return this.reject(new TypeError("must be an array"));var r=e.length,n=!1;if(!r)return this.resolve([]);var i=-1,s=new this(u);for(;++i<r;)a=e[i],t.resolve(a).then(function(e){n||(n=!0,l.resolve(s,e))},function(e){n||(n=!0,l.reject(s,e))});var a;return s}},{immediate:36}],38:[function(e,t,r){"use strict";var n={};(0,e("./lib/utils/common").assign)(n,e("./lib/deflate"),e("./lib/inflate"),e("./lib/zlib/constants")),t.exports=n},{"./lib/deflate":39,"./lib/inflate":40,"./lib/utils/common":41,"./lib/zlib/constants":44}],39:[function(e,t,r){"use strict";var a=e("./zlib/deflate"),o=e("./utils/common"),h=e("./utils/strings"),i=e("./zlib/messages"),s=e("./zlib/zstream"),u=Object.prototype.toString,l=0,f=-1,c=0,d=8;function p(e){if(!(this instanceof p))return new p(e);this.options=o.assign({level:f,method:d,chunkSize:16384,windowBits:15,memLevel:8,strategy:c,to:""},e||{});var t=this.options;t.raw&&0<t.windowBits?t.windowBits=-t.windowBits:t.gzip&&0<t.windowBits&&t.windowBits<16&&(t.windowBits+=16),this.err=0,this.msg="",this.ended=!1,this.chunks=[],this.strm=new s,this.strm.avail_out=0;var r=a.deflateInit2(this.strm,t.level,t.method,t.windowBits,t.memLevel,t.strategy);if(r!==l)throw new Error(i[r]);if(t.header&&a.deflateSetHeader(this.strm,t.header),t.dictionary){var n;if(n="string"==typeof t.dictionary?h.string2buf(t.dictionary):"[object ArrayBuffer]"===u.call(t.dictionary)?new Uint8Array(t.dictionary):t.dictionary,(r=a.deflateSetDictionary(this.strm,n))!==l)throw new Error(i[r]);this._dict_set=!0}}function n(e,t){var r=new p(t);if(r.push(e,!0),r.err)throw r.msg||i[r.err];return r.result}p.prototype.push=function(e,t){var r,n,i=this.strm,s=this.options.chunkSize;if(this.ended)return!1;n=t===~~t?t:!0===t?4:0,"string"==typeof e?i.input=h.string2buf(e):"[object ArrayBuffer]"===u.call(e)?i.input=new Uint8Array(e):i.input=e,i.next_in=0,i.avail_in=i.input.length;do{if(0===i.avail_out&&(i.output=new o.Buf8(s),i.next_out=0,i.avail_out=s),1!==(r=a.deflate(i,n))&&r!==l)return this.onEnd(r),!(this.ended=!0);0!==i.avail_out&&(0!==i.avail_in||4!==n&&2!==n)||("string"===this.options.to?this.onData(h.buf2binstring(o.shrinkBuf(i.output,i.next_out))):this.onData(o.shrinkBuf(i.output,i.next_out)))}while((0<i.avail_in||0===i.avail_out)&&1!==r);return 4===n?(r=a.deflateEnd(this.strm),this.onEnd(r),this.ended=!0,r===l):2!==n||(this.onEnd(l),!(i.avail_out=0))},p.prototype.onData=function(e){this.chunks.push(e)},p.prototype.onEnd=function(e){e===l&&("string"===this.options.to?this.result=this.chunks.join(""):this.result=o.flattenChunks(this.chunks)),this.chunks=[],this.err=e,this.msg=this.strm.msg},r.Deflate=p,r.deflate=n,r.deflateRaw=function(e,t){return(t=t||{}).raw=!0,n(e,t)},r.gzip=function(e,t){return(t=t||{}).gzip=!0,n(e,t)}},{"./utils/common":41,"./utils/strings":42,"./zlib/deflate":46,"./zlib/messages":51,"./zlib/zstream":53}],40:[function(e,t,r){"use strict";var c=e("./zlib/inflate"),d=e("./utils/common"),p=e("./utils/strings"),m=e("./zlib/constants"),n=e("./zlib/messages"),i=e("./zlib/zstream"),s=e("./zlib/gzheader"),_=Object.prototype.toString;function a(e){if(!(this instanceof a))return new a(e);this.options=d.assign({chunkSize:16384,windowBits:0,to:""},e||{});var t=this.options;t.raw&&0<=t.windowBits&&t.windowBits<16&&(t.windowBits=-t.windowBits,0===t.windowBits&&(t.windowBits=-15)),!(0<=t.windowBits&&t.windowBits<16)||e&&e.windowBits||(t.windowBits+=32),15<t.windowBits&&t.windowBits<48&&0==(15&t.windowBits)&&(t.windowBits|=15),this.err=0,this.msg="",this.ended=!1,this.chunks=[],this.strm=new i,this.strm.avail_out=0;var r=c.inflateInit2(this.strm,t.windowBits);if(r!==m.Z_OK)throw new Error(n[r]);this.header=new s,c.inflateGetHeader(this.strm,this.header)}function o(e,t){var r=new a(t);if(r.push(e,!0),r.err)throw r.msg||n[r.err];return r.result}a.prototype.push=function(e,t){var r,n,i,s,a,o,h=this.strm,u=this.options.chunkSize,l=this.options.dictionary,f=!1;if(this.ended)return!1;n=t===~~t?t:!0===t?m.Z_FINISH:m.Z_NO_FLUSH,"string"==typeof e?h.input=p.binstring2buf(e):"[object ArrayBuffer]"===_.call(e)?h.input=new Uint8Array(e):h.input=e,h.next_in=0,h.avail_in=h.input.length;do{if(0===h.avail_out&&(h.output=new d.Buf8(u),h.next_out=0,h.avail_out=u),(r=c.inflate(h,m.Z_NO_FLUSH))===m.Z_NEED_DICT&&l&&(o="string"==typeof l?p.string2buf(l):"[object ArrayBuffer]"===_.call(l)?new Uint8Array(l):l,r=c.inflateSetDictionary(this.strm,o)),r===m.Z_BUF_ERROR&&!0===f&&(r=m.Z_OK,f=!1),r!==m.Z_STREAM_END&&r!==m.Z_OK)return this.onEnd(r),!(this.ended=!0);h.next_out&&(0!==h.avail_out&&r!==m.Z_STREAM_END&&(0!==h.avail_in||n!==m.Z_FINISH&&n!==m.Z_SYNC_FLUSH)||("string"===this.options.to?(i=p.utf8border(h.output,h.next_out),s=h.next_out-i,a=p.buf2string(h.output,i),h.next_out=s,h.avail_out=u-s,s&&d.arraySet(h.output,h.output,i,s,0),this.onData(a)):this.onData(d.shrinkBuf(h.output,h.next_out)))),0===h.avail_in&&0===h.avail_out&&(f=!0)}while((0<h.avail_in||0===h.avail_out)&&r!==m.Z_STREAM_END);return r===m.Z_STREAM_END&&(n=m.Z_FINISH),n===m.Z_FINISH?(r=c.inflateEnd(this.strm),this.onEnd(r),this.ended=!0,r===m.Z_OK):n!==m.Z_SYNC_FLUSH||(this.onEnd(m.Z_OK),!(h.avail_out=0))},a.prototype.onData=function(e){this.chunks.push(e)},a.prototype.onEnd=function(e){e===m.Z_OK&&("string"===this.options.to?this.result=this.chunks.join(""):this.result=d.flattenChunks(this.chunks)),this.chunks=[],this.err=e,this.msg=this.strm.msg},r.Inflate=a,r.inflate=o,r.inflateRaw=function(e,t){return(t=t||{}).raw=!0,o(e,t)},r.ungzip=o},{"./utils/common":41,"./utils/strings":42,"./zlib/constants":44,"./zlib/gzheader":47,"./zlib/inflate":49,"./zlib/messages":51,"./zlib/zstream":53}],41:[function(e,t,r){"use strict";var n="undefined"!=typeof Uint8Array&&"undefined"!=typeof Uint16Array&&"undefined"!=typeof Int32Array;r.assign=function(e){for(var t=Array.prototype.slice.call(arguments,1);t.length;){var r=t.shift();if(r){if("object"!=typeof r)throw new TypeError(r+"must be non-object");for(var n in r)r.hasOwnProperty(n)&&(e[n]=r[n])}}return e},r.shrinkBuf=function(e,t){return e.length===t?e:e.subarray?e.subarray(0,t):(e.length=t,e)};var i={arraySet:function(e,t,r,n,i){if(t.subarray&&e.subarray)e.set(t.subarray(r,r+n),i);else for(var s=0;s<n;s++)e[i+s]=t[r+s]},flattenChunks:function(e){var t,r,n,i,s,a;for(t=n=0,r=e.length;t<r;t++)n+=e[t].length;for(a=new Uint8Array(n),t=i=0,r=e.length;t<r;t++)s=e[t],a.set(s,i),i+=s.length;return a}},s={arraySet:function(e,t,r,n,i){for(var s=0;s<n;s++)e[i+s]=t[r+s]},flattenChunks:function(e){return[].concat.apply([],e)}};r.setTyped=function(e){e?(r.Buf8=Uint8Array,r.Buf16=Uint16Array,r.Buf32=Int32Array,r.assign(r,i)):(r.Buf8=Array,r.Buf16=Array,r.Buf32=Array,r.assign(r,s))},r.setTyped(n)},{}],42:[function(e,t,r){"use strict";var h=e("./common"),i=!0,s=!0;try{String.fromCharCode.apply(null,[0])}catch(e){i=!1}try{String.fromCharCode.apply(null,new Uint8Array(1))}catch(e){s=!1}for(var u=new h.Buf8(256),n=0;n<256;n++)u[n]=252<=n?6:248<=n?5:240<=n?4:224<=n?3:192<=n?2:1;function l(e,t){if(t<65537&&(e.subarray&&s||!e.subarray&&i))return String.fromCharCode.apply(null,h.shrinkBuf(e,t));for(var r="",n=0;n<t;n++)r+=String.fromCharCode(e[n]);return r}u[254]=u[254]=1,r.string2buf=function(e){var t,r,n,i,s,a=e.length,o=0;for(i=0;i<a;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),o+=r<128?1:r<2048?2:r<65536?3:4;for(t=new h.Buf8(o),i=s=0;s<o;i++)55296==(64512&(r=e.charCodeAt(i)))&&i+1<a&&56320==(64512&(n=e.charCodeAt(i+1)))&&(r=65536+(r-55296<<10)+(n-56320),i++),r<128?t[s++]=r:(r<2048?t[s++]=192|r>>>6:(r<65536?t[s++]=224|r>>>12:(t[s++]=240|r>>>18,t[s++]=128|r>>>12&63),t[s++]=128|r>>>6&63),t[s++]=128|63&r);return t},r.buf2binstring=function(e){return l(e,e.length)},r.binstring2buf=function(e){for(var t=new h.Buf8(e.length),r=0,n=t.length;r<n;r++)t[r]=e.charCodeAt(r);return t},r.buf2string=function(e,t){var r,n,i,s,a=t||e.length,o=new Array(2*a);for(r=n=0;r<a;)if((i=e[r++])<128)o[n++]=i;else if(4<(s=u[i]))o[n++]=65533,r+=s-1;else{for(i&=2===s?31:3===s?15:7;1<s&&r<a;)i=i<<6|63&e[r++],s--;1<s?o[n++]=65533:i<65536?o[n++]=i:(i-=65536,o[n++]=55296|i>>10&1023,o[n++]=56320|1023&i)}return l(o,n)},r.utf8border=function(e,t){var r;for((t=t||e.length)>e.length&&(t=e.length),r=t-1;0<=r&&128==(192&e[r]);)r--;return r<0?t:0===r?t:r+u[e[r]]>t?r:t}},{"./common":41}],43:[function(e,t,r){"use strict";t.exports=function(e,t,r,n){for(var i=65535&e|0,s=e>>>16&65535|0,a=0;0!==r;){for(r-=a=2e3<r?2e3:r;s=s+(i=i+t[n++]|0)|0,--a;);i%=65521,s%=65521}return i|s<<16|0}},{}],44:[function(e,t,r){"use strict";t.exports={Z_NO_FLUSH:0,Z_PARTIAL_FLUSH:1,Z_SYNC_FLUSH:2,Z_FULL_FLUSH:3,Z_FINISH:4,Z_BLOCK:5,Z_TREES:6,Z_OK:0,Z_STREAM_END:1,Z_NEED_DICT:2,Z_ERRNO:-1,Z_STREAM_ERROR:-2,Z_DATA_ERROR:-3,Z_BUF_ERROR:-5,Z_NO_COMPRESSION:0,Z_BEST_SPEED:1,Z_BEST_COMPRESSION:9,Z_DEFAULT_COMPRESSION:-1,Z_FILTERED:1,Z_HUFFMAN_ONLY:2,Z_RLE:3,Z_FIXED:4,Z_DEFAULT_STRATEGY:0,Z_BINARY:0,Z_TEXT:1,Z_UNKNOWN:2,Z_DEFLATED:8}},{}],45:[function(e,t,r){"use strict";var o=function(){for(var e,t=[],r=0;r<256;r++){e=r;for(var n=0;n<8;n++)e=1&e?3988292384^e>>>1:e>>>1;t[r]=e}return t}();t.exports=function(e,t,r,n){var i=o,s=n+r;e^=-1;for(var a=n;a<s;a++)e=e>>>8^i[255&(e^t[a])];return-1^e}},{}],46:[function(e,t,r){"use strict";var h,c=e("../utils/common"),u=e("./trees"),d=e("./adler32"),p=e("./crc32"),n=e("./messages"),l=0,f=4,m=0,_=-2,g=-1,b=4,i=2,v=8,y=9,s=286,a=30,o=19,w=2*s+1,k=15,x=3,S=258,z=S+x+1,C=42,E=113,A=1,I=2,O=3,B=4;function R(e,t){return e.msg=n[t],t}function T(e){return(e<<1)-(4<e?9:0)}function D(e){for(var t=e.length;0<=--t;)e[t]=0}function F(e){var t=e.state,r=t.pending;r>e.avail_out&&(r=e.avail_out),0!==r&&(c.arraySet(e.output,t.pending_buf,t.pending_out,r,e.next_out),e.next_out+=r,t.pending_out+=r,e.total_out+=r,e.avail_out-=r,t.pending-=r,0===t.pending&&(t.pending_out=0))}function N(e,t){u._tr_flush_block(e,0<=e.block_start?e.block_start:-1,e.strstart-e.block_start,t),e.block_start=e.strstart,F(e.strm)}function U(e,t){e.pending_buf[e.pending++]=t}function P(e,t){e.pending_buf[e.pending++]=t>>>8&255,e.pending_buf[e.pending++]=255&t}function L(e,t){var r,n,i=e.max_chain_length,s=e.strstart,a=e.prev_length,o=e.nice_match,h=e.strstart>e.w_size-z?e.strstart-(e.w_size-z):0,u=e.window,l=e.w_mask,f=e.prev,c=e.strstart+S,d=u[s+a-1],p=u[s+a];e.prev_length>=e.good_match&&(i>>=2),o>e.lookahead&&(o=e.lookahead);do{if(u[(r=t)+a]===p&&u[r+a-1]===d&&u[r]===u[s]&&u[++r]===u[s+1]){s+=2,r++;do{}while(u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&u[++s]===u[++r]&&s<c);if(n=S-(c-s),s=c-S,a<n){if(e.match_start=t,o<=(a=n))break;d=u[s+a-1],p=u[s+a]}}}while((t=f[t&l])>h&&0!=--i);return a<=e.lookahead?a:e.lookahead}function j(e){var t,r,n,i,s,a,o,h,u,l,f=e.w_size;do{if(i=e.window_size-e.lookahead-e.strstart,e.strstart>=f+(f-z)){for(c.arraySet(e.window,e.window,f,f,0),e.match_start-=f,e.strstart-=f,e.block_start-=f,t=r=e.hash_size;n=e.head[--t],e.head[t]=f<=n?n-f:0,--r;);for(t=r=f;n=e.prev[--t],e.prev[t]=f<=n?n-f:0,--r;);i+=f}if(0===e.strm.avail_in)break;if(a=e.strm,o=e.window,h=e.strstart+e.lookahead,u=i,l=void 0,l=a.avail_in,u<l&&(l=u),r=0===l?0:(a.avail_in-=l,c.arraySet(o,a.input,a.next_in,l,h),1===a.state.wrap?a.adler=d(a.adler,o,l,h):2===a.state.wrap&&(a.adler=p(a.adler,o,l,h)),a.next_in+=l,a.total_in+=l,l),e.lookahead+=r,e.lookahead+e.insert>=x)for(s=e.strstart-e.insert,e.ins_h=e.window[s],e.ins_h=(e.ins_h<<e.hash_shift^e.window[s+1])&e.hash_mask;e.insert&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[s+x-1])&e.hash_mask,e.prev[s&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=s,s++,e.insert--,!(e.lookahead+e.insert<x)););}while(e.lookahead<z&&0!==e.strm.avail_in)}function Z(e,t){for(var r,n;;){if(e.lookahead<z){if(j(e),e.lookahead<z&&t===l)return A;if(0===e.lookahead)break}if(r=0,e.lookahead>=x&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),0!==r&&e.strstart-r<=e.w_size-z&&(e.match_length=L(e,r)),e.match_length>=x)if(n=u._tr_tally(e,e.strstart-e.match_start,e.match_length-x),e.lookahead-=e.match_length,e.match_length<=e.max_lazy_match&&e.lookahead>=x){for(e.match_length--;e.strstart++,e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart,0!=--e.match_length;);e.strstart++}else e.strstart+=e.match_length,e.match_length=0,e.ins_h=e.window[e.strstart],e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+1])&e.hash_mask;else n=u._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++;if(n&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=e.strstart<x-1?e.strstart:x-1,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}function W(e,t){for(var r,n,i;;){if(e.lookahead<z){if(j(e),e.lookahead<z&&t===l)return A;if(0===e.lookahead)break}if(r=0,e.lookahead>=x&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),e.prev_length=e.match_length,e.prev_match=e.match_start,e.match_length=x-1,0!==r&&e.prev_length<e.max_lazy_match&&e.strstart-r<=e.w_size-z&&(e.match_length=L(e,r),e.match_length<=5&&(1===e.strategy||e.match_length===x&&4096<e.strstart-e.match_start)&&(e.match_length=x-1)),e.prev_length>=x&&e.match_length<=e.prev_length){for(i=e.strstart+e.lookahead-x,n=u._tr_tally(e,e.strstart-1-e.prev_match,e.prev_length-x),e.lookahead-=e.prev_length-1,e.prev_length-=2;++e.strstart<=i&&(e.ins_h=(e.ins_h<<e.hash_shift^e.window[e.strstart+x-1])&e.hash_mask,r=e.prev[e.strstart&e.w_mask]=e.head[e.ins_h],e.head[e.ins_h]=e.strstart),0!=--e.prev_length;);if(e.match_available=0,e.match_length=x-1,e.strstart++,n&&(N(e,!1),0===e.strm.avail_out))return A}else if(e.match_available){if((n=u._tr_tally(e,0,e.window[e.strstart-1]))&&N(e,!1),e.strstart++,e.lookahead--,0===e.strm.avail_out)return A}else e.match_available=1,e.strstart++,e.lookahead--}return e.match_available&&(n=u._tr_tally(e,0,e.window[e.strstart-1]),e.match_available=0),e.insert=e.strstart<x-1?e.strstart:x-1,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}function M(e,t,r,n,i){this.good_length=e,this.max_lazy=t,this.nice_length=r,this.max_chain=n,this.func=i}function H(){this.strm=null,this.status=0,this.pending_buf=null,this.pending_buf_size=0,this.pending_out=0,this.pending=0,this.wrap=0,this.gzhead=null,this.gzindex=0,this.method=v,this.last_flush=-1,this.w_size=0,this.w_bits=0,this.w_mask=0,this.window=null,this.window_size=0,this.prev=null,this.head=null,this.ins_h=0,this.hash_size=0,this.hash_bits=0,this.hash_mask=0,this.hash_shift=0,this.block_start=0,this.match_length=0,this.prev_match=0,this.match_available=0,this.strstart=0,this.match_start=0,this.lookahead=0,this.prev_length=0,this.max_chain_length=0,this.max_lazy_match=0,this.level=0,this.strategy=0,this.good_match=0,this.nice_match=0,this.dyn_ltree=new c.Buf16(2*w),this.dyn_dtree=new c.Buf16(2*(2*a+1)),this.bl_tree=new c.Buf16(2*(2*o+1)),D(this.dyn_ltree),D(this.dyn_dtree),D(this.bl_tree),this.l_desc=null,this.d_desc=null,this.bl_desc=null,this.bl_count=new c.Buf16(k+1),this.heap=new c.Buf16(2*s+1),D(this.heap),this.heap_len=0,this.heap_max=0,this.depth=new c.Buf16(2*s+1),D(this.depth),this.l_buf=0,this.lit_bufsize=0,this.last_lit=0,this.d_buf=0,this.opt_len=0,this.static_len=0,this.matches=0,this.insert=0,this.bi_buf=0,this.bi_valid=0}function G(e){var t;return e&&e.state?(e.total_in=e.total_out=0,e.data_type=i,(t=e.state).pending=0,t.pending_out=0,t.wrap<0&&(t.wrap=-t.wrap),t.status=t.wrap?C:E,e.adler=2===t.wrap?0:1,t.last_flush=l,u._tr_init(t),m):R(e,_)}function K(e){var t=G(e);return t===m&&function(e){e.window_size=2*e.w_size,D(e.head),e.max_lazy_match=h[e.level].max_lazy,e.good_match=h[e.level].good_length,e.nice_match=h[e.level].nice_length,e.max_chain_length=h[e.level].max_chain,e.strstart=0,e.block_start=0,e.lookahead=0,e.insert=0,e.match_length=e.prev_length=x-1,e.match_available=0,e.ins_h=0}(e.state),t}function Y(e,t,r,n,i,s){if(!e)return _;var a=1;if(t===g&&(t=6),n<0?(a=0,n=-n):15<n&&(a=2,n-=16),i<1||y<i||r!==v||n<8||15<n||t<0||9<t||s<0||b<s)return R(e,_);8===n&&(n=9);var o=new H;return(e.state=o).strm=e,o.wrap=a,o.gzhead=null,o.w_bits=n,o.w_size=1<<o.w_bits,o.w_mask=o.w_size-1,o.hash_bits=i+7,o.hash_size=1<<o.hash_bits,o.hash_mask=o.hash_size-1,o.hash_shift=~~((o.hash_bits+x-1)/x),o.window=new c.Buf8(2*o.w_size),o.head=new c.Buf16(o.hash_size),o.prev=new c.Buf16(o.w_size),o.lit_bufsize=1<<i+6,o.pending_buf_size=4*o.lit_bufsize,o.pending_buf=new c.Buf8(o.pending_buf_size),o.d_buf=1*o.lit_bufsize,o.l_buf=3*o.lit_bufsize,o.level=t,o.strategy=s,o.method=r,K(e)}h=[new M(0,0,0,0,function(e,t){var r=65535;for(r>e.pending_buf_size-5&&(r=e.pending_buf_size-5);;){if(e.lookahead<=1){if(j(e),0===e.lookahead&&t===l)return A;if(0===e.lookahead)break}e.strstart+=e.lookahead,e.lookahead=0;var n=e.block_start+r;if((0===e.strstart||e.strstart>=n)&&(e.lookahead=e.strstart-n,e.strstart=n,N(e,!1),0===e.strm.avail_out))return A;if(e.strstart-e.block_start>=e.w_size-z&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=0,t===f?(N(e,!0),0===e.strm.avail_out?O:B):(e.strstart>e.block_start&&(N(e,!1),e.strm.avail_out),A)}),new M(4,4,8,4,Z),new M(4,5,16,8,Z),new M(4,6,32,32,Z),new M(4,4,16,16,W),new M(8,16,32,32,W),new M(8,16,128,128,W),new M(8,32,128,256,W),new M(32,128,258,1024,W),new M(32,258,258,4096,W)],r.deflateInit=function(e,t){return Y(e,t,v,15,8,0)},r.deflateInit2=Y,r.deflateReset=K,r.deflateResetKeep=G,r.deflateSetHeader=function(e,t){return e&&e.state?2!==e.state.wrap?_:(e.state.gzhead=t,m):_},r.deflate=function(e,t){var r,n,i,s;if(!e||!e.state||5<t||t<0)return e?R(e,_):_;if(n=e.state,!e.output||!e.input&&0!==e.avail_in||666===n.status&&t!==f)return R(e,0===e.avail_out?-5:_);if(n.strm=e,r=n.last_flush,n.last_flush=t,n.status===C)if(2===n.wrap)e.adler=0,U(n,31),U(n,139),U(n,8),n.gzhead?(U(n,(n.gzhead.text?1:0)+(n.gzhead.hcrc?2:0)+(n.gzhead.extra?4:0)+(n.gzhead.name?8:0)+(n.gzhead.comment?16:0)),U(n,255&n.gzhead.time),U(n,n.gzhead.time>>8&255),U(n,n.gzhead.time>>16&255),U(n,n.gzhead.time>>24&255),U(n,9===n.level?2:2<=n.strategy||n.level<2?4:0),U(n,255&n.gzhead.os),n.gzhead.extra&&n.gzhead.extra.length&&(U(n,255&n.gzhead.extra.length),U(n,n.gzhead.extra.length>>8&255)),n.gzhead.hcrc&&(e.adler=p(e.adler,n.pending_buf,n.pending,0)),n.gzindex=0,n.status=69):(U(n,0),U(n,0),U(n,0),U(n,0),U(n,0),U(n,9===n.level?2:2<=n.strategy||n.level<2?4:0),U(n,3),n.status=E);else{var a=v+(n.w_bits-8<<4)<<8;a|=(2<=n.strategy||n.level<2?0:n.level<6?1:6===n.level?2:3)<<6,0!==n.strstart&&(a|=32),a+=31-a%31,n.status=E,P(n,a),0!==n.strstart&&(P(n,e.adler>>>16),P(n,65535&e.adler)),e.adler=1}if(69===n.status)if(n.gzhead.extra){for(i=n.pending;n.gzindex<(65535&n.gzhead.extra.length)&&(n.pending!==n.pending_buf_size||(n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),F(e),i=n.pending,n.pending!==n.pending_buf_size));)U(n,255&n.gzhead.extra[n.gzindex]),n.gzindex++;n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),n.gzindex===n.gzhead.extra.length&&(n.gzindex=0,n.status=73)}else n.status=73;if(73===n.status)if(n.gzhead.name){i=n.pending;do{if(n.pending===n.pending_buf_size&&(n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),F(e),i=n.pending,n.pending===n.pending_buf_size)){s=1;break}s=n.gzindex<n.gzhead.name.length?255&n.gzhead.name.charCodeAt(n.gzindex++):0,U(n,s)}while(0!==s);n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),0===s&&(n.gzindex=0,n.status=91)}else n.status=91;if(91===n.status)if(n.gzhead.comment){i=n.pending;do{if(n.pending===n.pending_buf_size&&(n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),F(e),i=n.pending,n.pending===n.pending_buf_size)){s=1;break}s=n.gzindex<n.gzhead.comment.length?255&n.gzhead.comment.charCodeAt(n.gzindex++):0,U(n,s)}while(0!==s);n.gzhead.hcrc&&n.pending>i&&(e.adler=p(e.adler,n.pending_buf,n.pending-i,i)),0===s&&(n.status=103)}else n.status=103;if(103===n.status&&(n.gzhead.hcrc?(n.pending+2>n.pending_buf_size&&F(e),n.pending+2<=n.pending_buf_size&&(U(n,255&e.adler),U(n,e.adler>>8&255),e.adler=0,n.status=E)):n.status=E),0!==n.pending){if(F(e),0===e.avail_out)return n.last_flush=-1,m}else if(0===e.avail_in&&T(t)<=T(r)&&t!==f)return R(e,-5);if(666===n.status&&0!==e.avail_in)return R(e,-5);if(0!==e.avail_in||0!==n.lookahead||t!==l&&666!==n.status){var o=2===n.strategy?function(e,t){for(var r;;){if(0===e.lookahead&&(j(e),0===e.lookahead)){if(t===l)return A;break}if(e.match_length=0,r=u._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++,r&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=0,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}(n,t):3===n.strategy?function(e,t){for(var r,n,i,s,a=e.window;;){if(e.lookahead<=S){if(j(e),e.lookahead<=S&&t===l)return A;if(0===e.lookahead)break}if(e.match_length=0,e.lookahead>=x&&0<e.strstart&&(n=a[i=e.strstart-1])===a[++i]&&n===a[++i]&&n===a[++i]){s=e.strstart+S;do{}while(n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&n===a[++i]&&i<s);e.match_length=S-(s-i),e.match_length>e.lookahead&&(e.match_length=e.lookahead)}if(e.match_length>=x?(r=u._tr_tally(e,1,e.match_length-x),e.lookahead-=e.match_length,e.strstart+=e.match_length,e.match_length=0):(r=u._tr_tally(e,0,e.window[e.strstart]),e.lookahead--,e.strstart++),r&&(N(e,!1),0===e.strm.avail_out))return A}return e.insert=0,t===f?(N(e,!0),0===e.strm.avail_out?O:B):e.last_lit&&(N(e,!1),0===e.strm.avail_out)?A:I}(n,t):h[n.level].func(n,t);if(o!==O&&o!==B||(n.status=666),o===A||o===O)return 0===e.avail_out&&(n.last_flush=-1),m;if(o===I&&(1===t?u._tr_align(n):5!==t&&(u._tr_stored_block(n,0,0,!1),3===t&&(D(n.head),0===n.lookahead&&(n.strstart=0,n.block_start=0,n.insert=0))),F(e),0===e.avail_out))return n.last_flush=-1,m}return t!==f?m:n.wrap<=0?1:(2===n.wrap?(U(n,255&e.adler),U(n,e.adler>>8&255),U(n,e.adler>>16&255),U(n,e.adler>>24&255),U(n,255&e.total_in),U(n,e.total_in>>8&255),U(n,e.total_in>>16&255),U(n,e.total_in>>24&255)):(P(n,e.adler>>>16),P(n,65535&e.adler)),F(e),0<n.wrap&&(n.wrap=-n.wrap),0!==n.pending?m:1)},r.deflateEnd=function(e){var t;return e&&e.state?(t=e.state.status)!==C&&69!==t&&73!==t&&91!==t&&103!==t&&t!==E&&666!==t?R(e,_):(e.state=null,t===E?R(e,-3):m):_},r.deflateSetDictionary=function(e,t){var r,n,i,s,a,o,h,u,l=t.length;if(!e||!e.state)return _;if(2===(s=(r=e.state).wrap)||1===s&&r.status!==C||r.lookahead)return _;for(1===s&&(e.adler=d(e.adler,t,l,0)),r.wrap=0,l>=r.w_size&&(0===s&&(D(r.head),r.strstart=0,r.block_start=0,r.insert=0),u=new c.Buf8(r.w_size),c.arraySet(u,t,l-r.w_size,r.w_size,0),t=u,l=r.w_size),a=e.avail_in,o=e.next_in,h=e.input,e.avail_in=l,e.next_in=0,e.input=t,j(r);r.lookahead>=x;){for(n=r.strstart,i=r.lookahead-(x-1);r.ins_h=(r.ins_h<<r.hash_shift^r.window[n+x-1])&r.hash_mask,r.prev[n&r.w_mask]=r.head[r.ins_h],r.head[r.ins_h]=n,n++,--i;);r.strstart=n,r.lookahead=x-1,j(r)}return r.strstart+=r.lookahead,r.block_start=r.strstart,r.insert=r.lookahead,r.lookahead=0,r.match_length=r.prev_length=x-1,r.match_available=0,e.next_in=o,e.input=h,e.avail_in=a,r.wrap=s,m},r.deflateInfo="pako deflate (from Nodeca project)"},{"../utils/common":41,"./adler32":43,"./crc32":45,"./messages":51,"./trees":52}],47:[function(e,t,r){"use strict";t.exports=function(){this.text=0,this.time=0,this.xflags=0,this.os=0,this.extra=null,this.extra_len=0,this.name="",this.comment="",this.hcrc=0,this.done=!1}},{}],48:[function(e,t,r){"use strict";t.exports=function(e,t){var r,n,i,s,a,o,h,u,l,f,c,d,p,m,_,g,b,v,y,w,k,x,S,z,C;r=e.state,n=e.next_in,z=e.input,i=n+(e.avail_in-5),s=e.next_out,C=e.output,a=s-(t-e.avail_out),o=s+(e.avail_out-257),h=r.dmax,u=r.wsize,l=r.whave,f=r.wnext,c=r.window,d=r.hold,p=r.bits,m=r.lencode,_=r.distcode,g=(1<<r.lenbits)-1,b=(1<<r.distbits)-1;e:do{p<15&&(d+=z[n++]<<p,p+=8,d+=z[n++]<<p,p+=8),v=m[d&g];t:for(;;){if(d>>>=y=v>>>24,p-=y,0===(y=v>>>16&255))C[s++]=65535&v;else{if(!(16&y)){if(0==(64&y)){v=m[(65535&v)+(d&(1<<y)-1)];continue t}if(32&y){r.mode=12;break e}e.msg="invalid literal/length code",r.mode=30;break e}w=65535&v,(y&=15)&&(p<y&&(d+=z[n++]<<p,p+=8),w+=d&(1<<y)-1,d>>>=y,p-=y),p<15&&(d+=z[n++]<<p,p+=8,d+=z[n++]<<p,p+=8),v=_[d&b];r:for(;;){if(d>>>=y=v>>>24,p-=y,!(16&(y=v>>>16&255))){if(0==(64&y)){v=_[(65535&v)+(d&(1<<y)-1)];continue r}e.msg="invalid distance code",r.mode=30;break e}if(k=65535&v,p<(y&=15)&&(d+=z[n++]<<p,(p+=8)<y&&(d+=z[n++]<<p,p+=8)),h<(k+=d&(1<<y)-1)){e.msg="invalid distance too far back",r.mode=30;break e}if(d>>>=y,p-=y,(y=s-a)<k){if(l<(y=k-y)&&r.sane){e.msg="invalid distance too far back",r.mode=30;break e}if(S=c,(x=0)===f){if(x+=u-y,y<w){for(w-=y;C[s++]=c[x++],--y;);x=s-k,S=C}}else if(f<y){if(x+=u+f-y,(y-=f)<w){for(w-=y;C[s++]=c[x++],--y;);if(x=0,f<w){for(w-=y=f;C[s++]=c[x++],--y;);x=s-k,S=C}}}else if(x+=f-y,y<w){for(w-=y;C[s++]=c[x++],--y;);x=s-k,S=C}for(;2<w;)C[s++]=S[x++],C[s++]=S[x++],C[s++]=S[x++],w-=3;w&&(C[s++]=S[x++],1<w&&(C[s++]=S[x++]))}else{for(x=s-k;C[s++]=C[x++],C[s++]=C[x++],C[s++]=C[x++],2<(w-=3););w&&(C[s++]=C[x++],1<w&&(C[s++]=C[x++]))}break}}break}}while(n<i&&s<o);n-=w=p>>3,d&=(1<<(p-=w<<3))-1,e.next_in=n,e.next_out=s,e.avail_in=n<i?i-n+5:5-(n-i),e.avail_out=s<o?o-s+257:257-(s-o),r.hold=d,r.bits=p}},{}],49:[function(e,t,r){"use strict";var I=e("../utils/common"),O=e("./adler32"),B=e("./crc32"),R=e("./inffast"),T=e("./inftrees"),D=1,F=2,N=0,U=-2,P=1,n=852,i=592;function L(e){return(e>>>24&255)+(e>>>8&65280)+((65280&e)<<8)+((255&e)<<24)}function s(){this.mode=0,this.last=!1,this.wrap=0,this.havedict=!1,this.flags=0,this.dmax=0,this.check=0,this.total=0,this.head=null,this.wbits=0,this.wsize=0,this.whave=0,this.wnext=0,this.window=null,this.hold=0,this.bits=0,this.length=0,this.offset=0,this.extra=0,this.lencode=null,this.distcode=null,this.lenbits=0,this.distbits=0,this.ncode=0,this.nlen=0,this.ndist=0,this.have=0,this.next=null,this.lens=new I.Buf16(320),this.work=new I.Buf16(288),this.lendyn=null,this.distdyn=null,this.sane=0,this.back=0,this.was=0}function a(e){var t;return e&&e.state?(t=e.state,e.total_in=e.total_out=t.total=0,e.msg="",t.wrap&&(e.adler=1&t.wrap),t.mode=P,t.last=0,t.havedict=0,t.dmax=32768,t.head=null,t.hold=0,t.bits=0,t.lencode=t.lendyn=new I.Buf32(n),t.distcode=t.distdyn=new I.Buf32(i),t.sane=1,t.back=-1,N):U}function o(e){var t;return e&&e.state?((t=e.state).wsize=0,t.whave=0,t.wnext=0,a(e)):U}function h(e,t){var r,n;return e&&e.state?(n=e.state,t<0?(r=0,t=-t):(r=1+(t>>4),t<48&&(t&=15)),t&&(t<8||15<t)?U:(null!==n.window&&n.wbits!==t&&(n.window=null),n.wrap=r,n.wbits=t,o(e))):U}function u(e,t){var r,n;return e?(n=new s,(e.state=n).window=null,(r=h(e,t))!==N&&(e.state=null),r):U}var l,f,c=!0;function j(e){if(c){var t;for(l=new I.Buf32(512),f=new I.Buf32(32),t=0;t<144;)e.lens[t++]=8;for(;t<256;)e.lens[t++]=9;for(;t<280;)e.lens[t++]=7;for(;t<288;)e.lens[t++]=8;for(T(D,e.lens,0,288,l,0,e.work,{bits:9}),t=0;t<32;)e.lens[t++]=5;T(F,e.lens,0,32,f,0,e.work,{bits:5}),c=!1}e.lencode=l,e.lenbits=9,e.distcode=f,e.distbits=5}function Z(e,t,r,n){var i,s=e.state;return null===s.window&&(s.wsize=1<<s.wbits,s.wnext=0,s.whave=0,s.window=new I.Buf8(s.wsize)),n>=s.wsize?(I.arraySet(s.window,t,r-s.wsize,s.wsize,0),s.wnext=0,s.whave=s.wsize):(n<(i=s.wsize-s.wnext)&&(i=n),I.arraySet(s.window,t,r-n,i,s.wnext),(n-=i)?(I.arraySet(s.window,t,r-n,n,0),s.wnext=n,s.whave=s.wsize):(s.wnext+=i,s.wnext===s.wsize&&(s.wnext=0),s.whave<s.wsize&&(s.whave+=i))),0}r.inflateReset=o,r.inflateReset2=h,r.inflateResetKeep=a,r.inflateInit=function(e){return u(e,15)},r.inflateInit2=u,r.inflate=function(e,t){var r,n,i,s,a,o,h,u,l,f,c,d,p,m,_,g,b,v,y,w,k,x,S,z,C=0,E=new I.Buf8(4),A=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15];if(!e||!e.state||!e.output||!e.input&&0!==e.avail_in)return U;12===(r=e.state).mode&&(r.mode=13),a=e.next_out,i=e.output,h=e.avail_out,s=e.next_in,n=e.input,o=e.avail_in,u=r.hold,l=r.bits,f=o,c=h,x=N;e:for(;;)switch(r.mode){case P:if(0===r.wrap){r.mode=13;break}for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(2&r.wrap&&35615===u){E[r.check=0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0),l=u=0,r.mode=2;break}if(r.flags=0,r.head&&(r.head.done=!1),!(1&r.wrap)||(((255&u)<<8)+(u>>8))%31){e.msg="incorrect header check",r.mode=30;break}if(8!=(15&u)){e.msg="unknown compression method",r.mode=30;break}if(l-=4,k=8+(15&(u>>>=4)),0===r.wbits)r.wbits=k;else if(k>r.wbits){e.msg="invalid window size",r.mode=30;break}r.dmax=1<<k,e.adler=r.check=1,r.mode=512&u?10:12,l=u=0;break;case 2:for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(r.flags=u,8!=(255&r.flags)){e.msg="unknown compression method",r.mode=30;break}if(57344&r.flags){e.msg="unknown header flags set",r.mode=30;break}r.head&&(r.head.text=u>>8&1),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0)),l=u=0,r.mode=3;case 3:for(;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.head&&(r.head.time=u),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,E[2]=u>>>16&255,E[3]=u>>>24&255,r.check=B(r.check,E,4,0)),l=u=0,r.mode=4;case 4:for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.head&&(r.head.xflags=255&u,r.head.os=u>>8),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0)),l=u=0,r.mode=5;case 5:if(1024&r.flags){for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.length=u,r.head&&(r.head.extra_len=u),512&r.flags&&(E[0]=255&u,E[1]=u>>>8&255,r.check=B(r.check,E,2,0)),l=u=0}else r.head&&(r.head.extra=null);r.mode=6;case 6:if(1024&r.flags&&(o<(d=r.length)&&(d=o),d&&(r.head&&(k=r.head.extra_len-r.length,r.head.extra||(r.head.extra=new Array(r.head.extra_len)),I.arraySet(r.head.extra,n,s,d,k)),512&r.flags&&(r.check=B(r.check,n,d,s)),o-=d,s+=d,r.length-=d),r.length))break e;r.length=0,r.mode=7;case 7:if(2048&r.flags){if(0===o)break e;for(d=0;k=n[s+d++],r.head&&k&&r.length<65536&&(r.head.name+=String.fromCharCode(k)),k&&d<o;);if(512&r.flags&&(r.check=B(r.check,n,d,s)),o-=d,s+=d,k)break e}else r.head&&(r.head.name=null);r.length=0,r.mode=8;case 8:if(4096&r.flags){if(0===o)break e;for(d=0;k=n[s+d++],r.head&&k&&r.length<65536&&(r.head.comment+=String.fromCharCode(k)),k&&d<o;);if(512&r.flags&&(r.check=B(r.check,n,d,s)),o-=d,s+=d,k)break e}else r.head&&(r.head.comment=null);r.mode=9;case 9:if(512&r.flags){for(;l<16;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(u!==(65535&r.check)){e.msg="header crc mismatch",r.mode=30;break}l=u=0}r.head&&(r.head.hcrc=r.flags>>9&1,r.head.done=!0),e.adler=r.check=0,r.mode=12;break;case 10:for(;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}e.adler=r.check=L(u),l=u=0,r.mode=11;case 11:if(0===r.havedict)return e.next_out=a,e.avail_out=h,e.next_in=s,e.avail_in=o,r.hold=u,r.bits=l,2;e.adler=r.check=1,r.mode=12;case 12:if(5===t||6===t)break e;case 13:if(r.last){u>>>=7&l,l-=7&l,r.mode=27;break}for(;l<3;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}switch(r.last=1&u,l-=1,3&(u>>>=1)){case 0:r.mode=14;break;case 1:if(j(r),r.mode=20,6!==t)break;u>>>=2,l-=2;break e;case 2:r.mode=17;break;case 3:e.msg="invalid block type",r.mode=30}u>>>=2,l-=2;break;case 14:for(u>>>=7&l,l-=7&l;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if((65535&u)!=(u>>>16^65535)){e.msg="invalid stored block lengths",r.mode=30;break}if(r.length=65535&u,l=u=0,r.mode=15,6===t)break e;case 15:r.mode=16;case 16:if(d=r.length){if(o<d&&(d=o),h<d&&(d=h),0===d)break e;I.arraySet(i,n,s,d,a),o-=d,s+=d,h-=d,a+=d,r.length-=d;break}r.mode=12;break;case 17:for(;l<14;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(r.nlen=257+(31&u),u>>>=5,l-=5,r.ndist=1+(31&u),u>>>=5,l-=5,r.ncode=4+(15&u),u>>>=4,l-=4,286<r.nlen||30<r.ndist){e.msg="too many length or distance symbols",r.mode=30;break}r.have=0,r.mode=18;case 18:for(;r.have<r.ncode;){for(;l<3;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.lens[A[r.have++]]=7&u,u>>>=3,l-=3}for(;r.have<19;)r.lens[A[r.have++]]=0;if(r.lencode=r.lendyn,r.lenbits=7,S={bits:r.lenbits},x=T(0,r.lens,0,19,r.lencode,0,r.work,S),r.lenbits=S.bits,x){e.msg="invalid code lengths set",r.mode=30;break}r.have=0,r.mode=19;case 19:for(;r.have<r.nlen+r.ndist;){for(;g=(C=r.lencode[u&(1<<r.lenbits)-1])>>>16&255,b=65535&C,!((_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(b<16)u>>>=_,l-=_,r.lens[r.have++]=b;else{if(16===b){for(z=_+2;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(u>>>=_,l-=_,0===r.have){e.msg="invalid bit length repeat",r.mode=30;break}k=r.lens[r.have-1],d=3+(3&u),u>>>=2,l-=2}else if(17===b){for(z=_+3;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}l-=_,k=0,d=3+(7&(u>>>=_)),u>>>=3,l-=3}else{for(z=_+7;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}l-=_,k=0,d=11+(127&(u>>>=_)),u>>>=7,l-=7}if(r.have+d>r.nlen+r.ndist){e.msg="invalid bit length repeat",r.mode=30;break}for(;d--;)r.lens[r.have++]=k}}if(30===r.mode)break;if(0===r.lens[256]){e.msg="invalid code -- missing end-of-block",r.mode=30;break}if(r.lenbits=9,S={bits:r.lenbits},x=T(D,r.lens,0,r.nlen,r.lencode,0,r.work,S),r.lenbits=S.bits,x){e.msg="invalid literal/lengths set",r.mode=30;break}if(r.distbits=6,r.distcode=r.distdyn,S={bits:r.distbits},x=T(F,r.lens,r.nlen,r.ndist,r.distcode,0,r.work,S),r.distbits=S.bits,x){e.msg="invalid distances set",r.mode=30;break}if(r.mode=20,6===t)break e;case 20:r.mode=21;case 21:if(6<=o&&258<=h){e.next_out=a,e.avail_out=h,e.next_in=s,e.avail_in=o,r.hold=u,r.bits=l,R(e,c),a=e.next_out,i=e.output,h=e.avail_out,s=e.next_in,n=e.input,o=e.avail_in,u=r.hold,l=r.bits,12===r.mode&&(r.back=-1);break}for(r.back=0;g=(C=r.lencode[u&(1<<r.lenbits)-1])>>>16&255,b=65535&C,!((_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(g&&0==(240&g)){for(v=_,y=g,w=b;g=(C=r.lencode[w+((u&(1<<v+y)-1)>>v)])>>>16&255,b=65535&C,!(v+(_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}u>>>=v,l-=v,r.back+=v}if(u>>>=_,l-=_,r.back+=_,r.length=b,0===g){r.mode=26;break}if(32&g){r.back=-1,r.mode=12;break}if(64&g){e.msg="invalid literal/length code",r.mode=30;break}r.extra=15&g,r.mode=22;case 22:if(r.extra){for(z=r.extra;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.length+=u&(1<<r.extra)-1,u>>>=r.extra,l-=r.extra,r.back+=r.extra}r.was=r.length,r.mode=23;case 23:for(;g=(C=r.distcode[u&(1<<r.distbits)-1])>>>16&255,b=65535&C,!((_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(0==(240&g)){for(v=_,y=g,w=b;g=(C=r.distcode[w+((u&(1<<v+y)-1)>>v)])>>>16&255,b=65535&C,!(v+(_=C>>>24)<=l);){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}u>>>=v,l-=v,r.back+=v}if(u>>>=_,l-=_,r.back+=_,64&g){e.msg="invalid distance code",r.mode=30;break}r.offset=b,r.extra=15&g,r.mode=24;case 24:if(r.extra){for(z=r.extra;l<z;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}r.offset+=u&(1<<r.extra)-1,u>>>=r.extra,l-=r.extra,r.back+=r.extra}if(r.offset>r.dmax){e.msg="invalid distance too far back",r.mode=30;break}r.mode=25;case 25:if(0===h)break e;if(d=c-h,r.offset>d){if((d=r.offset-d)>r.whave&&r.sane){e.msg="invalid distance too far back",r.mode=30;break}p=d>r.wnext?(d-=r.wnext,r.wsize-d):r.wnext-d,d>r.length&&(d=r.length),m=r.window}else m=i,p=a-r.offset,d=r.length;for(h<d&&(d=h),h-=d,r.length-=d;i[a++]=m[p++],--d;);0===r.length&&(r.mode=21);break;case 26:if(0===h)break e;i[a++]=r.length,h--,r.mode=21;break;case 27:if(r.wrap){for(;l<32;){if(0===o)break e;o--,u|=n[s++]<<l,l+=8}if(c-=h,e.total_out+=c,r.total+=c,c&&(e.adler=r.check=r.flags?B(r.check,i,c,a-c):O(r.check,i,c,a-c)),c=h,(r.flags?u:L(u))!==r.check){e.msg="incorrect data check",r.mode=30;break}l=u=0}r.mode=28;case 28:if(r.wrap&&r.flags){for(;l<32;){if(0===o)break e;o--,u+=n[s++]<<l,l+=8}if(u!==(4294967295&r.total)){e.msg="incorrect length check",r.mode=30;break}l=u=0}r.mode=29;case 29:x=1;break e;case 30:x=-3;break e;case 31:return-4;case 32:default:return U}return e.next_out=a,e.avail_out=h,e.next_in=s,e.avail_in=o,r.hold=u,r.bits=l,(r.wsize||c!==e.avail_out&&r.mode<30&&(r.mode<27||4!==t))&&Z(e,e.output,e.next_out,c-e.avail_out)?(r.mode=31,-4):(f-=e.avail_in,c-=e.avail_out,e.total_in+=f,e.total_out+=c,r.total+=c,r.wrap&&c&&(e.adler=r.check=r.flags?B(r.check,i,c,e.next_out-c):O(r.check,i,c,e.next_out-c)),e.data_type=r.bits+(r.last?64:0)+(12===r.mode?128:0)+(20===r.mode||15===r.mode?256:0),(0==f&&0===c||4===t)&&x===N&&(x=-5),x)},r.inflateEnd=function(e){if(!e||!e.state)return U;var t=e.state;return t.window&&(t.window=null),e.state=null,N},r.inflateGetHeader=function(e,t){var r;return e&&e.state?0==(2&(r=e.state).wrap)?U:((r.head=t).done=!1,N):U},r.inflateSetDictionary=function(e,t){var r,n=t.length;return e&&e.state?0!==(r=e.state).wrap&&11!==r.mode?U:11===r.mode&&O(1,t,n,0)!==r.check?-3:Z(e,t,n,n)?(r.mode=31,-4):(r.havedict=1,N):U},r.inflateInfo="pako inflate (from Nodeca project)"},{"../utils/common":41,"./adler32":43,"./crc32":45,"./inffast":48,"./inftrees":50}],50:[function(e,t,r){"use strict";var D=e("../utils/common"),F=[3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258,0,0],N=[16,16,16,16,16,16,16,16,17,17,17,17,18,18,18,18,19,19,19,19,20,20,20,20,21,21,21,21,16,72,78],U=[1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577,0,0],P=[16,16,16,16,17,17,18,18,19,19,20,20,21,21,22,22,23,23,24,24,25,25,26,26,27,27,28,28,29,29,64,64];t.exports=function(e,t,r,n,i,s,a,o){var h,u,l,f,c,d,p,m,_,g=o.bits,b=0,v=0,y=0,w=0,k=0,x=0,S=0,z=0,C=0,E=0,A=null,I=0,O=new D.Buf16(16),B=new D.Buf16(16),R=null,T=0;for(b=0;b<=15;b++)O[b]=0;for(v=0;v<n;v++)O[t[r+v]]++;for(k=g,w=15;1<=w&&0===O[w];w--);if(w<k&&(k=w),0===w)return i[s++]=20971520,i[s++]=20971520,o.bits=1,0;for(y=1;y<w&&0===O[y];y++);for(k<y&&(k=y),b=z=1;b<=15;b++)if(z<<=1,(z-=O[b])<0)return-1;if(0<z&&(0===e||1!==w))return-1;for(B[1]=0,b=1;b<15;b++)B[b+1]=B[b]+O[b];for(v=0;v<n;v++)0!==t[r+v]&&(a[B[t[r+v]]++]=v);if(d=0===e?(A=R=a,19):1===e?(A=F,I-=257,R=N,T-=257,256):(A=U,R=P,-1),b=y,c=s,S=v=E=0,l=-1,f=(C=1<<(x=k))-1,1===e&&852<C||2===e&&592<C)return 1;for(;;){for(p=b-S,_=a[v]<d?(m=0,a[v]):a[v]>d?(m=R[T+a[v]],A[I+a[v]]):(m=96,0),h=1<<b-S,y=u=1<<x;i[c+(E>>S)+(u-=h)]=p<<24|m<<16|_|0,0!==u;);for(h=1<<b-1;E&h;)h>>=1;if(0!==h?(E&=h-1,E+=h):E=0,v++,0==--O[b]){if(b===w)break;b=t[r+a[v]]}if(k<b&&(E&f)!==l){for(0===S&&(S=k),c+=y,z=1<<(x=b-S);x+S<w&&!((z-=O[x+S])<=0);)x++,z<<=1;if(C+=1<<x,1===e&&852<C||2===e&&592<C)return 1;i[l=E&f]=k<<24|x<<16|c-s|0}}return 0!==E&&(i[c+E]=b-S<<24|64<<16|0),o.bits=k,0}},{"../utils/common":41}],51:[function(e,t,r){"use strict";t.exports={2:"need dictionary",1:"stream end",0:"","-1":"file error","-2":"stream error","-3":"data error","-4":"insufficient memory","-5":"buffer error","-6":"incompatible version"}},{}],52:[function(e,t,r){"use strict";var i=e("../utils/common"),o=0,h=1;function n(e){for(var t=e.length;0<=--t;)e[t]=0}var s=0,a=29,u=256,l=u+1+a,f=30,c=19,_=2*l+1,g=15,d=16,p=7,m=256,b=16,v=17,y=18,w=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],k=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],x=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7],S=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],z=new Array(2*(l+2));n(z);var C=new Array(2*f);n(C);var E=new Array(512);n(E);var A=new Array(256);n(A);var I=new Array(a);n(I);var O,B,R,T=new Array(f);function D(e,t,r,n,i){this.static_tree=e,this.extra_bits=t,this.extra_base=r,this.elems=n,this.max_length=i,this.has_stree=e&&e.length}function F(e,t){this.dyn_tree=e,this.max_code=0,this.stat_desc=t}function N(e){return e<256?E[e]:E[256+(e>>>7)]}function U(e,t){e.pending_buf[e.pending++]=255&t,e.pending_buf[e.pending++]=t>>>8&255}function P(e,t,r){e.bi_valid>d-r?(e.bi_buf|=t<<e.bi_valid&65535,U(e,e.bi_buf),e.bi_buf=t>>d-e.bi_valid,e.bi_valid+=r-d):(e.bi_buf|=t<<e.bi_valid&65535,e.bi_valid+=r)}function L(e,t,r){P(e,r[2*t],r[2*t+1])}function j(e,t){for(var r=0;r|=1&e,e>>>=1,r<<=1,0<--t;);return r>>>1}function Z(e,t,r){var n,i,s=new Array(g+1),a=0;for(n=1;n<=g;n++)s[n]=a=a+r[n-1]<<1;for(i=0;i<=t;i++){var o=e[2*i+1];0!==o&&(e[2*i]=j(s[o]++,o))}}function W(e){var t;for(t=0;t<l;t++)e.dyn_ltree[2*t]=0;for(t=0;t<f;t++)e.dyn_dtree[2*t]=0;for(t=0;t<c;t++)e.bl_tree[2*t]=0;e.dyn_ltree[2*m]=1,e.opt_len=e.static_len=0,e.last_lit=e.matches=0}function M(e){8<e.bi_valid?U(e,e.bi_buf):0<e.bi_valid&&(e.pending_buf[e.pending++]=e.bi_buf),e.bi_buf=0,e.bi_valid=0}function H(e,t,r,n){var i=2*t,s=2*r;return e[i]<e[s]||e[i]===e[s]&&n[t]<=n[r]}function G(e,t,r){for(var n=e.heap[r],i=r<<1;i<=e.heap_len&&(i<e.heap_len&&H(t,e.heap[i+1],e.heap[i],e.depth)&&i++,!H(t,n,e.heap[i],e.depth));)e.heap[r]=e.heap[i],r=i,i<<=1;e.heap[r]=n}function K(e,t,r){var n,i,s,a,o=0;if(0!==e.last_lit)for(;n=e.pending_buf[e.d_buf+2*o]<<8|e.pending_buf[e.d_buf+2*o+1],i=e.pending_buf[e.l_buf+o],o++,0===n?L(e,i,t):(L(e,(s=A[i])+u+1,t),0!==(a=w[s])&&P(e,i-=I[s],a),L(e,s=N(--n),r),0!==(a=k[s])&&P(e,n-=T[s],a)),o<e.last_lit;);L(e,m,t)}function Y(e,t){var r,n,i,s=t.dyn_tree,a=t.stat_desc.static_tree,o=t.stat_desc.has_stree,h=t.stat_desc.elems,u=-1;for(e.heap_len=0,e.heap_max=_,r=0;r<h;r++)0!==s[2*r]?(e.heap[++e.heap_len]=u=r,e.depth[r]=0):s[2*r+1]=0;for(;e.heap_len<2;)s[2*(i=e.heap[++e.heap_len]=u<2?++u:0)]=1,e.depth[i]=0,e.opt_len--,o&&(e.static_len-=a[2*i+1]);for(t.max_code=u,r=e.heap_len>>1;1<=r;r--)G(e,s,r);for(i=h;r=e.heap[1],e.heap[1]=e.heap[e.heap_len--],G(e,s,1),n=e.heap[1],e.heap[--e.heap_max]=r,e.heap[--e.heap_max]=n,s[2*i]=s[2*r]+s[2*n],e.depth[i]=(e.depth[r]>=e.depth[n]?e.depth[r]:e.depth[n])+1,s[2*r+1]=s[2*n+1]=i,e.heap[1]=i++,G(e,s,1),2<=e.heap_len;);e.heap[--e.heap_max]=e.heap[1],function(e,t){var r,n,i,s,a,o,h=t.dyn_tree,u=t.max_code,l=t.stat_desc.static_tree,f=t.stat_desc.has_stree,c=t.stat_desc.extra_bits,d=t.stat_desc.extra_base,p=t.stat_desc.max_length,m=0;for(s=0;s<=g;s++)e.bl_count[s]=0;for(h[2*e.heap[e.heap_max]+1]=0,r=e.heap_max+1;r<_;r++)p<(s=h[2*h[2*(n=e.heap[r])+1]+1]+1)&&(s=p,m++),h[2*n+1]=s,u<n||(e.bl_count[s]++,a=0,d<=n&&(a=c[n-d]),o=h[2*n],e.opt_len+=o*(s+a),f&&(e.static_len+=o*(l[2*n+1]+a)));if(0!==m){do{for(s=p-1;0===e.bl_count[s];)s--;e.bl_count[s]--,e.bl_count[s+1]+=2,e.bl_count[p]--,m-=2}while(0<m);for(s=p;0!==s;s--)for(n=e.bl_count[s];0!==n;)u<(i=e.heap[--r])||(h[2*i+1]!==s&&(e.opt_len+=(s-h[2*i+1])*h[2*i],h[2*i+1]=s),n--)}}(e,t),Z(s,u,e.bl_count)}function X(e,t,r){var n,i,s=-1,a=t[1],o=0,h=7,u=4;for(0===a&&(h=138,u=3),t[2*(r+1)+1]=65535,n=0;n<=r;n++)i=a,a=t[2*(n+1)+1],++o<h&&i===a||(o<u?e.bl_tree[2*i]+=o:0!==i?(i!==s&&e.bl_tree[2*i]++,e.bl_tree[2*b]++):o<=10?e.bl_tree[2*v]++:e.bl_tree[2*y]++,s=i,u=(o=0)===a?(h=138,3):i===a?(h=6,3):(h=7,4))}function V(e,t,r){var n,i,s=-1,a=t[1],o=0,h=7,u=4;for(0===a&&(h=138,u=3),n=0;n<=r;n++)if(i=a,a=t[2*(n+1)+1],!(++o<h&&i===a)){if(o<u)for(;L(e,i,e.bl_tree),0!=--o;);else 0!==i?(i!==s&&(L(e,i,e.bl_tree),o--),L(e,b,e.bl_tree),P(e,o-3,2)):o<=10?(L(e,v,e.bl_tree),P(e,o-3,3)):(L(e,y,e.bl_tree),P(e,o-11,7));s=i,u=(o=0)===a?(h=138,3):i===a?(h=6,3):(h=7,4)}}n(T);var q=!1;function J(e,t,r,n){P(e,(s<<1)+(n?1:0),3),function(e,t,r,n){M(e),n&&(U(e,r),U(e,~r)),i.arraySet(e.pending_buf,e.window,t,r,e.pending),e.pending+=r}(e,t,r,!0)}r._tr_init=function(e){q||(function(){var e,t,r,n,i,s=new Array(g+1);for(n=r=0;n<a-1;n++)for(I[n]=r,e=0;e<1<<w[n];e++)A[r++]=n;for(A[r-1]=n,n=i=0;n<16;n++)for(T[n]=i,e=0;e<1<<k[n];e++)E[i++]=n;for(i>>=7;n<f;n++)for(T[n]=i<<7,e=0;e<1<<k[n]-7;e++)E[256+i++]=n;for(t=0;t<=g;t++)s[t]=0;for(e=0;e<=143;)z[2*e+1]=8,e++,s[8]++;for(;e<=255;)z[2*e+1]=9,e++,s[9]++;for(;e<=279;)z[2*e+1]=7,e++,s[7]++;for(;e<=287;)z[2*e+1]=8,e++,s[8]++;for(Z(z,l+1,s),e=0;e<f;e++)C[2*e+1]=5,C[2*e]=j(e,5);O=new D(z,w,u+1,l,g),B=new D(C,k,0,f,g),R=new D(new Array(0),x,0,c,p)}(),q=!0),e.l_desc=new F(e.dyn_ltree,O),e.d_desc=new F(e.dyn_dtree,B),e.bl_desc=new F(e.bl_tree,R),e.bi_buf=0,e.bi_valid=0,W(e)},r._tr_stored_block=J,r._tr_flush_block=function(e,t,r,n){var i,s,a=0;0<e.level?(2===e.strm.data_type&&(e.strm.data_type=function(e){var t,r=4093624447;for(t=0;t<=31;t++,r>>>=1)if(1&r&&0!==e.dyn_ltree[2*t])return o;if(0!==e.dyn_ltree[18]||0!==e.dyn_ltree[20]||0!==e.dyn_ltree[26])return h;for(t=32;t<u;t++)if(0!==e.dyn_ltree[2*t])return h;return o}(e)),Y(e,e.l_desc),Y(e,e.d_desc),a=function(e){var t;for(X(e,e.dyn_ltree,e.l_desc.max_code),X(e,e.dyn_dtree,e.d_desc.max_code),Y(e,e.bl_desc),t=c-1;3<=t&&0===e.bl_tree[2*S[t]+1];t--);return e.opt_len+=3*(t+1)+5+5+4,t}(e),i=e.opt_len+3+7>>>3,(s=e.static_len+3+7>>>3)<=i&&(i=s)):i=s=r+5,r+4<=i&&-1!==t?J(e,t,r,n):4===e.strategy||s===i?(P(e,2+(n?1:0),3),K(e,z,C)):(P(e,4+(n?1:0),3),function(e,t,r,n){var i;for(P(e,t-257,5),P(e,r-1,5),P(e,n-4,4),i=0;i<n;i++)P(e,e.bl_tree[2*S[i]+1],3);V(e,e.dyn_ltree,t-1),V(e,e.dyn_dtree,r-1)}(e,e.l_desc.max_code+1,e.d_desc.max_code+1,a+1),K(e,e.dyn_ltree,e.dyn_dtree)),W(e),n&&M(e)},r._tr_tally=function(e,t,r){return e.pending_buf[e.d_buf+2*e.last_lit]=t>>>8&255,e.pending_buf[e.d_buf+2*e.last_lit+1]=255&t,e.pending_buf[e.l_buf+e.last_lit]=255&r,e.last_lit++,0===t?e.dyn_ltree[2*r]++:(e.matches++,t--,e.dyn_ltree[2*(A[r]+u+1)]++,e.dyn_dtree[2*N(t)]++),e.last_lit===e.lit_bufsize-1},r._tr_align=function(e){P(e,2,3),L(e,m,z),function(e){16===e.bi_valid?(U(e,e.bi_buf),e.bi_buf=0,e.bi_valid=0):8<=e.bi_valid&&(e.pending_buf[e.pending++]=255&e.bi_buf,e.bi_buf>>=8,e.bi_valid-=8)}(e)}},{"../utils/common":41}],53:[function(e,t,r){"use strict";t.exports=function(){this.input=null,this.next_in=0,this.avail_in=0,this.total_in=0,this.output=null,this.next_out=0,this.avail_out=0,this.total_out=0,this.msg="",this.state=null,this.data_type=2,this.adler=0}},{}],54:[function(e,t,r){(function(e){!function(r,n){"use strict";if(!r.setImmediate){var i,s,t,a,o=1,h={},u=!1,l=r.document,e=Object.getPrototypeOf&&Object.getPrototypeOf(r);e=e&&e.setTimeout?e:r,i="[object process]"==={}.toString.call(r.process)?function(e){process.nextTick(function(){c(e)})}:function(){if(r.postMessage&&!r.importScripts){var e=!0,t=r.onmessage;return r.onmessage=function(){e=!1},r.postMessage("","*"),r.onmessage=t,e}}()?(a="setImmediate$"+Math.random()+"$",r.addEventListener?r.addEventListener("message",d,!1):r.attachEvent("onmessage",d),function(e){r.postMessage(a+e,"*")}):r.MessageChannel?((t=new MessageChannel).port1.onmessage=function(e){c(e.data)},function(e){t.port2.postMessage(e)}):l&&"onreadystatechange"in l.createElement("script")?(s=l.documentElement,function(e){var t=l.createElement("script");t.onreadystatechange=function(){c(e),t.onreadystatechange=null,s.removeChild(t),t=null},s.appendChild(t)}):function(e){setTimeout(c,0,e)},e.setImmediate=function(e){"function"!=typeof e&&(e=new Function(""+e));for(var t=new Array(arguments.length-1),r=0;r<t.length;r++)t[r]=arguments[r+1];var n={callback:e,args:t};return h[o]=n,i(o),o++},e.clearImmediate=f}function f(e){delete h[e]}function c(e){if(u)setTimeout(c,0,e);else{var t=h[e];if(t){u=!0;try{!function(e){var t=e.callback,r=e.args;switch(r.length){case 0:t();break;case 1:t(r[0]);break;case 2:t(r[0],r[1]);break;case 3:t(r[0],r[1],r[2]);break;default:t.apply(n,r)}}(t)}finally{f(e),u=!1}}}}function d(e){e.source===r&&"string"==typeof e.data&&0===e.data.indexOf(a)&&c(+e.data.slice(a.length))}}("undefined"==typeof self?void 0===e?this:e:self)}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}]},{},[10])(10)});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2).Buffer, __webpack_require__(22).setImmediate, __webpack_require__(1), __webpack_require__(5)))
 
 /***/ }),
-/* 48 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -13436,10 +22405,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1), __webpack_require__(5)))
 
 /***/ }),
-/* 49 */
+/* 60 */
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -13450,17 +22419,17 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 49;
+webpackEmptyContext.id = 60;
 
 /***/ }),
-/* 50 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(17)
-var inherits = __webpack_require__(5)
-var response = __webpack_require__(18)
-var stream = __webpack_require__(19)
-var toArrayBuffer = __webpack_require__(56)
+/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(24)
+var inherits = __webpack_require__(25)
+var response = __webpack_require__(26)
+var stream = __webpack_require__(27)
+var toArrayBuffer = __webpack_require__(67)
 
 var IncomingMessage = response.IncomingMessage
 var rStates = response.readyStates
@@ -13784,16 +22753,16 @@ var unsafeHeaders = [
 	'via'
 ]
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2).Buffer, __webpack_require__(1), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2).Buffer, __webpack_require__(1), __webpack_require__(5)))
 
 /***/ }),
-/* 51 */
+/* 62 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 52 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13801,8 +22770,8 @@ var unsafeHeaders = [
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Buffer = __webpack_require__(11).Buffer;
-var util = __webpack_require__(53);
+var Buffer = __webpack_require__(15).Buffer;
+var util = __webpack_require__(64);
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -13855,7 +22824,6 @@ module.exports = function () {
 
   BufferList.prototype.concat = function concat(n) {
     if (this.length === 0) return Buffer.alloc(0);
-    if (this.length === 1) return this.head.data;
     var ret = Buffer.allocUnsafe(n >>> 0);
     var p = this.head;
     var i = 0;
@@ -13878,13 +22846,13 @@ if (util && util.inspect && util.inspect.custom) {
 }
 
 /***/ }),
-/* 53 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 54 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -13958,7 +22926,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)))
 
 /***/ }),
-/* 55 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13991,11 +22959,11 @@ function config (name) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(25);
+var Transform = __webpack_require__(33);
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(8));
-util.inherits = __webpack_require__(5);
+var util = Object.create(__webpack_require__(9));
+util.inherits = __webpack_require__(10);
 /*</replacement>*/
 
 util.inherits(PassThrough, Transform);
@@ -14011,7 +22979,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 56 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2).Buffer
@@ -14044,7 +23012,7 @@ module.exports = function (buf) {
 
 
 /***/ }),
-/* 57 */
+/* 68 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -14069,7 +23037,7 @@ function extend() {
 
 
 /***/ }),
-/* 58 */
+/* 69 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -14139,7 +23107,7 @@ module.exports = {
 
 
 /***/ }),
-/* 59 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -14662,10 +23630,10 @@ module.exports = {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(60)(module), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(71)(module), __webpack_require__(1)))
 
 /***/ }),
-/* 60 */
+/* 71 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -14693,228 +23661,1823 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 61 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+var stringify = __webpack_require__(73);
+var parse = __webpack_require__(92);
+var formats = __webpack_require__(18);
 
 module.exports = {
-  isString: function(arg) {
-    return typeof(arg) === 'string';
-  },
-  isObject: function(arg) {
-    return typeof(arg) === 'object' && arg !== null;
-  },
-  isNull: function(arg) {
-    return arg === null;
-  },
-  isNullOrUndefined: function(arg) {
-    return arg == null;
-  }
+    formats: formats,
+    parse: parse,
+    stringify: stringify
 };
 
 
 /***/ }),
-/* 62 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(63);
-exports.encode = exports.stringify = __webpack_require__(64);
+var getSideChannel = __webpack_require__(74);
+var utils = __webpack_require__(37);
+var formats = __webpack_require__(18);
+var has = Object.prototype.hasOwnProperty;
+
+var arrayPrefixGenerators = {
+    brackets: function brackets(prefix) {
+        return prefix + '[]';
+    },
+    comma: 'comma',
+    indices: function indices(prefix, key) {
+        return prefix + '[' + key + ']';
+    },
+    repeat: function repeat(prefix) {
+        return prefix;
+    }
+};
+
+var isArray = Array.isArray;
+var push = Array.prototype.push;
+var pushToArray = function (arr, valueOrArray) {
+    push.apply(arr, isArray(valueOrArray) ? valueOrArray : [valueOrArray]);
+};
+
+var toISO = Date.prototype.toISOString;
+
+var defaultFormat = formats['default'];
+var defaults = {
+    addQueryPrefix: false,
+    allowDots: false,
+    allowEmptyArrays: false,
+    arrayFormat: 'indices',
+    charset: 'utf-8',
+    charsetSentinel: false,
+    delimiter: '&',
+    encode: true,
+    encodeDotInKeys: false,
+    encoder: utils.encode,
+    encodeValuesOnly: false,
+    format: defaultFormat,
+    formatter: formats.formatters[defaultFormat],
+    // deprecated
+    indices: false,
+    serializeDate: function serializeDate(date) {
+        return toISO.call(date);
+    },
+    skipNulls: false,
+    strictNullHandling: false
+};
+
+var isNonNullishPrimitive = function isNonNullishPrimitive(v) {
+    return typeof v === 'string'
+        || typeof v === 'number'
+        || typeof v === 'boolean'
+        || typeof v === 'symbol'
+        || typeof v === 'bigint';
+};
+
+var sentinel = {};
+
+var stringify = function stringify(
+    object,
+    prefix,
+    generateArrayPrefix,
+    commaRoundTrip,
+    allowEmptyArrays,
+    strictNullHandling,
+    skipNulls,
+    encodeDotInKeys,
+    encoder,
+    filter,
+    sort,
+    allowDots,
+    serializeDate,
+    format,
+    formatter,
+    encodeValuesOnly,
+    charset,
+    sideChannel
+) {
+    var obj = object;
+
+    var tmpSc = sideChannel;
+    var step = 0;
+    var findFlag = false;
+    while ((tmpSc = tmpSc.get(sentinel)) !== void undefined && !findFlag) {
+        // Where object last appeared in the ref tree
+        var pos = tmpSc.get(object);
+        step += 1;
+        if (typeof pos !== 'undefined') {
+            if (pos === step) {
+                throw new RangeError('Cyclic object value');
+            } else {
+                findFlag = true; // Break while
+            }
+        }
+        if (typeof tmpSc.get(sentinel) === 'undefined') {
+            step = 0;
+        }
+    }
+
+    if (typeof filter === 'function') {
+        obj = filter(prefix, obj);
+    } else if (obj instanceof Date) {
+        obj = serializeDate(obj);
+    } else if (generateArrayPrefix === 'comma' && isArray(obj)) {
+        obj = utils.maybeMap(obj, function (value) {
+            if (value instanceof Date) {
+                return serializeDate(value);
+            }
+            return value;
+        });
+    }
+
+    if (obj === null) {
+        if (strictNullHandling) {
+            return encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix;
+        }
+
+        obj = '';
+    }
+
+    if (isNonNullishPrimitive(obj) || utils.isBuffer(obj)) {
+        if (encoder) {
+            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder, charset, 'key', format);
+            return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults.encoder, charset, 'value', format))];
+        }
+        return [formatter(prefix) + '=' + formatter(String(obj))];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys;
+    if (generateArrayPrefix === 'comma' && isArray(obj)) {
+        // we need to join elements in
+        if (encodeValuesOnly && encoder) {
+            obj = utils.maybeMap(obj, encoder);
+        }
+        objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
+    } else if (isArray(filter)) {
+        objKeys = filter;
+    } else {
+        var keys = Object.keys(obj);
+        objKeys = sort ? keys.sort(sort) : keys;
+    }
+
+    var encodedPrefix = encodeDotInKeys ? prefix.replace(/\./g, '%2E') : prefix;
+
+    var adjustedPrefix = commaRoundTrip && isArray(obj) && obj.length === 1 ? encodedPrefix + '[]' : encodedPrefix;
+
+    if (allowEmptyArrays && isArray(obj) && obj.length === 0) {
+        return adjustedPrefix + '[]';
+    }
+
+    for (var j = 0; j < objKeys.length; ++j) {
+        var key = objKeys[j];
+        var value = typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key];
+
+        if (skipNulls && value === null) {
+            continue;
+        }
+
+        var encodedKey = allowDots && encodeDotInKeys ? key.replace(/\./g, '%2E') : key;
+        var keyPrefix = isArray(obj)
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, encodedKey) : adjustedPrefix
+            : adjustedPrefix + (allowDots ? '.' + encodedKey : '[' + encodedKey + ']');
+
+        sideChannel.set(object, step);
+        var valueSideChannel = getSideChannel();
+        valueSideChannel.set(sentinel, sideChannel);
+        pushToArray(values, stringify(
+            value,
+            keyPrefix,
+            generateArrayPrefix,
+            commaRoundTrip,
+            allowEmptyArrays,
+            strictNullHandling,
+            skipNulls,
+            encodeDotInKeys,
+            generateArrayPrefix === 'comma' && encodeValuesOnly && isArray(obj) ? null : encoder,
+            filter,
+            sort,
+            allowDots,
+            serializeDate,
+            format,
+            formatter,
+            encodeValuesOnly,
+            charset,
+            valueSideChannel
+        ));
+    }
+
+    return values;
+};
+
+var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (typeof opts.allowEmptyArrays !== 'undefined' && typeof opts.allowEmptyArrays !== 'boolean') {
+        throw new TypeError('`allowEmptyArrays` option can only be `true` or `false`, when provided');
+    }
+
+    if (typeof opts.encodeDotInKeys !== 'undefined' && typeof opts.encodeDotInKeys !== 'boolean') {
+        throw new TypeError('`encodeDotInKeys` option can only be `true` or `false`, when provided');
+    }
+
+    if (opts.encoder !== null && typeof opts.encoder !== 'undefined' && typeof opts.encoder !== 'function') {
+        throw new TypeError('Encoder has to be a function.');
+    }
+
+    var charset = opts.charset || defaults.charset;
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+
+    var format = formats['default'];
+    if (typeof opts.format !== 'undefined') {
+        if (!has.call(formats.formatters, opts.format)) {
+            throw new TypeError('Unknown format option provided.');
+        }
+        format = opts.format;
+    }
+    var formatter = formats.formatters[format];
+
+    var filter = defaults.filter;
+    if (typeof opts.filter === 'function' || isArray(opts.filter)) {
+        filter = opts.filter;
+    }
+
+    var arrayFormat;
+    if (opts.arrayFormat in arrayPrefixGenerators) {
+        arrayFormat = opts.arrayFormat;
+    } else if ('indices' in opts) {
+        arrayFormat = opts.indices ? 'indices' : 'repeat';
+    } else {
+        arrayFormat = defaults.arrayFormat;
+    }
+
+    if ('commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
+        throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
+    }
+
+    var allowDots = typeof opts.allowDots === 'undefined' ? opts.encodeDotInKeys === true ? true : defaults.allowDots : !!opts.allowDots;
+
+    return {
+        addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults.addQueryPrefix,
+        allowDots: allowDots,
+        allowEmptyArrays: typeof opts.allowEmptyArrays === 'boolean' ? !!opts.allowEmptyArrays : defaults.allowEmptyArrays,
+        arrayFormat: arrayFormat,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        commaRoundTrip: opts.commaRoundTrip,
+        delimiter: typeof opts.delimiter === 'undefined' ? defaults.delimiter : opts.delimiter,
+        encode: typeof opts.encode === 'boolean' ? opts.encode : defaults.encode,
+        encodeDotInKeys: typeof opts.encodeDotInKeys === 'boolean' ? opts.encodeDotInKeys : defaults.encodeDotInKeys,
+        encoder: typeof opts.encoder === 'function' ? opts.encoder : defaults.encoder,
+        encodeValuesOnly: typeof opts.encodeValuesOnly === 'boolean' ? opts.encodeValuesOnly : defaults.encodeValuesOnly,
+        filter: filter,
+        format: format,
+        formatter: formatter,
+        serializeDate: typeof opts.serializeDate === 'function' ? opts.serializeDate : defaults.serializeDate,
+        skipNulls: typeof opts.skipNulls === 'boolean' ? opts.skipNulls : defaults.skipNulls,
+        sort: typeof opts.sort === 'function' ? opts.sort : null,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+module.exports = function (object, opts) {
+    var obj = object;
+    var options = normalizeStringifyOptions(opts);
+
+    var objKeys;
+    var filter;
+
+    if (typeof options.filter === 'function') {
+        filter = options.filter;
+        obj = filter('', obj);
+    } else if (isArray(options.filter)) {
+        filter = options.filter;
+        objKeys = filter;
+    }
+
+    var keys = [];
+
+    if (typeof obj !== 'object' || obj === null) {
+        return '';
+    }
+
+    var generateArrayPrefix = arrayPrefixGenerators[options.arrayFormat];
+    var commaRoundTrip = generateArrayPrefix === 'comma' && options.commaRoundTrip;
+
+    if (!objKeys) {
+        objKeys = Object.keys(obj);
+    }
+
+    if (options.sort) {
+        objKeys.sort(options.sort);
+    }
+
+    var sideChannel = getSideChannel();
+    for (var i = 0; i < objKeys.length; ++i) {
+        var key = objKeys[i];
+
+        if (options.skipNulls && obj[key] === null) {
+            continue;
+        }
+        pushToArray(keys, stringify(
+            obj[key],
+            key,
+            generateArrayPrefix,
+            commaRoundTrip,
+            options.allowEmptyArrays,
+            options.strictNullHandling,
+            options.skipNulls,
+            options.encodeDotInKeys,
+            options.encode ? options.encoder : null,
+            options.filter,
+            options.sort,
+            options.allowDots,
+            options.serializeDate,
+            options.format,
+            options.formatter,
+            options.encodeValuesOnly,
+            options.charset,
+            sideChannel
+        ));
+    }
+
+    var joined = keys.join(options.delimiter);
+    var prefix = options.addQueryPrefix === true ? '?' : '';
+
+    if (options.charsetSentinel) {
+        if (options.charset === 'iso-8859-1') {
+            // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
+            prefix += 'utf8=%26%2310003%3B&';
+        } else {
+            // encodeURIComponent('✓')
+            prefix += 'utf8=%E2%9C%93&';
+        }
+    }
+
+    return joined.length > 0 ? prefix + joined : '';
+};
 
 
 /***/ }),
-/* 63 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+var GetIntrinsic = __webpack_require__(7);
+var callBound = __webpack_require__(85);
+var inspect = __webpack_require__(90);
 
-// If obj.hasOwnProperty has been overridden, then calling
-// obj.hasOwnProperty(prop) will break.
-// See: https://github.com/joyent/node/issues/1707
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
+var $TypeError = __webpack_require__(11);
+var $WeakMap = GetIntrinsic('%WeakMap%', true);
+var $Map = GetIntrinsic('%Map%', true);
+
+var $weakMapGet = callBound('WeakMap.prototype.get', true);
+var $weakMapSet = callBound('WeakMap.prototype.set', true);
+var $weakMapHas = callBound('WeakMap.prototype.has', true);
+var $mapGet = callBound('Map.prototype.get', true);
+var $mapSet = callBound('Map.prototype.set', true);
+var $mapHas = callBound('Map.prototype.has', true);
+
+/*
+* This function traverses the list returning the node corresponding to the given key.
+*
+* That node is also moved to the head of the list, so that if it's accessed again we don't need to traverse the whole list. By doing so, all the recently used nodes can be accessed relatively quickly.
+*/
+/** @type {import('.').listGetNode} */
+var listGetNode = function (list, key) { // eslint-disable-line consistent-return
+	/** @type {typeof list | NonNullable<(typeof list)['next']>} */
+	var prev = list;
+	/** @type {(typeof list)['next']} */
+	var curr;
+	for (; (curr = prev.next) !== null; prev = curr) {
+		if (curr.key === key) {
+			prev.next = curr.next;
+			// eslint-disable-next-line no-extra-parens
+			curr.next = /** @type {NonNullable<typeof list.next>} */ (list.next);
+			list.next = curr; // eslint-disable-line no-param-reassign
+			return curr;
+		}
+	}
+};
+
+/** @type {import('.').listGet} */
+var listGet = function (objects, key) {
+	var node = listGetNode(objects, key);
+	return node && node.value;
+};
+/** @type {import('.').listSet} */
+var listSet = function (objects, key, value) {
+	var node = listGetNode(objects, key);
+	if (node) {
+		node.value = value;
+	} else {
+		// Prepend the new node to the beginning of the list
+		objects.next = /** @type {import('.').ListNode<typeof value>} */ ({ // eslint-disable-line no-param-reassign, no-extra-parens
+			key: key,
+			next: objects.next,
+			value: value
+		});
+	}
+};
+/** @type {import('.').listHas} */
+var listHas = function (objects, key) {
+	return !!listGetNode(objects, key);
+};
+
+/** @type {import('.')} */
+module.exports = function getSideChannel() {
+	/** @type {WeakMap<object, unknown>} */ var $wm;
+	/** @type {Map<object, unknown>} */ var $m;
+	/** @type {import('.').RootNode<unknown>} */ var $o;
+
+	/** @type {import('.').Channel} */
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError('Side channel does not contain ' + inspect(key));
+			}
+		},
+		get: function (key) { // eslint-disable-line consistent-return
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapGet($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapGet($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listGet($o, key);
+				}
+			}
+		},
+		has: function (key) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapHas($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapHas($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listHas($o, key);
+				}
+			}
+			return false;
+		},
+		set: function (key, value) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if (!$wm) {
+					$wm = new $WeakMap();
+				}
+				$weakMapSet($wm, key, value);
+			} else if ($Map) {
+				if (!$m) {
+					$m = new $Map();
+				}
+				$mapSet($m, key, value);
+			} else {
+				if (!$o) {
+					// Initialize the linked list as an empty node, so that we don't have to special-case handling of the first node: we can always refer to it as (previous node).next, instead of something like (list).head
+					$o = { key: {}, next: null };
+				}
+				listSet($o, key, value);
+			}
+		}
+	};
+	return channel;
+};
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/** @type {import('.')} */
+module.exports = Error;
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/** @type {import('./eval')} */
+module.exports = EvalError;
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/** @type {import('./range')} */
+module.exports = RangeError;
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/** @type {import('./ref')} */
+module.exports = ReferenceError;
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/** @type {import('./uri')} */
+module.exports = URIError;
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var origSymbol = typeof Symbol !== 'undefined' && Symbol;
+var hasSymbolSham = __webpack_require__(81);
+
+module.exports = function hasNativeSymbols() {
+	if (typeof origSymbol !== 'function') { return false; }
+	if (typeof Symbol !== 'function') { return false; }
+	if (typeof origSymbol('foo') !== 'symbol') { return false; }
+	if (typeof Symbol('bar') !== 'symbol') { return false; }
+
+	return hasSymbolSham();
+};
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* eslint complexity: [2, 18], max-statements: [2, 33] */
+module.exports = function hasSymbols() {
+	if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
+	if (typeof Symbol.iterator === 'symbol') { return true; }
+
+	var obj = {};
+	var sym = Symbol('test');
+	var symObj = Object(sym);
+	if (typeof sym === 'string') { return false; }
+
+	if (Object.prototype.toString.call(sym) !== '[object Symbol]') { return false; }
+	if (Object.prototype.toString.call(symObj) !== '[object Symbol]') { return false; }
+
+	// temp disabled per https://github.com/ljharb/object.assign/issues/17
+	// if (sym instanceof Symbol) { return false; }
+	// temp disabled per https://github.com/WebReflection/get-own-property-symbols/issues/4
+	// if (!(symObj instanceof Symbol)) { return false; }
+
+	// if (typeof Symbol.prototype.toString !== 'function') { return false; }
+	// if (String(sym) !== Symbol.prototype.toString.call(sym)) { return false; }
+
+	var symVal = 42;
+	obj[sym] = symVal;
+	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
+	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
+
+	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
+
+	var syms = Object.getOwnPropertySymbols(obj);
+	if (syms.length !== 1 || syms[0] !== sym) { return false; }
+
+	if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
+
+	if (typeof Object.getOwnPropertyDescriptor === 'function') {
+		var descriptor = Object.getOwnPropertyDescriptor(obj, sym);
+		if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
+	}
+
+	return true;
+};
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var test = {
+	__proto__: null,
+	foo: {}
+};
+
+var $Object = Object;
+
+/** @type {import('.')} */
+module.exports = function hasProto() {
+	// @ts-expect-error: TS errors on an inherited property for some reason
+	return { __proto__: test }.foo === test.foo
+		&& !(test instanceof $Object);
+};
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* eslint no-invalid-this: 1 */
+
+var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
+var toStr = Object.prototype.toString;
+var max = Math.max;
+var funcType = '[object Function]';
+
+var concatty = function concatty(a, b) {
+    var arr = [];
+
+    for (var i = 0; i < a.length; i += 1) {
+        arr[i] = a[i];
+    }
+    for (var j = 0; j < b.length; j += 1) {
+        arr[j + a.length] = b[j];
+    }
+
+    return arr;
+};
+
+var slicy = function slicy(arrLike, offset) {
+    var arr = [];
+    for (var i = offset || 0, j = 0; i < arrLike.length; i += 1, j += 1) {
+        arr[j] = arrLike[i];
+    }
+    return arr;
+};
+
+var joiny = function (arr, joiner) {
+    var str = '';
+    for (var i = 0; i < arr.length; i += 1) {
+        str += arr[i];
+        if (i + 1 < arr.length) {
+            str += joiner;
+        }
+    }
+    return str;
+};
+
+module.exports = function bind(that) {
+    var target = this;
+    if (typeof target !== 'function' || toStr.apply(target) !== funcType) {
+        throw new TypeError(ERROR_MESSAGE + target);
+    }
+    var args = slicy(arguments, 1);
+
+    var bound;
+    var binder = function () {
+        if (this instanceof bound) {
+            var result = target.apply(
+                this,
+                concatty(args, arguments)
+            );
+            if (Object(result) === result) {
+                return result;
+            }
+            return this;
+        }
+        return target.apply(
+            that,
+            concatty(args, arguments)
+        );
+
+    };
+
+    var boundLength = max(0, target.length - args.length);
+    var boundArgs = [];
+    for (var i = 0; i < boundLength; i++) {
+        boundArgs[i] = '$' + i;
+    }
+
+    bound = Function('binder', 'return function (' + joiny(boundArgs, ',') + '){ return binder.apply(this,arguments); }')(binder);
+
+    if (target.prototype) {
+        var Empty = function Empty() {};
+        Empty.prototype = target.prototype;
+        bound.prototype = new Empty();
+        Empty.prototype = null;
+    }
+
+    return bound;
+};
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var call = Function.prototype.call;
+var $hasOwn = Object.prototype.hasOwnProperty;
+var bind = __webpack_require__(16);
+
+/** @type {import('.')} */
+module.exports = bind.call(call, $hasOwn);
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(7);
+
+var callBind = __webpack_require__(86);
+
+var $indexOf = callBind(GetIntrinsic('String.prototype.indexOf'));
+
+module.exports = function callBoundIntrinsic(name, allowMissing) {
+	var intrinsic = GetIntrinsic(name, !!allowMissing);
+	if (typeof intrinsic === 'function' && $indexOf(name, '.prototype.') > -1) {
+		return callBind(intrinsic);
+	}
+	return intrinsic;
+};
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(16);
+var GetIntrinsic = __webpack_require__(7);
+var setFunctionLength = __webpack_require__(87);
+
+var $TypeError = __webpack_require__(11);
+var $apply = GetIntrinsic('%Function.prototype.apply%');
+var $call = GetIntrinsic('%Function.prototype.call%');
+var $reflectApply = GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
+
+var $defineProperty = __webpack_require__(17);
+var $max = GetIntrinsic('%Math.max%');
+
+module.exports = function callBind(originalFunction) {
+	if (typeof originalFunction !== 'function') {
+		throw new $TypeError('a function is required');
+	}
+	var func = $reflectApply(bind, $call, arguments);
+	return setFunctionLength(
+		func,
+		1 + $max(0, originalFunction.length - (arguments.length - 1)),
+		true
+	);
+};
+
+var applyBind = function applyBind() {
+	return $reflectApply(bind, $apply, arguments);
+};
+
+if ($defineProperty) {
+	$defineProperty(module.exports, 'apply', { value: applyBind });
+} else {
+	module.exports.apply = applyBind;
 }
 
-module.exports = function(qs, sep, eq, options) {
-  sep = sep || '&';
-  eq = eq || '=';
-  var obj = {};
 
-  if (typeof qs !== 'string' || qs.length === 0) {
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(7);
+var define = __webpack_require__(88);
+var hasDescriptors = __webpack_require__(89)();
+var gOPD = __webpack_require__(36);
+
+var $TypeError = __webpack_require__(11);
+var $floor = GetIntrinsic('%Math.floor%');
+
+/** @type {import('.')} */
+module.exports = function setFunctionLength(fn, length) {
+	if (typeof fn !== 'function') {
+		throw new $TypeError('`fn` is not a function');
+	}
+	if (typeof length !== 'number' || length < 0 || length > 0xFFFFFFFF || $floor(length) !== length) {
+		throw new $TypeError('`length` must be a positive 32-bit integer');
+	}
+
+	var loose = arguments.length > 2 && !!arguments[2];
+
+	var functionLengthIsConfigurable = true;
+	var functionLengthIsWritable = true;
+	if ('length' in fn && gOPD) {
+		var desc = gOPD(fn, 'length');
+		if (desc && !desc.configurable) {
+			functionLengthIsConfigurable = false;
+		}
+		if (desc && !desc.writable) {
+			functionLengthIsWritable = false;
+		}
+	}
+
+	if (functionLengthIsConfigurable || functionLengthIsWritable || !loose) {
+		if (hasDescriptors) {
+			define(/** @type {Parameters<define>[0]} */ (fn), 'length', length, true, true);
+		} else {
+			define(/** @type {Parameters<define>[0]} */ (fn), 'length', length);
+		}
+	}
+	return fn;
+};
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $defineProperty = __webpack_require__(17);
+
+var $SyntaxError = __webpack_require__(35);
+var $TypeError = __webpack_require__(11);
+
+var gopd = __webpack_require__(36);
+
+/** @type {import('.')} */
+module.exports = function defineDataProperty(
+	obj,
+	property,
+	value
+) {
+	if (!obj || (typeof obj !== 'object' && typeof obj !== 'function')) {
+		throw new $TypeError('`obj` must be an object or a function`');
+	}
+	if (typeof property !== 'string' && typeof property !== 'symbol') {
+		throw new $TypeError('`property` must be a string or a symbol`');
+	}
+	if (arguments.length > 3 && typeof arguments[3] !== 'boolean' && arguments[3] !== null) {
+		throw new $TypeError('`nonEnumerable`, if provided, must be a boolean or null');
+	}
+	if (arguments.length > 4 && typeof arguments[4] !== 'boolean' && arguments[4] !== null) {
+		throw new $TypeError('`nonWritable`, if provided, must be a boolean or null');
+	}
+	if (arguments.length > 5 && typeof arguments[5] !== 'boolean' && arguments[5] !== null) {
+		throw new $TypeError('`nonConfigurable`, if provided, must be a boolean or null');
+	}
+	if (arguments.length > 6 && typeof arguments[6] !== 'boolean') {
+		throw new $TypeError('`loose`, if provided, must be a boolean');
+	}
+
+	var nonEnumerable = arguments.length > 3 ? arguments[3] : null;
+	var nonWritable = arguments.length > 4 ? arguments[4] : null;
+	var nonConfigurable = arguments.length > 5 ? arguments[5] : null;
+	var loose = arguments.length > 6 ? arguments[6] : false;
+
+	/* @type {false | TypedPropertyDescriptor<unknown>} */
+	var desc = !!gopd && gopd(obj, property);
+
+	if ($defineProperty) {
+		$defineProperty(obj, property, {
+			configurable: nonConfigurable === null && desc ? desc.configurable : !nonConfigurable,
+			enumerable: nonEnumerable === null && desc ? desc.enumerable : !nonEnumerable,
+			value: value,
+			writable: nonWritable === null && desc ? desc.writable : !nonWritable
+		});
+	} else if (loose || (!nonEnumerable && !nonWritable && !nonConfigurable)) {
+		// must fall back to [[Set]], and was not explicitly asked to make non-enumerable, non-writable, or non-configurable
+		obj[property] = value; // eslint-disable-line no-param-reassign
+	} else {
+		throw new $SyntaxError('This environment does not support defining a property as non-configurable, non-writable, or non-enumerable.');
+	}
+};
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $defineProperty = __webpack_require__(17);
+
+var hasPropertyDescriptors = function hasPropertyDescriptors() {
+	return !!$defineProperty;
+};
+
+hasPropertyDescriptors.hasArrayLengthDefineBug = function hasArrayLengthDefineBug() {
+	// node v0.6 has a bug where array lengths can be Set but not Defined
+	if (!$defineProperty) {
+		return null;
+	}
+	try {
+		return $defineProperty([], 'length', { value: 1 }).length !== 1;
+	} catch (e) {
+		// In Firefox 4-22, defining length on an array throws an exception.
+		return true;
+	}
+};
+
+module.exports = hasPropertyDescriptors;
+
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var hasMap = typeof Map === 'function' && Map.prototype;
+var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
+var mapSize = hasMap && mapSizeDescriptor && typeof mapSizeDescriptor.get === 'function' ? mapSizeDescriptor.get : null;
+var mapForEach = hasMap && Map.prototype.forEach;
+var hasSet = typeof Set === 'function' && Set.prototype;
+var setSizeDescriptor = Object.getOwnPropertyDescriptor && hasSet ? Object.getOwnPropertyDescriptor(Set.prototype, 'size') : null;
+var setSize = hasSet && setSizeDescriptor && typeof setSizeDescriptor.get === 'function' ? setSizeDescriptor.get : null;
+var setForEach = hasSet && Set.prototype.forEach;
+var hasWeakMap = typeof WeakMap === 'function' && WeakMap.prototype;
+var weakMapHas = hasWeakMap ? WeakMap.prototype.has : null;
+var hasWeakSet = typeof WeakSet === 'function' && WeakSet.prototype;
+var weakSetHas = hasWeakSet ? WeakSet.prototype.has : null;
+var hasWeakRef = typeof WeakRef === 'function' && WeakRef.prototype;
+var weakRefDeref = hasWeakRef ? WeakRef.prototype.deref : null;
+var booleanValueOf = Boolean.prototype.valueOf;
+var objectToString = Object.prototype.toString;
+var functionToString = Function.prototype.toString;
+var $match = String.prototype.match;
+var $slice = String.prototype.slice;
+var $replace = String.prototype.replace;
+var $toUpperCase = String.prototype.toUpperCase;
+var $toLowerCase = String.prototype.toLowerCase;
+var $test = RegExp.prototype.test;
+var $concat = Array.prototype.concat;
+var $join = Array.prototype.join;
+var $arrSlice = Array.prototype.slice;
+var $floor = Math.floor;
+var bigIntValueOf = typeof BigInt === 'function' ? BigInt.prototype.valueOf : null;
+var gOPS = Object.getOwnPropertySymbols;
+var symToString = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.prototype.toString : null;
+var hasShammedSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'object';
+// ie, `has-tostringtag/shams
+var toStringTag = typeof Symbol === 'function' && Symbol.toStringTag && (typeof Symbol.toStringTag === hasShammedSymbols ? 'object' : 'symbol')
+    ? Symbol.toStringTag
+    : null;
+var isEnumerable = Object.prototype.propertyIsEnumerable;
+
+var gPO = (typeof Reflect === 'function' ? Reflect.getPrototypeOf : Object.getPrototypeOf) || (
+    [].__proto__ === Array.prototype // eslint-disable-line no-proto
+        ? function (O) {
+            return O.__proto__; // eslint-disable-line no-proto
+        }
+        : null
+);
+
+function addNumericSeparator(num, str) {
+    if (
+        num === Infinity
+        || num === -Infinity
+        || num !== num
+        || (num && num > -1000 && num < 1000)
+        || $test.call(/e/, str)
+    ) {
+        return str;
+    }
+    var sepRegex = /[0-9](?=(?:[0-9]{3})+(?![0-9]))/g;
+    if (typeof num === 'number') {
+        var int = num < 0 ? -$floor(-num) : $floor(num); // trunc(num)
+        if (int !== num) {
+            var intStr = String(int);
+            var dec = $slice.call(str, intStr.length + 1);
+            return $replace.call(intStr, sepRegex, '$&_') + '.' + $replace.call($replace.call(dec, /([0-9]{3})/g, '$&_'), /_$/, '');
+        }
+    }
+    return $replace.call(str, sepRegex, '$&_');
+}
+
+var utilInspect = __webpack_require__(91);
+var inspectCustom = utilInspect.custom;
+var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
+
+module.exports = function inspect_(obj, options, depth, seen) {
+    var opts = options || {};
+
+    if (has(opts, 'quoteStyle') && (opts.quoteStyle !== 'single' && opts.quoteStyle !== 'double')) {
+        throw new TypeError('option "quoteStyle" must be "single" or "double"');
+    }
+    if (
+        has(opts, 'maxStringLength') && (typeof opts.maxStringLength === 'number'
+            ? opts.maxStringLength < 0 && opts.maxStringLength !== Infinity
+            : opts.maxStringLength !== null
+        )
+    ) {
+        throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
+    }
+    var customInspect = has(opts, 'customInspect') ? opts.customInspect : true;
+    if (typeof customInspect !== 'boolean' && customInspect !== 'symbol') {
+        throw new TypeError('option "customInspect", if provided, must be `true`, `false`, or `\'symbol\'`');
+    }
+
+    if (
+        has(opts, 'indent')
+        && opts.indent !== null
+        && opts.indent !== '\t'
+        && !(parseInt(opts.indent, 10) === opts.indent && opts.indent > 0)
+    ) {
+        throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
+    }
+    if (has(opts, 'numericSeparator') && typeof opts.numericSeparator !== 'boolean') {
+        throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
+    }
+    var numericSeparator = opts.numericSeparator;
+
+    if (typeof obj === 'undefined') {
+        return 'undefined';
+    }
+    if (obj === null) {
+        return 'null';
+    }
+    if (typeof obj === 'boolean') {
+        return obj ? 'true' : 'false';
+    }
+
+    if (typeof obj === 'string') {
+        return inspectString(obj, opts);
+    }
+    if (typeof obj === 'number') {
+        if (obj === 0) {
+            return Infinity / obj > 0 ? '0' : '-0';
+        }
+        var str = String(obj);
+        return numericSeparator ? addNumericSeparator(obj, str) : str;
+    }
+    if (typeof obj === 'bigint') {
+        var bigIntStr = String(obj) + 'n';
+        return numericSeparator ? addNumericSeparator(obj, bigIntStr) : bigIntStr;
+    }
+
+    var maxDepth = typeof opts.depth === 'undefined' ? 5 : opts.depth;
+    if (typeof depth === 'undefined') { depth = 0; }
+    if (depth >= maxDepth && maxDepth > 0 && typeof obj === 'object') {
+        return isArray(obj) ? '[Array]' : '[Object]';
+    }
+
+    var indent = getIndent(opts, depth);
+
+    if (typeof seen === 'undefined') {
+        seen = [];
+    } else if (indexOf(seen, obj) >= 0) {
+        return '[Circular]';
+    }
+
+    function inspect(value, from, noIndent) {
+        if (from) {
+            seen = $arrSlice.call(seen);
+            seen.push(from);
+        }
+        if (noIndent) {
+            var newOpts = {
+                depth: opts.depth
+            };
+            if (has(opts, 'quoteStyle')) {
+                newOpts.quoteStyle = opts.quoteStyle;
+            }
+            return inspect_(value, newOpts, depth + 1, seen);
+        }
+        return inspect_(value, opts, depth + 1, seen);
+    }
+
+    if (typeof obj === 'function' && !isRegExp(obj)) { // in older engines, regexes are callable
+        var name = nameOf(obj);
+        var keys = arrObjKeys(obj, inspect);
+        return '[Function' + (name ? ': ' + name : ' (anonymous)') + ']' + (keys.length > 0 ? ' { ' + $join.call(keys, ', ') + ' }' : '');
+    }
+    if (isSymbol(obj)) {
+        var symString = hasShammedSymbols ? $replace.call(String(obj), /^(Symbol\(.*\))_[^)]*$/, '$1') : symToString.call(obj);
+        return typeof obj === 'object' && !hasShammedSymbols ? markBoxed(symString) : symString;
+    }
+    if (isElement(obj)) {
+        var s = '<' + $toLowerCase.call(String(obj.nodeName));
+        var attrs = obj.attributes || [];
+        for (var i = 0; i < attrs.length; i++) {
+            s += ' ' + attrs[i].name + '=' + wrapQuotes(quote(attrs[i].value), 'double', opts);
+        }
+        s += '>';
+        if (obj.childNodes && obj.childNodes.length) { s += '...'; }
+        s += '</' + $toLowerCase.call(String(obj.nodeName)) + '>';
+        return s;
+    }
+    if (isArray(obj)) {
+        if (obj.length === 0) { return '[]'; }
+        var xs = arrObjKeys(obj, inspect);
+        if (indent && !singleLineValues(xs)) {
+            return '[' + indentedJoin(xs, indent) + ']';
+        }
+        return '[ ' + $join.call(xs, ', ') + ' ]';
+    }
+    if (isError(obj)) {
+        var parts = arrObjKeys(obj, inspect);
+        if (!('cause' in Error.prototype) && 'cause' in obj && !isEnumerable.call(obj, 'cause')) {
+            return '{ [' + String(obj) + '] ' + $join.call($concat.call('[cause]: ' + inspect(obj.cause), parts), ', ') + ' }';
+        }
+        if (parts.length === 0) { return '[' + String(obj) + ']'; }
+        return '{ [' + String(obj) + '] ' + $join.call(parts, ', ') + ' }';
+    }
+    if (typeof obj === 'object' && customInspect) {
+        if (inspectSymbol && typeof obj[inspectSymbol] === 'function' && utilInspect) {
+            return utilInspect(obj, { depth: maxDepth - depth });
+        } else if (customInspect !== 'symbol' && typeof obj.inspect === 'function') {
+            return obj.inspect();
+        }
+    }
+    if (isMap(obj)) {
+        var mapParts = [];
+        if (mapForEach) {
+            mapForEach.call(obj, function (value, key) {
+                mapParts.push(inspect(key, obj, true) + ' => ' + inspect(value, obj));
+            });
+        }
+        return collectionOf('Map', mapSize.call(obj), mapParts, indent);
+    }
+    if (isSet(obj)) {
+        var setParts = [];
+        if (setForEach) {
+            setForEach.call(obj, function (value) {
+                setParts.push(inspect(value, obj));
+            });
+        }
+        return collectionOf('Set', setSize.call(obj), setParts, indent);
+    }
+    if (isWeakMap(obj)) {
+        return weakCollectionOf('WeakMap');
+    }
+    if (isWeakSet(obj)) {
+        return weakCollectionOf('WeakSet');
+    }
+    if (isWeakRef(obj)) {
+        return weakCollectionOf('WeakRef');
+    }
+    if (isNumber(obj)) {
+        return markBoxed(inspect(Number(obj)));
+    }
+    if (isBigInt(obj)) {
+        return markBoxed(inspect(bigIntValueOf.call(obj)));
+    }
+    if (isBoolean(obj)) {
+        return markBoxed(booleanValueOf.call(obj));
+    }
+    if (isString(obj)) {
+        return markBoxed(inspect(String(obj)));
+    }
+    // note: in IE 8, sometimes `global !== window` but both are the prototypes of each other
+    /* eslint-env browser */
+    if (typeof window !== 'undefined' && obj === window) {
+        return '{ [object Window] }';
+    }
+    if (
+        (typeof globalThis !== 'undefined' && obj === globalThis)
+        || (typeof global !== 'undefined' && obj === global)
+    ) {
+        return '{ [object globalThis] }';
+    }
+    if (!isDate(obj) && !isRegExp(obj)) {
+        var ys = arrObjKeys(obj, inspect);
+        var isPlainObject = gPO ? gPO(obj) === Object.prototype : obj instanceof Object || obj.constructor === Object;
+        var protoTag = obj instanceof Object ? '' : 'null prototype';
+        var stringTag = !isPlainObject && toStringTag && Object(obj) === obj && toStringTag in obj ? $slice.call(toStr(obj), 8, -1) : protoTag ? 'Object' : '';
+        var constructorTag = isPlainObject || typeof obj.constructor !== 'function' ? '' : obj.constructor.name ? obj.constructor.name + ' ' : '';
+        var tag = constructorTag + (stringTag || protoTag ? '[' + $join.call($concat.call([], stringTag || [], protoTag || []), ': ') + '] ' : '');
+        if (ys.length === 0) { return tag + '{}'; }
+        if (indent) {
+            return tag + '{' + indentedJoin(ys, indent) + '}';
+        }
+        return tag + '{ ' + $join.call(ys, ', ') + ' }';
+    }
+    return String(obj);
+};
+
+function wrapQuotes(s, defaultStyle, opts) {
+    var quoteChar = (opts.quoteStyle || defaultStyle) === 'double' ? '"' : "'";
+    return quoteChar + s + quoteChar;
+}
+
+function quote(s) {
+    return $replace.call(String(s), /"/g, '&quot;');
+}
+
+function isArray(obj) { return toStr(obj) === '[object Array]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isDate(obj) { return toStr(obj) === '[object Date]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isRegExp(obj) { return toStr(obj) === '[object RegExp]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isError(obj) { return toStr(obj) === '[object Error]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isString(obj) { return toStr(obj) === '[object String]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isNumber(obj) { return toStr(obj) === '[object Number]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isBoolean(obj) { return toStr(obj) === '[object Boolean]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+
+// Symbol and BigInt do have Symbol.toStringTag by spec, so that can't be used to eliminate false positives
+function isSymbol(obj) {
+    if (hasShammedSymbols) {
+        return obj && typeof obj === 'object' && obj instanceof Symbol;
+    }
+    if (typeof obj === 'symbol') {
+        return true;
+    }
+    if (!obj || typeof obj !== 'object' || !symToString) {
+        return false;
+    }
+    try {
+        symToString.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isBigInt(obj) {
+    if (!obj || typeof obj !== 'object' || !bigIntValueOf) {
+        return false;
+    }
+    try {
+        bigIntValueOf.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+var hasOwn = Object.prototype.hasOwnProperty || function (key) { return key in this; };
+function has(obj, key) {
+    return hasOwn.call(obj, key);
+}
+
+function toStr(obj) {
+    return objectToString.call(obj);
+}
+
+function nameOf(f) {
+    if (f.name) { return f.name; }
+    var m = $match.call(functionToString.call(f), /^function\s*([\w$]+)/);
+    if (m) { return m[1]; }
+    return null;
+}
+
+function indexOf(xs, x) {
+    if (xs.indexOf) { return xs.indexOf(x); }
+    for (var i = 0, l = xs.length; i < l; i++) {
+        if (xs[i] === x) { return i; }
+    }
+    return -1;
+}
+
+function isMap(x) {
+    if (!mapSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        mapSize.call(x);
+        try {
+            setSize.call(x);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof Map; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakMap(x) {
+    if (!weakMapHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakMapHas.call(x, weakMapHas);
+        try {
+            weakSetHas.call(x, weakSetHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakMap; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakRef(x) {
+    if (!weakRefDeref || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakRefDeref.call(x);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isSet(x) {
+    if (!setSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        setSize.call(x);
+        try {
+            mapSize.call(x);
+        } catch (m) {
+            return true;
+        }
+        return x instanceof Set; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakSet(x) {
+    if (!weakSetHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakSetHas.call(x, weakSetHas);
+        try {
+            weakMapHas.call(x, weakMapHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakSet; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isElement(x) {
+    if (!x || typeof x !== 'object') { return false; }
+    if (typeof HTMLElement !== 'undefined' && x instanceof HTMLElement) {
+        return true;
+    }
+    return typeof x.nodeName === 'string' && typeof x.getAttribute === 'function';
+}
+
+function inspectString(str, opts) {
+    if (str.length > opts.maxStringLength) {
+        var remaining = str.length - opts.maxStringLength;
+        var trailer = '... ' + remaining + ' more character' + (remaining > 1 ? 's' : '');
+        return inspectString($slice.call(str, 0, opts.maxStringLength), opts) + trailer;
+    }
+    // eslint-disable-next-line no-control-regex
+    var s = $replace.call($replace.call(str, /(['\\])/g, '\\$1'), /[\x00-\x1f]/g, lowbyte);
+    return wrapQuotes(s, 'single', opts);
+}
+
+function lowbyte(c) {
+    var n = c.charCodeAt(0);
+    var x = {
+        8: 'b',
+        9: 't',
+        10: 'n',
+        12: 'f',
+        13: 'r'
+    }[n];
+    if (x) { return '\\' + x; }
+    return '\\x' + (n < 0x10 ? '0' : '') + $toUpperCase.call(n.toString(16));
+}
+
+function markBoxed(str) {
+    return 'Object(' + str + ')';
+}
+
+function weakCollectionOf(type) {
+    return type + ' { ? }';
+}
+
+function collectionOf(type, size, entries, indent) {
+    var joinedEntries = indent ? indentedJoin(entries, indent) : $join.call(entries, ', ');
+    return type + ' (' + size + ') {' + joinedEntries + '}';
+}
+
+function singleLineValues(xs) {
+    for (var i = 0; i < xs.length; i++) {
+        if (indexOf(xs[i], '\n') >= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function getIndent(opts, depth) {
+    var baseIndent;
+    if (opts.indent === '\t') {
+        baseIndent = '\t';
+    } else if (typeof opts.indent === 'number' && opts.indent > 0) {
+        baseIndent = $join.call(Array(opts.indent + 1), ' ');
+    } else {
+        return null;
+    }
+    return {
+        base: baseIndent,
+        prev: $join.call(Array(depth + 1), baseIndent)
+    };
+}
+
+function indentedJoin(xs, indent) {
+    if (xs.length === 0) { return ''; }
+    var lineJoiner = '\n' + indent.prev + indent.base;
+    return lineJoiner + $join.call(xs, ',' + lineJoiner) + '\n' + indent.prev;
+}
+
+function arrObjKeys(obj, inspect) {
+    var isArr = isArray(obj);
+    var xs = [];
+    if (isArr) {
+        xs.length = obj.length;
+        for (var i = 0; i < obj.length; i++) {
+            xs[i] = has(obj, i) ? inspect(obj[i], obj) : '';
+        }
+    }
+    var syms = typeof gOPS === 'function' ? gOPS(obj) : [];
+    var symMap;
+    if (hasShammedSymbols) {
+        symMap = {};
+        for (var k = 0; k < syms.length; k++) {
+            symMap['$' + syms[k]] = syms[k];
+        }
+    }
+
+    for (var key in obj) { // eslint-disable-line no-restricted-syntax
+        if (!has(obj, key)) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (isArr && String(Number(key)) === key && key < obj.length) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (hasShammedSymbols && symMap['$' + key] instanceof Symbol) {
+            // this is to prevent shammed Symbols, which are stored as strings, from being included in the string key section
+            continue; // eslint-disable-line no-restricted-syntax, no-continue
+        } else if ($test.call(/[^\w$]/, key)) {
+            xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
+        } else {
+            xs.push(key + ': ' + inspect(obj[key], obj));
+        }
+    }
+    if (typeof gOPS === 'function') {
+        for (var j = 0; j < syms.length; j++) {
+            if (isEnumerable.call(obj, syms[j])) {
+                xs.push('[' + inspect(syms[j]) + ']: ' + inspect(obj[syms[j]], obj));
+            }
+        }
+    }
+    return xs;
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)))
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(37);
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var defaults = {
+    allowDots: false,
+    allowEmptyArrays: false,
+    allowPrototypes: false,
+    allowSparse: false,
+    arrayLimit: 20,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    comma: false,
+    decodeDotInKeys: false,
+    decoder: utils.decode,
+    delimiter: '&',
+    depth: 5,
+    duplicates: 'combine',
+    ignoreQueryPrefix: false,
+    interpretNumericEntities: false,
+    parameterLimit: 1000,
+    parseArrays: true,
+    plainObjects: false,
+    strictDepth: false,
+    strictNullHandling: false
+};
+
+var interpretNumericEntities = function (str) {
+    return str.replace(/&#(\d+);/g, function ($0, numberStr) {
+        return String.fromCharCode(parseInt(numberStr, 10));
+    });
+};
+
+var parseArrayValue = function (val, options) {
+    if (val && typeof val === 'string' && options.comma && val.indexOf(',') > -1) {
+        return val.split(',');
+    }
+
+    return val;
+};
+
+// This is what browsers will submit when the ✓ character occurs in an
+// application/x-www-form-urlencoded body and the encoding of the page containing
+// the form is iso-8859-1, or when the submitted form has an accept-charset
+// attribute of iso-8859-1. Presumably also with other charsets that do not contain
+// the ✓ character, such as us-ascii.
+var isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
+
+// These are the percent-encoded utf-8 octets representing a checkmark, indicating that the request actually is utf-8 encoded.
+var charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
+
+var parseValues = function parseQueryStringValues(str, options) {
+    var obj = { __proto__: null };
+
+    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    cleanStr = cleanStr.replace(/%5B/gi, '[').replace(/%5D/gi, ']');
+    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
+    var parts = cleanStr.split(options.delimiter, limit);
+    var skipIndex = -1; // Keep track of where the utf8 sentinel was found
+    var i;
+
+    var charset = options.charset;
+    if (options.charsetSentinel) {
+        for (i = 0; i < parts.length; ++i) {
+            if (parts[i].indexOf('utf8=') === 0) {
+                if (parts[i] === charsetSentinel) {
+                    charset = 'utf-8';
+                } else if (parts[i] === isoSentinel) {
+                    charset = 'iso-8859-1';
+                }
+                skipIndex = i;
+                i = parts.length; // The eslint settings do not allow break;
+            }
+        }
+    }
+
+    for (i = 0; i < parts.length; ++i) {
+        if (i === skipIndex) {
+            continue;
+        }
+        var part = parts[i];
+
+        var bracketEqualsPos = part.indexOf(']=');
+        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
+
+        var key, val;
+        if (pos === -1) {
+            key = options.decoder(part, defaults.decoder, charset, 'key');
+            val = options.strictNullHandling ? null : '';
+        } else {
+            key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
+            val = utils.maybeMap(
+                parseArrayValue(part.slice(pos + 1), options),
+                function (encodedVal) {
+                    return options.decoder(encodedVal, defaults.decoder, charset, 'value');
+                }
+            );
+        }
+
+        if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+            val = interpretNumericEntities(val);
+        }
+
+        if (part.indexOf('[]=') > -1) {
+            val = isArray(val) ? [val] : val;
+        }
+
+        var existing = has.call(obj, key);
+        if (existing && options.duplicates === 'combine') {
+            obj[key] = utils.combine(obj[key], val);
+        } else if (!existing || options.duplicates === 'last') {
+            obj[key] = val;
+        }
+    }
+
     return obj;
-  }
-
-  var regexp = /\+/g;
-  qs = qs.split(sep);
-
-  var maxKeys = 1000;
-  if (options && typeof options.maxKeys === 'number') {
-    maxKeys = options.maxKeys;
-  }
-
-  var len = qs.length;
-  // maxKeys <= 0 means that we should not limit keys count
-  if (maxKeys > 0 && len > maxKeys) {
-    len = maxKeys;
-  }
-
-  for (var i = 0; i < len; ++i) {
-    var x = qs[i].replace(regexp, '%20'),
-        idx = x.indexOf(eq),
-        kstr, vstr, k, v;
-
-    if (idx >= 0) {
-      kstr = x.substr(0, idx);
-      vstr = x.substr(idx + 1);
-    } else {
-      kstr = x;
-      vstr = '';
-    }
-
-    k = decodeURIComponent(kstr);
-    v = decodeURIComponent(vstr);
-
-    if (!hasOwnProperty(obj, k)) {
-      obj[k] = v;
-    } else if (isArray(obj[k])) {
-      obj[k].push(v);
-    } else {
-      obj[k] = [obj[k], v];
-    }
-  }
-
-  return obj;
 };
 
-var isArray = Array.isArray || function (xs) {
-  return Object.prototype.toString.call(xs) === '[object Array]';
+var parseObject = function (chain, val, options, valuesParsed) {
+    var leaf = valuesParsed ? val : parseArrayValue(val, options);
+
+    for (var i = chain.length - 1; i >= 0; --i) {
+        var obj;
+        var root = chain[i];
+
+        if (root === '[]' && options.parseArrays) {
+            obj = options.allowEmptyArrays && (leaf === '' || (options.strictNullHandling && leaf === null))
+                ? []
+                : [].concat(leaf);
+        } else {
+            obj = options.plainObjects ? Object.create(null) : {};
+            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
+            var decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/g, '.') : cleanRoot;
+            var index = parseInt(decodedRoot, 10);
+            if (!options.parseArrays && decodedRoot === '') {
+                obj = { 0: leaf };
+            } else if (
+                !isNaN(index)
+                && root !== decodedRoot
+                && String(index) === decodedRoot
+                && index >= 0
+                && (options.parseArrays && index <= options.arrayLimit)
+            ) {
+                obj = [];
+                obj[index] = leaf;
+            } else if (decodedRoot !== '__proto__') {
+                obj[decodedRoot] = leaf;
+            }
+        }
+
+        leaf = obj;
+    }
+
+    return leaf;
+};
+
+var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesParsed) {
+    if (!givenKey) {
+        return;
+    }
+
+    // Transform dot notation to bracket notation
+    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+
+    // The regex chunks
+
+    var brackets = /(\[[^[\]]*])/;
+    var child = /(\[[^[\]]*])/g;
+
+    // Get the parent
+
+    var segment = options.depth > 0 && brackets.exec(key);
+    var parent = segment ? key.slice(0, segment.index) : key;
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (parent) {
+        // If we aren't using plain objects, optionally prefix keys that would overwrite object prototype properties
+        if (!options.plainObjects && has.call(Object.prototype, parent)) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+
+        keys.push(parent);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while (options.depth > 0 && (segment = child.exec(key)) !== null && i < options.depth) {
+        i += 1;
+        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+        keys.push(segment[1]);
+    }
+
+    // If there's a remainder, check strictDepth option for throw, else just add whatever is left
+
+    if (segment) {
+        if (options.strictDepth === true) {
+            throw new RangeError('Input depth exceeded depth option of ' + options.depth + ' and strictDepth is true');
+        }
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return parseObject(keys, val, options, valuesParsed);
+};
+
+var normalizeParseOptions = function normalizeParseOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (typeof opts.allowEmptyArrays !== 'undefined' && typeof opts.allowEmptyArrays !== 'boolean') {
+        throw new TypeError('`allowEmptyArrays` option can only be `true` or `false`, when provided');
+    }
+
+    if (typeof opts.decodeDotInKeys !== 'undefined' && typeof opts.decodeDotInKeys !== 'boolean') {
+        throw new TypeError('`decodeDotInKeys` option can only be `true` or `false`, when provided');
+    }
+
+    if (opts.decoder !== null && typeof opts.decoder !== 'undefined' && typeof opts.decoder !== 'function') {
+        throw new TypeError('Decoder has to be a function.');
+    }
+
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+    var charset = typeof opts.charset === 'undefined' ? defaults.charset : opts.charset;
+
+    var duplicates = typeof opts.duplicates === 'undefined' ? defaults.duplicates : opts.duplicates;
+
+    if (duplicates !== 'combine' && duplicates !== 'first' && duplicates !== 'last') {
+        throw new TypeError('The duplicates option must be either combine, first, or last');
+    }
+
+    var allowDots = typeof opts.allowDots === 'undefined' ? opts.decodeDotInKeys === true ? true : defaults.allowDots : !!opts.allowDots;
+
+    return {
+        allowDots: allowDots,
+        allowEmptyArrays: typeof opts.allowEmptyArrays === 'boolean' ? !!opts.allowEmptyArrays : defaults.allowEmptyArrays,
+        allowPrototypes: typeof opts.allowPrototypes === 'boolean' ? opts.allowPrototypes : defaults.allowPrototypes,
+        allowSparse: typeof opts.allowSparse === 'boolean' ? opts.allowSparse : defaults.allowSparse,
+        arrayLimit: typeof opts.arrayLimit === 'number' ? opts.arrayLimit : defaults.arrayLimit,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        comma: typeof opts.comma === 'boolean' ? opts.comma : defaults.comma,
+        decodeDotInKeys: typeof opts.decodeDotInKeys === 'boolean' ? opts.decodeDotInKeys : defaults.decodeDotInKeys,
+        decoder: typeof opts.decoder === 'function' ? opts.decoder : defaults.decoder,
+        delimiter: typeof opts.delimiter === 'string' || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
+        // eslint-disable-next-line no-implicit-coercion, no-extra-parens
+        depth: (typeof opts.depth === 'number' || opts.depth === false) ? +opts.depth : defaults.depth,
+        duplicates: duplicates,
+        ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
+        interpretNumericEntities: typeof opts.interpretNumericEntities === 'boolean' ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
+        parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
+        parseArrays: opts.parseArrays !== false,
+        plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+        strictDepth: typeof opts.strictDepth === 'boolean' ? !!opts.strictDepth : defaults.strictDepth,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+module.exports = function (str, opts) {
+    var options = normalizeParseOptions(opts);
+
+    if (str === '' || str === null || typeof str === 'undefined') {
+        return options.plainObjects ? Object.create(null) : {};
+    }
+
+    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
+    var obj = options.plainObjects ? Object.create(null) : {};
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0; i < keys.length; ++i) {
+        var key = keys[i];
+        var newObj = parseKeys(key, tempObj[key], options, typeof str === 'string');
+        obj = utils.merge(obj, newObj, options);
+    }
+
+    if (options.allowSparse === true) {
+        return obj;
+    }
+
+    return utils.compact(obj);
 };
 
 
 /***/ }),
-/* 64 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-var stringifyPrimitive = function(v) {
-  switch (typeof v) {
-    case 'string':
-      return v;
-
-    case 'boolean':
-      return v ? 'true' : 'false';
-
-    case 'number':
-      return isFinite(v) ? v : '';
-
-    default:
-      return '';
-  }
-};
-
-module.exports = function(obj, sep, eq, name) {
-  sep = sep || '&';
-  eq = eq || '=';
-  if (obj === null) {
-    obj = undefined;
-  }
-
-  if (typeof obj === 'object') {
-    return map(objectKeys(obj), function(k) {
-      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-      if (isArray(obj[k])) {
-        return map(obj[k], function(v) {
-          return ks + encodeURIComponent(stringifyPrimitive(v));
-        }).join(sep);
-      } else {
-        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
-      }
-    }).join(sep);
-
-  }
-
-  if (!name) return '';
-  return encodeURIComponent(stringifyPrimitive(name)) + eq +
-         encodeURIComponent(stringifyPrimitive(obj));
-};
-
-var isArray = Array.isArray || function (xs) {
-  return Object.prototype.toString.call(xs) === '[object Array]';
-};
-
-function map (xs, f) {
-  if (xs.map) return xs.map(f);
-  var res = [];
-  for (var i = 0; i < xs.length; i++) {
-    res.push(f(xs[i], i));
-  }
-  return res;
-}
-
-var objectKeys = Object.keys || function (obj) {
-  var res = [];
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
-  }
-  return res;
-};
-
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var http = __webpack_require__(16)
-var url = __webpack_require__(26)
+var http = __webpack_require__(23)
+var url = __webpack_require__(34)
 
 var https = module.exports
 
@@ -14947,7717 +25510,33 @@ function validateParams (params) {
 
 
 /***/ }),
-/* 66 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/global.js
-/* harmony default export */ var global = (function(defs) {
-  defs('EPSG:4326', "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees");
-  defs('EPSG:4269', "+title=NAD83 (long/lat) +proj=longlat +a=6378137.0 +b=6356752.31414036 +ellps=GRS80 +datum=NAD83 +units=degrees");
-  defs('EPSG:3857', "+title=WGS 84 / Pseudo-Mercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs");
-
-  defs.WGS84 = defs['EPSG:4326'];
-  defs['EPSG:3785'] = defs['EPSG:3857']; // maintain backward compat, official code is 3857
-  defs.GOOGLE = defs['EPSG:3857'];
-  defs['EPSG:900913'] = defs['EPSG:3857'];
-  defs['EPSG:102113'] = defs['EPSG:3857'];
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/values.js
-var PJD_3PARAM = 1;
-var PJD_7PARAM = 2;
-var PJD_GRIDSHIFT = 3;
-var PJD_WGS84 = 4; // WGS84 or equivalent
-var PJD_NODATUM = 5; // WGS84 or equivalent
-var SRS_WGS84_SEMIMAJOR = 6378137.0;  // only used in grid shift transforms
-var SRS_WGS84_SEMIMINOR = 6356752.314;  // only used in grid shift transforms
-var SRS_WGS84_ESQUARED = 0.0066943799901413165; // only used in grid shift transforms
-var SEC_TO_RAD = 4.84813681109535993589914102357e-6;
-var HALF_PI = Math.PI/2;
-// ellipoid pj_set_ell.c
-var SIXTH = 0.1666666666666666667;
-/* 1/6 */
-var RA4 = 0.04722222222222222222;
-/* 17/360 */
-var RA6 = 0.02215608465608465608;
-var EPSLN = 1.0e-10;
-// you'd think you could use Number.EPSILON above but that makes
-// Mollweide get into an infinate loop.
-
-var D2R = 0.01745329251994329577;
-var R2D = 57.29577951308232088;
-var FORTPI = Math.PI/4;
-var TWO_PI = Math.PI * 2;
-// SPI is slightly greater than Math.PI, so values that exceed the -180..180
-// degree range by a tiny amount don't get wrapped. This prevents points that
-// have drifted from their original location along the 180th meridian (due to
-// floating point error) from changing their sign.
-var SPI = 3.14159265359;
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/PrimeMeridian.js
-var PrimeMeridian_exports = {};
-
-
-PrimeMeridian_exports.greenwich = 0.0; //"0dE",
-PrimeMeridian_exports.lisbon = -9.131906111111; //"9d07'54.862\"W",
-PrimeMeridian_exports.paris = 2.337229166667; //"2d20'14.025\"E",
-PrimeMeridian_exports.bogota = -74.080916666667; //"74d04'51.3\"W",
-PrimeMeridian_exports.madrid = -3.687938888889; //"3d41'16.58\"W",
-PrimeMeridian_exports.rome = 12.452333333333; //"12d27'8.4\"E",
-PrimeMeridian_exports.bern = 7.439583333333; //"7d26'22.5\"E",
-PrimeMeridian_exports.jakarta = 106.807719444444; //"106d48'27.79\"E",
-PrimeMeridian_exports.ferro = -17.666666666667; //"17d40'W",
-PrimeMeridian_exports.brussels = 4.367975; //"4d22'4.71\"E",
-PrimeMeridian_exports.stockholm = 18.058277777778; //"18d3'29.8\"E",
-PrimeMeridian_exports.athens = 23.7163375; //"23d42'58.815\"E",
-PrimeMeridian_exports.oslo = 10.722916666667; //"10d43'22.5\"E"
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/units.js
-/* harmony default export */ var units = ({
-  ft: {to_meter: 0.3048},
-  'us-ft': {to_meter: 1200 / 3937}
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/match.js
-var ignoredChar = /[\s_\-\/\(\)]/g;
-function match(obj, key) {
-  if (obj[key]) {
-    return obj[key];
-  }
-  var keys = Object.keys(obj);
-  var lkey = key.toLowerCase().replace(ignoredChar, '');
-  var i = -1;
-  var testkey, processedKey;
-  while (++i < keys.length) {
-    testkey = keys[i];
-    processedKey = testkey.toLowerCase().replace(ignoredChar, '');
-    if (processedKey === lkey) {
-      return obj[testkey];
-    }
-  }
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projString.js
-
-
-
-
-
-/* harmony default export */ var projString = (function(defData) {
-  var self = {};
-  var paramObj = defData.split('+').map(function(v) {
-    return v.trim();
-  }).filter(function(a) {
-    return a;
-  }).reduce(function(p, a) {
-    var split = a.split('=');
-    split.push(true);
-    p[split[0].toLowerCase()] = split[1];
-    return p;
-  }, {});
-  var paramName, paramVal, paramOutname;
-  var params = {
-    proj: 'projName',
-    datum: 'datumCode',
-    rf: function(v) {
-      self.rf = parseFloat(v);
-    },
-    lat_0: function(v) {
-      self.lat0 = v * D2R;
-    },
-    lat_1: function(v) {
-      self.lat1 = v * D2R;
-    },
-    lat_2: function(v) {
-      self.lat2 = v * D2R;
-    },
-    lat_ts: function(v) {
-      self.lat_ts = v * D2R;
-    },
-    lon_0: function(v) {
-      self.long0 = v * D2R;
-    },
-    lon_1: function(v) {
-      self.long1 = v * D2R;
-    },
-    lon_2: function(v) {
-      self.long2 = v * D2R;
-    },
-    alpha: function(v) {
-      self.alpha = parseFloat(v) * D2R;
-    },
-    gamma: function(v) {
-      self.rectified_grid_angle = parseFloat(v);
-    },
-    lonc: function(v) {
-      self.longc = v * D2R;
-    },
-    x_0: function(v) {
-      self.x0 = parseFloat(v);
-    },
-    y_0: function(v) {
-      self.y0 = parseFloat(v);
-    },
-    k_0: function(v) {
-      self.k0 = parseFloat(v);
-    },
-    k: function(v) {
-      self.k0 = parseFloat(v);
-    },
-    a: function(v) {
-      self.a = parseFloat(v);
-    },
-    b: function(v) {
-      self.b = parseFloat(v);
-    },
-    r_a: function() {
-      self.R_A = true;
-    },
-    zone: function(v) {
-      self.zone = parseInt(v, 10);
-    },
-    south: function() {
-      self.utmSouth = true;
-    },
-    towgs84: function(v) {
-      self.datum_params = v.split(",").map(function(a) {
-        return parseFloat(a);
-      });
-    },
-    to_meter: function(v) {
-      self.to_meter = parseFloat(v);
-    },
-    units: function(v) {
-      self.units = v;
-      var unit = match(units, v);
-      if (unit) {
-        self.to_meter = unit.to_meter;
-      }
-    },
-    from_greenwich: function(v) {
-      self.from_greenwich = v * D2R;
-    },
-    pm: function(v) {
-      var pm = match(PrimeMeridian_exports, v);
-      self.from_greenwich = (pm ? pm : parseFloat(v)) * D2R;
-    },
-    nadgrids: function(v) {
-      if (v === '@null') {
-        self.datumCode = 'none';
-      }
-      else {
-        self.nadgrids = v;
-      }
-    },
-    axis: function(v) {
-      var legalAxis = "ewnsud";
-      if (v.length === 3 && legalAxis.indexOf(v.substr(0, 1)) !== -1 && legalAxis.indexOf(v.substr(1, 1)) !== -1 && legalAxis.indexOf(v.substr(2, 1)) !== -1) {
-        self.axis = v;
-      }
-    },
-    approx: function() {
-      self.approx = true;
-    }
-  };
-  for (paramName in paramObj) {
-    paramVal = paramObj[paramName];
-    if (paramName in params) {
-      paramOutname = params[paramName];
-      if (typeof paramOutname === 'function') {
-        paramOutname(paramVal);
-      }
-      else {
-        self[paramOutname] = paramVal;
-      }
-    }
-    else {
-      self[paramName] = paramVal;
-    }
-  }
-  if(typeof self.datumCode === 'string' && self.datumCode !== "WGS84"){
-    self.datumCode = self.datumCode.toLowerCase();
-  }
-  return self;
-});
-
-// CONCATENATED MODULE: ./node_modules/wkt-parser/parser.js
-/* harmony default export */ var parser = (parseString);
-
-var NEUTRAL = 1;
-var KEYWORD = 2;
-var NUMBER = 3;
-var QUOTED = 4;
-var AFTERQUOTE = 5;
-var ENDED = -1;
-var whitespace = /\s/;
-var latin = /[A-Za-z]/;
-var keyword = /[A-Za-z84_]/;
-var endThings = /[,\]]/;
-var digets = /[\d\.E\-\+]/;
-// const ignoredChar = /[\s_\-\/\(\)]/g;
-function Parser(text) {
-  if (typeof text !== 'string') {
-    throw new Error('not a string');
-  }
-  this.text = text.trim();
-  this.level = 0;
-  this.place = 0;
-  this.root = null;
-  this.stack = [];
-  this.currentObject = null;
-  this.state = NEUTRAL;
-}
-Parser.prototype.readCharicter = function() {
-  var char = this.text[this.place++];
-  if (this.state !== QUOTED) {
-    while (whitespace.test(char)) {
-      if (this.place >= this.text.length) {
-        return;
-      }
-      char = this.text[this.place++];
-    }
-  }
-  switch (this.state) {
-    case NEUTRAL:
-      return this.neutral(char);
-    case KEYWORD:
-      return this.keyword(char)
-    case QUOTED:
-      return this.quoted(char);
-    case AFTERQUOTE:
-      return this.afterquote(char);
-    case NUMBER:
-      return this.number(char);
-    case ENDED:
-      return;
-  }
-};
-Parser.prototype.afterquote = function(char) {
-  if (char === '"') {
-    this.word += '"';
-    this.state = QUOTED;
-    return;
-  }
-  if (endThings.test(char)) {
-    this.word = this.word.trim();
-    this.afterItem(char);
-    return;
-  }
-  throw new Error('havn\'t handled "' +char + '" in afterquote yet, index ' + this.place);
-};
-Parser.prototype.afterItem = function(char) {
-  if (char === ',') {
-    if (this.word !== null) {
-      this.currentObject.push(this.word);
-    }
-    this.word = null;
-    this.state = NEUTRAL;
-    return;
-  }
-  if (char === ']') {
-    this.level--;
-    if (this.word !== null) {
-      this.currentObject.push(this.word);
-      this.word = null;
-    }
-    this.state = NEUTRAL;
-    this.currentObject = this.stack.pop();
-    if (!this.currentObject) {
-      this.state = ENDED;
-    }
-
-    return;
-  }
-};
-Parser.prototype.number = function(char) {
-  if (digets.test(char)) {
-    this.word += char;
-    return;
-  }
-  if (endThings.test(char)) {
-    this.word = parseFloat(this.word);
-    this.afterItem(char);
-    return;
-  }
-  throw new Error('havn\'t handled "' +char + '" in number yet, index ' + this.place);
-};
-Parser.prototype.quoted = function(char) {
-  if (char === '"') {
-    this.state = AFTERQUOTE;
-    return;
-  }
-  this.word += char;
-  return;
-};
-Parser.prototype.keyword = function(char) {
-  if (keyword.test(char)) {
-    this.word += char;
-    return;
-  }
-  if (char === '[') {
-    var newObjects = [];
-    newObjects.push(this.word);
-    this.level++;
-    if (this.root === null) {
-      this.root = newObjects;
-    } else {
-      this.currentObject.push(newObjects);
-    }
-    this.stack.push(this.currentObject);
-    this.currentObject = newObjects;
-    this.state = NEUTRAL;
-    return;
-  }
-  if (endThings.test(char)) {
-    this.afterItem(char);
-    return;
-  }
-  throw new Error('havn\'t handled "' +char + '" in keyword yet, index ' + this.place);
-};
-Parser.prototype.neutral = function(char) {
-  if (latin.test(char)) {
-    this.word = char;
-    this.state = KEYWORD;
-    return;
-  }
-  if (char === '"') {
-    this.word = '';
-    this.state = QUOTED;
-    return;
-  }
-  if (digets.test(char)) {
-    this.word = char;
-    this.state = NUMBER;
-    return;
-  }
-  if (endThings.test(char)) {
-    this.afterItem(char);
-    return;
-  }
-  throw new Error('havn\'t handled "' +char + '" in neutral yet, index ' + this.place);
-};
-Parser.prototype.output = function() {
-  while (this.place < this.text.length) {
-    this.readCharicter();
-  }
-  if (this.state === ENDED) {
-    return this.root;
-  }
-  throw new Error('unable to parse string "' +this.text + '". State is ' + this.state);
-};
-
-function parseString(txt) {
-  var parser = new Parser(txt);
-  return parser.output();
-}
-
-// CONCATENATED MODULE: ./node_modules/wkt-parser/process.js
-
-
-function mapit(obj, key, value) {
-  if (Array.isArray(key)) {
-    value.unshift(key);
-    key = null;
-  }
-  var thing = key ? {} : obj;
-
-  var out = value.reduce(function(newObj, item) {
-    sExpr(item, newObj);
-    return newObj
-  }, thing);
-  if (key) {
-    obj[key] = out;
-  }
-}
-
-function sExpr(v, obj) {
-  if (!Array.isArray(v)) {
-    obj[v] = true;
-    return;
-  }
-  var key = v.shift();
-  if (key === 'PARAMETER') {
-    key = v.shift();
-  }
-  if (v.length === 1) {
-    if (Array.isArray(v[0])) {
-      obj[key] = {};
-      sExpr(v[0], obj[key]);
-      return;
-    }
-    obj[key] = v[0];
-    return;
-  }
-  if (!v.length) {
-    obj[key] = true;
-    return;
-  }
-  if (key === 'TOWGS84') {
-    obj[key] = v;
-    return;
-  }
-  if (key === 'AXIS') {
-    if (!(key in obj)) {
-      obj[key] = [];
-    }
-    obj[key].push(v);
-    return;
-  }
-  if (!Array.isArray(key)) {
-    obj[key] = {};
-  }
-
-  var i;
-  switch (key) {
-    case 'UNIT':
-    case 'PRIMEM':
-    case 'VERT_DATUM':
-      obj[key] = {
-        name: v[0].toLowerCase(),
-        convert: v[1]
-      };
-      if (v.length === 3) {
-        sExpr(v[2], obj[key]);
-      }
-      return;
-    case 'SPHEROID':
-    case 'ELLIPSOID':
-      obj[key] = {
-        name: v[0],
-        a: v[1],
-        rf: v[2]
-      };
-      if (v.length === 4) {
-        sExpr(v[3], obj[key]);
-      }
-      return;
-    case 'PROJECTEDCRS':
-    case 'PROJCRS':
-    case 'GEOGCS':
-    case 'GEOCCS':
-    case 'PROJCS':
-    case 'LOCAL_CS':
-    case 'GEODCRS':
-    case 'GEODETICCRS':
-    case 'GEODETICDATUM':
-    case 'EDATUM':
-    case 'ENGINEERINGDATUM':
-    case 'VERT_CS':
-    case 'VERTCRS':
-    case 'VERTICALCRS':
-    case 'COMPD_CS':
-    case 'COMPOUNDCRS':
-    case 'ENGINEERINGCRS':
-    case 'ENGCRS':
-    case 'FITTED_CS':
-    case 'LOCAL_DATUM':
-    case 'DATUM':
-      v[0] = ['name', v[0]];
-      mapit(obj, key, v);
-      return;
-    default:
-      i = -1;
-      while (++i < v.length) {
-        if (!Array.isArray(v[i])) {
-          return sExpr(v, obj[key]);
-        }
-      }
-      return mapit(obj, key, v);
-  }
-}
-
-// CONCATENATED MODULE: ./node_modules/wkt-parser/index.js
-var wkt_parser_D2R = 0.01745329251994329577;
-
-
-
-
-
-function rename(obj, params) {
-  var outName = params[0];
-  var inName = params[1];
-  if (!(outName in obj) && (inName in obj)) {
-    obj[outName] = obj[inName];
-    if (params.length === 3) {
-      obj[outName] = params[2](obj[outName]);
-    }
-  }
-}
-
-function d2r(input) {
-  return input * wkt_parser_D2R;
-}
-
-function cleanWKT(wkt) {
-  if (wkt.type === 'GEOGCS') {
-    wkt.projName = 'longlat';
-  } else if (wkt.type === 'LOCAL_CS') {
-    wkt.projName = 'identity';
-    wkt.local = true;
-  } else {
-    if (typeof wkt.PROJECTION === 'object') {
-      wkt.projName = Object.keys(wkt.PROJECTION)[0];
-    } else {
-      wkt.projName = wkt.PROJECTION;
-    }
-  }
-  if (wkt.AXIS) {
-    var axisOrder = '';
-    for (var i = 0, ii = wkt.AXIS.length; i < ii; ++i) {
-      var axis = [wkt.AXIS[i][0].toLowerCase(), wkt.AXIS[i][1].toLowerCase()];
-      if (axis[0].indexOf('north') !== -1 || ((axis[0] === 'y' || axis[0] === 'lat') && axis[1] === 'north')) {
-        axisOrder += 'n';
-      } else if (axis[0].indexOf('south') !== -1 || ((axis[0] === 'y' || axis[0] === 'lat') && axis[1] === 'south')) {
-        axisOrder += 's';
-      } else if (axis[0].indexOf('east') !== -1 || ((axis[0] === 'x' || axis[0] === 'lon') && axis[1] === 'east')) {
-        axisOrder += 'e';
-      } else if (axis[0].indexOf('west') !== -1 || ((axis[0] === 'x' || axis[0] === 'lon') && axis[1] === 'west')) {
-        axisOrder += 'w';
-      }
-    }
-    if (axisOrder.length === 2) {
-      axisOrder += 'u';
-    }
-    if (axisOrder.length === 3) {
-      wkt.axis = axisOrder;
-    }
-  }
-  if (wkt.UNIT) {
-    wkt.units = wkt.UNIT.name.toLowerCase();
-    if (wkt.units === 'metre') {
-      wkt.units = 'meter';
-    }
-    if (wkt.UNIT.convert) {
-      if (wkt.type === 'GEOGCS') {
-        if (wkt.DATUM && wkt.DATUM.SPHEROID) {
-          wkt.to_meter = wkt.UNIT.convert*wkt.DATUM.SPHEROID.a;
-        }
-      } else {
-        wkt.to_meter = wkt.UNIT.convert;
-      }
-    }
-  }
-  var geogcs = wkt.GEOGCS;
-  if (wkt.type === 'GEOGCS') {
-    geogcs = wkt;
-  }
-  if (geogcs) {
-    //if(wkt.GEOGCS.PRIMEM&&wkt.GEOGCS.PRIMEM.convert){
-    //  wkt.from_greenwich=wkt.GEOGCS.PRIMEM.convert*D2R;
-    //}
-    if (geogcs.DATUM) {
-      wkt.datumCode = geogcs.DATUM.name.toLowerCase();
-    } else {
-      wkt.datumCode = geogcs.name.toLowerCase();
-    }
-    if (wkt.datumCode.slice(0, 2) === 'd_') {
-      wkt.datumCode = wkt.datumCode.slice(2);
-    }
-    if (wkt.datumCode === 'new_zealand_geodetic_datum_1949' || wkt.datumCode === 'new_zealand_1949') {
-      wkt.datumCode = 'nzgd49';
-    }
-    if (wkt.datumCode === 'wgs_1984' || wkt.datumCode === 'world_geodetic_system_1984') {
-      if (wkt.PROJECTION === 'Mercator_Auxiliary_Sphere') {
-        wkt.sphere = true;
-      }
-      wkt.datumCode = 'wgs84';
-    }
-    if (wkt.datumCode.slice(-6) === '_ferro') {
-      wkt.datumCode = wkt.datumCode.slice(0, - 6);
-    }
-    if (wkt.datumCode.slice(-8) === '_jakarta') {
-      wkt.datumCode = wkt.datumCode.slice(0, - 8);
-    }
-    if (~wkt.datumCode.indexOf('belge')) {
-      wkt.datumCode = 'rnb72';
-    }
-    if (geogcs.DATUM && geogcs.DATUM.SPHEROID) {
-      wkt.ellps = geogcs.DATUM.SPHEROID.name.replace('_19', '').replace(/[Cc]larke\_18/, 'clrk');
-      if (wkt.ellps.toLowerCase().slice(0, 13) === 'international') {
-        wkt.ellps = 'intl';
-      }
-
-      wkt.a = geogcs.DATUM.SPHEROID.a;
-      wkt.rf = parseFloat(geogcs.DATUM.SPHEROID.rf, 10);
-    }
-
-    if (geogcs.DATUM && geogcs.DATUM.TOWGS84) {
-      wkt.datum_params = geogcs.DATUM.TOWGS84;
-    }
-    if (~wkt.datumCode.indexOf('osgb_1936')) {
-      wkt.datumCode = 'osgb36';
-    }
-    if (~wkt.datumCode.indexOf('osni_1952')) {
-      wkt.datumCode = 'osni52';
-    }
-    if (~wkt.datumCode.indexOf('tm65')
-      || ~wkt.datumCode.indexOf('geodetic_datum_of_1965')) {
-      wkt.datumCode = 'ire65';
-    }
-    if (wkt.datumCode === 'ch1903+') {
-      wkt.datumCode = 'ch1903';
-    }
-    if (~wkt.datumCode.indexOf('israel')) {
-      wkt.datumCode = 'isr93';
-    }
-  }
-  if (wkt.b && !isFinite(wkt.b)) {
-    wkt.b = wkt.a;
-  }
-
-  function toMeter(input) {
-    var ratio = wkt.to_meter || 1;
-    return input * ratio;
-  }
-  var renamer = function(a) {
-    return rename(wkt, a);
-  };
-  var list = [
-    ['standard_parallel_1', 'Standard_Parallel_1'],
-    ['standard_parallel_1', 'Latitude of 1st standard parallel'],
-    ['standard_parallel_2', 'Standard_Parallel_2'],
-    ['standard_parallel_2', 'Latitude of 2nd standard parallel'],
-    ['false_easting', 'False_Easting'],
-    ['false_easting', 'False easting'],
-    ['false-easting', 'Easting at false origin'],
-    ['false_northing', 'False_Northing'],
-    ['false_northing', 'False northing'],
-    ['false_northing', 'Northing at false origin'],
-    ['central_meridian', 'Central_Meridian'],
-    ['central_meridian', 'Longitude of natural origin'],
-    ['central_meridian', 'Longitude of false origin'],
-    ['latitude_of_origin', 'Latitude_Of_Origin'],
-    ['latitude_of_origin', 'Central_Parallel'],
-    ['latitude_of_origin', 'Latitude of natural origin'],
-    ['latitude_of_origin', 'Latitude of false origin'],
-    ['scale_factor', 'Scale_Factor'],
-    ['k0', 'scale_factor'],
-    ['latitude_of_center', 'Latitude_Of_Center'],
-    ['latitude_of_center', 'Latitude_of_center'],
-    ['lat0', 'latitude_of_center', d2r],
-    ['longitude_of_center', 'Longitude_Of_Center'],
-    ['longitude_of_center', 'Longitude_of_center'],
-    ['longc', 'longitude_of_center', d2r],
-    ['x0', 'false_easting', toMeter],
-    ['y0', 'false_northing', toMeter],
-    ['long0', 'central_meridian', d2r],
-    ['lat0', 'latitude_of_origin', d2r],
-    ['lat0', 'standard_parallel_1', d2r],
-    ['lat1', 'standard_parallel_1', d2r],
-    ['lat2', 'standard_parallel_2', d2r],
-    ['azimuth', 'Azimuth'],
-    ['alpha', 'azimuth', d2r],
-    ['srsCode', 'name']
-  ];
-  list.forEach(renamer);
-  if (!wkt.long0 && wkt.longc && (wkt.projName === 'Albers_Conic_Equal_Area' || wkt.projName === 'Lambert_Azimuthal_Equal_Area')) {
-    wkt.long0 = wkt.longc;
-  }
-  if (!wkt.lat_ts && wkt.lat1 && (wkt.projName === 'Stereographic_South_Pole' || wkt.projName === 'Polar Stereographic (variant B)')) {
-    wkt.lat0 = d2r(wkt.lat1 > 0 ? 90 : -90);
-    wkt.lat_ts = wkt.lat1;
-  }
-}
-/* harmony default export */ var wkt_parser = (function(wkt) {
-  var lisp = parser(wkt);
-  var type = lisp.shift();
-  var name = lisp.shift();
-  lisp.unshift(['name', name]);
-  lisp.unshift(['type', type]);
-  var obj = {};
-  sExpr(lisp, obj);
-  cleanWKT(obj);
-  return obj;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/defs.js
-
-
-
-
-function defs(name) {
-  /*global console*/
-  var that = this;
-  if (arguments.length === 2) {
-    var def = arguments[1];
-    if (typeof def === 'string') {
-      if (def.charAt(0) === '+') {
-        defs[name] = projString(arguments[1]);
-      }
-      else {
-        defs[name] = wkt_parser(arguments[1]);
-      }
-    } else {
-      defs[name] = def;
-    }
-  }
-  else if (arguments.length === 1) {
-    if (Array.isArray(name)) {
-      return name.map(function(v) {
-        if (Array.isArray(v)) {
-          defs.apply(that, v);
-        }
-        else {
-          defs(v);
-        }
-      });
-    }
-    else if (typeof name === 'string') {
-      if (name in defs) {
-        return defs[name];
-      }
-    }
-    else if ('EPSG' in name) {
-      defs['EPSG:' + name.EPSG] = name;
-    }
-    else if ('ESRI' in name) {
-      defs['ESRI:' + name.ESRI] = name;
-    }
-    else if ('IAU2000' in name) {
-      defs['IAU2000:' + name.IAU2000] = name;
-    }
-    else {
-      console.log(name);
-    }
-    return;
-  }
-
-
-}
-global(defs);
-/* harmony default export */ var lib_defs = (defs);
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/parseCode.js
-
-
-
-
-function testObj(code){
-  return typeof code === 'string';
-}
-function testDef(code){
-  return code in lib_defs;
-}
-var codeWords = ['PROJECTEDCRS', 'PROJCRS', 'GEOGCS','GEOCCS','PROJCS','LOCAL_CS', 'GEODCRS', 'GEODETICCRS', 'GEODETICDATUM', 'ENGCRS', 'ENGINEERINGCRS'];
-function testWKT(code){
-  return codeWords.some(function (word) {
-    return code.indexOf(word) > -1;
-  });
-}
-var codes = ['3857', '900913', '3785', '102113'];
-function checkMercator(item) {
-  var auth = match(item, 'authority');
-  if (!auth) {
-    return;
-  }
-  var code = match(auth, 'epsg');
-  return code && codes.indexOf(code) > -1;
-}
-function checkProjStr(item) {
-  var ext = match(item, 'extension');
-  if (!ext) {
-    return;
-  }
-  return match(ext, 'proj4');
-}
-function testProj(code){
-  return code[0] === '+';
-}
-function parse(code){
-  if (testObj(code)) {
-    //check to see if this is a WKT string
-    if (testDef(code)) {
-      return lib_defs[code];
-    }
-    if (testWKT(code)) {
-      var out = wkt_parser(code);
-      // test of spetial case, due to this being a very common and often malformed
-      if (checkMercator(out)) {
-        return lib_defs['EPSG:3857'];
-      }
-      var maybeProjStr = checkProjStr(out);
-      if (maybeProjStr) {
-        return projString(maybeProjStr);
-      }
-      return out;
-    }
-    if (testProj(code)) {
-      return projString(code);
-    }
-  }else{
-    return code;
-  }
-}
-
-/* harmony default export */ var parseCode = (parse);
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/extend.js
-/* harmony default export */ var extend = (function(destination, source) {
-  destination = destination || {};
-  var value, property;
-  if (!source) {
-    return destination;
-  }
-  for (property in source) {
-    value = source[property];
-    if (value !== undefined) {
-      destination[property] = value;
-    }
-  }
-  return destination;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/msfnz.js
-/* harmony default export */ var msfnz = (function(eccent, sinphi, cosphi) {
-  var con = eccent * sinphi;
-  return cosphi / (Math.sqrt(1 - con * con));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/sign.js
-/* harmony default export */ var sign = (function(x) {
-  return x<0 ? -1 : 1;
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/adjust_lon.js
-
-
-
-
-/* harmony default export */ var adjust_lon = (function(x) {
-  return (Math.abs(x) <= SPI) ? x : (x - (sign(x) * TWO_PI));
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/tsfnz.js
-
-
-/* harmony default export */ var tsfnz = (function(eccent, phi, sinphi) {
-  var con = eccent * sinphi;
-  var com = 0.5 * eccent;
-  con = Math.pow(((1 - con) / (1 + con)), com);
-  return (Math.tan(0.5 * (HALF_PI - phi)) / con);
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/phi2z.js
-
-
-/* harmony default export */ var phi2z = (function(eccent, ts) {
-  var eccnth = 0.5 * eccent;
-  var con, dphi;
-  var phi = HALF_PI - 2 * Math.atan(ts);
-  for (var i = 0; i <= 15; i++) {
-    con = eccent * Math.sin(phi);
-    dphi = HALF_PI - 2 * Math.atan(ts * (Math.pow(((1 - con) / (1 + con)), eccnth))) - phi;
-    phi += dphi;
-    if (Math.abs(dphi) <= 0.0000000001) {
-      return phi;
-    }
-  }
-  //console.log("phi2z has NoConvergence");
-  return -9999;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/merc.js
-
-
-
-
-
-
-function init() {
-  var con = this.b / this.a;
-  this.es = 1 - con * con;
-  if(!('x0' in this)){
-    this.x0 = 0;
-  }
-  if(!('y0' in this)){
-    this.y0 = 0;
-  }
-  this.e = Math.sqrt(this.es);
-  if (this.lat_ts) {
-    if (this.sphere) {
-      this.k0 = Math.cos(this.lat_ts);
-    }
-    else {
-      this.k0 = msfnz(this.e, Math.sin(this.lat_ts), Math.cos(this.lat_ts));
-    }
-  }
-  else {
-    if (!this.k0) {
-      if (this.k) {
-        this.k0 = this.k;
-      }
-      else {
-        this.k0 = 1;
-      }
-    }
-  }
-}
-
-/* Mercator forward equations--mapping lat,long to x,y
-  --------------------------------------------------*/
-
-function forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-  // convert to radians
-  if (lat * R2D > 90 && lat * R2D < -90 && lon * R2D > 180 && lon * R2D < -180) {
-    return null;
-  }
-
-  var x, y;
-  if (Math.abs(Math.abs(lat) - HALF_PI) <= EPSLN) {
-    return null;
-  }
-  else {
-    if (this.sphere) {
-      x = this.x0 + this.a * this.k0 * adjust_lon(lon - this.long0);
-      y = this.y0 + this.a * this.k0 * Math.log(Math.tan(FORTPI + 0.5 * lat));
-    }
-    else {
-      var sinphi = Math.sin(lat);
-      var ts = tsfnz(this.e, lat, sinphi);
-      x = this.x0 + this.a * this.k0 * adjust_lon(lon - this.long0);
-      y = this.y0 - this.a * this.k0 * Math.log(ts);
-    }
-    p.x = x;
-    p.y = y;
-    return p;
-  }
-}
-
-/* Mercator inverse equations--mapping x,y to lat/long
-  --------------------------------------------------*/
-function merc_inverse(p) {
-
-  var x = p.x - this.x0;
-  var y = p.y - this.y0;
-  var lon, lat;
-
-  if (this.sphere) {
-    lat = HALF_PI - 2 * Math.atan(Math.exp(-y / (this.a * this.k0)));
-  }
-  else {
-    var ts = Math.exp(-y / (this.a * this.k0));
-    lat = phi2z(this.e, ts);
-    if (lat === -9999) {
-      return null;
-    }
-  }
-  lon = adjust_lon(this.long0 + x / (this.a * this.k0));
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var names = ["Mercator", "Popular Visualisation Pseudo Mercator", "Mercator_1SP", "Mercator_Auxiliary_Sphere", "merc"];
-/* harmony default export */ var merc = ({
-  init: init,
-  forward: forward,
-  inverse: merc_inverse,
-  names: names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/longlat.js
-function longlat_init() {
-  //no-op for longlat
-}
-
-function identity(pt) {
-  return pt;
-}
-
-
-var longlat_names = ["longlat", "identity"];
-/* harmony default export */ var longlat = ({
-  init: longlat_init,
-  forward: identity,
-  inverse: identity,
-  names: longlat_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections.js
-
-
-var projs = [merc, longlat];
-var projections_names = {};
-var projStore = [];
-
-function add(proj, i) {
-  var len = projStore.length;
-  if (!proj.names) {
-    console.log(i);
-    return true;
-  }
-  projStore[len] = proj;
-  proj.names.forEach(function(n) {
-    projections_names[n.toLowerCase()] = len;
-  });
-  return this;
-}
-
-
-
-function get(name) {
-  if (!name) {
-    return false;
-  }
-  var n = name.toLowerCase();
-  if (typeof projections_names[n] !== 'undefined' && projStore[projections_names[n]]) {
-    return projStore[projections_names[n]];
-  }
-}
-
-function start() {
-  projs.forEach(add);
-}
-/* harmony default export */ var projections = ({
-  start: start,
-  add: add,
-  get: get
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/Ellipsoid.js
-var Ellipsoid_exports = {};
-
-Ellipsoid_exports.MERIT = {
-  a: 6378137.0,
-  rf: 298.257,
-  ellipseName: "MERIT 1983"
-};
-
-Ellipsoid_exports.SGS85 = {
-  a: 6378136.0,
-  rf: 298.257,
-  ellipseName: "Soviet Geodetic System 85"
-};
-
-Ellipsoid_exports.GRS80 = {
-  a: 6378137.0,
-  rf: 298.257222101,
-  ellipseName: "GRS 1980(IUGG, 1980)"
-};
-
-Ellipsoid_exports.IAU76 = {
-  a: 6378140.0,
-  rf: 298.257,
-  ellipseName: "IAU 1976"
-};
-
-Ellipsoid_exports.airy = {
-  a: 6377563.396,
-  b: 6356256.910,
-  ellipseName: "Airy 1830"
-};
-
-Ellipsoid_exports.APL4 = {
-  a: 6378137,
-  rf: 298.25,
-  ellipseName: "Appl. Physics. 1965"
-};
-
-Ellipsoid_exports.NWL9D = {
-  a: 6378145.0,
-  rf: 298.25,
-  ellipseName: "Naval Weapons Lab., 1965"
-};
-
-Ellipsoid_exports.mod_airy = {
-  a: 6377340.189,
-  b: 6356034.446,
-  ellipseName: "Modified Airy"
-};
-
-Ellipsoid_exports.andrae = {
-  a: 6377104.43,
-  rf: 300.0,
-  ellipseName: "Andrae 1876 (Den., Iclnd.)"
-};
-
-Ellipsoid_exports.aust_SA = {
-  a: 6378160.0,
-  rf: 298.25,
-  ellipseName: "Australian Natl & S. Amer. 1969"
-};
-
-Ellipsoid_exports.GRS67 = {
-  a: 6378160.0,
-  rf: 298.2471674270,
-  ellipseName: "GRS 67(IUGG 1967)"
-};
-
-Ellipsoid_exports.bessel = {
-  a: 6377397.155,
-  rf: 299.1528128,
-  ellipseName: "Bessel 1841"
-};
-
-Ellipsoid_exports.bess_nam = {
-  a: 6377483.865,
-  rf: 299.1528128,
-  ellipseName: "Bessel 1841 (Namibia)"
-};
-
-Ellipsoid_exports.clrk66 = {
-  a: 6378206.4,
-  b: 6356583.8,
-  ellipseName: "Clarke 1866"
-};
-
-Ellipsoid_exports.clrk80 = {
-  a: 6378249.145,
-  rf: 293.4663,
-  ellipseName: "Clarke 1880 mod."
-};
-
-Ellipsoid_exports.clrk58 = {
-  a: 6378293.645208759,
-  rf: 294.2606763692654,
-  ellipseName: "Clarke 1858"
-};
-
-Ellipsoid_exports.CPM = {
-  a: 6375738.7,
-  rf: 334.29,
-  ellipseName: "Comm. des Poids et Mesures 1799"
-};
-
-Ellipsoid_exports.delmbr = {
-  a: 6376428.0,
-  rf: 311.5,
-  ellipseName: "Delambre 1810 (Belgium)"
-};
-
-Ellipsoid_exports.engelis = {
-  a: 6378136.05,
-  rf: 298.2566,
-  ellipseName: "Engelis 1985"
-};
-
-Ellipsoid_exports.evrst30 = {
-  a: 6377276.345,
-  rf: 300.8017,
-  ellipseName: "Everest 1830"
-};
-
-Ellipsoid_exports.evrst48 = {
-  a: 6377304.063,
-  rf: 300.8017,
-  ellipseName: "Everest 1948"
-};
-
-Ellipsoid_exports.evrst56 = {
-  a: 6377301.243,
-  rf: 300.8017,
-  ellipseName: "Everest 1956"
-};
-
-Ellipsoid_exports.evrst69 = {
-  a: 6377295.664,
-  rf: 300.8017,
-  ellipseName: "Everest 1969"
-};
-
-Ellipsoid_exports.evrstSS = {
-  a: 6377298.556,
-  rf: 300.8017,
-  ellipseName: "Everest (Sabah & Sarawak)"
-};
-
-Ellipsoid_exports.fschr60 = {
-  a: 6378166.0,
-  rf: 298.3,
-  ellipseName: "Fischer (Mercury Datum) 1960"
-};
-
-Ellipsoid_exports.fschr60m = {
-  a: 6378155.0,
-  rf: 298.3,
-  ellipseName: "Fischer 1960"
-};
-
-Ellipsoid_exports.fschr68 = {
-  a: 6378150.0,
-  rf: 298.3,
-  ellipseName: "Fischer 1968"
-};
-
-Ellipsoid_exports.helmert = {
-  a: 6378200.0,
-  rf: 298.3,
-  ellipseName: "Helmert 1906"
-};
-
-Ellipsoid_exports.hough = {
-  a: 6378270.0,
-  rf: 297.0,
-  ellipseName: "Hough"
-};
-
-Ellipsoid_exports.intl = {
-  a: 6378388.0,
-  rf: 297.0,
-  ellipseName: "International 1909 (Hayford)"
-};
-
-Ellipsoid_exports.kaula = {
-  a: 6378163.0,
-  rf: 298.24,
-  ellipseName: "Kaula 1961"
-};
-
-Ellipsoid_exports.lerch = {
-  a: 6378139.0,
-  rf: 298.257,
-  ellipseName: "Lerch 1979"
-};
-
-Ellipsoid_exports.mprts = {
-  a: 6397300.0,
-  rf: 191.0,
-  ellipseName: "Maupertius 1738"
-};
-
-Ellipsoid_exports.new_intl = {
-  a: 6378157.5,
-  b: 6356772.2,
-  ellipseName: "New International 1967"
-};
-
-Ellipsoid_exports.plessis = {
-  a: 6376523.0,
-  rf: 6355863.0,
-  ellipseName: "Plessis 1817 (France)"
-};
-
-Ellipsoid_exports.krass = {
-  a: 6378245.0,
-  rf: 298.3,
-  ellipseName: "Krassovsky, 1942"
-};
-
-Ellipsoid_exports.SEasia = {
-  a: 6378155.0,
-  b: 6356773.3205,
-  ellipseName: "Southeast Asia"
-};
-
-Ellipsoid_exports.walbeck = {
-  a: 6376896.0,
-  b: 6355834.8467,
-  ellipseName: "Walbeck"
-};
-
-Ellipsoid_exports.WGS60 = {
-  a: 6378165.0,
-  rf: 298.3,
-  ellipseName: "WGS 60"
-};
-
-Ellipsoid_exports.WGS66 = {
-  a: 6378145.0,
-  rf: 298.25,
-  ellipseName: "WGS 66"
-};
-
-Ellipsoid_exports.WGS7 = {
-  a: 6378135.0,
-  rf: 298.26,
-  ellipseName: "WGS 72"
-};
-
-var WGS84 = Ellipsoid_exports.WGS84 = {
-  a: 6378137.0,
-  rf: 298.257223563,
-  ellipseName: "WGS 84"
-};
-
-Ellipsoid_exports.sphere = {
-  a: 6370997.0,
-  b: 6370997.0,
-  ellipseName: "Normal Sphere (r=6370997)"
-};
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/deriveConstants.js
-
-
-
-
-function eccentricity(a, b, rf, R_A) {
-  var a2 = a * a; // used in geocentric
-  var b2 = b * b; // used in geocentric
-  var es = (a2 - b2) / a2; // e ^ 2
-  var e = 0;
-  if (R_A) {
-    a *= 1 - es * (SIXTH + es * (RA4 + es * RA6));
-    a2 = a * a;
-    es = 0;
-  } else {
-    e = Math.sqrt(es); // eccentricity
-  }
-  var ep2 = (a2 - b2) / b2; // used in geocentric
-  return {
-    es: es,
-    e: e,
-    ep2: ep2
-  };
-}
-function deriveConstants_sphere(a, b, rf, ellps, sphere) {
-  if (!a) { // do we have an ellipsoid?
-    var ellipse = match(Ellipsoid_exports, ellps);
-    if (!ellipse) {
-      ellipse = WGS84;
-    }
-    a = ellipse.a;
-    b = ellipse.b;
-    rf = ellipse.rf;
-  }
-
-  if (rf && !b) {
-    b = (1.0 - 1.0 / rf) * a;
-  }
-  if (rf === 0 || Math.abs(a - b) < EPSLN) {
-    sphere = true;
-    b = a;
-  }
-  return {
-    a: a,
-    b: b,
-    rf: rf,
-    sphere: sphere
-  };
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/constants/Datum.js
-var Datum_exports = {};
-
-Datum_exports.wgs84 = {
-  towgs84: "0,0,0",
-  ellipse: "WGS84",
-  datumName: "WGS84"
-};
-
-Datum_exports.ch1903 = {
-  towgs84: "674.374,15.056,405.346",
-  ellipse: "bessel",
-  datumName: "swiss"
-};
-
-Datum_exports.ggrs87 = {
-  towgs84: "-199.87,74.79,246.62",
-  ellipse: "GRS80",
-  datumName: "Greek_Geodetic_Reference_System_1987"
-};
-
-Datum_exports.nad83 = {
-  towgs84: "0,0,0",
-  ellipse: "GRS80",
-  datumName: "North_American_Datum_1983"
-};
-
-Datum_exports.nad27 = {
-  nadgrids: "@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat",
-  ellipse: "clrk66",
-  datumName: "North_American_Datum_1927"
-};
-
-Datum_exports.potsdam = {
-  towgs84: "598.1,73.7,418.2,0.202,0.045,-2.455,6.7",
-  ellipse: "bessel",
-  datumName: "Potsdam Rauenberg 1950 DHDN"
-};
-
-Datum_exports.carthage = {
-  towgs84: "-263.0,6.0,431.0",
-  ellipse: "clark80",
-  datumName: "Carthage 1934 Tunisia"
-};
-
-Datum_exports.hermannskogel = {
-  towgs84: "577.326,90.129,463.919,5.137,1.474,5.297,2.4232",
-  ellipse: "bessel",
-  datumName: "Hermannskogel"
-};
-
-Datum_exports.osni52 = {
-  towgs84: "482.530,-130.596,564.557,-1.042,-0.214,-0.631,8.15",
-  ellipse: "airy",
-  datumName: "Irish National"
-};
-
-Datum_exports.ire65 = {
-  towgs84: "482.530,-130.596,564.557,-1.042,-0.214,-0.631,8.15",
-  ellipse: "mod_airy",
-  datumName: "Ireland 1965"
-};
-
-Datum_exports.rassadiran = {
-  towgs84: "-133.63,-157.5,-158.62",
-  ellipse: "intl",
-  datumName: "Rassadiran"
-};
-
-Datum_exports.nzgd49 = {
-  towgs84: "59.47,-5.04,187.44,0.47,-0.1,1.024,-4.5993",
-  ellipse: "intl",
-  datumName: "New Zealand Geodetic Datum 1949"
-};
-
-Datum_exports.osgb36 = {
-  towgs84: "446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894",
-  ellipse: "airy",
-  datumName: "Airy 1830"
-};
-
-Datum_exports.s_jtsk = {
-  towgs84: "589,76,480",
-  ellipse: 'bessel',
-  datumName: 'S-JTSK (Ferro)'
-};
-
-Datum_exports.beduaram = {
-  towgs84: '-106,-87,188',
-  ellipse: 'clrk80',
-  datumName: 'Beduaram'
-};
-
-Datum_exports.gunung_segara = {
-  towgs84: '-403,684,41',
-  ellipse: 'bessel',
-  datumName: 'Gunung Segara Jakarta'
-};
-
-Datum_exports.rnb72 = {
-  towgs84: "106.869,-52.2978,103.724,-0.33657,0.456955,-1.84218,1",
-  ellipse: "intl",
-  datumName: "Reseau National Belge 1972"
-};
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/datum.js
-
-
-function datum(datumCode, datum_params, a, b, es, ep2, nadgrids) {
-  var out = {};
-
-  if (datumCode === undefined || datumCode === 'none') {
-    out.datum_type = PJD_NODATUM;
-  } else {
-    out.datum_type = PJD_WGS84;
-  }
-
-  if (datum_params) {
-    out.datum_params = datum_params.map(parseFloat);
-    if (out.datum_params[0] !== 0 || out.datum_params[1] !== 0 || out.datum_params[2] !== 0) {
-      out.datum_type = PJD_3PARAM;
-    }
-    if (out.datum_params.length > 3) {
-      if (out.datum_params[3] !== 0 || out.datum_params[4] !== 0 || out.datum_params[5] !== 0 || out.datum_params[6] !== 0) {
-        out.datum_type = PJD_7PARAM;
-        out.datum_params[3] *= SEC_TO_RAD;
-        out.datum_params[4] *= SEC_TO_RAD;
-        out.datum_params[5] *= SEC_TO_RAD;
-        out.datum_params[6] = (out.datum_params[6] / 1000000.0) + 1.0;
-      }
-    }
-  }
-
-  if (nadgrids) {
-    out.datum_type = PJD_GRIDSHIFT;
-    out.grids = nadgrids;
-  }
-  out.a = a; //datum object also uses these values
-  out.b = b;
-  out.es = es;
-  out.ep2 = ep2;
-  return out;
-}
-
-/* harmony default export */ var lib_datum = (datum);
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/nadgrid.js
-/**
- * Resources for details of NTv2 file formats:
- * - https://web.archive.org/web/20140127204822if_/http://www.mgs.gov.on.ca:80/stdprodconsume/groups/content/@mgs/@iandit/documents/resourcelist/stel02_047447.pdf
- * - http://mimaka.com/help/gs/html/004_NTV2%20Data%20Format.htm
- */
-
-var loadedNadgrids = {};
-
-/**
- * Load a binary NTv2 file (.gsb) to a key that can be used in a proj string like +nadgrids=<key>. Pass the NTv2 file
- * as an ArrayBuffer.
- */
-function nadgrid(key, data) {
-  var view = new DataView(data);
-  var isLittleEndian = detectLittleEndian(view);
-  var header = readHeader(view, isLittleEndian);
-  if (header.nSubgrids > 1) {
-    console.log('Only single NTv2 subgrids are currently supported, subsequent sub grids are ignored');
-  }
-  var subgrids = readSubgrids(view, header, isLittleEndian);
-  var nadgrid = {header: header, subgrids: subgrids};
-  loadedNadgrids[key] = nadgrid;
-  return nadgrid;
-}
-
-/**
- * Given a proj4 value for nadgrids, return an array of loaded grids
- */
-function getNadgrids(nadgrids) {
-  // Format details: http://proj.maptools.org/gen_parms.html
-  if (nadgrids === undefined) { return null; }
-  var grids = nadgrids.split(',');
-  return grids.map(parseNadgridString);
-}
-
-function parseNadgridString(value) {
-  if (value.length === 0) {
-    return null;
-  }
-  var optional = value[0] === '@';
-  if (optional) {
-    value = value.slice(1);
-  }
-  if (value === 'null') {
-    return {name: 'null', mandatory: !optional, grid: null, isNull: true};
-  }
-  return {
-    name: value,
-    mandatory: !optional,
-    grid: loadedNadgrids[value] || null,
-    isNull: false
-  };
-}
-
-function secondsToRadians(seconds) {
-  return (seconds / 3600) * Math.PI / 180;
-}
-
-function detectLittleEndian(view) {
-  var nFields = view.getInt32(8, false);
-  if (nFields === 11) {
-    return false;
-  }
-  nFields = view.getInt32(8, true);
-  if (nFields !== 11) {
-    console.warn('Failed to detect nadgrid endian-ness, defaulting to little-endian');
-  }
-  return true;
-}
-
-function readHeader(view, isLittleEndian) {
-  return {
-    nFields: view.getInt32(8, isLittleEndian),
-    nSubgridFields: view.getInt32(24, isLittleEndian),
-    nSubgrids: view.getInt32(40, isLittleEndian),
-    shiftType: decodeString(view, 56, 56 + 8).trim(),
-    fromSemiMajorAxis: view.getFloat64(120, isLittleEndian),
-    fromSemiMinorAxis: view.getFloat64(136, isLittleEndian),
-    toSemiMajorAxis: view.getFloat64(152, isLittleEndian),
-    toSemiMinorAxis: view.getFloat64(168, isLittleEndian),
-  };
-}
-
-function decodeString(view, start, end) {
-  return String.fromCharCode.apply(null, new Uint8Array(view.buffer.slice(start, end)));
-}
-
-function readSubgrids(view, header, isLittleEndian) {
-  var gridOffset = 176;
-  var grids = [];
-  for (var i = 0; i < header.nSubgrids; i++) {
-    var subHeader = readGridHeader(view, gridOffset, isLittleEndian);
-    var nodes = readGridNodes(view, gridOffset, subHeader, isLittleEndian);
-    var lngColumnCount = Math.round(
-      1 + (subHeader.upperLongitude - subHeader.lowerLongitude) / subHeader.longitudeInterval);
-    var latColumnCount = Math.round(
-      1 + (subHeader.upperLatitude - subHeader.lowerLatitude) / subHeader.latitudeInterval);
-    // Proj4 operates on radians whereas the coordinates are in seconds in the grid
-    grids.push({
-      ll: [secondsToRadians(subHeader.lowerLongitude), secondsToRadians(subHeader.lowerLatitude)],
-      del: [secondsToRadians(subHeader.longitudeInterval), secondsToRadians(subHeader.latitudeInterval)],
-      lim: [lngColumnCount, latColumnCount],
-      count: subHeader.gridNodeCount,
-      cvs: mapNodes(nodes)
-    });
-  }
-  return grids;
-}
-
-function mapNodes(nodes) {
-  return nodes.map(function (r) {return [secondsToRadians(r.longitudeShift), secondsToRadians(r.latitudeShift)];});
-}
-
-function readGridHeader(view, offset, isLittleEndian) {
-  return {
-    name: decodeString(view, offset + 8, offset + 16).trim(),
-    parent: decodeString(view, offset + 24, offset + 24 + 8).trim(),
-    lowerLatitude: view.getFloat64(offset + 72, isLittleEndian),
-    upperLatitude: view.getFloat64(offset + 88, isLittleEndian),
-    lowerLongitude: view.getFloat64(offset + 104, isLittleEndian),
-    upperLongitude: view.getFloat64(offset + 120, isLittleEndian),
-    latitudeInterval: view.getFloat64(offset + 136, isLittleEndian),
-    longitudeInterval: view.getFloat64(offset + 152, isLittleEndian),
-    gridNodeCount: view.getInt32(offset + 168, isLittleEndian)
-  };
-}
-
-function readGridNodes(view, offset, gridHeader, isLittleEndian) {
-  var nodesOffset = offset + 176;
-  var gridRecordLength = 16;
-  var gridShiftRecords = [];
-  for (var i = 0; i < gridHeader.gridNodeCount; i++) {
-    var record = {
-      latitudeShift: view.getFloat32(nodesOffset + i * gridRecordLength, isLittleEndian),
-      longitudeShift: view.getFloat32(nodesOffset + i * gridRecordLength + 4, isLittleEndian),
-      latitudeAccuracy: view.getFloat32(nodesOffset + i * gridRecordLength + 8, isLittleEndian),
-      longitudeAccuracy: view.getFloat32(nodesOffset + i * gridRecordLength + 12, isLittleEndian),
-    };
-    gridShiftRecords.push(record);
-  }
-  return gridShiftRecords;
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/Proj.js
-
-
-
-
-
-
-
-
-
-function Projection(srsCode,callback) {
-  if (!(this instanceof Projection)) {
-    return new Projection(srsCode);
-  }
-  callback = callback || function(error){
-    if(error){
-      throw error;
-    }
-  };
-  var json = parseCode(srsCode);
-  if(typeof json !== 'object'){
-    callback(srsCode);
-    return;
-  }
-  var ourProj = Projection.projections.get(json.projName);
-  if(!ourProj){
-    callback(srsCode);
-    return;
-  }
-  if (json.datumCode && json.datumCode !== 'none') {
-    var datumDef = match(Datum_exports, json.datumCode);
-    if (datumDef) {
-      json.datum_params = json.datum_params || (datumDef.towgs84 ? datumDef.towgs84.split(',') : null);
-      json.ellps = datumDef.ellipse;
-      json.datumName = datumDef.datumName ? datumDef.datumName : json.datumCode;
-    }
-  }
-  json.k0 = json.k0 || 1.0;
-  json.axis = json.axis || 'enu';
-  json.ellps = json.ellps || 'wgs84';
-  json.lat1 = json.lat1 || json.lat0; // Lambert_Conformal_Conic_1SP, for example, needs this
-
-  var sphere_ = deriveConstants_sphere(json.a, json.b, json.rf, json.ellps, json.sphere);
-  var ecc = eccentricity(sphere_.a, sphere_.b, sphere_.rf, json.R_A);
-  var nadgrids = getNadgrids(json.nadgrids);
-  var datumObj = json.datum || lib_datum(json.datumCode, json.datum_params, sphere_.a, sphere_.b, ecc.es, ecc.ep2,
-    nadgrids);
-
-  extend(this, json); // transfer everything over from the projection because we don't know what we'll need
-  extend(this, ourProj); // transfer all the methods from the projection
-
-  // copy the 4 things over we calculated in deriveConstants.sphere
-  this.a = sphere_.a;
-  this.b = sphere_.b;
-  this.rf = sphere_.rf;
-  this.sphere = sphere_.sphere;
-
-  // copy the 3 things we calculated in deriveConstants.eccentricity
-  this.es = ecc.es;
-  this.e = ecc.e;
-  this.ep2 = ecc.ep2;
-
-  // add in the datum object
-  this.datum = datumObj;
-
-  // init the projection
-  this.init();
-
-  // legecy callback from back in the day when it went to spatialreference.org
-  callback(null, this);
-
-}
-Projection.projections = projections;
-Projection.projections.start();
-/* harmony default export */ var Proj = (Projection);
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/datumUtils.js
-
-
-function compareDatums(source, dest) {
-  if (source.datum_type !== dest.datum_type) {
-    return false; // false, datums are not equal
-  } else if (source.a !== dest.a || Math.abs(source.es - dest.es) > 0.000000000050) {
-    // the tolerance for es is to ensure that GRS80 and WGS84
-    // are considered identical
-    return false;
-  } else if (source.datum_type === PJD_3PARAM) {
-    return (source.datum_params[0] === dest.datum_params[0] && source.datum_params[1] === dest.datum_params[1] && source.datum_params[2] === dest.datum_params[2]);
-  } else if (source.datum_type === PJD_7PARAM) {
-    return (source.datum_params[0] === dest.datum_params[0] && source.datum_params[1] === dest.datum_params[1] && source.datum_params[2] === dest.datum_params[2] && source.datum_params[3] === dest.datum_params[3] && source.datum_params[4] === dest.datum_params[4] && source.datum_params[5] === dest.datum_params[5] && source.datum_params[6] === dest.datum_params[6]);
-  } else {
-    return true; // datums are equal
-  }
-} // cs_compare_datums()
-
-/*
- * The function Convert_Geodetic_To_Geocentric converts geodetic coordinates
- * (latitude, longitude, and height) to geocentric coordinates (X, Y, Z),
- * according to the current ellipsoid parameters.
- *
- *    Latitude  : Geodetic latitude in radians                     (input)
- *    Longitude : Geodetic longitude in radians                    (input)
- *    Height    : Geodetic height, in meters                       (input)
- *    X         : Calculated Geocentric X coordinate, in meters    (output)
- *    Y         : Calculated Geocentric Y coordinate, in meters    (output)
- *    Z         : Calculated Geocentric Z coordinate, in meters    (output)
- *
- */
-function geodeticToGeocentric(p, es, a) {
-  var Longitude = p.x;
-  var Latitude = p.y;
-  var Height = p.z ? p.z : 0; //Z value not always supplied
-
-  var Rn; /*  Earth radius at location  */
-  var Sin_Lat; /*  Math.sin(Latitude)  */
-  var Sin2_Lat; /*  Square of Math.sin(Latitude)  */
-  var Cos_Lat; /*  Math.cos(Latitude)  */
-
-  /*
-   ** Don't blow up if Latitude is just a little out of the value
-   ** range as it may just be a rounding issue.  Also removed longitude
-   ** test, it should be wrapped by Math.cos() and Math.sin().  NFW for PROJ.4, Sep/2001.
-   */
-  if (Latitude < -HALF_PI && Latitude > -1.001 * HALF_PI) {
-    Latitude = -HALF_PI;
-  } else if (Latitude > HALF_PI && Latitude < 1.001 * HALF_PI) {
-    Latitude = HALF_PI;
-  } else if (Latitude < -HALF_PI) {
-    /* Latitude out of range */
-    //..reportError('geocent:lat out of range:' + Latitude);
-    return { x: -Infinity, y: -Infinity, z: p.z };
-  } else if (Latitude > HALF_PI) {
-    /* Latitude out of range */
-    return { x: Infinity, y: Infinity, z: p.z };
-  }
-
-  if (Longitude > Math.PI) {
-    Longitude -= (2 * Math.PI);
-  }
-  Sin_Lat = Math.sin(Latitude);
-  Cos_Lat = Math.cos(Latitude);
-  Sin2_Lat = Sin_Lat * Sin_Lat;
-  Rn = a / (Math.sqrt(1.0e0 - es * Sin2_Lat));
-  return {
-    x: (Rn + Height) * Cos_Lat * Math.cos(Longitude),
-    y: (Rn + Height) * Cos_Lat * Math.sin(Longitude),
-    z: ((Rn * (1 - es)) + Height) * Sin_Lat
-  };
-} // cs_geodetic_to_geocentric()
-
-function geocentricToGeodetic(p, es, a, b) {
-  /* local defintions and variables */
-  /* end-criterium of loop, accuracy of sin(Latitude) */
-  var genau = 1e-12;
-  var genau2 = (genau * genau);
-  var maxiter = 30;
-
-  var P; /* distance between semi-minor axis and location */
-  var RR; /* distance between center and location */
-  var CT; /* sin of geocentric latitude */
-  var ST; /* cos of geocentric latitude */
-  var RX;
-  var RK;
-  var RN; /* Earth radius at location */
-  var CPHI0; /* cos of start or old geodetic latitude in iterations */
-  var SPHI0; /* sin of start or old geodetic latitude in iterations */
-  var CPHI; /* cos of searched geodetic latitude */
-  var SPHI; /* sin of searched geodetic latitude */
-  var SDPHI; /* end-criterium: addition-theorem of sin(Latitude(iter)-Latitude(iter-1)) */
-  var iter; /* # of continous iteration, max. 30 is always enough (s.a.) */
-
-  var X = p.x;
-  var Y = p.y;
-  var Z = p.z ? p.z : 0.0; //Z value not always supplied
-  var Longitude;
-  var Latitude;
-  var Height;
-
-  P = Math.sqrt(X * X + Y * Y);
-  RR = Math.sqrt(X * X + Y * Y + Z * Z);
-
-  /*      special cases for latitude and longitude */
-  if (P / a < genau) {
-
-    /*  special case, if P=0. (X=0., Y=0.) */
-    Longitude = 0.0;
-
-    /*  if (X,Y,Z)=(0.,0.,0.) then Height becomes semi-minor axis
-     *  of ellipsoid (=center of mass), Latitude becomes PI/2 */
-    if (RR / a < genau) {
-      Latitude = HALF_PI;
-      Height = -b;
-      return {
-        x: p.x,
-        y: p.y,
-        z: p.z
-      };
-    }
-  } else {
-    /*  ellipsoidal (geodetic) longitude
-     *  interval: -PI < Longitude <= +PI */
-    Longitude = Math.atan2(Y, X);
-  }
-
-  /* --------------------------------------------------------------
-   * Following iterative algorithm was developped by
-   * "Institut for Erdmessung", University of Hannover, July 1988.
-   * Internet: www.ife.uni-hannover.de
-   * Iterative computation of CPHI,SPHI and Height.
-   * Iteration of CPHI and SPHI to 10**-12 radian resp.
-   * 2*10**-7 arcsec.
-   * --------------------------------------------------------------
-   */
-  CT = Z / RR;
-  ST = P / RR;
-  RX = 1.0 / Math.sqrt(1.0 - es * (2.0 - es) * ST * ST);
-  CPHI0 = ST * (1.0 - es) * RX;
-  SPHI0 = CT * RX;
-  iter = 0;
-
-  /* loop to find sin(Latitude) resp. Latitude
-   * until |sin(Latitude(iter)-Latitude(iter-1))| < genau */
-  do {
-    iter++;
-    RN = a / Math.sqrt(1.0 - es * SPHI0 * SPHI0);
-
-    /*  ellipsoidal (geodetic) height */
-    Height = P * CPHI0 + Z * SPHI0 - RN * (1.0 - es * SPHI0 * SPHI0);
-
-    RK = es * RN / (RN + Height);
-    RX = 1.0 / Math.sqrt(1.0 - RK * (2.0 - RK) * ST * ST);
-    CPHI = ST * (1.0 - RK) * RX;
-    SPHI = CT * RX;
-    SDPHI = SPHI * CPHI0 - CPHI * SPHI0;
-    CPHI0 = CPHI;
-    SPHI0 = SPHI;
-  }
-  while (SDPHI * SDPHI > genau2 && iter < maxiter);
-
-  /*      ellipsoidal (geodetic) latitude */
-  Latitude = Math.atan(SPHI / Math.abs(CPHI));
-  return {
-    x: Longitude,
-    y: Latitude,
-    z: Height
-  };
-} // cs_geocentric_to_geodetic()
-
-/****************************************************************/
-// pj_geocentic_to_wgs84( p )
-//  p = point to transform in geocentric coordinates (x,y,z)
-
-
-/** point object, nothing fancy, just allows values to be
-    passed back and forth by reference rather than by value.
-    Other point classes may be used as long as they have
-    x and y properties, which will get modified in the transform method.
-*/
-function geocentricToWgs84(p, datum_type, datum_params) {
-
-  if (datum_type === PJD_3PARAM) {
-    // if( x[io] === HUGE_VAL )
-    //    continue;
-    return {
-      x: p.x + datum_params[0],
-      y: p.y + datum_params[1],
-      z: p.z + datum_params[2],
-    };
-  } else if (datum_type === PJD_7PARAM) {
-    var Dx_BF = datum_params[0];
-    var Dy_BF = datum_params[1];
-    var Dz_BF = datum_params[2];
-    var Rx_BF = datum_params[3];
-    var Ry_BF = datum_params[4];
-    var Rz_BF = datum_params[5];
-    var M_BF = datum_params[6];
-    // if( x[io] === HUGE_VAL )
-    //    continue;
-    return {
-      x: M_BF * (p.x - Rz_BF * p.y + Ry_BF * p.z) + Dx_BF,
-      y: M_BF * (Rz_BF * p.x + p.y - Rx_BF * p.z) + Dy_BF,
-      z: M_BF * (-Ry_BF * p.x + Rx_BF * p.y + p.z) + Dz_BF
-    };
-  }
-} // cs_geocentric_to_wgs84
-
-/****************************************************************/
-// pj_geocentic_from_wgs84()
-//  coordinate system definition,
-//  point to transform in geocentric coordinates (x,y,z)
-function geocentricFromWgs84(p, datum_type, datum_params) {
-
-  if (datum_type === PJD_3PARAM) {
-    //if( x[io] === HUGE_VAL )
-    //    continue;
-    return {
-      x: p.x - datum_params[0],
-      y: p.y - datum_params[1],
-      z: p.z - datum_params[2],
-    };
-
-  } else if (datum_type === PJD_7PARAM) {
-    var Dx_BF = datum_params[0];
-    var Dy_BF = datum_params[1];
-    var Dz_BF = datum_params[2];
-    var Rx_BF = datum_params[3];
-    var Ry_BF = datum_params[4];
-    var Rz_BF = datum_params[5];
-    var M_BF = datum_params[6];
-    var x_tmp = (p.x - Dx_BF) / M_BF;
-    var y_tmp = (p.y - Dy_BF) / M_BF;
-    var z_tmp = (p.z - Dz_BF) / M_BF;
-    //if( x[io] === HUGE_VAL )
-    //    continue;
-
-    return {
-      x: x_tmp + Rz_BF * y_tmp - Ry_BF * z_tmp,
-      y: -Rz_BF * x_tmp + y_tmp + Rx_BF * z_tmp,
-      z: Ry_BF * x_tmp - Rx_BF * y_tmp + z_tmp
-    };
-  } //cs_geocentric_from_wgs84()
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/datum_transform.js
-
-
-
-
-function checkParams(type) {
-  return (type === PJD_3PARAM || type === PJD_7PARAM);
-}
-
-/* harmony default export */ var datum_transform = (function(source, dest, point) {
-  // Short cut if the datums are identical.
-  if (compareDatums(source, dest)) {
-    return point; // in this case, zero is sucess,
-    // whereas cs_compare_datums returns 1 to indicate TRUE
-    // confusing, should fix this
-  }
-
-  // Explicitly skip datum transform by setting 'datum=none' as parameter for either source or dest
-  if (source.datum_type === PJD_NODATUM || dest.datum_type === PJD_NODATUM) {
-    return point;
-  }
-
-  // If this datum requires grid shifts, then apply it to geodetic coordinates.
-  var source_a = source.a;
-  var source_es = source.es;
-  if (source.datum_type === PJD_GRIDSHIFT) {
-    var gridShiftCode = applyGridShift(source, false, point);
-    if (gridShiftCode !== 0) {
-      return undefined;
-    }
-    source_a = SRS_WGS84_SEMIMAJOR;
-    source_es = SRS_WGS84_ESQUARED;
-  }
-
-  var dest_a = dest.a;
-  var dest_b = dest.b;
-  var dest_es = dest.es;
-  if (dest.datum_type === PJD_GRIDSHIFT) {
-    dest_a = SRS_WGS84_SEMIMAJOR;
-    dest_b = SRS_WGS84_SEMIMINOR;
-    dest_es = SRS_WGS84_ESQUARED;
-  }
-
-  // Do we need to go through geocentric coordinates?
-  if (source_es === dest_es && source_a === dest_a && !checkParams(source.datum_type) &&  !checkParams(dest.datum_type)) {
-    return point;
-  }
-
-  // Convert to geocentric coordinates.
-  point = geodeticToGeocentric(point, source_es, source_a);
-  // Convert between datums
-  if (checkParams(source.datum_type)) {
-    point = geocentricToWgs84(point, source.datum_type, source.datum_params);
-  }
-  if (checkParams(dest.datum_type)) {
-    point = geocentricFromWgs84(point, dest.datum_type, dest.datum_params);
-  }
-  point = geocentricToGeodetic(point, dest_es, dest_a, dest_b);
-
-  if (dest.datum_type === PJD_GRIDSHIFT) {
-    var destGridShiftResult = applyGridShift(dest, true, point);
-    if (destGridShiftResult !== 0) {
-      return undefined;
-    }
-  }
-
-  return point;
-});
-
-function applyGridShift(source, inverse, point) {
-  if (source.grids === null || source.grids.length === 0) {
-    console.log('Grid shift grids not found');
-    return -1;
-  }
-  var input = {x: -point.x, y: point.y};
-  var output = {x: Number.NaN, y: Number.NaN};
-  var onlyMandatoryGrids = false;
-  var attemptedGrids = [];
-  for (var i = 0; i < source.grids.length; i++) {
-    var grid = source.grids[i];
-    attemptedGrids.push(grid.name);
-    if (grid.isNull) {
-      output = input;
-      break;
-    }
-    onlyMandatoryGrids = grid.mandatory;
-    if (grid.grid === null) {
-      if (grid.mandatory) {
-        console.log("Unable to find mandatory grid '" + grid.name + "'");
-        return -1;
-      }
-      continue;
-    }
-    var subgrid = grid.grid.subgrids[0];
-    // skip tables that don't match our point at all
-    var epsilon = (Math.abs(subgrid.del[1]) + Math.abs(subgrid.del[0])) / 10000.0;
-    var minX = subgrid.ll[0] - epsilon;
-    var minY = subgrid.ll[1] - epsilon;
-    var maxX = subgrid.ll[0] + (subgrid.lim[0] - 1) * subgrid.del[0] + epsilon;
-    var maxY = subgrid.ll[1] + (subgrid.lim[1] - 1) * subgrid.del[1] + epsilon;
-    if (minY > input.y || minX > input.x || maxY < input.y || maxX < input.x ) {
-      continue;
-    }
-    output = applySubgridShift(input, inverse, subgrid);
-    if (!isNaN(output.x)) {
-      break;
-    }
-  }
-  if (isNaN(output.x)) {
-    console.log("Failed to find a grid shift table for location '"+
-      -input.x * R2D + " " + input.y * R2D + " tried: '" + attemptedGrids + "'");
-    return -1;
-  }
-  point.x = -output.x;
-  point.y = output.y;
-  return 0;
-}
-
-function applySubgridShift(pin, inverse, ct) {
-  var val = {x: Number.NaN, y: Number.NaN};
-  if (isNaN(pin.x)) { return val; }
-  var tb = {x: pin.x, y: pin.y};
-  tb.x -= ct.ll[0];
-  tb.y -= ct.ll[1];
-  tb.x = adjust_lon(tb.x - Math.PI) + Math.PI;
-  var t = nadInterpolate(tb, ct);
-  if (inverse) {
-    if (isNaN(t.x)) {
-      return val;
-    }
-    t.x = tb.x - t.x;
-    t.y = tb.y - t.y;
-    var i = 9, tol = 1e-12;
-    var dif, del;
-    do {
-      del = nadInterpolate(t, ct);
-      if (isNaN(del.x)) {
-        console.log("Inverse grid shift iteration failed, presumably at grid edge.  Using first approximation.");
-        break;
-      }
-      dif = {x: tb.x - (del.x + t.x), y: tb.y - (del.y + t.y)};
-      t.x += dif.x;
-      t.y += dif.y;
-    } while (i-- && Math.abs(dif.x) > tol && Math.abs(dif.y) > tol);
-    if (i < 0) {
-      console.log("Inverse grid shift iterator failed to converge.");
-      return val;
-    }
-    val.x = adjust_lon(t.x + ct.ll[0]);
-    val.y = t.y + ct.ll[1];
-  } else {
-    if (!isNaN(t.x)) {
-      val.x = pin.x + t.x;
-      val.y = pin.y + t.y;
-    }
-  }
-  return val;
-}
-
-function nadInterpolate(pin, ct) {
-  var t = {x: pin.x / ct.del[0], y: pin.y / ct.del[1]};
-  var indx = {x: Math.floor(t.x), y: Math.floor(t.y)};
-  var frct = {x: t.x - 1.0 * indx.x, y: t.y - 1.0 * indx.y};
-  var val= {x: Number.NaN, y: Number.NaN};
-  var inx;
-  if (indx.x < 0 || indx.x >= ct.lim[0]) {
-    return val;
-  }
-  if (indx.y < 0 || indx.y >= ct.lim[1]) {
-    return val;
-  }
-  inx = (indx.y * ct.lim[0]) + indx.x;
-  var f00 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
-  inx++;
-  var f10= {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
-  inx += ct.lim[0];
-  var f11 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
-  inx--;
-  var f01 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
-  var m11 = frct.x * frct.y, m10 = frct.x * (1.0 - frct.y),
-    m00 = (1.0 - frct.x) * (1.0 - frct.y), m01 = (1.0 - frct.x) * frct.y;
-  val.x = (m00 * f00.x + m10 * f10.x + m01 * f01.x + m11 * f11.x);
-  val.y = (m00 * f00.y + m10 * f10.y + m01 * f01.y + m11 * f11.y);
-  return val;
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/adjust_axis.js
-/* harmony default export */ var adjust_axis = (function(crs, denorm, point) {
-  var xin = point.x,
-    yin = point.y,
-    zin = point.z || 0.0;
-  var v, t, i;
-  var out = {};
-  for (i = 0; i < 3; i++) {
-    if (denorm && i === 2 && point.z === undefined) {
-      continue;
-    }
-    if (i === 0) {
-      v = xin;
-      if ("ew".indexOf(crs.axis[i]) !== -1) {
-        t = 'x';
-      } else {
-        t = 'y';
-      }
-
-    }
-    else if (i === 1) {
-      v = yin;
-      if ("ns".indexOf(crs.axis[i]) !== -1) {
-        t = 'y';
-      } else {
-        t = 'x';
-      }
-    }
-    else {
-      v = zin;
-      t = 'z';
-    }
-    switch (crs.axis[i]) {
-    case 'e':
-      out[t] = v;
-      break;
-    case 'w':
-      out[t] = -v;
-      break;
-    case 'n':
-      out[t] = v;
-      break;
-    case 's':
-      out[t] = -v;
-      break;
-    case 'u':
-      if (point[t] !== undefined) {
-        out.z = v;
-      }
-      break;
-    case 'd':
-      if (point[t] !== undefined) {
-        out.z = -v;
-      }
-      break;
-    default:
-      //console.log("ERROR: unknow axis ("+crs.axis[i]+") - check definition of "+crs.projName);
-      return null;
-    }
-  }
-  return out;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/toPoint.js
-/* harmony default export */ var toPoint = (function (array){
-  var out = {
-    x: array[0],
-    y: array[1]
-  };
-  if (array.length>2) {
-    out.z = array[2];
-  }
-  if (array.length>3) {
-    out.m = array[3];
-  }
-  return out;
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/checkSanity.js
-/* harmony default export */ var checkSanity = (function (point) {
-  checkCoord(point.x);
-  checkCoord(point.y);
-});
-function checkCoord(num) {
-  if (typeof Number.isFinite === 'function') {
-    if (Number.isFinite(num)) {
-      return;
-    }
-    throw new TypeError('coordinates must be finite numbers');
-  }
-  if (typeof num !== 'number' || num !== num || !isFinite(num)) {
-    throw new TypeError('coordinates must be finite numbers');
-  }
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/transform.js
-
-
-
-
-
-
-
-function checkNotWGS(source, dest) {
-  return ((source.datum.datum_type === PJD_3PARAM || source.datum.datum_type === PJD_7PARAM) && dest.datumCode !== 'WGS84') || ((dest.datum.datum_type === PJD_3PARAM || dest.datum.datum_type === PJD_7PARAM) && source.datumCode !== 'WGS84');
-}
-
-function transform(source, dest, point, enforceAxis) {
-  var wgs84;
-  if (Array.isArray(point)) {
-    point = toPoint(point);
-  }
-  checkSanity(point);
-  // Workaround for datum shifts towgs84, if either source or destination projection is not wgs84
-  if (source.datum && dest.datum && checkNotWGS(source, dest)) {
-    wgs84 = new Proj('WGS84');
-    point = transform(source, wgs84, point, enforceAxis);
-    source = wgs84;
-  }
-  // DGR, 2010/11/12
-  if (enforceAxis && source.axis !== 'enu') {
-    point = adjust_axis(source, false, point);
-  }
-  // Transform source points to long/lat, if they aren't already.
-  if (source.projName === 'longlat') {
-    point = {
-      x: point.x * D2R,
-      y: point.y * D2R,
-      z: point.z || 0
-    };
-  } else {
-    if (source.to_meter) {
-      point = {
-        x: point.x * source.to_meter,
-        y: point.y * source.to_meter,
-        z: point.z || 0
-      };
-    }
-    point = source.inverse(point); // Convert Cartesian to longlat
-    if (!point) {
-      return;
-    }
-  }
-  // Adjust for the prime meridian if necessary
-  if (source.from_greenwich) {
-    point.x += source.from_greenwich;
-  }
-
-  // Convert datums if needed, and if possible.
-  point = datum_transform(source.datum, dest.datum, point);
-  if (!point) {
-    return;
-  }
-
-  // Adjust for the prime meridian if necessary
-  if (dest.from_greenwich) {
-    point = {
-      x: point.x - dest.from_greenwich,
-      y: point.y,
-      z: point.z || 0
-    };
-  }
-
-  if (dest.projName === 'longlat') {
-    // convert radians to decimal degrees
-    point = {
-      x: point.x * R2D,
-      y: point.y * R2D,
-      z: point.z || 0
-    };
-  } else { // else project
-    point = dest.forward(point);
-    if (dest.to_meter) {
-      point = {
-        x: point.x / dest.to_meter,
-        y: point.y / dest.to_meter,
-        z: point.z || 0
-      };
-    }
-  }
-
-  // DGR, 2010/11/12
-  if (enforceAxis && dest.axis !== 'enu') {
-    return adjust_axis(dest, true, point);
-  }
-
-  return point;
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/core.js
-
-
-var core_wgs84 = Proj('WGS84');
-
-function transformer(from, to, coords, enforceAxis) {
-  var transformedArray, out, keys;
-  if (Array.isArray(coords)) {
-    transformedArray = transform(from, to, coords, enforceAxis) || {x: NaN, y: NaN};
-    if (coords.length > 2) {
-      if ((typeof from.name !== 'undefined' && from.name === 'geocent') || (typeof to.name !== 'undefined' && to.name === 'geocent')) {
-        if (typeof transformedArray.z === 'number') {
-          return [transformedArray.x, transformedArray.y, transformedArray.z].concat(coords.splice(3));
-        } else {
-          return [transformedArray.x, transformedArray.y, coords[2]].concat(coords.splice(3));
-        }
-      } else {
-        return [transformedArray.x, transformedArray.y].concat(coords.splice(2));
-      }
-    } else {
-      return [transformedArray.x, transformedArray.y];
-    }
-  } else {
-    out = transform(from, to, coords, enforceAxis);
-    keys = Object.keys(coords);
-    if (keys.length === 2) {
-      return out;
-    }
-    keys.forEach(function (key) {
-      if ((typeof from.name !== 'undefined' && from.name === 'geocent') || (typeof to.name !== 'undefined' && to.name === 'geocent')) {
-        if (key === 'x' || key === 'y' || key === 'z') {
-          return;
-        }
-      } else {
-        if (key === 'x' || key === 'y') {
-          return;
-        }
-      }
-      out[key] = coords[key];
-    });
-    return out;
-  }
-}
-
-function checkProj(item) {
-  if (item instanceof Proj) {
-    return item;
-  }
-  if (item.oProj) {
-    return item.oProj;
-  }
-  return Proj(item);
-}
-
-function core_proj4(fromProj, toProj, coord) {
-  fromProj = checkProj(fromProj);
-  var single = false;
-  var obj;
-  if (typeof toProj === 'undefined') {
-    toProj = fromProj;
-    fromProj = core_wgs84;
-    single = true;
-  } else if (typeof toProj.x !== 'undefined' || Array.isArray(toProj)) {
-    coord = toProj;
-    toProj = fromProj;
-    fromProj = core_wgs84;
-    single = true;
-  }
-  toProj = checkProj(toProj);
-  if (coord) {
-    return transformer(fromProj, toProj, coord);
-  } else {
-    obj = {
-      forward: function (coords, enforceAxis) {
-        return transformer(fromProj, toProj, coords, enforceAxis);
-      },
-      inverse: function (coords, enforceAxis) {
-        return transformer(toProj, fromProj, coords, enforceAxis);
-      }
-    };
-    if (single) {
-      obj.oProj = toProj;
-    }
-    return obj;
-  }
-}
-/* harmony default export */ var core = (core_proj4);
-// CONCATENATED MODULE: ./node_modules/mgrs/mgrs.js
-
-
-
-/**
- * UTM zones are grouped, and assigned to one of a group of 6
- * sets.
- *
- * {int} @private
- */
-var NUM_100K_SETS = 6;
-
-/**
- * The column letters (for easting) of the lower left value, per
- * set.
- *
- * {string} @private
- */
-var SET_ORIGIN_COLUMN_LETTERS = 'AJSAJS';
-
-/**
- * The row letters (for northing) of the lower left value, per
- * set.
- *
- * {string} @private
- */
-var SET_ORIGIN_ROW_LETTERS = 'AFAFAF';
-
-var mgrs_A = 65; // A
-var I = 73; // I
-var O = 79; // O
-var mgrs_V = 86; // V
-var mgrs_Z = 90; // Z
-/* harmony default export */ var mgrs = ({
-  forward: mgrs_forward,
-  inverse: mgrs_inverse,
-  toPoint: mgrs_toPoint
-});
-/**
- * Conversion of lat/lon to MGRS.
- *
- * @param {object} ll Object literal with lat and lon properties on a
- *     WGS84 ellipsoid.
- * @param {int} accuracy Accuracy in digits (5 for 1 m, 4 for 10 m, 3 for
- *      100 m, 2 for 1000 m or 1 for 10000 m). Optional, default is 5.
- * @return {string} the MGRS string for the given location and accuracy.
- */
-function mgrs_forward(ll, accuracy) {
-  accuracy = accuracy || 5; // default accuracy 1m
-  return encode(LLtoUTM({
-    lat: ll[1],
-    lon: ll[0]
-  }), accuracy);
-};
-
-/**
- * Conversion of MGRS to lat/lon.
- *
- * @param {string} mgrs MGRS string.
- * @return {array} An array with left (longitude), bottom (latitude), right
- *     (longitude) and top (latitude) values in WGS84, representing the
- *     bounding box for the provided MGRS reference.
- */
-function mgrs_inverse(mgrs) {
-  var bbox = UTMtoLL(decode(mgrs.toUpperCase()));
-  if (bbox.lat && bbox.lon) {
-    return [bbox.lon, bbox.lat, bbox.lon, bbox.lat];
-  }
-  return [bbox.left, bbox.bottom, bbox.right, bbox.top];
-};
-
-function mgrs_toPoint(mgrs) {
-  var bbox = UTMtoLL(decode(mgrs.toUpperCase()));
-  if (bbox.lat && bbox.lon) {
-    return [bbox.lon, bbox.lat];
-  }
-  return [(bbox.left + bbox.right) / 2, (bbox.top + bbox.bottom) / 2];
-};
-/**
- * Conversion from degrees to radians.
- *
- * @private
- * @param {number} deg the angle in degrees.
- * @return {number} the angle in radians.
- */
-function degToRad(deg) {
-  return (deg * (Math.PI / 180.0));
-}
-
-/**
- * Conversion from radians to degrees.
- *
- * @private
- * @param {number} rad the angle in radians.
- * @return {number} the angle in degrees.
- */
-function radToDeg(rad) {
-  return (180.0 * (rad / Math.PI));
-}
-
-/**
- * Converts a set of Longitude and Latitude co-ordinates to UTM
- * using the WGS84 ellipsoid.
- *
- * @private
- * @param {object} ll Object literal with lat and lon properties
- *     representing the WGS84 coordinate to be converted.
- * @return {object} Object literal containing the UTM value with easting,
- *     northing, zoneNumber and zoneLetter properties, and an optional
- *     accuracy property in digits. Returns null if the conversion failed.
- */
-function LLtoUTM(ll) {
-  var Lat = ll.lat;
-  var Long = ll.lon;
-  var a = 6378137.0; //ellip.radius;
-  var eccSquared = 0.00669438; //ellip.eccsq;
-  var k0 = 0.9996;
-  var LongOrigin;
-  var eccPrimeSquared;
-  var N, T, C, A, M;
-  var LatRad = degToRad(Lat);
-  var LongRad = degToRad(Long);
-  var LongOriginRad;
-  var ZoneNumber;
-  // (int)
-  ZoneNumber = Math.floor((Long + 180) / 6) + 1;
-
-  //Make sure the longitude 180.00 is in Zone 60
-  if (Long === 180) {
-    ZoneNumber = 60;
-  }
-
-  // Special zone for Norway
-  if (Lat >= 56.0 && Lat < 64.0 && Long >= 3.0 && Long < 12.0) {
-    ZoneNumber = 32;
-  }
-
-  // Special zones for Svalbard
-  if (Lat >= 72.0 && Lat < 84.0) {
-    if (Long >= 0.0 && Long < 9.0) {
-      ZoneNumber = 31;
-    }
-    else if (Long >= 9.0 && Long < 21.0) {
-      ZoneNumber = 33;
-    }
-    else if (Long >= 21.0 && Long < 33.0) {
-      ZoneNumber = 35;
-    }
-    else if (Long >= 33.0 && Long < 42.0) {
-      ZoneNumber = 37;
-    }
-  }
-
-  LongOrigin = (ZoneNumber - 1) * 6 - 180 + 3; //+3 puts origin
-  // in middle of
-  // zone
-  LongOriginRad = degToRad(LongOrigin);
-
-  eccPrimeSquared = (eccSquared) / (1 - eccSquared);
-
-  N = a / Math.sqrt(1 - eccSquared * Math.sin(LatRad) * Math.sin(LatRad));
-  T = Math.tan(LatRad) * Math.tan(LatRad);
-  C = eccPrimeSquared * Math.cos(LatRad) * Math.cos(LatRad);
-  A = Math.cos(LatRad) * (LongRad - LongOriginRad);
-
-  M = a * ((1 - eccSquared / 4 - 3 * eccSquared * eccSquared / 64 - 5 * eccSquared * eccSquared * eccSquared / 256) * LatRad - (3 * eccSquared / 8 + 3 * eccSquared * eccSquared / 32 + 45 * eccSquared * eccSquared * eccSquared / 1024) * Math.sin(2 * LatRad) + (15 * eccSquared * eccSquared / 256 + 45 * eccSquared * eccSquared * eccSquared / 1024) * Math.sin(4 * LatRad) - (35 * eccSquared * eccSquared * eccSquared / 3072) * Math.sin(6 * LatRad));
-
-  var UTMEasting = (k0 * N * (A + (1 - T + C) * A * A * A / 6.0 + (5 - 18 * T + T * T + 72 * C - 58 * eccPrimeSquared) * A * A * A * A * A / 120.0) + 500000.0);
-
-  var UTMNorthing = (k0 * (M + N * Math.tan(LatRad) * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * A * A * A * A / 24.0 + (61 - 58 * T + T * T + 600 * C - 330 * eccPrimeSquared) * A * A * A * A * A * A / 720.0)));
-  if (Lat < 0.0) {
-    UTMNorthing += 10000000.0; //10000000 meter offset for
-    // southern hemisphere
-  }
-
-  return {
-    northing: Math.round(UTMNorthing),
-    easting: Math.round(UTMEasting),
-    zoneNumber: ZoneNumber,
-    zoneLetter: getLetterDesignator(Lat)
-  };
-}
-
-/**
- * Converts UTM coords to lat/long, using the WGS84 ellipsoid. This is a convenience
- * class where the Zone can be specified as a single string eg."60N" which
- * is then broken down into the ZoneNumber and ZoneLetter.
- *
- * @private
- * @param {object} utm An object literal with northing, easting, zoneNumber
- *     and zoneLetter properties. If an optional accuracy property is
- *     provided (in meters), a bounding box will be returned instead of
- *     latitude and longitude.
- * @return {object} An object literal containing either lat and lon values
- *     (if no accuracy was provided), or top, right, bottom and left values
- *     for the bounding box calculated according to the provided accuracy.
- *     Returns null if the conversion failed.
- */
-function UTMtoLL(utm) {
-
-  var UTMNorthing = utm.northing;
-  var UTMEasting = utm.easting;
-  var zoneLetter = utm.zoneLetter;
-  var zoneNumber = utm.zoneNumber;
-  // check the ZoneNummber is valid
-  if (zoneNumber < 0 || zoneNumber > 60) {
-    return null;
-  }
-
-  var k0 = 0.9996;
-  var a = 6378137.0; //ellip.radius;
-  var eccSquared = 0.00669438; //ellip.eccsq;
-  var eccPrimeSquared;
-  var e1 = (1 - Math.sqrt(1 - eccSquared)) / (1 + Math.sqrt(1 - eccSquared));
-  var N1, T1, C1, R1, D, M;
-  var LongOrigin;
-  var mu, phi1Rad;
-
-  // remove 500,000 meter offset for longitude
-  var x = UTMEasting - 500000.0;
-  var y = UTMNorthing;
-
-  // We must know somehow if we are in the Northern or Southern
-  // hemisphere, this is the only time we use the letter So even
-  // if the Zone letter isn't exactly correct it should indicate
-  // the hemisphere correctly
-  if (zoneLetter < 'N') {
-    y -= 10000000.0; // remove 10,000,000 meter offset used
-    // for southern hemisphere
-  }
-
-  // There are 60 zones with zone 1 being at West -180 to -174
-  LongOrigin = (zoneNumber - 1) * 6 - 180 + 3; // +3 puts origin
-  // in middle of
-  // zone
-
-  eccPrimeSquared = (eccSquared) / (1 - eccSquared);
-
-  M = y / k0;
-  mu = M / (a * (1 - eccSquared / 4 - 3 * eccSquared * eccSquared / 64 - 5 * eccSquared * eccSquared * eccSquared / 256));
-
-  phi1Rad = mu + (3 * e1 / 2 - 27 * e1 * e1 * e1 / 32) * Math.sin(2 * mu) + (21 * e1 * e1 / 16 - 55 * e1 * e1 * e1 * e1 / 32) * Math.sin(4 * mu) + (151 * e1 * e1 * e1 / 96) * Math.sin(6 * mu);
-  // double phi1 = ProjMath.radToDeg(phi1Rad);
-
-  N1 = a / Math.sqrt(1 - eccSquared * Math.sin(phi1Rad) * Math.sin(phi1Rad));
-  T1 = Math.tan(phi1Rad) * Math.tan(phi1Rad);
-  C1 = eccPrimeSquared * Math.cos(phi1Rad) * Math.cos(phi1Rad);
-  R1 = a * (1 - eccSquared) / Math.pow(1 - eccSquared * Math.sin(phi1Rad) * Math.sin(phi1Rad), 1.5);
-  D = x / (N1 * k0);
-
-  var lat = phi1Rad - (N1 * Math.tan(phi1Rad) / R1) * (D * D / 2 - (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * eccPrimeSquared) * D * D * D * D / 24 + (61 + 90 * T1 + 298 * C1 + 45 * T1 * T1 - 252 * eccPrimeSquared - 3 * C1 * C1) * D * D * D * D * D * D / 720);
-  lat = radToDeg(lat);
-
-  var lon = (D - (1 + 2 * T1 + C1) * D * D * D / 6 + (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * eccPrimeSquared + 24 * T1 * T1) * D * D * D * D * D / 120) / Math.cos(phi1Rad);
-  lon = LongOrigin + radToDeg(lon);
-
-  var result;
-  if (utm.accuracy) {
-    var topRight = UTMtoLL({
-      northing: utm.northing + utm.accuracy,
-      easting: utm.easting + utm.accuracy,
-      zoneLetter: utm.zoneLetter,
-      zoneNumber: utm.zoneNumber
-    });
-    result = {
-      top: topRight.lat,
-      right: topRight.lon,
-      bottom: lat,
-      left: lon
-    };
-  }
-  else {
-    result = {
-      lat: lat,
-      lon: lon
-    };
-  }
-  return result;
-}
-
-/**
- * Calculates the MGRS letter designator for the given latitude.
- *
- * @private
- * @param {number} lat The latitude in WGS84 to get the letter designator
- *     for.
- * @return {char} The letter designator.
- */
-function getLetterDesignator(lat) {
-  //This is here as an error flag to show that the Latitude is
-  //outside MGRS limits
-  var LetterDesignator = 'Z';
-
-  if ((84 >= lat) && (lat >= 72)) {
-    LetterDesignator = 'X';
-  }
-  else if ((72 > lat) && (lat >= 64)) {
-    LetterDesignator = 'W';
-  }
-  else if ((64 > lat) && (lat >= 56)) {
-    LetterDesignator = 'V';
-  }
-  else if ((56 > lat) && (lat >= 48)) {
-    LetterDesignator = 'U';
-  }
-  else if ((48 > lat) && (lat >= 40)) {
-    LetterDesignator = 'T';
-  }
-  else if ((40 > lat) && (lat >= 32)) {
-    LetterDesignator = 'S';
-  }
-  else if ((32 > lat) && (lat >= 24)) {
-    LetterDesignator = 'R';
-  }
-  else if ((24 > lat) && (lat >= 16)) {
-    LetterDesignator = 'Q';
-  }
-  else if ((16 > lat) && (lat >= 8)) {
-    LetterDesignator = 'P';
-  }
-  else if ((8 > lat) && (lat >= 0)) {
-    LetterDesignator = 'N';
-  }
-  else if ((0 > lat) && (lat >= -8)) {
-    LetterDesignator = 'M';
-  }
-  else if ((-8 > lat) && (lat >= -16)) {
-    LetterDesignator = 'L';
-  }
-  else if ((-16 > lat) && (lat >= -24)) {
-    LetterDesignator = 'K';
-  }
-  else if ((-24 > lat) && (lat >= -32)) {
-    LetterDesignator = 'J';
-  }
-  else if ((-32 > lat) && (lat >= -40)) {
-    LetterDesignator = 'H';
-  }
-  else if ((-40 > lat) && (lat >= -48)) {
-    LetterDesignator = 'G';
-  }
-  else if ((-48 > lat) && (lat >= -56)) {
-    LetterDesignator = 'F';
-  }
-  else if ((-56 > lat) && (lat >= -64)) {
-    LetterDesignator = 'E';
-  }
-  else if ((-64 > lat) && (lat >= -72)) {
-    LetterDesignator = 'D';
-  }
-  else if ((-72 > lat) && (lat >= -80)) {
-    LetterDesignator = 'C';
-  }
-  return LetterDesignator;
-}
-
-/**
- * Encodes a UTM location as MGRS string.
- *
- * @private
- * @param {object} utm An object literal with easting, northing,
- *     zoneLetter, zoneNumber
- * @param {number} accuracy Accuracy in digits (1-5).
- * @return {string} MGRS string for the given UTM location.
- */
-function encode(utm, accuracy) {
-  // prepend with leading zeroes
-  var seasting = "00000" + utm.easting,
-    snorthing = "00000" + utm.northing;
-
-  return utm.zoneNumber + utm.zoneLetter + get100kID(utm.easting, utm.northing, utm.zoneNumber) + seasting.substr(seasting.length - 5, accuracy) + snorthing.substr(snorthing.length - 5, accuracy);
-}
-
-/**
- * Get the two letter 100k designator for a given UTM easting,
- * northing and zone number value.
- *
- * @private
- * @param {number} easting
- * @param {number} northing
- * @param {number} zoneNumber
- * @return the two letter 100k designator for the given UTM location.
- */
-function get100kID(easting, northing, zoneNumber) {
-  var setParm = get100kSetForZone(zoneNumber);
-  var setColumn = Math.floor(easting / 100000);
-  var setRow = Math.floor(northing / 100000) % 20;
-  return getLetter100kID(setColumn, setRow, setParm);
-}
-
-/**
- * Given a UTM zone number, figure out the MGRS 100K set it is in.
- *
- * @private
- * @param {number} i An UTM zone number.
- * @return {number} the 100k set the UTM zone is in.
- */
-function get100kSetForZone(i) {
-  var setParm = i % NUM_100K_SETS;
-  if (setParm === 0) {
-    setParm = NUM_100K_SETS;
-  }
-
-  return setParm;
-}
-
-/**
- * Get the two-letter MGRS 100k designator given information
- * translated from the UTM northing, easting and zone number.
- *
- * @private
- * @param {number} column the column index as it relates to the MGRS
- *        100k set spreadsheet, created from the UTM easting.
- *        Values are 1-8.
- * @param {number} row the row index as it relates to the MGRS 100k set
- *        spreadsheet, created from the UTM northing value. Values
- *        are from 0-19.
- * @param {number} parm the set block, as it relates to the MGRS 100k set
- *        spreadsheet, created from the UTM zone. Values are from
- *        1-60.
- * @return two letter MGRS 100k code.
- */
-function getLetter100kID(column, row, parm) {
-  // colOrigin and rowOrigin are the letters at the origin of the set
-  var index = parm - 1;
-  var colOrigin = SET_ORIGIN_COLUMN_LETTERS.charCodeAt(index);
-  var rowOrigin = SET_ORIGIN_ROW_LETTERS.charCodeAt(index);
-
-  // colInt and rowInt are the letters to build to return
-  var colInt = colOrigin + column - 1;
-  var rowInt = rowOrigin + row;
-  var rollover = false;
-
-  if (colInt > mgrs_Z) {
-    colInt = colInt - mgrs_Z + mgrs_A - 1;
-    rollover = true;
-  }
-
-  if (colInt === I || (colOrigin < I && colInt > I) || ((colInt > I || colOrigin < I) && rollover)) {
-    colInt++;
-  }
-
-  if (colInt === O || (colOrigin < O && colInt > O) || ((colInt > O || colOrigin < O) && rollover)) {
-    colInt++;
-
-    if (colInt === I) {
-      colInt++;
-    }
-  }
-
-  if (colInt > mgrs_Z) {
-    colInt = colInt - mgrs_Z + mgrs_A - 1;
-  }
-
-  if (rowInt > mgrs_V) {
-    rowInt = rowInt - mgrs_V + mgrs_A - 1;
-    rollover = true;
-  }
-  else {
-    rollover = false;
-  }
-
-  if (((rowInt === I) || ((rowOrigin < I) && (rowInt > I))) || (((rowInt > I) || (rowOrigin < I)) && rollover)) {
-    rowInt++;
-  }
-
-  if (((rowInt === O) || ((rowOrigin < O) && (rowInt > O))) || (((rowInt > O) || (rowOrigin < O)) && rollover)) {
-    rowInt++;
-
-    if (rowInt === I) {
-      rowInt++;
-    }
-  }
-
-  if (rowInt > mgrs_V) {
-    rowInt = rowInt - mgrs_V + mgrs_A - 1;
-  }
-
-  var twoLetter = String.fromCharCode(colInt) + String.fromCharCode(rowInt);
-  return twoLetter;
-}
-
-/**
- * Decode the UTM parameters from a MGRS string.
- *
- * @private
- * @param {string} mgrsString an UPPERCASE coordinate string is expected.
- * @return {object} An object literal with easting, northing, zoneLetter,
- *     zoneNumber and accuracy (in meters) properties.
- */
-function decode(mgrsString) {
-
-  if (mgrsString && mgrsString.length === 0) {
-    throw ("MGRSPoint coverting from nothing");
-  }
-
-  var length = mgrsString.length;
-
-  var hunK = null;
-  var sb = "";
-  var testChar;
-  var i = 0;
-
-  // get Zone number
-  while (!(/[A-Z]/).test(testChar = mgrsString.charAt(i))) {
-    if (i >= 2) {
-      throw ("MGRSPoint bad conversion from: " + mgrsString);
-    }
-    sb += testChar;
-    i++;
-  }
-
-  var zoneNumber = parseInt(sb, 10);
-
-  if (i === 0 || i + 3 > length) {
-    // A good MGRS string has to be 4-5 digits long,
-    // ##AAA/#AAA at least.
-    throw ("MGRSPoint bad conversion from: " + mgrsString);
-  }
-
-  var zoneLetter = mgrsString.charAt(i++);
-
-  // Should we check the zone letter here? Why not.
-  if (zoneLetter <= 'A' || zoneLetter === 'B' || zoneLetter === 'Y' || zoneLetter >= 'Z' || zoneLetter === 'I' || zoneLetter === 'O') {
-    throw ("MGRSPoint zone letter " + zoneLetter + " not handled: " + mgrsString);
-  }
-
-  hunK = mgrsString.substring(i, i += 2);
-
-  var set = get100kSetForZone(zoneNumber);
-
-  var east100k = getEastingFromChar(hunK.charAt(0), set);
-  var north100k = getNorthingFromChar(hunK.charAt(1), set);
-
-  // We have a bug where the northing may be 2000000 too low.
-  // How
-  // do we know when to roll over?
-
-  while (north100k < getMinNorthing(zoneLetter)) {
-    north100k += 2000000;
-  }
-
-  // calculate the char index for easting/northing separator
-  var remainder = length - i;
-
-  if (remainder % 2 !== 0) {
-    throw ("MGRSPoint has to have an even number \nof digits after the zone letter and two 100km letters - front \nhalf for easting meters, second half for \nnorthing meters" + mgrsString);
-  }
-
-  var sep = remainder / 2;
-
-  var sepEasting = 0.0;
-  var sepNorthing = 0.0;
-  var accuracyBonus, sepEastingString, sepNorthingString, easting, northing;
-  if (sep > 0) {
-    accuracyBonus = 100000.0 / Math.pow(10, sep);
-    sepEastingString = mgrsString.substring(i, i + sep);
-    sepEasting = parseFloat(sepEastingString) * accuracyBonus;
-    sepNorthingString = mgrsString.substring(i + sep);
-    sepNorthing = parseFloat(sepNorthingString) * accuracyBonus;
-  }
-
-  easting = sepEasting + east100k;
-  northing = sepNorthing + north100k;
-
-  return {
-    easting: easting,
-    northing: northing,
-    zoneLetter: zoneLetter,
-    zoneNumber: zoneNumber,
-    accuracy: accuracyBonus
-  };
-}
-
-/**
- * Given the first letter from a two-letter MGRS 100k zone, and given the
- * MGRS table set for the zone number, figure out the easting value that
- * should be added to the other, secondary easting value.
- *
- * @private
- * @param {char} e The first letter from a two-letter MGRS 100´k zone.
- * @param {number} set The MGRS table set for the zone number.
- * @return {number} The easting value for the given letter and set.
- */
-function getEastingFromChar(e, set) {
-  // colOrigin is the letter at the origin of the set for the
-  // column
-  var curCol = SET_ORIGIN_COLUMN_LETTERS.charCodeAt(set - 1);
-  var eastingValue = 100000.0;
-  var rewindMarker = false;
-
-  while (curCol !== e.charCodeAt(0)) {
-    curCol++;
-    if (curCol === I) {
-      curCol++;
-    }
-    if (curCol === O) {
-      curCol++;
-    }
-    if (curCol > mgrs_Z) {
-      if (rewindMarker) {
-        throw ("Bad character: " + e);
-      }
-      curCol = mgrs_A;
-      rewindMarker = true;
-    }
-    eastingValue += 100000.0;
-  }
-
-  return eastingValue;
-}
-
-/**
- * Given the second letter from a two-letter MGRS 100k zone, and given the
- * MGRS table set for the zone number, figure out the northing value that
- * should be added to the other, secondary northing value. You have to
- * remember that Northings are determined from the equator, and the vertical
- * cycle of letters mean a 2000000 additional northing meters. This happens
- * approx. every 18 degrees of latitude. This method does *NOT* count any
- * additional northings. You have to figure out how many 2000000 meters need
- * to be added for the zone letter of the MGRS coordinate.
- *
- * @private
- * @param {char} n Second letter of the MGRS 100k zone
- * @param {number} set The MGRS table set number, which is dependent on the
- *     UTM zone number.
- * @return {number} The northing value for the given letter and set.
- */
-function getNorthingFromChar(n, set) {
-
-  if (n > 'V') {
-    throw ("MGRSPoint given invalid Northing " + n);
-  }
-
-  // rowOrigin is the letter at the origin of the set for the
-  // column
-  var curRow = SET_ORIGIN_ROW_LETTERS.charCodeAt(set - 1);
-  var northingValue = 0.0;
-  var rewindMarker = false;
-
-  while (curRow !== n.charCodeAt(0)) {
-    curRow++;
-    if (curRow === I) {
-      curRow++;
-    }
-    if (curRow === O) {
-      curRow++;
-    }
-    // fixing a bug making whole application hang in this loop
-    // when 'n' is a wrong character
-    if (curRow > mgrs_V) {
-      if (rewindMarker) { // making sure that this loop ends
-        throw ("Bad character: " + n);
-      }
-      curRow = mgrs_A;
-      rewindMarker = true;
-    }
-    northingValue += 100000.0;
-  }
-
-  return northingValue;
-}
-
-/**
- * The function getMinNorthing returns the minimum northing value of a MGRS
- * zone.
- *
- * Ported from Geotrans' c Lattitude_Band_Value structure table.
- *
- * @private
- * @param {char} zoneLetter The MGRS zone to get the min northing for.
- * @return {number}
- */
-function getMinNorthing(zoneLetter) {
-  var northing;
-  switch (zoneLetter) {
-  case 'C':
-    northing = 1100000.0;
-    break;
-  case 'D':
-    northing = 2000000.0;
-    break;
-  case 'E':
-    northing = 2800000.0;
-    break;
-  case 'F':
-    northing = 3700000.0;
-    break;
-  case 'G':
-    northing = 4600000.0;
-    break;
-  case 'H':
-    northing = 5500000.0;
-    break;
-  case 'J':
-    northing = 6400000.0;
-    break;
-  case 'K':
-    northing = 7300000.0;
-    break;
-  case 'L':
-    northing = 8200000.0;
-    break;
-  case 'M':
-    northing = 9100000.0;
-    break;
-  case 'N':
-    northing = 0.0;
-    break;
-  case 'P':
-    northing = 800000.0;
-    break;
-  case 'Q':
-    northing = 1700000.0;
-    break;
-  case 'R':
-    northing = 2600000.0;
-    break;
-  case 'S':
-    northing = 3500000.0;
-    break;
-  case 'T':
-    northing = 4400000.0;
-    break;
-  case 'U':
-    northing = 5300000.0;
-    break;
-  case 'V':
-    northing = 6200000.0;
-    break;
-  case 'W':
-    northing = 7000000.0;
-    break;
-  case 'X':
-    northing = 7900000.0;
-    break;
-  default:
-    northing = -1.0;
-  }
-  if (northing >= 0.0) {
-    return northing;
-  }
-  else {
-    throw ("Invalid zone letter: " + zoneLetter);
-  }
-
-}
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/Point.js
-
-
-function Point(x, y, z) {
-  if (!(this instanceof Point)) {
-    return new Point(x, y, z);
-  }
-  if (Array.isArray(x)) {
-    this.x = x[0];
-    this.y = x[1];
-    this.z = x[2] || 0.0;
-  } else if(typeof x === 'object') {
-    this.x = x.x;
-    this.y = x.y;
-    this.z = x.z || 0.0;
-  } else if (typeof x === 'string' && typeof y === 'undefined') {
-    var coords = x.split(',');
-    this.x = parseFloat(coords[0], 10);
-    this.y = parseFloat(coords[1], 10);
-    this.z = parseFloat(coords[2], 10) || 0.0;
-  } else {
-    this.x = x;
-    this.y = y;
-    this.z = z || 0.0;
-  }
-  console.warn('proj4.Point will be removed in version 3, use proj4.toPoint');
-}
-
-Point.fromMGRS = function(mgrsStr) {
-  return new Point(mgrs_toPoint(mgrsStr));
-};
-Point.prototype.toMGRS = function(accuracy) {
-  return mgrs_forward([this.x, this.y], accuracy);
-};
-/* harmony default export */ var lib_Point = (Point);
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/pj_enfn.js
-var C00 = 1;
-var C02 = 0.25;
-var C04 = 0.046875;
-var C06 = 0.01953125;
-var C08 = 0.01068115234375;
-var C22 = 0.75;
-var C44 = 0.46875;
-var C46 = 0.01302083333333333333;
-var C48 = 0.00712076822916666666;
-var C66 = 0.36458333333333333333;
-var C68 = 0.00569661458333333333;
-var C88 = 0.3076171875;
-
-/* harmony default export */ var pj_enfn = (function(es) {
-  var en = [];
-  en[0] = C00 - es * (C02 + es * (C04 + es * (C06 + es * C08)));
-  en[1] = es * (C22 - es * (C04 + es * (C06 + es * C08)));
-  var t = es * es;
-  en[2] = t * (C44 - es * (C46 + es * C48));
-  t *= es;
-  en[3] = t * (C66 - es * C68);
-  en[4] = t * es * C88;
-  return en;
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/pj_mlfn.js
-/* harmony default export */ var pj_mlfn = (function(phi, sphi, cphi, en) {
-  cphi *= sphi;
-  sphi *= sphi;
-  return (en[0] * phi - cphi * (en[1] + sphi * (en[2] + sphi * (en[3] + sphi * en[4]))));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/pj_inv_mlfn.js
-
-
-
-var MAX_ITER = 20;
-
-/* harmony default export */ var pj_inv_mlfn = (function(arg, es, en) {
-  var k = 1 / (1 - es);
-  var phi = arg;
-  for (var i = MAX_ITER; i; --i) { /* rarely goes over 2 iterations */
-    var s = Math.sin(phi);
-    var t = 1 - es * s * s;
-    //t = this.pj_mlfn(phi, s, Math.cos(phi), en) - arg;
-    //phi -= t * (t * Math.sqrt(t)) * k;
-    t = (pj_mlfn(phi, s, Math.cos(phi), en) - arg) * (t * Math.sqrt(t)) * k;
-    phi -= t;
-    if (Math.abs(t) < EPSLN) {
-      return phi;
-    }
-  }
-  //..reportError("cass:pj_inv_mlfn: Convergence error");
-  return phi;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/tmerc.js
-// Heavily based on this tmerc projection implementation
-// https://github.com/mbloch/mapshaper-proj/blob/master/src/projections/tmerc.js
-
-
-
-
-
-
-
-
-
-function tmerc_init() {
-  this.x0 = this.x0 !== undefined ? this.x0 : 0;
-  this.y0 = this.y0 !== undefined ? this.y0 : 0;
-  this.long0 = this.long0 !== undefined ? this.long0 : 0;
-  this.lat0 = this.lat0 !== undefined ? this.lat0 : 0;
-
-  if (this.es) {
-    this.en = pj_enfn(this.es);
-    this.ml0 = pj_mlfn(this.lat0, Math.sin(this.lat0), Math.cos(this.lat0), this.en);
-  }
-}
-
-/**
-    Transverse Mercator Forward  - long/lat to x/y
-    long/lat in radians
-  */
-function tmerc_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-
-  var delta_lon = adjust_lon(lon - this.long0);
-  var con;
-  var x, y;
-  var sin_phi = Math.sin(lat);
-  var cos_phi = Math.cos(lat);
-
-  if (!this.es) {
-    var b = cos_phi * Math.sin(delta_lon);
-
-    if ((Math.abs(Math.abs(b) - 1)) < EPSLN) {
-      return (93);
-    }
-    else {
-      x = 0.5 * this.a * this.k0 * Math.log((1 + b) / (1 - b)) + this.x0;
-      y = cos_phi * Math.cos(delta_lon) / Math.sqrt(1 - Math.pow(b, 2));
-      b = Math.abs(y);
-
-      if (b >= 1) {
-        if ((b - 1) > EPSLN) {
-          return (93);
-        }
-        else {
-          y = 0;
-        }
-      }
-      else {
-        y = Math.acos(y);
-      }
-
-      if (lat < 0) {
-        y = -y;
-      }
-
-      y = this.a * this.k0 * (y - this.lat0) + this.y0;
-    }
-  }
-  else {
-    var al = cos_phi * delta_lon;
-    var als = Math.pow(al, 2);
-    var c = this.ep2 * Math.pow(cos_phi, 2);
-    var cs = Math.pow(c, 2);
-    var tq = Math.abs(cos_phi) > EPSLN ? Math.tan(lat) : 0;
-    var t = Math.pow(tq, 2);
-    var ts = Math.pow(t, 2);
-    con = 1 - this.es * Math.pow(sin_phi, 2);
-    al = al / Math.sqrt(con);
-    var ml = pj_mlfn(lat, sin_phi, cos_phi, this.en);
-
-    x = this.a * (this.k0 * al * (1 +
-      als / 6 * (1 - t + c +
-      als / 20 * (5 - 18 * t + ts + 14 * c - 58 * t * c +
-      als / 42 * (61 + 179 * ts - ts * t - 479 * t))))) +
-      this.x0;
-
-    y = this.a * (this.k0 * (ml - this.ml0 +
-      sin_phi * delta_lon * al / 2 * (1 +
-      als / 12 * (5 - t + 9 * c + 4 * cs +
-      als / 30 * (61 + ts - 58 * t + 270 * c - 330 * t * c +
-      als / 56 * (1385 + 543 * ts - ts * t - 3111 * t)))))) +
-      this.y0;
-  }
-
-  p.x = x;
-  p.y = y;
-
-  return p;
-}
-
-/**
-    Transverse Mercator Inverse  -  x/y to long/lat
-  */
-function tmerc_inverse(p) {
-  var con, phi;
-  var lat, lon;
-  var x = (p.x - this.x0) * (1 / this.a);
-  var y = (p.y - this.y0) * (1 / this.a);
-
-  if (!this.es) {
-    var f = Math.exp(x / this.k0);
-    var g = 0.5 * (f - 1 / f);
-    var temp = this.lat0 + y / this.k0;
-    var h = Math.cos(temp);
-    con = Math.sqrt((1 - Math.pow(h, 2)) / (1 + Math.pow(g, 2)));
-    lat = Math.asin(con);
-
-    if (y < 0) {
-      lat = -lat;
-    }
-
-    if ((g === 0) && (h === 0)) {
-      lon = 0;
-    }
-    else {
-      lon = adjust_lon(Math.atan2(g, h) + this.long0);
-    }
-  }
-  else { // ellipsoidal form
-    con = this.ml0 + y / this.k0;
-    phi = pj_inv_mlfn(con, this.es, this.en);
-
-    if (Math.abs(phi) < HALF_PI) {
-      var sin_phi = Math.sin(phi);
-      var cos_phi = Math.cos(phi);
-      var tan_phi = Math.abs(cos_phi) > EPSLN ? Math.tan(phi) : 0;
-      var c = this.ep2 * Math.pow(cos_phi, 2);
-      var cs = Math.pow(c, 2);
-      var t = Math.pow(tan_phi, 2);
-      var ts = Math.pow(t, 2);
-      con = 1 - this.es * Math.pow(sin_phi, 2);
-      var d = x * Math.sqrt(con) / this.k0;
-      var ds = Math.pow(d, 2);
-      con = con * tan_phi;
-
-      lat = phi - (con * ds / (1 - this.es)) * 0.5 * (1 -
-        ds / 12 * (5 + 3 * t - 9 * c * t + c - 4 * cs -
-        ds / 30 * (61 + 90 * t - 252 * c * t + 45 * ts + 46 * c -
-        ds / 56 * (1385 + 3633 * t + 4095 * ts + 1574 * ts * t))));
-
-      lon = adjust_lon(this.long0 + (d * (1 -
-        ds / 6 * (1 + 2 * t + c -
-        ds / 20 * (5 + 28 * t + 24 * ts + 8 * c * t + 6 * c -
-        ds / 42 * (61 + 662 * t + 1320 * ts + 720 * ts * t)))) / cos_phi));
-    }
-    else {
-      lat = HALF_PI * sign(y);
-      lon = 0;
-    }
-  }
-
-  p.x = lon;
-  p.y = lat;
-
-  return p;
-}
-
-var tmerc_names = ["Fast_Transverse_Mercator", "Fast Transverse Mercator"];
-/* harmony default export */ var tmerc = ({
-  init: tmerc_init,
-  forward: tmerc_forward,
-  inverse: tmerc_inverse,
-  names: tmerc_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/sinh.js
-/* harmony default export */ var sinh = (function(x) {
-  var r = Math.exp(x);
-  r = (r - 1 / r) / 2;
-  return r;
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/hypot.js
-/* harmony default export */ var hypot = (function(x, y) {
-  x = Math.abs(x);
-  y = Math.abs(y);
-  var a = Math.max(x, y);
-  var b = Math.min(x, y) / (a ? a : 1);
-
-  return a * Math.sqrt(1 + Math.pow(b, 2));
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/log1py.js
-/* harmony default export */ var log1py = (function(x) {
-  var y = 1 + x;
-  var z = y - 1;
-
-  return z === 0 ? x : x * Math.log(y) / z;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/asinhy.js
-
-
-
-/* harmony default export */ var asinhy = (function(x) {
-  var y = Math.abs(x);
-  y = log1py(y * (1 + y / (hypot(1, y) + 1)));
-
-  return x < 0 ? -y : y;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/gatg.js
-/* harmony default export */ var gatg = (function(pp, B) {
-  var cos_2B = 2 * Math.cos(2 * B);
-  var i = pp.length - 1;
-  var h1 = pp[i];
-  var h2 = 0;
-  var h;
-
-  while (--i >= 0) {
-    h = -h2 + cos_2B * h1 + pp[i];
-    h2 = h1;
-    h1 = h;
-  }
-
-  return (B + h * Math.sin(2 * B));
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/clens.js
-/* harmony default export */ var clens = (function(pp, arg_r) {
-  var r = 2 * Math.cos(arg_r);
-  var i = pp.length - 1;
-  var hr1 = pp[i];
-  var hr2 = 0;
-  var hr;
-
-  while (--i >= 0) {
-    hr = -hr2 + r * hr1 + pp[i];
-    hr2 = hr1;
-    hr1 = hr;
-  }
-
-  return Math.sin(arg_r) * hr;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/cosh.js
-/* harmony default export */ var cosh = (function(x) {
-  var r = Math.exp(x);
-  r = (r + 1 / r) / 2;
-  return r;
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/clens_cmplx.js
-
-
-
-/* harmony default export */ var clens_cmplx = (function(pp, arg_r, arg_i) {
-  var sin_arg_r = Math.sin(arg_r);
-  var cos_arg_r = Math.cos(arg_r);
-  var sinh_arg_i = sinh(arg_i);
-  var cosh_arg_i = cosh(arg_i);
-  var r = 2 * cos_arg_r * cosh_arg_i;
-  var i = -2 * sin_arg_r * sinh_arg_i;
-  var j = pp.length - 1;
-  var hr = pp[j];
-  var hi1 = 0;
-  var hr1 = 0;
-  var hi = 0;
-  var hr2;
-  var hi2;
-
-  while (--j >= 0) {
-    hr2 = hr1;
-    hi2 = hi1;
-    hr1 = hr;
-    hi1 = hi;
-    hr = -hr2 + r * hr1 - i * hi1 + pp[j];
-    hi = -hi2 + i * hr1 + r * hi1;
-  }
-
-  r = sin_arg_r * cosh_arg_i;
-  i = cos_arg_r * sinh_arg_i;
-
-  return [r * hr - i * hi, r * hi + i * hr];
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/etmerc.js
-// Heavily based on this etmerc projection implementation
-// https://github.com/mbloch/mapshaper-proj/blob/master/src/projections/etmerc.js
-
-
-
-
-
-
-
-
-
-
-function etmerc_init() {
-  if (!this.approx && (isNaN(this.es) || this.es <= 0)) {
-    throw new Error('Incorrect elliptical usage. Try using the +approx option in the proj string, or PROJECTION["Fast_Transverse_Mercator"] in the WKT.');
-  }
-  if (this.approx) {
-    // When '+approx' is set, use tmerc instead
-    tmerc.init.apply(this);
-    this.forward = tmerc.forward;
-    this.inverse = tmerc.inverse;
-  }
-
-  this.x0 = this.x0 !== undefined ? this.x0 : 0;
-  this.y0 = this.y0 !== undefined ? this.y0 : 0;
-  this.long0 = this.long0 !== undefined ? this.long0 : 0;
-  this.lat0 = this.lat0 !== undefined ? this.lat0 : 0;
-
-  this.cgb = [];
-  this.cbg = [];
-  this.utg = [];
-  this.gtu = [];
-
-  var f = this.es / (1 + Math.sqrt(1 - this.es));
-  var n = f / (2 - f);
-  var np = n;
-
-  this.cgb[0] = n * (2 + n * (-2 / 3 + n * (-2 + n * (116 / 45 + n * (26 / 45 + n * (-2854 / 675 ))))));
-  this.cbg[0] = n * (-2 + n * ( 2 / 3 + n * ( 4 / 3 + n * (-82 / 45 + n * (32 / 45 + n * (4642 / 4725))))));
-
-  np = np * n;
-  this.cgb[1] = np * (7 / 3 + n * (-8 / 5 + n * (-227 / 45 + n * (2704 / 315 + n * (2323 / 945)))));
-  this.cbg[1] = np * (5 / 3 + n * (-16 / 15 + n * ( -13 / 9 + n * (904 / 315 + n * (-1522 / 945)))));
-
-  np = np * n;
-  this.cgb[2] = np * (56 / 15 + n * (-136 / 35 + n * (-1262 / 105 + n * (73814 / 2835))));
-  this.cbg[2] = np * (-26 / 15 + n * (34 / 21 + n * (8 / 5 + n * (-12686 / 2835))));
-
-  np = np * n;
-  this.cgb[3] = np * (4279 / 630 + n * (-332 / 35 + n * (-399572 / 14175)));
-  this.cbg[3] = np * (1237 / 630 + n * (-12 / 5 + n * ( -24832 / 14175)));
-
-  np = np * n;
-  this.cgb[4] = np * (4174 / 315 + n * (-144838 / 6237));
-  this.cbg[4] = np * (-734 / 315 + n * (109598 / 31185));
-
-  np = np * n;
-  this.cgb[5] = np * (601676 / 22275);
-  this.cbg[5] = np * (444337 / 155925);
-
-  np = Math.pow(n, 2);
-  this.Qn = this.k0 / (1 + n) * (1 + np * (1 / 4 + np * (1 / 64 + np / 256)));
-
-  this.utg[0] = n * (-0.5 + n * ( 2 / 3 + n * (-37 / 96 + n * ( 1 / 360 + n * (81 / 512 + n * (-96199 / 604800))))));
-  this.gtu[0] = n * (0.5 + n * (-2 / 3 + n * (5 / 16 + n * (41 / 180 + n * (-127 / 288 + n * (7891 / 37800))))));
-
-  this.utg[1] = np * (-1 / 48 + n * (-1 / 15 + n * (437 / 1440 + n * (-46 / 105 + n * (1118711 / 3870720)))));
-  this.gtu[1] = np * (13 / 48 + n * (-3 / 5 + n * (557 / 1440 + n * (281 / 630 + n * (-1983433 / 1935360)))));
-
-  np = np * n;
-  this.utg[2] = np * (-17 / 480 + n * (37 / 840 + n * (209 / 4480 + n * (-5569 / 90720 ))));
-  this.gtu[2] = np * (61 / 240 + n * (-103 / 140 + n * (15061 / 26880 + n * (167603 / 181440))));
-
-  np = np * n;
-  this.utg[3] = np * (-4397 / 161280 + n * (11 / 504 + n * (830251 / 7257600)));
-  this.gtu[3] = np * (49561 / 161280 + n * (-179 / 168 + n * (6601661 / 7257600)));
-
-  np = np * n;
-  this.utg[4] = np * (-4583 / 161280 + n * (108847 / 3991680));
-  this.gtu[4] = np * (34729 / 80640 + n * (-3418889 / 1995840));
-
-  np = np * n;
-  this.utg[5] = np * (-20648693 / 638668800);
-  this.gtu[5] = np * (212378941 / 319334400);
-
-  var Z = gatg(this.cbg, this.lat0);
-  this.Zb = -this.Qn * (Z + clens(this.gtu, 2 * Z));
-}
-
-function etmerc_forward(p) {
-  var Ce = adjust_lon(p.x - this.long0);
-  var Cn = p.y;
-
-  Cn = gatg(this.cbg, Cn);
-  var sin_Cn = Math.sin(Cn);
-  var cos_Cn = Math.cos(Cn);
-  var sin_Ce = Math.sin(Ce);
-  var cos_Ce = Math.cos(Ce);
-
-  Cn = Math.atan2(sin_Cn, cos_Ce * cos_Cn);
-  Ce = Math.atan2(sin_Ce * cos_Cn, hypot(sin_Cn, cos_Cn * cos_Ce));
-  Ce = asinhy(Math.tan(Ce));
-
-  var tmp = clens_cmplx(this.gtu, 2 * Cn, 2 * Ce);
-
-  Cn = Cn + tmp[0];
-  Ce = Ce + tmp[1];
-
-  var x;
-  var y;
-
-  if (Math.abs(Ce) <= 2.623395162778) {
-    x = this.a * (this.Qn * Ce) + this.x0;
-    y = this.a * (this.Qn * Cn + this.Zb) + this.y0;
-  }
-  else {
-    x = Infinity;
-    y = Infinity;
-  }
-
-  p.x = x;
-  p.y = y;
-
-  return p;
-}
-
-function etmerc_inverse(p) {
-  var Ce = (p.x - this.x0) * (1 / this.a);
-  var Cn = (p.y - this.y0) * (1 / this.a);
-
-  Cn = (Cn - this.Zb) / this.Qn;
-  Ce = Ce / this.Qn;
-
-  var lon;
-  var lat;
-
-  if (Math.abs(Ce) <= 2.623395162778) {
-    var tmp = clens_cmplx(this.utg, 2 * Cn, 2 * Ce);
-
-    Cn = Cn + tmp[0];
-    Ce = Ce + tmp[1];
-    Ce = Math.atan(sinh(Ce));
-
-    var sin_Cn = Math.sin(Cn);
-    var cos_Cn = Math.cos(Cn);
-    var sin_Ce = Math.sin(Ce);
-    var cos_Ce = Math.cos(Ce);
-
-    Cn = Math.atan2(sin_Cn * cos_Ce, hypot(sin_Ce, cos_Ce * cos_Cn));
-    Ce = Math.atan2(sin_Ce, cos_Ce * cos_Cn);
-
-    lon = adjust_lon(Ce + this.long0);
-    lat = gatg(this.cgb, Cn);
-  }
-  else {
-    lon = Infinity;
-    lat = Infinity;
-  }
-
-  p.x = lon;
-  p.y = lat;
-
-  return p;
-}
-
-var etmerc_names = ["Extended_Transverse_Mercator", "Extended Transverse Mercator", "etmerc", "Transverse_Mercator", "Transverse Mercator", "tmerc"];
-/* harmony default export */ var etmerc = ({
-  init: etmerc_init,
-  forward: etmerc_forward,
-  inverse: etmerc_inverse,
-  names: etmerc_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/adjust_zone.js
-
-
-/* harmony default export */ var adjust_zone = (function(zone, lon) {
-  if (zone === undefined) {
-    zone = Math.floor((adjust_lon(lon) + Math.PI) * 30 / Math.PI) + 1;
-
-    if (zone < 0) {
-      return 0;
-    } else if (zone > 60) {
-      return 60;
-    }
-  }
-  return zone;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/utm.js
-
-
-var dependsOn = 'etmerc';
-
-
-
-function utm_init() {
-  var zone = adjust_zone(this.zone, this.long0);
-  if (zone === undefined) {
-    throw new Error('unknown utm zone');
-  }
-  this.lat0 = 0;
-  this.long0 =  ((6 * Math.abs(zone)) - 183) * D2R;
-  this.x0 = 500000;
-  this.y0 = this.utmSouth ? 10000000 : 0;
-  this.k0 = 0.9996;
-
-  etmerc.init.apply(this);
-  this.forward = etmerc.forward;
-  this.inverse = etmerc.inverse;
-}
-
-var utm_names = ["Universal Transverse Mercator System", "utm"];
-/* harmony default export */ var utm = ({
-  init: utm_init,
-  names: utm_names,
-  dependsOn: dependsOn
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/srat.js
-/* harmony default export */ var srat = (function(esinp, exp) {
-  return (Math.pow((1 - esinp) / (1 + esinp), exp));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/gauss.js
-
-var gauss_MAX_ITER = 20;
-
-
-function gauss_init() {
-  var sphi = Math.sin(this.lat0);
-  var cphi = Math.cos(this.lat0);
-  cphi *= cphi;
-  this.rc = Math.sqrt(1 - this.es) / (1 - this.es * sphi * sphi);
-  this.C = Math.sqrt(1 + this.es * cphi * cphi / (1 - this.es));
-  this.phic0 = Math.asin(sphi / this.C);
-  this.ratexp = 0.5 * this.C * this.e;
-  this.K = Math.tan(0.5 * this.phic0 + FORTPI) / (Math.pow(Math.tan(0.5 * this.lat0 + FORTPI), this.C) * srat(this.e * sphi, this.ratexp));
-}
-
-function gauss_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-
-  p.y = 2 * Math.atan(this.K * Math.pow(Math.tan(0.5 * lat + FORTPI), this.C) * srat(this.e * Math.sin(lat), this.ratexp)) - HALF_PI;
-  p.x = this.C * lon;
-  return p;
-}
-
-function gauss_inverse(p) {
-  var DEL_TOL = 1e-14;
-  var lon = p.x / this.C;
-  var lat = p.y;
-  var num = Math.pow(Math.tan(0.5 * lat + FORTPI) / this.K, 1 / this.C);
-  for (var i = gauss_MAX_ITER; i > 0; --i) {
-    lat = 2 * Math.atan(num * srat(this.e * Math.sin(p.y), - 0.5 * this.e)) - HALF_PI;
-    if (Math.abs(lat - p.y) < DEL_TOL) {
-      break;
-    }
-    p.y = lat;
-  }
-  /* convergence failed */
-  if (!i) {
-    return null;
-  }
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var gauss_names = ["gauss"];
-/* harmony default export */ var gauss = ({
-  init: gauss_init,
-  forward: gauss_forward,
-  inverse: gauss_inverse,
-  names: gauss_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/sterea.js
-
-
-
-function sterea_init() {
-  gauss.init.apply(this);
-  if (!this.rc) {
-    return;
-  }
-  this.sinc0 = Math.sin(this.phic0);
-  this.cosc0 = Math.cos(this.phic0);
-  this.R2 = 2 * this.rc;
-  if (!this.title) {
-    this.title = "Oblique Stereographic Alternative";
-  }
-}
-
-function sterea_forward(p) {
-  var sinc, cosc, cosl, k;
-  p.x = adjust_lon(p.x - this.long0);
-  gauss.forward.apply(this, [p]);
-  sinc = Math.sin(p.y);
-  cosc = Math.cos(p.y);
-  cosl = Math.cos(p.x);
-  k = this.k0 * this.R2 / (1 + this.sinc0 * sinc + this.cosc0 * cosc * cosl);
-  p.x = k * cosc * Math.sin(p.x);
-  p.y = k * (this.cosc0 * sinc - this.sinc0 * cosc * cosl);
-  p.x = this.a * p.x + this.x0;
-  p.y = this.a * p.y + this.y0;
-  return p;
-}
-
-function sterea_inverse(p) {
-  var sinc, cosc, lon, lat, rho;
-  p.x = (p.x - this.x0) / this.a;
-  p.y = (p.y - this.y0) / this.a;
-
-  p.x /= this.k0;
-  p.y /= this.k0;
-  if ((rho = Math.sqrt(p.x * p.x + p.y * p.y))) {
-    var c = 2 * Math.atan2(rho, this.R2);
-    sinc = Math.sin(c);
-    cosc = Math.cos(c);
-    lat = Math.asin(cosc * this.sinc0 + p.y * sinc * this.cosc0 / rho);
-    lon = Math.atan2(p.x * sinc, rho * this.cosc0 * cosc - p.y * this.sinc0 * sinc);
-  }
-  else {
-    lat = this.phic0;
-    lon = 0;
-  }
-
-  p.x = lon;
-  p.y = lat;
-  gauss.inverse.apply(this, [p]);
-  p.x = adjust_lon(p.x + this.long0);
-  return p;
-}
-
-var sterea_names = ["Stereographic_North_Pole", "Oblique_Stereographic", "Polar_Stereographic", "sterea","Oblique Stereographic Alternative","Double_Stereographic"];
-/* harmony default export */ var sterea = ({
-  init: sterea_init,
-  forward: sterea_forward,
-  inverse: sterea_inverse,
-  names: sterea_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/stere.js
-
-
-
-
-
-
-
-
-function ssfn_(phit, sinphi, eccen) {
-  sinphi *= eccen;
-  return (Math.tan(0.5 * (HALF_PI + phit)) * Math.pow((1 - sinphi) / (1 + sinphi), 0.5 * eccen));
-}
-
-function stere_init() {
-  this.coslat0 = Math.cos(this.lat0);
-  this.sinlat0 = Math.sin(this.lat0);
-  if (this.sphere) {
-    if (this.k0 === 1 && !isNaN(this.lat_ts) && Math.abs(this.coslat0) <= EPSLN) {
-      this.k0 = 0.5 * (1 + sign(this.lat0) * Math.sin(this.lat_ts));
-    }
-  }
-  else {
-    if (Math.abs(this.coslat0) <= EPSLN) {
-      if (this.lat0 > 0) {
-        //North pole
-        //trace('stere:north pole');
-        this.con = 1;
-      }
-      else {
-        //South pole
-        //trace('stere:south pole');
-        this.con = -1;
-      }
-    }
-    this.cons = Math.sqrt(Math.pow(1 + this.e, 1 + this.e) * Math.pow(1 - this.e, 1 - this.e));
-    if (this.k0 === 1 && !isNaN(this.lat_ts) && Math.abs(this.coslat0) <= EPSLN) {
-      this.k0 = 0.5 * this.cons * msfnz(this.e, Math.sin(this.lat_ts), Math.cos(this.lat_ts)) / tsfnz(this.e, this.con * this.lat_ts, this.con * Math.sin(this.lat_ts));
-    }
-    this.ms1 = msfnz(this.e, this.sinlat0, this.coslat0);
-    this.X0 = 2 * Math.atan(this.ssfn_(this.lat0, this.sinlat0, this.e)) - HALF_PI;
-    this.cosX0 = Math.cos(this.X0);
-    this.sinX0 = Math.sin(this.X0);
-  }
-}
-
-// Stereographic forward equations--mapping lat,long to x,y
-function stere_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-  var sinlat = Math.sin(lat);
-  var coslat = Math.cos(lat);
-  var A, X, sinX, cosX, ts, rh;
-  var dlon = adjust_lon(lon - this.long0);
-
-  if (Math.abs(Math.abs(lon - this.long0) - Math.PI) <= EPSLN && Math.abs(lat + this.lat0) <= EPSLN) {
-    //case of the origine point
-    //trace('stere:this is the origin point');
-    p.x = NaN;
-    p.y = NaN;
-    return p;
-  }
-  if (this.sphere) {
-    //trace('stere:sphere case');
-    A = 2 * this.k0 / (1 + this.sinlat0 * sinlat + this.coslat0 * coslat * Math.cos(dlon));
-    p.x = this.a * A * coslat * Math.sin(dlon) + this.x0;
-    p.y = this.a * A * (this.coslat0 * sinlat - this.sinlat0 * coslat * Math.cos(dlon)) + this.y0;
-    return p;
-  }
-  else {
-    X = 2 * Math.atan(this.ssfn_(lat, sinlat, this.e)) - HALF_PI;
-    cosX = Math.cos(X);
-    sinX = Math.sin(X);
-    if (Math.abs(this.coslat0) <= EPSLN) {
-      ts = tsfnz(this.e, lat * this.con, this.con * sinlat);
-      rh = 2 * this.a * this.k0 * ts / this.cons;
-      p.x = this.x0 + rh * Math.sin(lon - this.long0);
-      p.y = this.y0 - this.con * rh * Math.cos(lon - this.long0);
-      //trace(p.toString());
-      return p;
-    }
-    else if (Math.abs(this.sinlat0) < EPSLN) {
-      //Eq
-      //trace('stere:equateur');
-      A = 2 * this.a * this.k0 / (1 + cosX * Math.cos(dlon));
-      p.y = A * sinX;
-    }
-    else {
-      //other case
-      //trace('stere:normal case');
-      A = 2 * this.a * this.k0 * this.ms1 / (this.cosX0 * (1 + this.sinX0 * sinX + this.cosX0 * cosX * Math.cos(dlon)));
-      p.y = A * (this.cosX0 * sinX - this.sinX0 * cosX * Math.cos(dlon)) + this.y0;
-    }
-    p.x = A * cosX * Math.sin(dlon) + this.x0;
-  }
-  //trace(p.toString());
-  return p;
-}
-
-//* Stereographic inverse equations--mapping x,y to lat/long
-function stere_inverse(p) {
-  p.x -= this.x0;
-  p.y -= this.y0;
-  var lon, lat, ts, ce, Chi;
-  var rh = Math.sqrt(p.x * p.x + p.y * p.y);
-  if (this.sphere) {
-    var c = 2 * Math.atan(rh / (2 * this.a * this.k0));
-    lon = this.long0;
-    lat = this.lat0;
-    if (rh <= EPSLN) {
-      p.x = lon;
-      p.y = lat;
-      return p;
-    }
-    lat = Math.asin(Math.cos(c) * this.sinlat0 + p.y * Math.sin(c) * this.coslat0 / rh);
-    if (Math.abs(this.coslat0) < EPSLN) {
-      if (this.lat0 > 0) {
-        lon = adjust_lon(this.long0 + Math.atan2(p.x, - 1 * p.y));
-      }
-      else {
-        lon = adjust_lon(this.long0 + Math.atan2(p.x, p.y));
-      }
-    }
-    else {
-      lon = adjust_lon(this.long0 + Math.atan2(p.x * Math.sin(c), rh * this.coslat0 * Math.cos(c) - p.y * this.sinlat0 * Math.sin(c)));
-    }
-    p.x = lon;
-    p.y = lat;
-    return p;
-  }
-  else {
-    if (Math.abs(this.coslat0) <= EPSLN) {
-      if (rh <= EPSLN) {
-        lat = this.lat0;
-        lon = this.long0;
-        p.x = lon;
-        p.y = lat;
-        //trace(p.toString());
-        return p;
-      }
-      p.x *= this.con;
-      p.y *= this.con;
-      ts = rh * this.cons / (2 * this.a * this.k0);
-      lat = this.con * phi2z(this.e, ts);
-      lon = this.con * adjust_lon(this.con * this.long0 + Math.atan2(p.x, - 1 * p.y));
-    }
-    else {
-      ce = 2 * Math.atan(rh * this.cosX0 / (2 * this.a * this.k0 * this.ms1));
-      lon = this.long0;
-      if (rh <= EPSLN) {
-        Chi = this.X0;
-      }
-      else {
-        Chi = Math.asin(Math.cos(ce) * this.sinX0 + p.y * Math.sin(ce) * this.cosX0 / rh);
-        lon = adjust_lon(this.long0 + Math.atan2(p.x * Math.sin(ce), rh * this.cosX0 * Math.cos(ce) - p.y * this.sinX0 * Math.sin(ce)));
-      }
-      lat = -1 * phi2z(this.e, Math.tan(0.5 * (HALF_PI + Chi)));
-    }
-  }
-  p.x = lon;
-  p.y = lat;
-
-  //trace(p.toString());
-  return p;
-
-}
-
-var stere_names = ["stere", "Stereographic_South_Pole", "Polar Stereographic (variant B)"];
-/* harmony default export */ var stere = ({
-  init: stere_init,
-  forward: stere_forward,
-  inverse: stere_inverse,
-  names: stere_names,
-  ssfn_: ssfn_
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/somerc.js
-/*
-  references:
-    Formules et constantes pour le Calcul pour la
-    projection cylindrique conforme à axe oblique et pour la transformation entre
-    des systèmes de référence.
-    http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.77004.DownloadFile.tmp/swissprojectionfr.pdf
-  */
-
-function somerc_init() {
-  var phy0 = this.lat0;
-  this.lambda0 = this.long0;
-  var sinPhy0 = Math.sin(phy0);
-  var semiMajorAxis = this.a;
-  var invF = this.rf;
-  var flattening = 1 / invF;
-  var e2 = 2 * flattening - Math.pow(flattening, 2);
-  var e = this.e = Math.sqrt(e2);
-  this.R = this.k0 * semiMajorAxis * Math.sqrt(1 - e2) / (1 - e2 * Math.pow(sinPhy0, 2));
-  this.alpha = Math.sqrt(1 + e2 / (1 - e2) * Math.pow(Math.cos(phy0), 4));
-  this.b0 = Math.asin(sinPhy0 / this.alpha);
-  var k1 = Math.log(Math.tan(Math.PI / 4 + this.b0 / 2));
-  var k2 = Math.log(Math.tan(Math.PI / 4 + phy0 / 2));
-  var k3 = Math.log((1 + e * sinPhy0) / (1 - e * sinPhy0));
-  this.K = k1 - this.alpha * k2 + this.alpha * e / 2 * k3;
-}
-
-function somerc_forward(p) {
-  var Sa1 = Math.log(Math.tan(Math.PI / 4 - p.y / 2));
-  var Sa2 = this.e / 2 * Math.log((1 + this.e * Math.sin(p.y)) / (1 - this.e * Math.sin(p.y)));
-  var S = -this.alpha * (Sa1 + Sa2) + this.K;
-
-  // spheric latitude
-  var b = 2 * (Math.atan(Math.exp(S)) - Math.PI / 4);
-
-  // spheric longitude
-  var I = this.alpha * (p.x - this.lambda0);
-
-  // psoeudo equatorial rotation
-  var rotI = Math.atan(Math.sin(I) / (Math.sin(this.b0) * Math.tan(b) + Math.cos(this.b0) * Math.cos(I)));
-
-  var rotB = Math.asin(Math.cos(this.b0) * Math.sin(b) - Math.sin(this.b0) * Math.cos(b) * Math.cos(I));
-
-  p.y = this.R / 2 * Math.log((1 + Math.sin(rotB)) / (1 - Math.sin(rotB))) + this.y0;
-  p.x = this.R * rotI + this.x0;
-  return p;
-}
-
-function somerc_inverse(p) {
-  var Y = p.x - this.x0;
-  var X = p.y - this.y0;
-
-  var rotI = Y / this.R;
-  var rotB = 2 * (Math.atan(Math.exp(X / this.R)) - Math.PI / 4);
-
-  var b = Math.asin(Math.cos(this.b0) * Math.sin(rotB) + Math.sin(this.b0) * Math.cos(rotB) * Math.cos(rotI));
-  var I = Math.atan(Math.sin(rotI) / (Math.cos(this.b0) * Math.cos(rotI) - Math.sin(this.b0) * Math.tan(rotB)));
-
-  var lambda = this.lambda0 + I / this.alpha;
-
-  var S = 0;
-  var phy = b;
-  var prevPhy = -1000;
-  var iteration = 0;
-  while (Math.abs(phy - prevPhy) > 0.0000001) {
-    if (++iteration > 20) {
-      //...reportError("omercFwdInfinity");
-      return;
-    }
-    //S = Math.log(Math.tan(Math.PI / 4 + phy / 2));
-    S = 1 / this.alpha * (Math.log(Math.tan(Math.PI / 4 + b / 2)) - this.K) + this.e * Math.log(Math.tan(Math.PI / 4 + Math.asin(this.e * Math.sin(phy)) / 2));
-    prevPhy = phy;
-    phy = 2 * Math.atan(Math.exp(S)) - Math.PI / 2;
-  }
-
-  p.x = lambda;
-  p.y = phy;
-  return p;
-}
-
-var somerc_names = ["somerc"];
-/* harmony default export */ var somerc = ({
-  init: somerc_init,
-  forward: somerc_forward,
-  inverse: somerc_inverse,
-  names: somerc_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/omerc.js
-
-
-
-
-
-var TOL = 1e-7;
-
-function isTypeA(P) {
-  var typeAProjections = ['Hotine_Oblique_Mercator','Hotine_Oblique_Mercator_Azimuth_Natural_Origin'];
-  var projectionName = typeof P.PROJECTION === "object" ? Object.keys(P.PROJECTION)[0] : P.PROJECTION;
-  
-  return 'no_uoff' in P || 'no_off' in P || typeAProjections.indexOf(projectionName) !== -1;
-}
-
-
-/* Initialize the Oblique Mercator  projection
-    ------------------------------------------*/
-function omerc_init() {  
-  var con, com, cosph0, D, F, H, L, sinph0, p, J, gamma = 0,
-    gamma0, lamc = 0, lam1 = 0, lam2 = 0, phi1 = 0, phi2 = 0, alpha_c = 0, AB;
-  
-  // only Type A uses the no_off or no_uoff property
-  // https://github.com/OSGeo/proj.4/issues/104
-  this.no_off = isTypeA(this);
-  this.no_rot = 'no_rot' in this;
-  
-  var alp = false;
-  if ("alpha" in this) {
-    alp = true;
-  }
-
-  var gam = false;
-  if ("rectified_grid_angle" in this) {
-    gam = true;
-  }
-
-  if (alp) {
-    alpha_c = this.alpha;
-  }
-  
-  if (gam) {
-    gamma = (this.rectified_grid_angle * D2R);
-  }
-  
-  if (alp || gam) {
-    lamc = this.longc;
-  } else {
-    lam1 = this.long1;
-    phi1 = this.lat1;
-    lam2 = this.long2;
-    phi2 = this.lat2;
-    
-    if (Math.abs(phi1 - phi2) <= TOL || (con = Math.abs(phi1)) <= TOL ||
-        Math.abs(con - HALF_PI) <= TOL || Math.abs(Math.abs(this.lat0) - HALF_PI) <= TOL ||
-        Math.abs(Math.abs(phi2) - HALF_PI) <= TOL) {
-      throw new Error();
-    }
-  }
-  
-  var one_es = 1.0 - this.es;
-  com = Math.sqrt(one_es);
-  
-  if (Math.abs(this.lat0) > EPSLN) {
-    sinph0 = Math.sin(this.lat0);
-    cosph0 = Math.cos(this.lat0);
-    con = 1 - this.es * sinph0 * sinph0;
-    this.B = cosph0 * cosph0;
-    this.B = Math.sqrt(1 + this.es * this.B * this.B / one_es);
-    this.A = this.B * this.k0 * com / con;
-    D = this.B * com / (cosph0 * Math.sqrt(con));
-    F = D * D -1;
-    
-    if (F <= 0) {
-      F = 0;
-    } else {
-      F = Math.sqrt(F);
-      if (this.lat0 < 0) {
-        F = -F;
-      }
-    }
-    
-    this.E = F += D;
-    this.E *= Math.pow(tsfnz(this.e, this.lat0, sinph0), this.B);
-  } else {
-    this.B = 1 / com;
-    this.A = this.k0;
-    this.E = D = F = 1;
-  }
-  
-  if (alp || gam) {
-    if (alp) {
-      gamma0 = Math.asin(Math.sin(alpha_c) / D);
-      if (!gam) {
-        gamma = alpha_c;
-      }
-    } else {
-      gamma0 = gamma;
-      alpha_c = Math.asin(D * Math.sin(gamma0));
-    }
-    this.lam0 = lamc - Math.asin(0.5 * (F - 1 / F) * Math.tan(gamma0)) / this.B;
-  } else {
-    H = Math.pow(tsfnz(this.e, phi1, Math.sin(phi1)), this.B);
-    L = Math.pow(tsfnz(this.e, phi2, Math.sin(phi2)), this.B);
-    F = this.E / H;
-    p = (L - H) / (L + H);
-    J = this.E * this.E;
-    J = (J - L * H) / (J + L * H);
-    con = lam1 - lam2;
-    
-    if (con < -Math.pi) {
-      lam2 -=TWO_PI;
-    } else if (con > Math.pi) {
-      lam2 += TWO_PI;
-    }
-    
-    this.lam0 = adjust_lon(0.5 * (lam1 + lam2) - Math.atan(J * Math.tan(0.5 * this.B * (lam1 - lam2)) / p) / this.B);
-    gamma0 = Math.atan(2 * Math.sin(this.B * adjust_lon(lam1 - this.lam0)) / (F - 1 / F));
-    gamma = alpha_c = Math.asin(D * Math.sin(gamma0));
-  }
-  
-  this.singam = Math.sin(gamma0);
-  this.cosgam = Math.cos(gamma0);
-  this.sinrot = Math.sin(gamma);
-  this.cosrot = Math.cos(gamma);
-  
-  this.rB = 1 / this.B;
-  this.ArB = this.A * this.rB;
-  this.BrA = 1 / this.ArB;
-  AB = this.A * this.B;
-  
-  if (this.no_off) {
-    this.u_0 = 0;
-  } else {
-    this.u_0 = Math.abs(this.ArB * Math.atan(Math.sqrt(D * D - 1) / Math.cos(alpha_c)));
-    
-    if (this.lat0 < 0) {
-      this.u_0 = - this.u_0;
-    }  
-  }
-    
-  F = 0.5 * gamma0;
-  this.v_pole_n = this.ArB * Math.log(Math.tan(FORTPI - F));
-  this.v_pole_s = this.ArB * Math.log(Math.tan(FORTPI + F));
-}
-
-
-/* Oblique Mercator forward equations--mapping lat,long to x,y
-    ----------------------------------------------------------*/
-function omerc_forward(p) {
-  var coords = {};
-  var S, T, U, V, W, temp, u, v;
-  p.x = p.x - this.lam0;
-  
-  if (Math.abs(Math.abs(p.y) - HALF_PI) > EPSLN) {
-    W = this.E / Math.pow(tsfnz(this.e, p.y, Math.sin(p.y)), this.B);
-    
-    temp = 1 / W;
-    S = 0.5 * (W - temp);
-    T = 0.5 * (W + temp);
-    V = Math.sin(this.B * p.x);
-    U = (S * this.singam - V * this.cosgam) / T;
-        
-    if (Math.abs(Math.abs(U) - 1.0) < EPSLN) {
-      throw new Error();
-    }
-    
-    v = 0.5 * this.ArB * Math.log((1 - U)/(1 + U));
-    temp = Math.cos(this.B * p.x);
-    
-    if (Math.abs(temp) < TOL) {
-      u = this.A * p.x;
-    } else {
-      u = this.ArB * Math.atan2((S * this.cosgam + V * this.singam), temp);
-    }    
-  } else {
-    v = p.y > 0 ? this.v_pole_n : this.v_pole_s;
-    u = this.ArB * p.y;
-  }
-     
-  if (this.no_rot) {
-    coords.x = u;
-    coords.y = v;
-  } else {
-    u -= this.u_0;
-    coords.x = v * this.cosrot + u * this.sinrot;
-    coords.y = u * this.cosrot - v * this.sinrot;
-  }
-  
-  coords.x = (this.a * coords.x + this.x0);
-  coords.y = (this.a * coords.y + this.y0);
-  
-  return coords;
-}
-
-function omerc_inverse(p) {
-  var u, v, Qp, Sp, Tp, Vp, Up;
-  var coords = {};
-  
-  p.x = (p.x - this.x0) * (1.0 / this.a);
-  p.y = (p.y - this.y0) * (1.0 / this.a);
-
-  if (this.no_rot) {
-    v = p.y;
-    u = p.x;
-  } else {
-    v = p.x * this.cosrot - p.y * this.sinrot;
-    u = p.y * this.cosrot + p.x * this.sinrot + this.u_0;
-  }
-  
-  Qp = Math.exp(-this.BrA * v);
-  Sp = 0.5 * (Qp - 1 / Qp);
-  Tp = 0.5 * (Qp + 1 / Qp);
-  Vp = Math.sin(this.BrA * u);
-  Up = (Vp * this.cosgam + Sp * this.singam) / Tp;
-  
-  if (Math.abs(Math.abs(Up) - 1) < EPSLN) {
-    coords.x = 0;
-    coords.y = Up < 0 ? -HALF_PI : HALF_PI;
-  } else {
-    coords.y = this.E / Math.sqrt((1 + Up) / (1 - Up));
-    coords.y = phi2z(this.e, Math.pow(coords.y, 1 / this.B));
-    
-    if (coords.y === Infinity) {
-      throw new Error();
-    }
-        
-    coords.x = -this.rB * Math.atan2((Sp * this.cosgam - Vp * this.singam), Math.cos(this.BrA * u));
-  }
-  
-  coords.x += this.lam0;
-  
-  return coords;
-}
-
-var omerc_names = ["Hotine_Oblique_Mercator", "Hotine Oblique Mercator", "Hotine_Oblique_Mercator_Azimuth_Natural_Origin", "Hotine_Oblique_Mercator_Two_Point_Natural_Origin", "Hotine_Oblique_Mercator_Azimuth_Center", "Oblique_Mercator", "omerc"];
-/* harmony default export */ var omerc = ({
-  init: omerc_init,
-  forward: omerc_forward,
-  inverse: omerc_inverse,
-  names: omerc_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/lcc.js
-
-
-
-
-
-
-function lcc_init() {
-  
-  //double lat0;                    /* the reference latitude               */
-  //double long0;                   /* the reference longitude              */
-  //double lat1;                    /* first standard parallel              */
-  //double lat2;                    /* second standard parallel             */
-  //double r_maj;                   /* major axis                           */
-  //double r_min;                   /* minor axis                           */
-  //double false_east;              /* x offset in meters                   */
-  //double false_north;             /* y offset in meters                   */
-  
-  //the above value can be set with proj4.defs
-  //example: proj4.defs("EPSG:2154","+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
-
-  if (!this.lat2) {
-    this.lat2 = this.lat1;
-  } //if lat2 is not defined
-  if (!this.k0) {
-    this.k0 = 1;
-  }
-  this.x0 = this.x0 || 0;
-  this.y0 = this.y0 || 0;
-  // Standard Parallels cannot be equal and on opposite sides of the equator
-  if (Math.abs(this.lat1 + this.lat2) < EPSLN) {
-    return;
-  }
-
-  var temp = this.b / this.a;
-  this.e = Math.sqrt(1 - temp * temp);
-
-  var sin1 = Math.sin(this.lat1);
-  var cos1 = Math.cos(this.lat1);
-  var ms1 = msfnz(this.e, sin1, cos1);
-  var ts1 = tsfnz(this.e, this.lat1, sin1);
-
-  var sin2 = Math.sin(this.lat2);
-  var cos2 = Math.cos(this.lat2);
-  var ms2 = msfnz(this.e, sin2, cos2);
-  var ts2 = tsfnz(this.e, this.lat2, sin2);
-
-  var ts0 = tsfnz(this.e, this.lat0, Math.sin(this.lat0));
-
-  if (Math.abs(this.lat1 - this.lat2) > EPSLN) {
-    this.ns = Math.log(ms1 / ms2) / Math.log(ts1 / ts2);
-  }
-  else {
-    this.ns = sin1;
-  }
-  if (isNaN(this.ns)) {
-    this.ns = sin1;
-  }
-  this.f0 = ms1 / (this.ns * Math.pow(ts1, this.ns));
-  this.rh = this.a * this.f0 * Math.pow(ts0, this.ns);
-  if (!this.title) {
-    this.title = "Lambert Conformal Conic";
-  }
-}
-
-// Lambert Conformal conic forward equations--mapping lat,long to x,y
-// -----------------------------------------------------------------
-function lcc_forward(p) {
-
-  var lon = p.x;
-  var lat = p.y;
-
-  // singular cases :
-  if (Math.abs(2 * Math.abs(lat) - Math.PI) <= EPSLN) {
-    lat = sign(lat) * (HALF_PI - 2 * EPSLN);
-  }
-
-  var con = Math.abs(Math.abs(lat) - HALF_PI);
-  var ts, rh1;
-  if (con > EPSLN) {
-    ts = tsfnz(this.e, lat, Math.sin(lat));
-    rh1 = this.a * this.f0 * Math.pow(ts, this.ns);
-  }
-  else {
-    con = lat * this.ns;
-    if (con <= 0) {
-      return null;
-    }
-    rh1 = 0;
-  }
-  var theta = this.ns * adjust_lon(lon - this.long0);
-  p.x = this.k0 * (rh1 * Math.sin(theta)) + this.x0;
-  p.y = this.k0 * (this.rh - rh1 * Math.cos(theta)) + this.y0;
-
-  return p;
-}
-
-// Lambert Conformal Conic inverse equations--mapping x,y to lat/long
-// -----------------------------------------------------------------
-function lcc_inverse(p) {
-
-  var rh1, con, ts;
-  var lat, lon;
-  var x = (p.x - this.x0) / this.k0;
-  var y = (this.rh - (p.y - this.y0) / this.k0);
-  if (this.ns > 0) {
-    rh1 = Math.sqrt(x * x + y * y);
-    con = 1;
-  }
-  else {
-    rh1 = -Math.sqrt(x * x + y * y);
-    con = -1;
-  }
-  var theta = 0;
-  if (rh1 !== 0) {
-    theta = Math.atan2((con * x), (con * y));
-  }
-  if ((rh1 !== 0) || (this.ns > 0)) {
-    con = 1 / this.ns;
-    ts = Math.pow((rh1 / (this.a * this.f0)), con);
-    lat = phi2z(this.e, ts);
-    if (lat === -9999) {
-      return null;
-    }
-  }
-  else {
-    lat = -HALF_PI;
-  }
-  lon = adjust_lon(theta / this.ns + this.long0);
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var lcc_names = [
-  "Lambert Tangential Conformal Conic Projection",
-  "Lambert_Conformal_Conic",
-  "Lambert_Conformal_Conic_1SP",
-  "Lambert_Conformal_Conic_2SP",
-  "lcc",
-  "Lambert Conic Conformal (1SP)",
-  "Lambert Conic Conformal (2SP)"
-];
-
-/* harmony default export */ var lcc = ({
-  init: lcc_init,
-  forward: lcc_forward,
-  inverse: lcc_inverse,
-  names: lcc_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/krovak.js
-
-
-function krovak_init() {
-  this.a = 6377397.155;
-  this.es = 0.006674372230614;
-  this.e = Math.sqrt(this.es);
-  if (!this.lat0) {
-    this.lat0 = 0.863937979737193;
-  }
-  if (!this.long0) {
-    this.long0 = 0.7417649320975901 - 0.308341501185665;
-  }
-  /* if scale not set default to 0.9999 */
-  if (!this.k0) {
-    this.k0 = 0.9999;
-  }
-  this.s45 = 0.785398163397448; /* 45 */
-  this.s90 = 2 * this.s45;
-  this.fi0 = this.lat0;
-  this.e2 = this.es;
-  this.e = Math.sqrt(this.e2);
-  this.alfa = Math.sqrt(1 + (this.e2 * Math.pow(Math.cos(this.fi0), 4)) / (1 - this.e2));
-  this.uq = 1.04216856380474;
-  this.u0 = Math.asin(Math.sin(this.fi0) / this.alfa);
-  this.g = Math.pow((1 + this.e * Math.sin(this.fi0)) / (1 - this.e * Math.sin(this.fi0)), this.alfa * this.e / 2);
-  this.k = Math.tan(this.u0 / 2 + this.s45) / Math.pow(Math.tan(this.fi0 / 2 + this.s45), this.alfa) * this.g;
-  this.k1 = this.k0;
-  this.n0 = this.a * Math.sqrt(1 - this.e2) / (1 - this.e2 * Math.pow(Math.sin(this.fi0), 2));
-  this.s0 = 1.37008346281555;
-  this.n = Math.sin(this.s0);
-  this.ro0 = this.k1 * this.n0 / Math.tan(this.s0);
-  this.ad = this.s90 - this.uq;
-}
-
-/* ellipsoid */
-/* calculate xy from lat/lon */
-/* Constants, identical to inverse transform function */
-function krovak_forward(p) {
-  var gfi, u, deltav, s, d, eps, ro;
-  var lon = p.x;
-  var lat = p.y;
-  var delta_lon = adjust_lon(lon - this.long0);
-  /* Transformation */
-  gfi = Math.pow(((1 + this.e * Math.sin(lat)) / (1 - this.e * Math.sin(lat))), (this.alfa * this.e / 2));
-  u = 2 * (Math.atan(this.k * Math.pow(Math.tan(lat / 2 + this.s45), this.alfa) / gfi) - this.s45);
-  deltav = -delta_lon * this.alfa;
-  s = Math.asin(Math.cos(this.ad) * Math.sin(u) + Math.sin(this.ad) * Math.cos(u) * Math.cos(deltav));
-  d = Math.asin(Math.cos(u) * Math.sin(deltav) / Math.cos(s));
-  eps = this.n * d;
-  ro = this.ro0 * Math.pow(Math.tan(this.s0 / 2 + this.s45), this.n) / Math.pow(Math.tan(s / 2 + this.s45), this.n);
-  p.y = ro * Math.cos(eps) / 1;
-  p.x = ro * Math.sin(eps) / 1;
-
-  if (!this.czech) {
-    p.y *= -1;
-    p.x *= -1;
-  }
-  return (p);
-}
-
-/* calculate lat/lon from xy */
-function krovak_inverse(p) {
-  var u, deltav, s, d, eps, ro, fi1;
-  var ok;
-
-  /* Transformation */
-  /* revert y, x*/
-  var tmp = p.x;
-  p.x = p.y;
-  p.y = tmp;
-  if (!this.czech) {
-    p.y *= -1;
-    p.x *= -1;
-  }
-  ro = Math.sqrt(p.x * p.x + p.y * p.y);
-  eps = Math.atan2(p.y, p.x);
-  d = eps / Math.sin(this.s0);
-  s = 2 * (Math.atan(Math.pow(this.ro0 / ro, 1 / this.n) * Math.tan(this.s0 / 2 + this.s45)) - this.s45);
-  u = Math.asin(Math.cos(this.ad) * Math.sin(s) - Math.sin(this.ad) * Math.cos(s) * Math.cos(d));
-  deltav = Math.asin(Math.cos(s) * Math.sin(d) / Math.cos(u));
-  p.x = this.long0 - deltav / this.alfa;
-  fi1 = u;
-  ok = 0;
-  var iter = 0;
-  do {
-    p.y = 2 * (Math.atan(Math.pow(this.k, - 1 / this.alfa) * Math.pow(Math.tan(u / 2 + this.s45), 1 / this.alfa) * Math.pow((1 + this.e * Math.sin(fi1)) / (1 - this.e * Math.sin(fi1)), this.e / 2)) - this.s45);
-    if (Math.abs(fi1 - p.y) < 0.0000000001) {
-      ok = 1;
-    }
-    fi1 = p.y;
-    iter += 1;
-  } while (ok === 0 && iter < 15);
-  if (iter >= 15) {
-    return null;
-  }
-
-  return (p);
-}
-
-var krovak_names = ["Krovak", "krovak"];
-/* harmony default export */ var krovak = ({
-  init: krovak_init,
-  forward: krovak_forward,
-  inverse: krovak_inverse,
-  names: krovak_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/mlfn.js
-/* harmony default export */ var mlfn = (function(e0, e1, e2, e3, phi) {
-  return (e0 * phi - e1 * Math.sin(2 * phi) + e2 * Math.sin(4 * phi) - e3 * Math.sin(6 * phi));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e0fn.js
-/* harmony default export */ var e0fn = (function(x) {
-  return (1 - 0.25 * x * (1 + x / 16 * (3 + 1.25 * x)));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e1fn.js
-/* harmony default export */ var e1fn = (function(x) {
-  return (0.375 * x * (1 + 0.25 * x * (1 + 0.46875 * x)));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e2fn.js
-/* harmony default export */ var e2fn = (function(x) {
-  return (0.05859375 * x * x * (1 + 0.75 * x));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/e3fn.js
-/* harmony default export */ var e3fn = (function(x) {
-  return (x * x * x * (35 / 3072));
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/gN.js
-/* harmony default export */ var gN = (function(a, e, sinphi) {
-  var temp = e * sinphi;
-  return a / Math.sqrt(1 - temp * temp);
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/adjust_lat.js
-
-
-
-/* harmony default export */ var adjust_lat = (function(x) {
-  return (Math.abs(x) < HALF_PI) ? x : (x - (sign(x) * Math.PI));
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/imlfn.js
-/* harmony default export */ var imlfn = (function(ml, e0, e1, e2, e3) {
-  var phi;
-  var dphi;
-
-  phi = ml / e0;
-  for (var i = 0; i < 15; i++) {
-    dphi = (ml - (e0 * phi - e1 * Math.sin(2 * phi) + e2 * Math.sin(4 * phi) - e3 * Math.sin(6 * phi))) / (e0 - 2 * e1 * Math.cos(2 * phi) + 4 * e2 * Math.cos(4 * phi) - 6 * e3 * Math.cos(6 * phi));
-    phi += dphi;
-    if (Math.abs(dphi) <= 0.0000000001) {
-      return phi;
-    }
-  }
-
-  //..reportError("IMLFN-CONV:Latitude failed to converge after 15 iterations");
-  return NaN;
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/cass.js
-
-
-
-
-
-
-
-
-
-
-
-function cass_init() {
-  if (!this.sphere) {
-    this.e0 = e0fn(this.es);
-    this.e1 = e1fn(this.es);
-    this.e2 = e2fn(this.es);
-    this.e3 = e3fn(this.es);
-    this.ml0 = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, this.lat0);
-  }
-}
-
-/* Cassini forward equations--mapping lat,long to x,y
-  -----------------------------------------------------------------------*/
-function cass_forward(p) {
-
-  /* Forward equations
-      -----------------*/
-  var x, y;
-  var lam = p.x;
-  var phi = p.y;
-  lam = adjust_lon(lam - this.long0);
-
-  if (this.sphere) {
-    x = this.a * Math.asin(Math.cos(phi) * Math.sin(lam));
-    y = this.a * (Math.atan2(Math.tan(phi), Math.cos(lam)) - this.lat0);
-  }
-  else {
-    //ellipsoid
-    var sinphi = Math.sin(phi);
-    var cosphi = Math.cos(phi);
-    var nl = gN(this.a, this.e, sinphi);
-    var tl = Math.tan(phi) * Math.tan(phi);
-    var al = lam * Math.cos(phi);
-    var asq = al * al;
-    var cl = this.es * cosphi * cosphi / (1 - this.es);
-    var ml = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, phi);
-
-    x = nl * al * (1 - asq * tl * (1 / 6 - (8 - tl + 8 * cl) * asq / 120));
-    y = ml - this.ml0 + nl * sinphi / cosphi * asq * (0.5 + (5 - tl + 6 * cl) * asq / 24);
-
-
-  }
-
-  p.x = x + this.x0;
-  p.y = y + this.y0;
-  return p;
-}
-
-/* Inverse equations
-  -----------------*/
-function cass_inverse(p) {
-  p.x -= this.x0;
-  p.y -= this.y0;
-  var x = p.x / this.a;
-  var y = p.y / this.a;
-  var phi, lam;
-
-  if (this.sphere) {
-    var dd = y + this.lat0;
-    phi = Math.asin(Math.sin(dd) * Math.cos(x));
-    lam = Math.atan2(Math.tan(x), Math.cos(dd));
-  }
-  else {
-    /* ellipsoid */
-    var ml1 = this.ml0 / this.a + y;
-    var phi1 = imlfn(ml1, this.e0, this.e1, this.e2, this.e3);
-    if (Math.abs(Math.abs(phi1) - HALF_PI) <= EPSLN) {
-      p.x = this.long0;
-      p.y = HALF_PI;
-      if (y < 0) {
-        p.y *= -1;
-      }
-      return p;
-    }
-    var nl1 = gN(this.a, this.e, Math.sin(phi1));
-
-    var rl1 = nl1 * nl1 * nl1 / this.a / this.a * (1 - this.es);
-    var tl1 = Math.pow(Math.tan(phi1), 2);
-    var dl = x * this.a / nl1;
-    var dsq = dl * dl;
-    phi = phi1 - nl1 * Math.tan(phi1) / rl1 * dl * dl * (0.5 - (1 + 3 * tl1) * dl * dl / 24);
-    lam = dl * (1 - dsq * (tl1 / 3 + (1 + 3 * tl1) * tl1 * dsq / 15)) / Math.cos(phi1);
-
-  }
-
-  p.x = adjust_lon(lam + this.long0);
-  p.y = adjust_lat(phi);
-  return p;
-
-}
-
-var cass_names = ["Cassini", "Cassini_Soldner", "cass"];
-/* harmony default export */ var cass = ({
-  init: cass_init,
-  forward: cass_forward,
-  inverse: cass_inverse,
-  names: cass_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/qsfnz.js
-/* harmony default export */ var qsfnz = (function(eccent, sinphi) {
-  var con;
-  if (eccent > 1.0e-7) {
-    con = eccent * sinphi;
-    return ((1 - eccent * eccent) * (sinphi / (1 - con * con) - (0.5 / eccent) * Math.log((1 - con) / (1 + con))));
-  }
-  else {
-    return (2 * sinphi);
-  }
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/laea.js
-
-
-
-
-
-
-/*
-  reference
-    "New Equal-Area Map Projections for Noncircular Regions", John P. Snyder,
-    The American Cartographer, Vol 15, No. 4, October 1988, pp. 341-355.
-  */
-
-var S_POLE = 1;
-
-var N_POLE = 2;
-var EQUIT = 3;
-var OBLIQ = 4;
-
-/* Initialize the Lambert Azimuthal Equal Area projection
-  ------------------------------------------------------*/
-function laea_init() {
-  var t = Math.abs(this.lat0);
-  if (Math.abs(t - HALF_PI) < EPSLN) {
-    this.mode = this.lat0 < 0 ? this.S_POLE : this.N_POLE;
-  }
-  else if (Math.abs(t) < EPSLN) {
-    this.mode = this.EQUIT;
-  }
-  else {
-    this.mode = this.OBLIQ;
-  }
-  if (this.es > 0) {
-    var sinphi;
-
-    this.qp = qsfnz(this.e, 1);
-    this.mmf = 0.5 / (1 - this.es);
-    this.apa = authset(this.es);
-    switch (this.mode) {
-    case this.N_POLE:
-      this.dd = 1;
-      break;
-    case this.S_POLE:
-      this.dd = 1;
-      break;
-    case this.EQUIT:
-      this.rq = Math.sqrt(0.5 * this.qp);
-      this.dd = 1 / this.rq;
-      this.xmf = 1;
-      this.ymf = 0.5 * this.qp;
-      break;
-    case this.OBLIQ:
-      this.rq = Math.sqrt(0.5 * this.qp);
-      sinphi = Math.sin(this.lat0);
-      this.sinb1 = qsfnz(this.e, sinphi) / this.qp;
-      this.cosb1 = Math.sqrt(1 - this.sinb1 * this.sinb1);
-      this.dd = Math.cos(this.lat0) / (Math.sqrt(1 - this.es * sinphi * sinphi) * this.rq * this.cosb1);
-      this.ymf = (this.xmf = this.rq) / this.dd;
-      this.xmf *= this.dd;
-      break;
-    }
-  }
-  else {
-    if (this.mode === this.OBLIQ) {
-      this.sinph0 = Math.sin(this.lat0);
-      this.cosph0 = Math.cos(this.lat0);
-    }
-  }
-}
-
-/* Lambert Azimuthal Equal Area forward equations--mapping lat,long to x,y
-  -----------------------------------------------------------------------*/
-function laea_forward(p) {
-
-  /* Forward equations
-      -----------------*/
-  var x, y, coslam, sinlam, sinphi, q, sinb, cosb, b, cosphi;
-  var lam = p.x;
-  var phi = p.y;
-
-  lam = adjust_lon(lam - this.long0);
-  if (this.sphere) {
-    sinphi = Math.sin(phi);
-    cosphi = Math.cos(phi);
-    coslam = Math.cos(lam);
-    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
-      y = (this.mode === this.EQUIT) ? 1 + cosphi * coslam : 1 + this.sinph0 * sinphi + this.cosph0 * cosphi * coslam;
-      if (y <= EPSLN) {
-        return null;
-      }
-      y = Math.sqrt(2 / y);
-      x = y * cosphi * Math.sin(lam);
-      y *= (this.mode === this.EQUIT) ? sinphi : this.cosph0 * sinphi - this.sinph0 * cosphi * coslam;
-    }
-    else if (this.mode === this.N_POLE || this.mode === this.S_POLE) {
-      if (this.mode === this.N_POLE) {
-        coslam = -coslam;
-      }
-      if (Math.abs(phi + this.lat0) < EPSLN) {
-        return null;
-      }
-      y = FORTPI - phi * 0.5;
-      y = 2 * ((this.mode === this.S_POLE) ? Math.cos(y) : Math.sin(y));
-      x = y * Math.sin(lam);
-      y *= coslam;
-    }
-  }
-  else {
-    sinb = 0;
-    cosb = 0;
-    b = 0;
-    coslam = Math.cos(lam);
-    sinlam = Math.sin(lam);
-    sinphi = Math.sin(phi);
-    q = qsfnz(this.e, sinphi);
-    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
-      sinb = q / this.qp;
-      cosb = Math.sqrt(1 - sinb * sinb);
-    }
-    switch (this.mode) {
-    case this.OBLIQ:
-      b = 1 + this.sinb1 * sinb + this.cosb1 * cosb * coslam;
-      break;
-    case this.EQUIT:
-      b = 1 + cosb * coslam;
-      break;
-    case this.N_POLE:
-      b = HALF_PI + phi;
-      q = this.qp - q;
-      break;
-    case this.S_POLE:
-      b = phi - HALF_PI;
-      q = this.qp + q;
-      break;
-    }
-    if (Math.abs(b) < EPSLN) {
-      return null;
-    }
-    switch (this.mode) {
-    case this.OBLIQ:
-    case this.EQUIT:
-      b = Math.sqrt(2 / b);
-      if (this.mode === this.OBLIQ) {
-        y = this.ymf * b * (this.cosb1 * sinb - this.sinb1 * cosb * coslam);
-      }
-      else {
-        y = (b = Math.sqrt(2 / (1 + cosb * coslam))) * sinb * this.ymf;
-      }
-      x = this.xmf * b * cosb * sinlam;
-      break;
-    case this.N_POLE:
-    case this.S_POLE:
-      if (q >= 0) {
-        x = (b = Math.sqrt(q)) * sinlam;
-        y = coslam * ((this.mode === this.S_POLE) ? b : -b);
-      }
-      else {
-        x = y = 0;
-      }
-      break;
-    }
-  }
-
-  p.x = this.a * x + this.x0;
-  p.y = this.a * y + this.y0;
-  return p;
-}
-
-/* Inverse equations
-  -----------------*/
-function laea_inverse(p) {
-  p.x -= this.x0;
-  p.y -= this.y0;
-  var x = p.x / this.a;
-  var y = p.y / this.a;
-  var lam, phi, cCe, sCe, q, rho, ab;
-  if (this.sphere) {
-    var cosz = 0,
-      rh, sinz = 0;
-
-    rh = Math.sqrt(x * x + y * y);
-    phi = rh * 0.5;
-    if (phi > 1) {
-      return null;
-    }
-    phi = 2 * Math.asin(phi);
-    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
-      sinz = Math.sin(phi);
-      cosz = Math.cos(phi);
-    }
-    switch (this.mode) {
-    case this.EQUIT:
-      phi = (Math.abs(rh) <= EPSLN) ? 0 : Math.asin(y * sinz / rh);
-      x *= sinz;
-      y = cosz * rh;
-      break;
-    case this.OBLIQ:
-      phi = (Math.abs(rh) <= EPSLN) ? this.lat0 : Math.asin(cosz * this.sinph0 + y * sinz * this.cosph0 / rh);
-      x *= sinz * this.cosph0;
-      y = (cosz - Math.sin(phi) * this.sinph0) * rh;
-      break;
-    case this.N_POLE:
-      y = -y;
-      phi = HALF_PI - phi;
-      break;
-    case this.S_POLE:
-      phi -= HALF_PI;
-      break;
-    }
-    lam = (y === 0 && (this.mode === this.EQUIT || this.mode === this.OBLIQ)) ? 0 : Math.atan2(x, y);
-  }
-  else {
-    ab = 0;
-    if (this.mode === this.OBLIQ || this.mode === this.EQUIT) {
-      x /= this.dd;
-      y *= this.dd;
-      rho = Math.sqrt(x * x + y * y);
-      if (rho < EPSLN) {
-        p.x = this.long0;
-        p.y = this.lat0;
-        return p;
-      }
-      sCe = 2 * Math.asin(0.5 * rho / this.rq);
-      cCe = Math.cos(sCe);
-      x *= (sCe = Math.sin(sCe));
-      if (this.mode === this.OBLIQ) {
-        ab = cCe * this.sinb1 + y * sCe * this.cosb1 / rho;
-        q = this.qp * ab;
-        y = rho * this.cosb1 * cCe - y * this.sinb1 * sCe;
-      }
-      else {
-        ab = y * sCe / rho;
-        q = this.qp * ab;
-        y = rho * cCe;
-      }
-    }
-    else if (this.mode === this.N_POLE || this.mode === this.S_POLE) {
-      if (this.mode === this.N_POLE) {
-        y = -y;
-      }
-      q = (x * x + y * y);
-      if (!q) {
-        p.x = this.long0;
-        p.y = this.lat0;
-        return p;
-      }
-      ab = 1 - q / this.qp;
-      if (this.mode === this.S_POLE) {
-        ab = -ab;
-      }
-    }
-    lam = Math.atan2(x, y);
-    phi = authlat(Math.asin(ab), this.apa);
-  }
-
-  p.x = adjust_lon(this.long0 + lam);
-  p.y = phi;
-  return p;
-}
-
-/* determine latitude from authalic latitude */
-var P00 = 0.33333333333333333333;
-
-var P01 = 0.17222222222222222222;
-var P02 = 0.10257936507936507936;
-var P10 = 0.06388888888888888888;
-var P11 = 0.06640211640211640211;
-var P20 = 0.01641501294219154443;
-
-function authset(es) {
-  var t;
-  var APA = [];
-  APA[0] = es * P00;
-  t = es * es;
-  APA[0] += t * P01;
-  APA[1] = t * P10;
-  t *= es;
-  APA[0] += t * P02;
-  APA[1] += t * P11;
-  APA[2] = t * P20;
-  return APA;
-}
-
-function authlat(beta, APA) {
-  var t = beta + beta;
-  return (beta + APA[0] * Math.sin(t) + APA[1] * Math.sin(t + t) + APA[2] * Math.sin(t + t + t));
-}
-
-var laea_names = ["Lambert Azimuthal Equal Area", "Lambert_Azimuthal_Equal_Area", "laea"];
-/* harmony default export */ var laea = ({
-  init: laea_init,
-  forward: laea_forward,
-  inverse: laea_inverse,
-  names: laea_names,
-  S_POLE: S_POLE,
-  N_POLE: N_POLE,
-  EQUIT: EQUIT,
-  OBLIQ: OBLIQ
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/asinz.js
-/* harmony default export */ var asinz = (function(x) {
-  if (Math.abs(x) > 1) {
-    x = (x > 1) ? 1 : -1;
-  }
-  return Math.asin(x);
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/aea.js
-
-
-
-
-
-
-function aea_init() {
-
-  if (Math.abs(this.lat1 + this.lat2) < EPSLN) {
-    return;
-  }
-  this.temp = this.b / this.a;
-  this.es = 1 - Math.pow(this.temp, 2);
-  this.e3 = Math.sqrt(this.es);
-
-  this.sin_po = Math.sin(this.lat1);
-  this.cos_po = Math.cos(this.lat1);
-  this.t1 = this.sin_po;
-  this.con = this.sin_po;
-  this.ms1 = msfnz(this.e3, this.sin_po, this.cos_po);
-  this.qs1 = qsfnz(this.e3, this.sin_po, this.cos_po);
-
-  this.sin_po = Math.sin(this.lat2);
-  this.cos_po = Math.cos(this.lat2);
-  this.t2 = this.sin_po;
-  this.ms2 = msfnz(this.e3, this.sin_po, this.cos_po);
-  this.qs2 = qsfnz(this.e3, this.sin_po, this.cos_po);
-
-  this.sin_po = Math.sin(this.lat0);
-  this.cos_po = Math.cos(this.lat0);
-  this.t3 = this.sin_po;
-  this.qs0 = qsfnz(this.e3, this.sin_po, this.cos_po);
-
-  if (Math.abs(this.lat1 - this.lat2) > EPSLN) {
-    this.ns0 = (this.ms1 * this.ms1 - this.ms2 * this.ms2) / (this.qs2 - this.qs1);
-  }
-  else {
-    this.ns0 = this.con;
-  }
-  this.c = this.ms1 * this.ms1 + this.ns0 * this.qs1;
-  this.rh = this.a * Math.sqrt(this.c - this.ns0 * this.qs0) / this.ns0;
-}
-
-/* Albers Conical Equal Area forward equations--mapping lat,long to x,y
-  -------------------------------------------------------------------*/
-function aea_forward(p) {
-
-  var lon = p.x;
-  var lat = p.y;
-
-  this.sin_phi = Math.sin(lat);
-  this.cos_phi = Math.cos(lat);
-
-  var qs = qsfnz(this.e3, this.sin_phi, this.cos_phi);
-  var rh1 = this.a * Math.sqrt(this.c - this.ns0 * qs) / this.ns0;
-  var theta = this.ns0 * adjust_lon(lon - this.long0);
-  var x = rh1 * Math.sin(theta) + this.x0;
-  var y = this.rh - rh1 * Math.cos(theta) + this.y0;
-
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-function aea_inverse(p) {
-  var rh1, qs, con, theta, lon, lat;
-
-  p.x -= this.x0;
-  p.y = this.rh - p.y + this.y0;
-  if (this.ns0 >= 0) {
-    rh1 = Math.sqrt(p.x * p.x + p.y * p.y);
-    con = 1;
-  }
-  else {
-    rh1 = -Math.sqrt(p.x * p.x + p.y * p.y);
-    con = -1;
-  }
-  theta = 0;
-  if (rh1 !== 0) {
-    theta = Math.atan2(con * p.x, con * p.y);
-  }
-  con = rh1 * this.ns0 / this.a;
-  if (this.sphere) {
-    lat = Math.asin((this.c - con * con) / (2 * this.ns0));
-  }
-  else {
-    qs = (this.c - con * con) / this.ns0;
-    lat = this.phi1z(this.e3, qs);
-  }
-
-  lon = adjust_lon(theta / this.ns0 + this.long0);
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-/* Function to compute phi1, the latitude for the inverse of the
-   Albers Conical Equal-Area projection.
--------------------------------------------*/
-function phi1z(eccent, qs) {
-  var sinphi, cosphi, con, com, dphi;
-  var phi = asinz(0.5 * qs);
-  if (eccent < EPSLN) {
-    return phi;
-  }
-
-  var eccnts = eccent * eccent;
-  for (var i = 1; i <= 25; i++) {
-    sinphi = Math.sin(phi);
-    cosphi = Math.cos(phi);
-    con = eccent * sinphi;
-    com = 1 - con * con;
-    dphi = 0.5 * com * com / cosphi * (qs / (1 - eccnts) - sinphi / com + 0.5 / eccent * Math.log((1 - con) / (1 + con)));
-    phi = phi + dphi;
-    if (Math.abs(dphi) <= 1e-7) {
-      return phi;
-    }
-  }
-  return null;
-}
-
-var aea_names = ["Albers_Conic_Equal_Area", "Albers", "aea"];
-/* harmony default export */ var aea = ({
-  init: aea_init,
-  forward: aea_forward,
-  inverse: aea_inverse,
-  names: aea_names,
-  phi1z: phi1z
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/gnom.js
-
-
-
-
-/*
-  reference:
-    Wolfram Mathworld "Gnomonic Projection"
-    http://mathworld.wolfram.com/GnomonicProjection.html
-    Accessed: 12th November 2009
-  */
-function gnom_init() {
-
-  /* Place parameters in static storage for common use
-      -------------------------------------------------*/
-  this.sin_p14 = Math.sin(this.lat0);
-  this.cos_p14 = Math.cos(this.lat0);
-  // Approximation for projecting points to the horizon (infinity)
-  this.infinity_dist = 1000 * this.a;
-  this.rc = 1;
-}
-
-/* Gnomonic forward equations--mapping lat,long to x,y
-    ---------------------------------------------------*/
-function gnom_forward(p) {
-  var sinphi, cosphi; /* sin and cos value        */
-  var dlon; /* delta longitude value      */
-  var coslon; /* cos of longitude        */
-  var ksp; /* scale factor          */
-  var g;
-  var x, y;
-  var lon = p.x;
-  var lat = p.y;
-  /* Forward equations
-      -----------------*/
-  dlon = adjust_lon(lon - this.long0);
-
-  sinphi = Math.sin(lat);
-  cosphi = Math.cos(lat);
-
-  coslon = Math.cos(dlon);
-  g = this.sin_p14 * sinphi + this.cos_p14 * cosphi * coslon;
-  ksp = 1;
-  if ((g > 0) || (Math.abs(g) <= EPSLN)) {
-    x = this.x0 + this.a * ksp * cosphi * Math.sin(dlon) / g;
-    y = this.y0 + this.a * ksp * (this.cos_p14 * sinphi - this.sin_p14 * cosphi * coslon) / g;
-  }
-  else {
-
-    // Point is in the opposing hemisphere and is unprojectable
-    // We still need to return a reasonable point, so we project
-    // to infinity, on a bearing
-    // equivalent to the northern hemisphere equivalent
-    // This is a reasonable approximation for short shapes and lines that
-    // straddle the horizon.
-
-    x = this.x0 + this.infinity_dist * cosphi * Math.sin(dlon);
-    y = this.y0 + this.infinity_dist * (this.cos_p14 * sinphi - this.sin_p14 * cosphi * coslon);
-
-  }
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-function gnom_inverse(p) {
-  var rh; /* Rho */
-  var sinc, cosc;
-  var c;
-  var lon, lat;
-
-  /* Inverse equations
-      -----------------*/
-  p.x = (p.x - this.x0) / this.a;
-  p.y = (p.y - this.y0) / this.a;
-
-  p.x /= this.k0;
-  p.y /= this.k0;
-
-  if ((rh = Math.sqrt(p.x * p.x + p.y * p.y))) {
-    c = Math.atan2(rh, this.rc);
-    sinc = Math.sin(c);
-    cosc = Math.cos(c);
-
-    lat = asinz(cosc * this.sin_p14 + (p.y * sinc * this.cos_p14) / rh);
-    lon = Math.atan2(p.x * sinc, rh * this.cos_p14 * cosc - p.y * this.sin_p14 * sinc);
-    lon = adjust_lon(this.long0 + lon);
-  }
-  else {
-    lat = this.phic0;
-    lon = 0;
-  }
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var gnom_names = ["gnom"];
-/* harmony default export */ var gnom = ({
-  init: gnom_init,
-  forward: gnom_forward,
-  inverse: gnom_inverse,
-  names: gnom_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/common/iqsfnz.js
-
-
-/* harmony default export */ var iqsfnz = (function(eccent, q) {
-  var temp = 1 - (1 - eccent * eccent) / (2 * eccent) * Math.log((1 - eccent) / (1 + eccent));
-  if (Math.abs(Math.abs(q) - temp) < 1.0E-6) {
-    if (q < 0) {
-      return (-1 * HALF_PI);
-    }
-    else {
-      return HALF_PI;
-    }
-  }
-  //var phi = 0.5* q/(1-eccent*eccent);
-  var phi = Math.asin(0.5 * q);
-  var dphi;
-  var sin_phi;
-  var cos_phi;
-  var con;
-  for (var i = 0; i < 30; i++) {
-    sin_phi = Math.sin(phi);
-    cos_phi = Math.cos(phi);
-    con = eccent * sin_phi;
-    dphi = Math.pow(1 - con * con, 2) / (2 * cos_phi) * (q / (1 - eccent * eccent) - sin_phi / (1 - con * con) + 0.5 / eccent * Math.log((1 - con) / (1 + con)));
-    phi += dphi;
-    if (Math.abs(dphi) <= 0.0000000001) {
-      return phi;
-    }
-  }
-
-  //console.log("IQSFN-CONV:Latitude failed to converge after 30 iterations");
-  return NaN;
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/cea.js
-
-
-
-
-
-/*
-  reference:
-    "Cartographic Projection Procedures for the UNIX Environment-
-    A User's Manual" by Gerald I. Evenden,
-    USGS Open File Report 90-284and Release 4 Interim Reports (2003)
-*/
-function cea_init() {
-  //no-op
-  if (!this.sphere) {
-    this.k0 = msfnz(this.e, Math.sin(this.lat_ts), Math.cos(this.lat_ts));
-  }
-}
-
-/* Cylindrical Equal Area forward equations--mapping lat,long to x,y
-    ------------------------------------------------------------*/
-function cea_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-  var x, y;
-  /* Forward equations
-      -----------------*/
-  var dlon = adjust_lon(lon - this.long0);
-  if (this.sphere) {
-    x = this.x0 + this.a * dlon * Math.cos(this.lat_ts);
-    y = this.y0 + this.a * Math.sin(lat) / Math.cos(this.lat_ts);
-  }
-  else {
-    var qs = qsfnz(this.e, Math.sin(lat));
-    x = this.x0 + this.a * this.k0 * dlon;
-    y = this.y0 + this.a * qs * 0.5 / this.k0;
-  }
-
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-/* Cylindrical Equal Area inverse equations--mapping x,y to lat/long
-    ------------------------------------------------------------*/
-function cea_inverse(p) {
-  p.x -= this.x0;
-  p.y -= this.y0;
-  var lon, lat;
-
-  if (this.sphere) {
-    lon = adjust_lon(this.long0 + (p.x / this.a) / Math.cos(this.lat_ts));
-    lat = Math.asin((p.y / this.a) * Math.cos(this.lat_ts));
-  }
-  else {
-    lat = iqsfnz(this.e, 2 * p.y * this.k0 / this.a);
-    lon = adjust_lon(this.long0 + p.x / (this.a * this.k0));
-  }
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var cea_names = ["cea"];
-/* harmony default export */ var cea = ({
-  init: cea_init,
-  forward: cea_forward,
-  inverse: cea_inverse,
-  names: cea_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/eqc.js
-
-
-
-function eqc_init() {
-
-  this.x0 = this.x0 || 0;
-  this.y0 = this.y0 || 0;
-  this.lat0 = this.lat0 || 0;
-  this.long0 = this.long0 || 0;
-  this.lat_ts = this.lat_ts || 0;
-  this.title = this.title || "Equidistant Cylindrical (Plate Carre)";
-
-  this.rc = Math.cos(this.lat_ts);
-}
-
-// forward equations--mapping lat,long to x,y
-// -----------------------------------------------------------------
-function eqc_forward(p) {
-
-  var lon = p.x;
-  var lat = p.y;
-
-  var dlon = adjust_lon(lon - this.long0);
-  var dlat = adjust_lat(lat - this.lat0);
-  p.x = this.x0 + (this.a * dlon * this.rc);
-  p.y = this.y0 + (this.a * dlat);
-  return p;
-}
-
-// inverse equations--mapping x,y to lat/long
-// -----------------------------------------------------------------
-function eqc_inverse(p) {
-
-  var x = p.x;
-  var y = p.y;
-
-  p.x = adjust_lon(this.long0 + ((x - this.x0) / (this.a * this.rc)));
-  p.y = adjust_lat(this.lat0 + ((y - this.y0) / (this.a)));
-  return p;
-}
-
-var eqc_names = ["Equirectangular", "Equidistant_Cylindrical", "eqc"];
-/* harmony default export */ var eqc = ({
-  init: eqc_init,
-  forward: eqc_forward,
-  inverse: eqc_inverse,
-  names: eqc_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/poly.js
-
-
-
-
-
-
-
-
-
-
-var poly_MAX_ITER = 20;
-
-function poly_init() {
-  /* Place parameters in static storage for common use
-      -------------------------------------------------*/
-  this.temp = this.b / this.a;
-  this.es = 1 - Math.pow(this.temp, 2); // devait etre dans tmerc.js mais n y est pas donc je commente sinon retour de valeurs nulles
-  this.e = Math.sqrt(this.es);
-  this.e0 = e0fn(this.es);
-  this.e1 = e1fn(this.es);
-  this.e2 = e2fn(this.es);
-  this.e3 = e3fn(this.es);
-  this.ml0 = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, this.lat0); //si que des zeros le calcul ne se fait pas
-}
-
-/* Polyconic forward equations--mapping lat,long to x,y
-    ---------------------------------------------------*/
-function poly_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-  var x, y, el;
-  var dlon = adjust_lon(lon - this.long0);
-  el = dlon * Math.sin(lat);
-  if (this.sphere) {
-    if (Math.abs(lat) <= EPSLN) {
-      x = this.a * dlon;
-      y = -1 * this.a * this.lat0;
-    }
-    else {
-      x = this.a * Math.sin(el) / Math.tan(lat);
-      y = this.a * (adjust_lat(lat - this.lat0) + (1 - Math.cos(el)) / Math.tan(lat));
-    }
-  }
-  else {
-    if (Math.abs(lat) <= EPSLN) {
-      x = this.a * dlon;
-      y = -1 * this.ml0;
-    }
-    else {
-      var nl = gN(this.a, this.e, Math.sin(lat)) / Math.tan(lat);
-      x = nl * Math.sin(el);
-      y = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, lat) - this.ml0 + nl * (1 - Math.cos(el));
-    }
-
-  }
-  p.x = x + this.x0;
-  p.y = y + this.y0;
-  return p;
-}
-
-/* Inverse equations
-  -----------------*/
-function poly_inverse(p) {
-  var lon, lat, x, y, i;
-  var al, bl;
-  var phi, dphi;
-  x = p.x - this.x0;
-  y = p.y - this.y0;
-
-  if (this.sphere) {
-    if (Math.abs(y + this.a * this.lat0) <= EPSLN) {
-      lon = adjust_lon(x / this.a + this.long0);
-      lat = 0;
-    }
-    else {
-      al = this.lat0 + y / this.a;
-      bl = x * x / this.a / this.a + al * al;
-      phi = al;
-      var tanphi;
-      for (i = poly_MAX_ITER; i; --i) {
-        tanphi = Math.tan(phi);
-        dphi = -1 * (al * (phi * tanphi + 1) - phi - 0.5 * (phi * phi + bl) * tanphi) / ((phi - al) / tanphi - 1);
-        phi += dphi;
-        if (Math.abs(dphi) <= EPSLN) {
-          lat = phi;
-          break;
-        }
-      }
-      lon = adjust_lon(this.long0 + (Math.asin(x * Math.tan(phi) / this.a)) / Math.sin(lat));
-    }
-  }
-  else {
-    if (Math.abs(y + this.ml0) <= EPSLN) {
-      lat = 0;
-      lon = adjust_lon(this.long0 + x / this.a);
-    }
-    else {
-
-      al = (this.ml0 + y) / this.a;
-      bl = x * x / this.a / this.a + al * al;
-      phi = al;
-      var cl, mln, mlnp, ma;
-      var con;
-      for (i = poly_MAX_ITER; i; --i) {
-        con = this.e * Math.sin(phi);
-        cl = Math.sqrt(1 - con * con) * Math.tan(phi);
-        mln = this.a * mlfn(this.e0, this.e1, this.e2, this.e3, phi);
-        mlnp = this.e0 - 2 * this.e1 * Math.cos(2 * phi) + 4 * this.e2 * Math.cos(4 * phi) - 6 * this.e3 * Math.cos(6 * phi);
-        ma = mln / this.a;
-        dphi = (al * (cl * ma + 1) - ma - 0.5 * cl * (ma * ma + bl)) / (this.es * Math.sin(2 * phi) * (ma * ma + bl - 2 * al * ma) / (4 * cl) + (al - ma) * (cl * mlnp - 2 / Math.sin(2 * phi)) - mlnp);
-        phi -= dphi;
-        if (Math.abs(dphi) <= EPSLN) {
-          lat = phi;
-          break;
-        }
-      }
-
-      //lat=phi4z(this.e,this.e0,this.e1,this.e2,this.e3,al,bl,0,0);
-      cl = Math.sqrt(1 - this.es * Math.pow(Math.sin(lat), 2)) * Math.tan(lat);
-      lon = adjust_lon(this.long0 + Math.asin(x * cl / this.a) / Math.sin(lat));
-    }
-  }
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var poly_names = ["Polyconic", "poly"];
-/* harmony default export */ var poly = ({
-  init: poly_init,
-  forward: poly_forward,
-  inverse: poly_inverse,
-  names: poly_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/nzmg.js
-
-
-/*
-  reference
-    Department of Land and Survey Technical Circular 1973/32
-      http://www.linz.govt.nz/docs/miscellaneous/nz-map-definition.pdf
-    OSG Technical Report 4.1
-      http://www.linz.govt.nz/docs/miscellaneous/nzmg.pdf
-  */
-
-/**
- * iterations: Number of iterations to refine inverse transform.
- *     0 -> km accuracy
- *     1 -> m accuracy -- suitable for most mapping applications
- *     2 -> mm accuracy
- */
-var iterations = 1;
-
-function nzmg_init() {
-  this.A = [];
-  this.A[1] = 0.6399175073;
-  this.A[2] = -0.1358797613;
-  this.A[3] = 0.063294409;
-  this.A[4] = -0.02526853;
-  this.A[5] = 0.0117879;
-  this.A[6] = -0.0055161;
-  this.A[7] = 0.0026906;
-  this.A[8] = -0.001333;
-  this.A[9] = 0.00067;
-  this.A[10] = -0.00034;
-
-  this.B_re = [];
-  this.B_im = [];
-  this.B_re[1] = 0.7557853228;
-  this.B_im[1] = 0;
-  this.B_re[2] = 0.249204646;
-  this.B_im[2] = 0.003371507;
-  this.B_re[3] = -0.001541739;
-  this.B_im[3] = 0.041058560;
-  this.B_re[4] = -0.10162907;
-  this.B_im[4] = 0.01727609;
-  this.B_re[5] = -0.26623489;
-  this.B_im[5] = -0.36249218;
-  this.B_re[6] = -0.6870983;
-  this.B_im[6] = -1.1651967;
-
-  this.C_re = [];
-  this.C_im = [];
-  this.C_re[1] = 1.3231270439;
-  this.C_im[1] = 0;
-  this.C_re[2] = -0.577245789;
-  this.C_im[2] = -0.007809598;
-  this.C_re[3] = 0.508307513;
-  this.C_im[3] = -0.112208952;
-  this.C_re[4] = -0.15094762;
-  this.C_im[4] = 0.18200602;
-  this.C_re[5] = 1.01418179;
-  this.C_im[5] = 1.64497696;
-  this.C_re[6] = 1.9660549;
-  this.C_im[6] = 2.5127645;
-
-  this.D = [];
-  this.D[1] = 1.5627014243;
-  this.D[2] = 0.5185406398;
-  this.D[3] = -0.03333098;
-  this.D[4] = -0.1052906;
-  this.D[5] = -0.0368594;
-  this.D[6] = 0.007317;
-  this.D[7] = 0.01220;
-  this.D[8] = 0.00394;
-  this.D[9] = -0.0013;
-}
-
-/**
-    New Zealand Map Grid Forward  - long/lat to x/y
-    long/lat in radians
-  */
-function nzmg_forward(p) {
-  var n;
-  var lon = p.x;
-  var lat = p.y;
-
-  var delta_lat = lat - this.lat0;
-  var delta_lon = lon - this.long0;
-
-  // 1. Calculate d_phi and d_psi    ...                          // and d_lambda
-  // For this algorithm, delta_latitude is in seconds of arc x 10-5, so we need to scale to those units. Longitude is radians.
-  var d_phi = delta_lat / SEC_TO_RAD * 1E-5;
-  var d_lambda = delta_lon;
-  var d_phi_n = 1; // d_phi^0
-
-  var d_psi = 0;
-  for (n = 1; n <= 10; n++) {
-    d_phi_n = d_phi_n * d_phi;
-    d_psi = d_psi + this.A[n] * d_phi_n;
-  }
-
-  // 2. Calculate theta
-  var th_re = d_psi;
-  var th_im = d_lambda;
-
-  // 3. Calculate z
-  var th_n_re = 1;
-  var th_n_im = 0; // theta^0
-  var th_n_re1;
-  var th_n_im1;
-
-  var z_re = 0;
-  var z_im = 0;
-  for (n = 1; n <= 6; n++) {
-    th_n_re1 = th_n_re * th_re - th_n_im * th_im;
-    th_n_im1 = th_n_im * th_re + th_n_re * th_im;
-    th_n_re = th_n_re1;
-    th_n_im = th_n_im1;
-    z_re = z_re + this.B_re[n] * th_n_re - this.B_im[n] * th_n_im;
-    z_im = z_im + this.B_im[n] * th_n_re + this.B_re[n] * th_n_im;
-  }
-
-  // 4. Calculate easting and northing
-  p.x = (z_im * this.a) + this.x0;
-  p.y = (z_re * this.a) + this.y0;
-
-  return p;
-}
-
-/**
-    New Zealand Map Grid Inverse  -  x/y to long/lat
-  */
-function nzmg_inverse(p) {
-  var n;
-  var x = p.x;
-  var y = p.y;
-
-  var delta_x = x - this.x0;
-  var delta_y = y - this.y0;
-
-  // 1. Calculate z
-  var z_re = delta_y / this.a;
-  var z_im = delta_x / this.a;
-
-  // 2a. Calculate theta - first approximation gives km accuracy
-  var z_n_re = 1;
-  var z_n_im = 0; // z^0
-  var z_n_re1;
-  var z_n_im1;
-
-  var th_re = 0;
-  var th_im = 0;
-  for (n = 1; n <= 6; n++) {
-    z_n_re1 = z_n_re * z_re - z_n_im * z_im;
-    z_n_im1 = z_n_im * z_re + z_n_re * z_im;
-    z_n_re = z_n_re1;
-    z_n_im = z_n_im1;
-    th_re = th_re + this.C_re[n] * z_n_re - this.C_im[n] * z_n_im;
-    th_im = th_im + this.C_im[n] * z_n_re + this.C_re[n] * z_n_im;
-  }
-
-  // 2b. Iterate to refine the accuracy of the calculation
-  //        0 iterations gives km accuracy
-  //        1 iteration gives m accuracy -- good enough for most mapping applications
-  //        2 iterations bives mm accuracy
-  for (var i = 0; i < this.iterations; i++) {
-    var th_n_re = th_re;
-    var th_n_im = th_im;
-    var th_n_re1;
-    var th_n_im1;
-
-    var num_re = z_re;
-    var num_im = z_im;
-    for (n = 2; n <= 6; n++) {
-      th_n_re1 = th_n_re * th_re - th_n_im * th_im;
-      th_n_im1 = th_n_im * th_re + th_n_re * th_im;
-      th_n_re = th_n_re1;
-      th_n_im = th_n_im1;
-      num_re = num_re + (n - 1) * (this.B_re[n] * th_n_re - this.B_im[n] * th_n_im);
-      num_im = num_im + (n - 1) * (this.B_im[n] * th_n_re + this.B_re[n] * th_n_im);
-    }
-
-    th_n_re = 1;
-    th_n_im = 0;
-    var den_re = this.B_re[1];
-    var den_im = this.B_im[1];
-    for (n = 2; n <= 6; n++) {
-      th_n_re1 = th_n_re * th_re - th_n_im * th_im;
-      th_n_im1 = th_n_im * th_re + th_n_re * th_im;
-      th_n_re = th_n_re1;
-      th_n_im = th_n_im1;
-      den_re = den_re + n * (this.B_re[n] * th_n_re - this.B_im[n] * th_n_im);
-      den_im = den_im + n * (this.B_im[n] * th_n_re + this.B_re[n] * th_n_im);
-    }
-
-    // Complex division
-    var den2 = den_re * den_re + den_im * den_im;
-    th_re = (num_re * den_re + num_im * den_im) / den2;
-    th_im = (num_im * den_re - num_re * den_im) / den2;
-  }
-
-  // 3. Calculate d_phi              ...                                    // and d_lambda
-  var d_psi = th_re;
-  var d_lambda = th_im;
-  var d_psi_n = 1; // d_psi^0
-
-  var d_phi = 0;
-  for (n = 1; n <= 9; n++) {
-    d_psi_n = d_psi_n * d_psi;
-    d_phi = d_phi + this.D[n] * d_psi_n;
-  }
-
-  // 4. Calculate latitude and longitude
-  // d_phi is calcuated in second of arc * 10^-5, so we need to scale back to radians. d_lambda is in radians.
-  var lat = this.lat0 + (d_phi * SEC_TO_RAD * 1E5);
-  var lon = this.long0 + d_lambda;
-
-  p.x = lon;
-  p.y = lat;
-
-  return p;
-}
-
-var nzmg_names = ["New_Zealand_Map_Grid", "nzmg"];
-/* harmony default export */ var nzmg = ({
-  init: nzmg_init,
-  forward: nzmg_forward,
-  inverse: nzmg_inverse,
-  names: nzmg_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/mill.js
-
-
-/*
-  reference
-    "New Equal-Area Map Projections for Noncircular Regions", John P. Snyder,
-    The American Cartographer, Vol 15, No. 4, October 1988, pp. 341-355.
-  */
-
-
-/* Initialize the Miller Cylindrical projection
-  -------------------------------------------*/
-function mill_init() {
-  //no-op
-}
-
-/* Miller Cylindrical forward equations--mapping lat,long to x,y
-    ------------------------------------------------------------*/
-function mill_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-  /* Forward equations
-      -----------------*/
-  var dlon = adjust_lon(lon - this.long0);
-  var x = this.x0 + this.a * dlon;
-  var y = this.y0 + this.a * Math.log(Math.tan((Math.PI / 4) + (lat / 2.5))) * 1.25;
-
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-/* Miller Cylindrical inverse equations--mapping x,y to lat/long
-    ------------------------------------------------------------*/
-function mill_inverse(p) {
-  p.x -= this.x0;
-  p.y -= this.y0;
-
-  var lon = adjust_lon(this.long0 + p.x / this.a);
-  var lat = 2.5 * (Math.atan(Math.exp(0.8 * p.y / this.a)) - Math.PI / 4);
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var mill_names = ["Miller_Cylindrical", "mill"];
-/* harmony default export */ var mill = ({
-  init: mill_init,
-  forward: mill_forward,
-  inverse: mill_inverse,
-  names: mill_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/sinu.js
-
-
-
-var sinu_MAX_ITER = 20;
-
-
-
-
-
-
-
-function sinu_init() {
-  /* Place parameters in static storage for common use
-    -------------------------------------------------*/
-
-
-  if (!this.sphere) {
-    this.en = pj_enfn(this.es);
-  }
-  else {
-    this.n = 1;
-    this.m = 0;
-    this.es = 0;
-    this.C_y = Math.sqrt((this.m + 1) / this.n);
-    this.C_x = this.C_y / (this.m + 1);
-  }
-
-}
-
-/* Sinusoidal forward equations--mapping lat,long to x,y
-  -----------------------------------------------------*/
-function sinu_forward(p) {
-  var x, y;
-  var lon = p.x;
-  var lat = p.y;
-  /* Forward equations
-    -----------------*/
-  lon = adjust_lon(lon - this.long0);
-
-  if (this.sphere) {
-    if (!this.m) {
-      lat = this.n !== 1 ? Math.asin(this.n * Math.sin(lat)) : lat;
-    }
-    else {
-      var k = this.n * Math.sin(lat);
-      for (var i = sinu_MAX_ITER; i; --i) {
-        var V = (this.m * lat + Math.sin(lat) - k) / (this.m + Math.cos(lat));
-        lat -= V;
-        if (Math.abs(V) < EPSLN) {
-          break;
-        }
-      }
-    }
-    x = this.a * this.C_x * lon * (this.m + Math.cos(lat));
-    y = this.a * this.C_y * lat;
-
-  }
-  else {
-
-    var s = Math.sin(lat);
-    var c = Math.cos(lat);
-    y = this.a * pj_mlfn(lat, s, c, this.en);
-    x = this.a * lon * c / Math.sqrt(1 - this.es * s * s);
-  }
-
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-function sinu_inverse(p) {
-  var lat, temp, lon, s;
-
-  p.x -= this.x0;
-  lon = p.x / this.a;
-  p.y -= this.y0;
-  lat = p.y / this.a;
-
-  if (this.sphere) {
-    lat /= this.C_y;
-    lon = lon / (this.C_x * (this.m + Math.cos(lat)));
-    if (this.m) {
-      lat = asinz((this.m * lat + Math.sin(lat)) / this.n);
-    }
-    else if (this.n !== 1) {
-      lat = asinz(Math.sin(lat) / this.n);
-    }
-    lon = adjust_lon(lon + this.long0);
-    lat = adjust_lat(lat);
-  }
-  else {
-    lat = pj_inv_mlfn(p.y / this.a, this.es, this.en);
-    s = Math.abs(lat);
-    if (s < HALF_PI) {
-      s = Math.sin(lat);
-      temp = this.long0 + p.x * Math.sqrt(1 - this.es * s * s) / (this.a * Math.cos(lat));
-      //temp = this.long0 + p.x / (this.a * Math.cos(lat));
-      lon = adjust_lon(temp);
-    }
-    else if ((s - EPSLN) < HALF_PI) {
-      lon = this.long0;
-    }
-  }
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var sinu_names = ["Sinusoidal", "sinu"];
-/* harmony default export */ var sinu = ({
-  init: sinu_init,
-  forward: sinu_forward,
-  inverse: sinu_inverse,
-  names: sinu_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/moll.js
-
-function moll_init() {}
-
-/* Mollweide forward equations--mapping lat,long to x,y
-    ----------------------------------------------------*/
-function moll_forward(p) {
-
-  /* Forward equations
-      -----------------*/
-  var lon = p.x;
-  var lat = p.y;
-
-  var delta_lon = adjust_lon(lon - this.long0);
-  var theta = lat;
-  var con = Math.PI * Math.sin(lat);
-
-  /* Iterate using the Newton-Raphson method to find theta
-      -----------------------------------------------------*/
-  while (true) {
-    var delta_theta = -(theta + Math.sin(theta) - con) / (1 + Math.cos(theta));
-    theta += delta_theta;
-    if (Math.abs(delta_theta) < EPSLN) {
-      break;
-    }
-  }
-  theta /= 2;
-
-  /* If the latitude is 90 deg, force the x coordinate to be "0 + false easting"
-       this is done here because of precision problems with "cos(theta)"
-       --------------------------------------------------------------------------*/
-  if (Math.PI / 2 - Math.abs(lat) < EPSLN) {
-    delta_lon = 0;
-  }
-  var x = 0.900316316158 * this.a * delta_lon * Math.cos(theta) + this.x0;
-  var y = 1.4142135623731 * this.a * Math.sin(theta) + this.y0;
-
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-function moll_inverse(p) {
-  var theta;
-  var arg;
-
-  /* Inverse equations
-      -----------------*/
-  p.x -= this.x0;
-  p.y -= this.y0;
-  arg = p.y / (1.4142135623731 * this.a);
-
-  /* Because of division by zero problems, 'arg' can not be 1.  Therefore
-       a number very close to one is used instead.
-       -------------------------------------------------------------------*/
-  if (Math.abs(arg) > 0.999999999999) {
-    arg = 0.999999999999;
-  }
-  theta = Math.asin(arg);
-  var lon = adjust_lon(this.long0 + (p.x / (0.900316316158 * this.a * Math.cos(theta))));
-  if (lon < (-Math.PI)) {
-    lon = -Math.PI;
-  }
-  if (lon > Math.PI) {
-    lon = Math.PI;
-  }
-  arg = (2 * theta + Math.sin(2 * theta)) / Math.PI;
-  if (Math.abs(arg) > 1) {
-    arg = 1;
-  }
-  var lat = Math.asin(arg);
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var moll_names = ["Mollweide", "moll"];
-/* harmony default export */ var moll = ({
-  init: moll_init,
-  forward: moll_forward,
-  inverse: moll_inverse,
-  names: moll_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/eqdc.js
-
-
-
-
-
-
-
-
-
-
-
-function eqdc_init() {
-
-  /* Place parameters in static storage for common use
-      -------------------------------------------------*/
-  // Standard Parallels cannot be equal and on opposite sides of the equator
-  if (Math.abs(this.lat1 + this.lat2) < EPSLN) {
-    return;
-  }
-  this.lat2 = this.lat2 || this.lat1;
-  this.temp = this.b / this.a;
-  this.es = 1 - Math.pow(this.temp, 2);
-  this.e = Math.sqrt(this.es);
-  this.e0 = e0fn(this.es);
-  this.e1 = e1fn(this.es);
-  this.e2 = e2fn(this.es);
-  this.e3 = e3fn(this.es);
-
-  this.sinphi = Math.sin(this.lat1);
-  this.cosphi = Math.cos(this.lat1);
-
-  this.ms1 = msfnz(this.e, this.sinphi, this.cosphi);
-  this.ml1 = mlfn(this.e0, this.e1, this.e2, this.e3, this.lat1);
-
-  if (Math.abs(this.lat1 - this.lat2) < EPSLN) {
-    this.ns = this.sinphi;
-  }
-  else {
-    this.sinphi = Math.sin(this.lat2);
-    this.cosphi = Math.cos(this.lat2);
-    this.ms2 = msfnz(this.e, this.sinphi, this.cosphi);
-    this.ml2 = mlfn(this.e0, this.e1, this.e2, this.e3, this.lat2);
-    this.ns = (this.ms1 - this.ms2) / (this.ml2 - this.ml1);
-  }
-  this.g = this.ml1 + this.ms1 / this.ns;
-  this.ml0 = mlfn(this.e0, this.e1, this.e2, this.e3, this.lat0);
-  this.rh = this.a * (this.g - this.ml0);
-}
-
-/* Equidistant Conic forward equations--mapping lat,long to x,y
-  -----------------------------------------------------------*/
-function eqdc_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-  var rh1;
-
-  /* Forward equations
-      -----------------*/
-  if (this.sphere) {
-    rh1 = this.a * (this.g - lat);
-  }
-  else {
-    var ml = mlfn(this.e0, this.e1, this.e2, this.e3, lat);
-    rh1 = this.a * (this.g - ml);
-  }
-  var theta = this.ns * adjust_lon(lon - this.long0);
-  var x = this.x0 + rh1 * Math.sin(theta);
-  var y = this.y0 + this.rh - rh1 * Math.cos(theta);
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-/* Inverse equations
-  -----------------*/
-function eqdc_inverse(p) {
-  p.x -= this.x0;
-  p.y = this.rh - p.y + this.y0;
-  var con, rh1, lat, lon;
-  if (this.ns >= 0) {
-    rh1 = Math.sqrt(p.x * p.x + p.y * p.y);
-    con = 1;
-  }
-  else {
-    rh1 = -Math.sqrt(p.x * p.x + p.y * p.y);
-    con = -1;
-  }
-  var theta = 0;
-  if (rh1 !== 0) {
-    theta = Math.atan2(con * p.x, con * p.y);
-  }
-
-  if (this.sphere) {
-    lon = adjust_lon(this.long0 + theta / this.ns);
-    lat = adjust_lat(this.g - rh1 / this.a);
-    p.x = lon;
-    p.y = lat;
-    return p;
-  }
-  else {
-    var ml = this.g - rh1 / this.a;
-    lat = imlfn(ml, this.e0, this.e1, this.e2, this.e3);
-    lon = adjust_lon(this.long0 + theta / this.ns);
-    p.x = lon;
-    p.y = lat;
-    return p;
-  }
-
-}
-
-var eqdc_names = ["Equidistant_Conic", "eqdc"];
-/* harmony default export */ var eqdc = ({
-  init: eqdc_init,
-  forward: eqdc_forward,
-  inverse: eqdc_inverse,
-  names: eqdc_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/vandg.js
-
-
-
-
-
-
-/* Initialize the Van Der Grinten projection
-  ----------------------------------------*/
-function vandg_init() {
-  //this.R = 6370997; //Radius of earth
-  this.R = this.a;
-}
-
-function vandg_forward(p) {
-
-  var lon = p.x;
-  var lat = p.y;
-
-  /* Forward equations
-    -----------------*/
-  var dlon = adjust_lon(lon - this.long0);
-  var x, y;
-
-  if (Math.abs(lat) <= EPSLN) {
-    x = this.x0 + this.R * dlon;
-    y = this.y0;
-  }
-  var theta = asinz(2 * Math.abs(lat / Math.PI));
-  if ((Math.abs(dlon) <= EPSLN) || (Math.abs(Math.abs(lat) - HALF_PI) <= EPSLN)) {
-    x = this.x0;
-    if (lat >= 0) {
-      y = this.y0 + Math.PI * this.R * Math.tan(0.5 * theta);
-    }
-    else {
-      y = this.y0 + Math.PI * this.R * -Math.tan(0.5 * theta);
-    }
-    //  return(OK);
-  }
-  var al = 0.5 * Math.abs((Math.PI / dlon) - (dlon / Math.PI));
-  var asq = al * al;
-  var sinth = Math.sin(theta);
-  var costh = Math.cos(theta);
-
-  var g = costh / (sinth + costh - 1);
-  var gsq = g * g;
-  var m = g * (2 / sinth - 1);
-  var msq = m * m;
-  var con = Math.PI * this.R * (al * (g - msq) + Math.sqrt(asq * (g - msq) * (g - msq) - (msq + asq) * (gsq - msq))) / (msq + asq);
-  if (dlon < 0) {
-    con = -con;
-  }
-  x = this.x0 + con;
-  //con = Math.abs(con / (Math.PI * this.R));
-  var q = asq + g;
-  con = Math.PI * this.R * (m * q - al * Math.sqrt((msq + asq) * (asq + 1) - q * q)) / (msq + asq);
-  if (lat >= 0) {
-    //y = this.y0 + Math.PI * this.R * Math.sqrt(1 - con * con - 2 * al * con);
-    y = this.y0 + con;
-  }
-  else {
-    //y = this.y0 - Math.PI * this.R * Math.sqrt(1 - con * con - 2 * al * con);
-    y = this.y0 - con;
-  }
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-/* Van Der Grinten inverse equations--mapping x,y to lat/long
-  ---------------------------------------------------------*/
-function vandg_inverse(p) {
-  var lon, lat;
-  var xx, yy, xys, c1, c2, c3;
-  var a1;
-  var m1;
-  var con;
-  var th1;
-  var d;
-
-  /* inverse equations
-    -----------------*/
-  p.x -= this.x0;
-  p.y -= this.y0;
-  con = Math.PI * this.R;
-  xx = p.x / con;
-  yy = p.y / con;
-  xys = xx * xx + yy * yy;
-  c1 = -Math.abs(yy) * (1 + xys);
-  c2 = c1 - 2 * yy * yy + xx * xx;
-  c3 = -2 * c1 + 1 + 2 * yy * yy + xys * xys;
-  d = yy * yy / c3 + (2 * c2 * c2 * c2 / c3 / c3 / c3 - 9 * c1 * c2 / c3 / c3) / 27;
-  a1 = (c1 - c2 * c2 / 3 / c3) / c3;
-  m1 = 2 * Math.sqrt(-a1 / 3);
-  con = ((3 * d) / a1) / m1;
-  if (Math.abs(con) > 1) {
-    if (con >= 0) {
-      con = 1;
-    }
-    else {
-      con = -1;
-    }
-  }
-  th1 = Math.acos(con) / 3;
-  if (p.y >= 0) {
-    lat = (-m1 * Math.cos(th1 + Math.PI / 3) - c2 / 3 / c3) * Math.PI;
-  }
-  else {
-    lat = -(-m1 * Math.cos(th1 + Math.PI / 3) - c2 / 3 / c3) * Math.PI;
-  }
-
-  if (Math.abs(xx) < EPSLN) {
-    lon = this.long0;
-  }
-  else {
-    lon = adjust_lon(this.long0 + Math.PI * (xys - 1 + Math.sqrt(1 + 2 * (xx * xx - yy * yy) + xys * xys)) / 2 / xx);
-  }
-
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var vandg_names = ["Van_der_Grinten_I", "VanDerGrinten", "vandg"];
-/* harmony default export */ var vandg = ({
-  init: vandg_init,
-  forward: vandg_forward,
-  inverse: vandg_inverse,
-  names: vandg_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/aeqd.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function aeqd_init() {
-  this.sin_p12 = Math.sin(this.lat0);
-  this.cos_p12 = Math.cos(this.lat0);
-}
-
-function aeqd_forward(p) {
-  var lon = p.x;
-  var lat = p.y;
-  var sinphi = Math.sin(p.y);
-  var cosphi = Math.cos(p.y);
-  var dlon = adjust_lon(lon - this.long0);
-  var e0, e1, e2, e3, Mlp, Ml, tanphi, Nl1, Nl, psi, Az, G, H, GH, Hs, c, kp, cos_c, s, s2, s3, s4, s5;
-  if (this.sphere) {
-    if (Math.abs(this.sin_p12 - 1) <= EPSLN) {
-      //North Pole case
-      p.x = this.x0 + this.a * (HALF_PI - lat) * Math.sin(dlon);
-      p.y = this.y0 - this.a * (HALF_PI - lat) * Math.cos(dlon);
-      return p;
-    }
-    else if (Math.abs(this.sin_p12 + 1) <= EPSLN) {
-      //South Pole case
-      p.x = this.x0 + this.a * (HALF_PI + lat) * Math.sin(dlon);
-      p.y = this.y0 + this.a * (HALF_PI + lat) * Math.cos(dlon);
-      return p;
-    }
-    else {
-      //default case
-      cos_c = this.sin_p12 * sinphi + this.cos_p12 * cosphi * Math.cos(dlon);
-      c = Math.acos(cos_c);
-      kp = c ? c / Math.sin(c) : 1;
-      p.x = this.x0 + this.a * kp * cosphi * Math.sin(dlon);
-      p.y = this.y0 + this.a * kp * (this.cos_p12 * sinphi - this.sin_p12 * cosphi * Math.cos(dlon));
-      return p;
-    }
-  }
-  else {
-    e0 = e0fn(this.es);
-    e1 = e1fn(this.es);
-    e2 = e2fn(this.es);
-    e3 = e3fn(this.es);
-    if (Math.abs(this.sin_p12 - 1) <= EPSLN) {
-      //North Pole case
-      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
-      Ml = this.a * mlfn(e0, e1, e2, e3, lat);
-      p.x = this.x0 + (Mlp - Ml) * Math.sin(dlon);
-      p.y = this.y0 - (Mlp - Ml) * Math.cos(dlon);
-      return p;
-    }
-    else if (Math.abs(this.sin_p12 + 1) <= EPSLN) {
-      //South Pole case
-      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
-      Ml = this.a * mlfn(e0, e1, e2, e3, lat);
-      p.x = this.x0 + (Mlp + Ml) * Math.sin(dlon);
-      p.y = this.y0 + (Mlp + Ml) * Math.cos(dlon);
-      return p;
-    }
-    else {
-      //Default case
-      tanphi = sinphi / cosphi;
-      Nl1 = gN(this.a, this.e, this.sin_p12);
-      Nl = gN(this.a, this.e, sinphi);
-      psi = Math.atan((1 - this.es) * tanphi + this.es * Nl1 * this.sin_p12 / (Nl * cosphi));
-      Az = Math.atan2(Math.sin(dlon), this.cos_p12 * Math.tan(psi) - this.sin_p12 * Math.cos(dlon));
-      if (Az === 0) {
-        s = Math.asin(this.cos_p12 * Math.sin(psi) - this.sin_p12 * Math.cos(psi));
-      }
-      else if (Math.abs(Math.abs(Az) - Math.PI) <= EPSLN) {
-        s = -Math.asin(this.cos_p12 * Math.sin(psi) - this.sin_p12 * Math.cos(psi));
-      }
-      else {
-        s = Math.asin(Math.sin(dlon) * Math.cos(psi) / Math.sin(Az));
-      }
-      G = this.e * this.sin_p12 / Math.sqrt(1 - this.es);
-      H = this.e * this.cos_p12 * Math.cos(Az) / Math.sqrt(1 - this.es);
-      GH = G * H;
-      Hs = H * H;
-      s2 = s * s;
-      s3 = s2 * s;
-      s4 = s3 * s;
-      s5 = s4 * s;
-      c = Nl1 * s * (1 - s2 * Hs * (1 - Hs) / 6 + s3 / 8 * GH * (1 - 2 * Hs) + s4 / 120 * (Hs * (4 - 7 * Hs) - 3 * G * G * (1 - 7 * Hs)) - s5 / 48 * GH);
-      p.x = this.x0 + c * Math.sin(Az);
-      p.y = this.y0 + c * Math.cos(Az);
-      return p;
-    }
-  }
-
-
-}
-
-function aeqd_inverse(p) {
-  p.x -= this.x0;
-  p.y -= this.y0;
-  var rh, z, sinz, cosz, lon, lat, con, e0, e1, e2, e3, Mlp, M, N1, psi, Az, cosAz, tmp, A, B, D, Ee, F, sinpsi;
-  if (this.sphere) {
-    rh = Math.sqrt(p.x * p.x + p.y * p.y);
-    if (rh > (2 * HALF_PI * this.a)) {
-      return;
-    }
-    z = rh / this.a;
-
-    sinz = Math.sin(z);
-    cosz = Math.cos(z);
-
-    lon = this.long0;
-    if (Math.abs(rh) <= EPSLN) {
-      lat = this.lat0;
-    }
-    else {
-      lat = asinz(cosz * this.sin_p12 + (p.y * sinz * this.cos_p12) / rh);
-      con = Math.abs(this.lat0) - HALF_PI;
-      if (Math.abs(con) <= EPSLN) {
-        if (this.lat0 >= 0) {
-          lon = adjust_lon(this.long0 + Math.atan2(p.x, - p.y));
-        }
-        else {
-          lon = adjust_lon(this.long0 - Math.atan2(-p.x, p.y));
-        }
-      }
-      else {
-        /*con = cosz - this.sin_p12 * Math.sin(lat);
-        if ((Math.abs(con) < EPSLN) && (Math.abs(p.x) < EPSLN)) {
-          //no-op, just keep the lon value as is
-        } else {
-          var temp = Math.atan2((p.x * sinz * this.cos_p12), (con * rh));
-          lon = adjust_lon(this.long0 + Math.atan2((p.x * sinz * this.cos_p12), (con * rh)));
-        }*/
-        lon = adjust_lon(this.long0 + Math.atan2(p.x * sinz, rh * this.cos_p12 * cosz - p.y * this.sin_p12 * sinz));
-      }
-    }
-
-    p.x = lon;
-    p.y = lat;
-    return p;
-  }
-  else {
-    e0 = e0fn(this.es);
-    e1 = e1fn(this.es);
-    e2 = e2fn(this.es);
-    e3 = e3fn(this.es);
-    if (Math.abs(this.sin_p12 - 1) <= EPSLN) {
-      //North pole case
-      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
-      rh = Math.sqrt(p.x * p.x + p.y * p.y);
-      M = Mlp - rh;
-      lat = imlfn(M / this.a, e0, e1, e2, e3);
-      lon = adjust_lon(this.long0 + Math.atan2(p.x, - 1 * p.y));
-      p.x = lon;
-      p.y = lat;
-      return p;
-    }
-    else if (Math.abs(this.sin_p12 + 1) <= EPSLN) {
-      //South pole case
-      Mlp = this.a * mlfn(e0, e1, e2, e3, HALF_PI);
-      rh = Math.sqrt(p.x * p.x + p.y * p.y);
-      M = rh - Mlp;
-
-      lat = imlfn(M / this.a, e0, e1, e2, e3);
-      lon = adjust_lon(this.long0 + Math.atan2(p.x, p.y));
-      p.x = lon;
-      p.y = lat;
-      return p;
-    }
-    else {
-      //default case
-      rh = Math.sqrt(p.x * p.x + p.y * p.y);
-      Az = Math.atan2(p.x, p.y);
-      N1 = gN(this.a, this.e, this.sin_p12);
-      cosAz = Math.cos(Az);
-      tmp = this.e * this.cos_p12 * cosAz;
-      A = -tmp * tmp / (1 - this.es);
-      B = 3 * this.es * (1 - A) * this.sin_p12 * this.cos_p12 * cosAz / (1 - this.es);
-      D = rh / N1;
-      Ee = D - A * (1 + A) * Math.pow(D, 3) / 6 - B * (1 + 3 * A) * Math.pow(D, 4) / 24;
-      F = 1 - A * Ee * Ee / 2 - D * Ee * Ee * Ee / 6;
-      psi = Math.asin(this.sin_p12 * Math.cos(Ee) + this.cos_p12 * Math.sin(Ee) * cosAz);
-      lon = adjust_lon(this.long0 + Math.asin(Math.sin(Az) * Math.sin(Ee) / Math.cos(psi)));
-      sinpsi = Math.sin(psi);
-      lat = Math.atan2((sinpsi - this.es * F * this.sin_p12) * Math.tan(psi), sinpsi * (1 - this.es));
-      p.x = lon;
-      p.y = lat;
-      return p;
-    }
-  }
-
-}
-
-var aeqd_names = ["Azimuthal_Equidistant", "aeqd"];
-/* harmony default export */ var aeqd = ({
-  init: aeqd_init,
-  forward: aeqd_forward,
-  inverse: aeqd_inverse,
-  names: aeqd_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/ortho.js
-
-
-
-
-function ortho_init() {
-  //double temp;      /* temporary variable    */
-
-  /* Place parameters in static storage for common use
-      -------------------------------------------------*/
-  this.sin_p14 = Math.sin(this.lat0);
-  this.cos_p14 = Math.cos(this.lat0);
-}
-
-/* Orthographic forward equations--mapping lat,long to x,y
-    ---------------------------------------------------*/
-function ortho_forward(p) {
-  var sinphi, cosphi; /* sin and cos value        */
-  var dlon; /* delta longitude value      */
-  var coslon; /* cos of longitude        */
-  var ksp; /* scale factor          */
-  var g, x, y;
-  var lon = p.x;
-  var lat = p.y;
-  /* Forward equations
-      -----------------*/
-  dlon = adjust_lon(lon - this.long0);
-
-  sinphi = Math.sin(lat);
-  cosphi = Math.cos(lat);
-
-  coslon = Math.cos(dlon);
-  g = this.sin_p14 * sinphi + this.cos_p14 * cosphi * coslon;
-  ksp = 1;
-  if ((g > 0) || (Math.abs(g) <= EPSLN)) {
-    x = this.a * ksp * cosphi * Math.sin(dlon);
-    y = this.y0 + this.a * ksp * (this.cos_p14 * sinphi - this.sin_p14 * cosphi * coslon);
-  }
-  p.x = x;
-  p.y = y;
-  return p;
-}
-
-function ortho_inverse(p) {
-  var rh; /* height above ellipsoid      */
-  var z; /* angle          */
-  var sinz, cosz; /* sin of z and cos of z      */
-  var con;
-  var lon, lat;
-  /* Inverse equations
-      -----------------*/
-  p.x -= this.x0;
-  p.y -= this.y0;
-  rh = Math.sqrt(p.x * p.x + p.y * p.y);
-  z = asinz(rh / this.a);
-
-  sinz = Math.sin(z);
-  cosz = Math.cos(z);
-
-  lon = this.long0;
-  if (Math.abs(rh) <= EPSLN) {
-    lat = this.lat0;
-    p.x = lon;
-    p.y = lat;
-    return p;
-  }
-  lat = asinz(cosz * this.sin_p14 + (p.y * sinz * this.cos_p14) / rh);
-  con = Math.abs(this.lat0) - HALF_PI;
-  if (Math.abs(con) <= EPSLN) {
-    if (this.lat0 >= 0) {
-      lon = adjust_lon(this.long0 + Math.atan2(p.x, - p.y));
-    }
-    else {
-      lon = adjust_lon(this.long0 - Math.atan2(-p.x, p.y));
-    }
-    p.x = lon;
-    p.y = lat;
-    return p;
-  }
-  lon = adjust_lon(this.long0 + Math.atan2((p.x * sinz), rh * this.cos_p14 * cosz - p.y * this.sin_p14 * sinz));
-  p.x = lon;
-  p.y = lat;
-  return p;
-}
-
-var ortho_names = ["ortho"];
-/* harmony default export */ var ortho = ({
-  init: ortho_init,
-  forward: ortho_forward,
-  inverse: ortho_inverse,
-  names: ortho_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/qsc.js
-// QSC projection rewritten from the original PROJ4
-// https://github.com/OSGeo/proj.4/blob/master/src/PJ_qsc.c
-
-
-
-/* constants */
-var FACE_ENUM = {
-    FRONT: 1,
-    RIGHT: 2,
-    BACK: 3,
-    LEFT: 4,
-    TOP: 5,
-    BOTTOM: 6
-};
-
-var AREA_ENUM = {
-    AREA_0: 1,
-    AREA_1: 2,
-    AREA_2: 3,
-    AREA_3: 4
-};
-
-function qsc_init() {
-
-  this.x0 = this.x0 || 0;
-  this.y0 = this.y0 || 0;
-  this.lat0 = this.lat0 || 0;
-  this.long0 = this.long0 || 0;
-  this.lat_ts = this.lat_ts || 0;
-  this.title = this.title || "Quadrilateralized Spherical Cube";
-
-  /* Determine the cube face from the center of projection. */
-  if (this.lat0 >= HALF_PI - FORTPI / 2.0) {
-    this.face = FACE_ENUM.TOP;
-  } else if (this.lat0 <= -(HALF_PI - FORTPI / 2.0)) {
-    this.face = FACE_ENUM.BOTTOM;
-  } else if (Math.abs(this.long0) <= FORTPI) {
-    this.face = FACE_ENUM.FRONT;
-  } else if (Math.abs(this.long0) <= HALF_PI + FORTPI) {
-    this.face = this.long0 > 0.0 ? FACE_ENUM.RIGHT : FACE_ENUM.LEFT;
-  } else {
-    this.face = FACE_ENUM.BACK;
-  }
-
-  /* Fill in useful values for the ellipsoid <-> sphere shift
-   * described in [LK12]. */
-  if (this.es !== 0) {
-    this.one_minus_f = 1 - (this.a - this.b) / this.a;
-    this.one_minus_f_squared = this.one_minus_f * this.one_minus_f;
-  }
-}
-
-// QSC forward equations--mapping lat,long to x,y
-// -----------------------------------------------------------------
-function qsc_forward(p) {
-  var xy = {x: 0, y: 0};
-  var lat, lon;
-  var theta, phi;
-  var t, mu;
-  /* nu; */
-  var area = {value: 0};
-
-  // move lon according to projection's lon
-  p.x -= this.long0;
-
-  /* Convert the geodetic latitude to a geocentric latitude.
-   * This corresponds to the shift from the ellipsoid to the sphere
-   * described in [LK12]. */
-  if (this.es !== 0) {//if (P->es != 0) {
-    lat = Math.atan(this.one_minus_f_squared * Math.tan(p.y));
-  } else {
-    lat = p.y;
-  }
-
-  /* Convert the input lat, lon into theta, phi as used by QSC.
-   * This depends on the cube face and the area on it.
-   * For the top and bottom face, we can compute theta and phi
-   * directly from phi, lam. For the other faces, we must use
-   * unit sphere cartesian coordinates as an intermediate step. */
-  lon = p.x; //lon = lp.lam;
-  if (this.face === FACE_ENUM.TOP) {
-    phi = HALF_PI - lat;
-    if (lon >= FORTPI && lon <= HALF_PI + FORTPI) {
-      area.value = AREA_ENUM.AREA_0;
-      theta = lon - HALF_PI;
-    } else if (lon > HALF_PI + FORTPI || lon <= -(HALF_PI + FORTPI)) {
-      area.value = AREA_ENUM.AREA_1;
-      theta = (lon > 0.0 ? lon - SPI : lon + SPI);
-    } else if (lon > -(HALF_PI + FORTPI) && lon <= -FORTPI) {
-      area.value = AREA_ENUM.AREA_2;
-      theta = lon + HALF_PI;
-    } else {
-      area.value = AREA_ENUM.AREA_3;
-      theta = lon;
-    }
-  } else if (this.face === FACE_ENUM.BOTTOM) {
-    phi = HALF_PI + lat;
-    if (lon >= FORTPI && lon <= HALF_PI + FORTPI) {
-      area.value = AREA_ENUM.AREA_0;
-      theta = -lon + HALF_PI;
-    } else if (lon < FORTPI && lon >= -FORTPI) {
-      area.value = AREA_ENUM.AREA_1;
-      theta = -lon;
-    } else if (lon < -FORTPI && lon >= -(HALF_PI + FORTPI)) {
-      area.value = AREA_ENUM.AREA_2;
-      theta = -lon - HALF_PI;
-    } else {
-      area.value = AREA_ENUM.AREA_3;
-      theta = (lon > 0.0 ? -lon + SPI : -lon - SPI);
-    }
-  } else {
-    var q, r, s;
-    var sinlat, coslat;
-    var sinlon, coslon;
-
-    if (this.face === FACE_ENUM.RIGHT) {
-      lon = qsc_shift_lon_origin(lon, +HALF_PI);
-    } else if (this.face === FACE_ENUM.BACK) {
-      lon = qsc_shift_lon_origin(lon, +SPI);
-    } else if (this.face === FACE_ENUM.LEFT) {
-      lon = qsc_shift_lon_origin(lon, -HALF_PI);
-    }
-    sinlat = Math.sin(lat);
-    coslat = Math.cos(lat);
-    sinlon = Math.sin(lon);
-    coslon = Math.cos(lon);
-    q = coslat * coslon;
-    r = coslat * sinlon;
-    s = sinlat;
-
-    if (this.face === FACE_ENUM.FRONT) {
-      phi = Math.acos(q);
-      theta = qsc_fwd_equat_face_theta(phi, s, r, area);
-    } else if (this.face === FACE_ENUM.RIGHT) {
-      phi = Math.acos(r);
-      theta = qsc_fwd_equat_face_theta(phi, s, -q, area);
-    } else if (this.face === FACE_ENUM.BACK) {
-      phi = Math.acos(-q);
-      theta = qsc_fwd_equat_face_theta(phi, s, -r, area);
-    } else if (this.face === FACE_ENUM.LEFT) {
-      phi = Math.acos(-r);
-      theta = qsc_fwd_equat_face_theta(phi, s, q, area);
-    } else {
-      /* Impossible */
-      phi = theta = 0;
-      area.value = AREA_ENUM.AREA_0;
-    }
-  }
-
-  /* Compute mu and nu for the area of definition.
-   * For mu, see Eq. (3-21) in [OL76], but note the typos:
-   * compare with Eq. (3-14). For nu, see Eq. (3-38). */
-  mu = Math.atan((12 / SPI) * (theta + Math.acos(Math.sin(theta) * Math.cos(FORTPI)) - HALF_PI));
-  t = Math.sqrt((1 - Math.cos(phi)) / (Math.cos(mu) * Math.cos(mu)) / (1 - Math.cos(Math.atan(1 / Math.cos(theta)))));
-
-  /* Apply the result to the real area. */
-  if (area.value === AREA_ENUM.AREA_1) {
-    mu += HALF_PI;
-  } else if (area.value === AREA_ENUM.AREA_2) {
-    mu += SPI;
-  } else if (area.value === AREA_ENUM.AREA_3) {
-    mu += 1.5 * SPI;
-  }
-
-  /* Now compute x, y from mu and nu */
-  xy.x = t * Math.cos(mu);
-  xy.y = t * Math.sin(mu);
-  xy.x = xy.x * this.a + this.x0;
-  xy.y = xy.y * this.a + this.y0;
-
-  p.x = xy.x;
-  p.y = xy.y;
-  return p;
-}
-
-// QSC inverse equations--mapping x,y to lat/long
-// -----------------------------------------------------------------
-function qsc_inverse(p) {
-  var lp = {lam: 0, phi: 0};
-  var mu, nu, cosmu, tannu;
-  var tantheta, theta, cosphi, phi;
-  var t;
-  var area = {value: 0};
-
-  /* de-offset */
-  p.x = (p.x - this.x0) / this.a;
-  p.y = (p.y - this.y0) / this.a;
-
-  /* Convert the input x, y to the mu and nu angles as used by QSC.
-   * This depends on the area of the cube face. */
-  nu = Math.atan(Math.sqrt(p.x * p.x + p.y * p.y));
-  mu = Math.atan2(p.y, p.x);
-  if (p.x >= 0.0 && p.x >= Math.abs(p.y)) {
-    area.value = AREA_ENUM.AREA_0;
-  } else if (p.y >= 0.0 && p.y >= Math.abs(p.x)) {
-    area.value = AREA_ENUM.AREA_1;
-    mu -= HALF_PI;
-  } else if (p.x < 0.0 && -p.x >= Math.abs(p.y)) {
-    area.value = AREA_ENUM.AREA_2;
-    mu = (mu < 0.0 ? mu + SPI : mu - SPI);
-  } else {
-    area.value = AREA_ENUM.AREA_3;
-    mu += HALF_PI;
-  }
-
-  /* Compute phi and theta for the area of definition.
-   * The inverse projection is not described in the original paper, but some
-   * good hints can be found here (as of 2011-12-14):
-   * http://fits.gsfc.nasa.gov/fitsbits/saf.93/saf.9302
-   * (search for "Message-Id: <9302181759.AA25477 at fits.cv.nrao.edu>") */
-  t = (SPI / 12) * Math.tan(mu);
-  tantheta = Math.sin(t) / (Math.cos(t) - (1 / Math.sqrt(2)));
-  theta = Math.atan(tantheta);
-  cosmu = Math.cos(mu);
-  tannu = Math.tan(nu);
-  cosphi = 1 - cosmu * cosmu * tannu * tannu * (1 - Math.cos(Math.atan(1 / Math.cos(theta))));
-  if (cosphi < -1) {
-    cosphi = -1;
-  } else if (cosphi > +1) {
-    cosphi = +1;
-  }
-
-  /* Apply the result to the real area on the cube face.
-   * For the top and bottom face, we can compute phi and lam directly.
-   * For the other faces, we must use unit sphere cartesian coordinates
-   * as an intermediate step. */
-  if (this.face === FACE_ENUM.TOP) {
-    phi = Math.acos(cosphi);
-    lp.phi = HALF_PI - phi;
-    if (area.value === AREA_ENUM.AREA_0) {
-      lp.lam = theta + HALF_PI;
-    } else if (area.value === AREA_ENUM.AREA_1) {
-      lp.lam = (theta < 0.0 ? theta + SPI : theta - SPI);
-    } else if (area.value === AREA_ENUM.AREA_2) {
-      lp.lam = theta - HALF_PI;
-    } else /* area.value == AREA_ENUM.AREA_3 */ {
-      lp.lam = theta;
-    }
-  } else if (this.face === FACE_ENUM.BOTTOM) {
-    phi = Math.acos(cosphi);
-    lp.phi = phi - HALF_PI;
-    if (area.value === AREA_ENUM.AREA_0) {
-      lp.lam = -theta + HALF_PI;
-    } else if (area.value === AREA_ENUM.AREA_1) {
-      lp.lam = -theta;
-    } else if (area.value === AREA_ENUM.AREA_2) {
-      lp.lam = -theta - HALF_PI;
-    } else /* area.value == AREA_ENUM.AREA_3 */ {
-      lp.lam = (theta < 0.0 ? -theta - SPI : -theta + SPI);
-    }
-  } else {
-    /* Compute phi and lam via cartesian unit sphere coordinates. */
-    var q, r, s;
-    q = cosphi;
-    t = q * q;
-    if (t >= 1) {
-      s = 0;
-    } else {
-      s = Math.sqrt(1 - t) * Math.sin(theta);
-    }
-    t += s * s;
-    if (t >= 1) {
-      r = 0;
-    } else {
-      r = Math.sqrt(1 - t);
-    }
-    /* Rotate q,r,s into the correct area. */
-    if (area.value === AREA_ENUM.AREA_1) {
-      t = r;
-      r = -s;
-      s = t;
-    } else if (area.value === AREA_ENUM.AREA_2) {
-      r = -r;
-      s = -s;
-    } else if (area.value === AREA_ENUM.AREA_3) {
-      t = r;
-      r = s;
-      s = -t;
-    }
-    /* Rotate q,r,s into the correct cube face. */
-    if (this.face === FACE_ENUM.RIGHT) {
-      t = q;
-      q = -r;
-      r = t;
-    } else if (this.face === FACE_ENUM.BACK) {
-      q = -q;
-      r = -r;
-    } else if (this.face === FACE_ENUM.LEFT) {
-      t = q;
-      q = r;
-      r = -t;
-    }
-    /* Now compute phi and lam from the unit sphere coordinates. */
-    lp.phi = Math.acos(-s) - HALF_PI;
-    lp.lam = Math.atan2(r, q);
-    if (this.face === FACE_ENUM.RIGHT) {
-      lp.lam = qsc_shift_lon_origin(lp.lam, -HALF_PI);
-    } else if (this.face === FACE_ENUM.BACK) {
-      lp.lam = qsc_shift_lon_origin(lp.lam, -SPI);
-    } else if (this.face === FACE_ENUM.LEFT) {
-      lp.lam = qsc_shift_lon_origin(lp.lam, +HALF_PI);
-    }
-  }
-
-  /* Apply the shift from the sphere to the ellipsoid as described
-   * in [LK12]. */
-  if (this.es !== 0) {
-    var invert_sign;
-    var tanphi, xa;
-    invert_sign = (lp.phi < 0 ? 1 : 0);
-    tanphi = Math.tan(lp.phi);
-    xa = this.b / Math.sqrt(tanphi * tanphi + this.one_minus_f_squared);
-    lp.phi = Math.atan(Math.sqrt(this.a * this.a - xa * xa) / (this.one_minus_f * xa));
-    if (invert_sign) {
-      lp.phi = -lp.phi;
-    }
-  }
-
-  lp.lam += this.long0;
-  p.x = lp.lam;
-  p.y = lp.phi;
-  return p;
-}
-
-/* Helper function for forward projection: compute the theta angle
- * and determine the area number. */
-function qsc_fwd_equat_face_theta(phi, y, x, area) {
-  var theta;
-  if (phi < EPSLN) {
-    area.value = AREA_ENUM.AREA_0;
-    theta = 0.0;
-  } else {
-    theta = Math.atan2(y, x);
-    if (Math.abs(theta) <= FORTPI) {
-      area.value = AREA_ENUM.AREA_0;
-    } else if (theta > FORTPI && theta <= HALF_PI + FORTPI) {
-      area.value = AREA_ENUM.AREA_1;
-      theta -= HALF_PI;
-    } else if (theta > HALF_PI + FORTPI || theta <= -(HALF_PI + FORTPI)) {
-      area.value = AREA_ENUM.AREA_2;
-      theta = (theta >= 0.0 ? theta - SPI : theta + SPI);
-    } else {
-      area.value = AREA_ENUM.AREA_3;
-      theta += HALF_PI;
-    }
-  }
-  return theta;
-}
-
-/* Helper function: shift the longitude. */
-function qsc_shift_lon_origin(lon, offset) {
-  var slon = lon + offset;
-  if (slon < -SPI) {
-    slon += TWO_PI;
-  } else if (slon > +SPI) {
-    slon -= TWO_PI;
-  }
-  return slon;
-}
-
-var qsc_names = ["Quadrilateralized Spherical Cube", "Quadrilateralized_Spherical_Cube", "qsc"];
-/* harmony default export */ var qsc = ({
-  init: qsc_init,
-  forward: qsc_forward,
-  inverse: qsc_inverse,
-  names: qsc_names
-});
-
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/robin.js
-// Robinson projection
-// Based on https://github.com/OSGeo/proj.4/blob/master/src/PJ_robin.c
-// Polynomial coeficients from http://article.gmane.org/gmane.comp.gis.proj-4.devel/6039
-
-
-
-
-var COEFS_X = [
-    [1.0000, 2.2199e-17, -7.15515e-05, 3.1103e-06],
-    [0.9986, -0.000482243, -2.4897e-05, -1.3309e-06],
-    [0.9954, -0.00083103, -4.48605e-05, -9.86701e-07],
-    [0.9900, -0.00135364, -5.9661e-05, 3.6777e-06],
-    [0.9822, -0.00167442, -4.49547e-06, -5.72411e-06],
-    [0.9730, -0.00214868, -9.03571e-05, 1.8736e-08],
-    [0.9600, -0.00305085, -9.00761e-05, 1.64917e-06],
-    [0.9427, -0.00382792, -6.53386e-05, -2.6154e-06],
-    [0.9216, -0.00467746, -0.00010457, 4.81243e-06],
-    [0.8962, -0.00536223, -3.23831e-05, -5.43432e-06],
-    [0.8679, -0.00609363, -0.000113898, 3.32484e-06],
-    [0.8350, -0.00698325, -6.40253e-05, 9.34959e-07],
-    [0.7986, -0.00755338, -5.00009e-05, 9.35324e-07],
-    [0.7597, -0.00798324, -3.5971e-05, -2.27626e-06],
-    [0.7186, -0.00851367, -7.01149e-05, -8.6303e-06],
-    [0.6732, -0.00986209, -0.000199569, 1.91974e-05],
-    [0.6213, -0.010418, 8.83923e-05, 6.24051e-06],
-    [0.5722, -0.00906601, 0.000182, 6.24051e-06],
-    [0.5322, -0.00677797, 0.000275608, 6.24051e-06]
-];
-
-var COEFS_Y = [
-    [-5.20417e-18, 0.0124, 1.21431e-18, -8.45284e-11],
-    [0.0620, 0.0124, -1.26793e-09, 4.22642e-10],
-    [0.1240, 0.0124, 5.07171e-09, -1.60604e-09],
-    [0.1860, 0.0123999, -1.90189e-08, 6.00152e-09],
-    [0.2480, 0.0124002, 7.10039e-08, -2.24e-08],
-    [0.3100, 0.0123992, -2.64997e-07, 8.35986e-08],
-    [0.3720, 0.0124029, 9.88983e-07, -3.11994e-07],
-    [0.4340, 0.0123893, -3.69093e-06, -4.35621e-07],
-    [0.4958, 0.0123198, -1.02252e-05, -3.45523e-07],
-    [0.5571, 0.0121916, -1.54081e-05, -5.82288e-07],
-    [0.6176, 0.0119938, -2.41424e-05, -5.25327e-07],
-    [0.6769, 0.011713, -3.20223e-05, -5.16405e-07],
-    [0.7346, 0.0113541, -3.97684e-05, -6.09052e-07],
-    [0.7903, 0.0109107, -4.89042e-05, -1.04739e-06],
-    [0.8435, 0.0103431, -6.4615e-05, -1.40374e-09],
-    [0.8936, 0.00969686, -6.4636e-05, -8.547e-06],
-    [0.9394, 0.00840947, -0.000192841, -4.2106e-06],
-    [0.9761, 0.00616527, -0.000256, -4.2106e-06],
-    [1.0000, 0.00328947, -0.000319159, -4.2106e-06]
-];
-
-var FXC = 0.8487;
-var FYC = 1.3523;
-var C1 = R2D/5; // rad to 5-degree interval
-var RC1 = 1/C1;
-var NODES = 18;
-
-var poly3_val = function(coefs, x) {
-    return coefs[0] + x * (coefs[1] + x * (coefs[2] + x * coefs[3]));
-};
-
-var poly3_der = function(coefs, x) {
-    return coefs[1] + x * (2 * coefs[2] + x * 3 * coefs[3]);
-};
-
-function newton_rapshon(f_df, start, max_err, iters) {
-    var x = start;
-    for (; iters; --iters) {
-        var upd = f_df(x);
-        x -= upd;
-        if (Math.abs(upd) < max_err) {
-            break;
-        }
-    }
-    return x;
-}
-
-function robin_init() {
-    this.x0 = this.x0 || 0;
-    this.y0 = this.y0 || 0;
-    this.long0 = this.long0 || 0;
-    this.es = 0;
-    this.title = this.title || "Robinson";
-}
-
-function robin_forward(ll) {
-    var lon = adjust_lon(ll.x - this.long0);
-
-    var dphi = Math.abs(ll.y);
-    var i = Math.floor(dphi * C1);
-    if (i < 0) {
-        i = 0;
-    } else if (i >= NODES) {
-        i = NODES - 1;
-    }
-    dphi = R2D * (dphi - RC1 * i);
-    var xy = {
-        x: poly3_val(COEFS_X[i], dphi) * lon,
-        y: poly3_val(COEFS_Y[i], dphi)
-    };
-    if (ll.y < 0) {
-        xy.y = -xy.y;
-    }
-
-    xy.x = xy.x * this.a * FXC + this.x0;
-    xy.y = xy.y * this.a * FYC + this.y0;
-    return xy;
-}
-
-function robin_inverse(xy) {
-    var ll = {
-        x: (xy.x - this.x0) / (this.a * FXC),
-        y: Math.abs(xy.y - this.y0) / (this.a * FYC)
-    };
-
-    if (ll.y >= 1) { // pathologic case
-        ll.x /= COEFS_X[NODES][0];
-        ll.y = xy.y < 0 ? -HALF_PI : HALF_PI;
-    } else {
-        // find table interval
-        var i = Math.floor(ll.y * NODES);
-        if (i < 0) {
-            i = 0;
-        } else if (i >= NODES) {
-            i = NODES - 1;
-        }
-        for (;;) {
-            if (COEFS_Y[i][0] > ll.y) {
-                --i;
-            } else if (COEFS_Y[i+1][0] <= ll.y) {
-                ++i;
-            } else {
-                break;
-            }
-        }
-        // linear interpolation in 5 degree interval
-        var coefs = COEFS_Y[i];
-        var t = 5 * (ll.y - coefs[0]) / (COEFS_Y[i+1][0] - coefs[0]);
-        // find t so that poly3_val(coefs, t) = ll.y
-        t = newton_rapshon(function(x) {
-            return (poly3_val(coefs, x) - ll.y) / poly3_der(coefs, x);
-        }, t, EPSLN, 100);
-
-        ll.x /= poly3_val(COEFS_X[i], t);
-        ll.y = (5 * i + t) * D2R;
-        if (xy.y < 0) {
-            ll.y = -ll.y;
-        }
-    }
-
-    ll.x = adjust_lon(ll.x + this.long0);
-    return ll;
-}
-
-var robin_names = ["Robinson", "robin"];
-/* harmony default export */ var robin = ({
-  init: robin_init,
-  forward: robin_forward,
-  inverse: robin_inverse,
-  names: robin_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/geocent.js
-
-
-function geocent_init() {
-    this.name = 'geocent';
-
-}
-
-function geocent_forward(p) {
-    var point = geodeticToGeocentric(p, this.es, this.a);
-    return point;
-}
-
-function geocent_inverse(p) {
-    var point = geocentricToGeodetic(p, this.es, this.a, this.b);
-    return point;
-}
-
-var geocent_names = ["Geocentric", 'geocentric', "geocent", "Geocent"];
-/* harmony default export */ var geocent = ({
-    init: geocent_init,
-    forward: geocent_forward,
-    inverse: geocent_inverse,
-    names: geocent_names
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/tpers.js
-
-var mode = {
-  N_POLE: 0,
-  S_POLE: 1,
-  EQUIT: 2,
-  OBLIQ: 3
-};
-
-
-
-
-var tpers_params = {
-  h:     { def: 100000, num: true },           // default is Karman line, no default in PROJ.7
-  azi:   { def: 0, num: true, degrees: true }, // default is North
-  tilt:  { def: 0, num: true, degrees: true }, // default is Nadir
-  long0: { def: 0, num: true },                // default is Greenwich, conversion to rad is automatic
-  lat0:  { def: 0, num: true }                 // default is Equator, conversion to rad is automatic
-};
-
-function tpers_init() {
-  Object.keys(tpers_params).forEach(function (p) {
-    if (typeof this[p] === "undefined") {
-      this[p] = tpers_params[p].def;
-    } else if (tpers_params[p].num && isNaN(this[p])) {
-      throw new Error("Invalid parameter value, must be numeric " + p + " = " + this[p]);
-    } else if (tpers_params[p].num) {
-      this[p] = parseFloat(this[p]);
-    }
-    if (tpers_params[p].degrees) {
-      this[p] = this[p] * D2R;
-    }
-  }.bind(this));
-
-  if (Math.abs((Math.abs(this.lat0) - HALF_PI)) < EPSLN) {
-    this.mode = this.lat0 < 0 ? mode.S_POLE : mode.N_POLE;
-  } else if (Math.abs(this.lat0) < EPSLN) {
-    this.mode = mode.EQUIT;
-  } else {
-    this.mode = mode.OBLIQ;
-    this.sinph0 = Math.sin(this.lat0);
-    this.cosph0 = Math.cos(this.lat0);
-  }
-
-  this.pn1 = this.h / this.a;  // Normalize relative to the Earth's radius
-
-  if (this.pn1 <= 0 || this.pn1 > 1e10) {
-    throw new Error("Invalid height");
-  }
-  
-  this.p = 1 + this.pn1;
-  this.rp = 1 / this.p;
-  this.h1 = 1 / this.pn1;
-  this.pfact = (this.p + 1) * this.h1;
-  this.es = 0;
-
-  var omega = this.tilt;
-  var gamma = this.azi;
-  this.cg = Math.cos(gamma);
-  this.sg = Math.sin(gamma);
-  this.cw = Math.cos(omega);
-  this.sw = Math.sin(omega);
-}
-
-function tpers_forward(p) {
-  p.x -= this.long0;
-  var sinphi = Math.sin(p.y);
-  var cosphi = Math.cos(p.y);
-  var coslam = Math.cos(p.x);
-  var x, y;
-  switch (this.mode) {
-    case mode.OBLIQ:
-      y = this.sinph0 * sinphi + this.cosph0 * cosphi * coslam;
-      break;
-    case mode.EQUIT:
-      y = cosphi * coslam;
-      break;
-    case mode.S_POLE:
-      y = -sinphi;
-      break;
-    case mode.N_POLE:
-      y = sinphi;
-      break;
-  }
-  y = this.pn1 / (this.p - y);
-  x = y * cosphi * Math.sin(p.x);
-
-  switch (this.mode) {
-    case mode.OBLIQ:
-      y *= this.cosph0 * sinphi - this.sinph0 * cosphi * coslam;
-      break;
-    case mode.EQUIT:
-      y *= sinphi;
-      break;
-    case mode.N_POLE:
-      y *= -(cosphi * coslam);
-      break;
-    case mode.S_POLE:
-      y *= cosphi * coslam;
-      break;
-  }
-
-  // Tilt 
-  var yt, ba;
-  yt = y * this.cg + x * this.sg;
-  ba = 1 / (yt * this.sw * this.h1 + this.cw);
-  x = (x * this.cg - y * this.sg) * this.cw * ba;
-  y = yt * ba;
-
-  p.x = x * this.a;
-  p.y = y * this.a;
-  return p;
-}
-
-function tpers_inverse(p) {
-  p.x /= this.a;
-  p.y /= this.a;
-  var r = { x: p.x, y: p.y };
-
-  // Un-Tilt
-  var bm, bq, yt;
-  yt = 1 / (this.pn1 - p.y * this.sw);
-  bm = this.pn1 * p.x * yt;
-  bq = this.pn1 * p.y * this.cw * yt;
-  p.x = bm * this.cg + bq * this.sg;
-  p.y = bq * this.cg - bm * this.sg;
-
-  var rh = hypot(p.x, p.y);
-  if (Math.abs(rh) < EPSLN) {
-    r.x = 0;
-    r.y = p.y;
-  } else {
-    var cosz, sinz;
-    sinz = 1 - rh * rh * this.pfact;
-    sinz = (this.p - Math.sqrt(sinz)) / (this.pn1 / rh + rh / this.pn1);
-    cosz = Math.sqrt(1 - sinz * sinz);
-    switch (this.mode) {
-      case mode.OBLIQ:
-        r.y = Math.asin(cosz * this.sinph0 + p.y * sinz * this.cosph0 / rh);
-        p.y = (cosz - this.sinph0 * Math.sin(r.y)) * rh;
-        p.x *= sinz * this.cosph0;
-        break;
-      case mode.EQUIT:
-        r.y = Math.asin(p.y * sinz / rh);
-        p.y = cosz * rh;
-        p.x *= sinz;
-        break;
-      case mode.N_POLE:
-        r.y = Math.asin(cosz);
-        p.y = -p.y;
-        break;
-      case mode.S_POLE:
-        r.y = -Math.asin(cosz);
-        break;
-    }
-    r.x = Math.atan2(p.x, p.y);
-  }
-
-  p.x = r.x + this.long0;
-  p.y = r.y;
-  return p;
-}
-
-var tpers_names = ["Tilted_Perspective", "tpers"];
-/* harmony default export */ var tpers = ({
-  init: tpers_init,
-  forward: tpers_forward,
-  inverse: tpers_inverse,
-  names: tpers_names
-});
-
-// CONCATENATED MODULE: ./node_modules/proj4/lib/projections/geos.js
-
-
-function geos_init() {
-    this.flip_axis = (this.sweep === 'x' ? 1 : 0);
-    this.h = Number(this.h);
-    this.radius_g_1 = this.h / this.a;
-
-    if (this.radius_g_1 <= 0 || this.radius_g_1 > 1e10) {
-        throw new Error();
-    }
-
-    this.radius_g = 1.0 + this.radius_g_1;
-    this.C = this.radius_g * this.radius_g - 1.0;
-
-    if (this.es !== 0.0) {
-        var one_es = 1.0 - this.es;
-        var rone_es = 1 / one_es;
-
-        this.radius_p = Math.sqrt(one_es);
-        this.radius_p2 = one_es;
-        this.radius_p_inv2 = rone_es;
-
-        this.shape = 'ellipse'; // Use as a condition in the forward and inverse functions.
-    } else {
-        this.radius_p = 1.0;
-        this.radius_p2 = 1.0;
-        this.radius_p_inv2 = 1.0;
-
-        this.shape = 'sphere';  // Use as a condition in the forward and inverse functions.
-    }
-
-    if (!this.title) {
-        this.title = "Geostationary Satellite View";
-    }
-}
-
-function geos_forward(p) {
-    var lon = p.x;
-    var lat = p.y;
-    var tmp, v_x, v_y, v_z;
-    lon = lon - this.long0;
-
-    if (this.shape === 'ellipse') {
-        lat = Math.atan(this.radius_p2 * Math.tan(lat));
-        var r = this.radius_p / hypot(this.radius_p * Math.cos(lat), Math.sin(lat));
-
-        v_x = r * Math.cos(lon) * Math.cos(lat);
-        v_y = r * Math.sin(lon) * Math.cos(lat);
-        v_z = r * Math.sin(lat);
-
-        if (((this.radius_g - v_x) * v_x - v_y * v_y - v_z * v_z * this.radius_p_inv2) < 0.0) {
-            p.x = Number.NaN;
-            p.y = Number.NaN;
-            return p;
-        }
-
-        tmp = this.radius_g - v_x;
-        if (this.flip_axis) {
-            p.x = this.radius_g_1 * Math.atan(v_y / hypot(v_z, tmp));
-            p.y = this.radius_g_1 * Math.atan(v_z / tmp);
-        } else {
-            p.x = this.radius_g_1 * Math.atan(v_y / tmp);
-            p.y = this.radius_g_1 * Math.atan(v_z / hypot(v_y, tmp));
-        }
-    } else if (this.shape === 'sphere') {
-        tmp = Math.cos(lat);
-        v_x = Math.cos(lon) * tmp;
-        v_y = Math.sin(lon) * tmp;
-        v_z = Math.sin(lat);
-        tmp = this.radius_g - v_x;
-
-        if (this.flip_axis) {
-            p.x = this.radius_g_1 * Math.atan(v_y / hypot(v_z, tmp));
-            p.y = this.radius_g_1 * Math.atan(v_z / tmp);
-        } else {
-            p.x = this.radius_g_1 * Math.atan(v_y / tmp);
-            p.y = this.radius_g_1 * Math.atan(v_z / hypot(v_y, tmp));
-        }
-    }
-    p.x = p.x * this.a;
-    p.y = p.y * this.a;
-    return p;
-}
-
-function geos_inverse(p) {
-    var v_x = -1.0;
-    var v_y = 0.0;
-    var v_z = 0.0;
-    var a, b, det, k;
-
-    p.x = p.x / this.a;
-    p.y = p.y / this.a;
-
-    if (this.shape === 'ellipse') {
-        if (this.flip_axis) {
-            v_z = Math.tan(p.y / this.radius_g_1);
-            v_y = Math.tan(p.x / this.radius_g_1) * hypot(1.0, v_z);
-        } else {
-            v_y = Math.tan(p.x / this.radius_g_1);
-            v_z = Math.tan(p.y / this.radius_g_1) * hypot(1.0, v_y);
-        }
-
-        var v_zp = v_z / this.radius_p;
-        a = v_y * v_y + v_zp * v_zp + v_x * v_x;
-        b = 2 * this.radius_g * v_x;
-        det = (b * b) - 4 * a * this.C;
-
-        if (det < 0.0) {
-            p.x = Number.NaN;
-            p.y = Number.NaN;
-            return p;
-        }
-
-        k = (-b - Math.sqrt(det)) / (2.0 * a);
-        v_x = this.radius_g + k * v_x;
-        v_y *= k;
-        v_z *= k;
-
-        p.x = Math.atan2(v_y, v_x);
-        p.y = Math.atan(v_z * Math.cos(p.x) / v_x);
-        p.y = Math.atan(this.radius_p_inv2 * Math.tan(p.y));
-    } else if (this.shape === 'sphere') {
-        if (this.flip_axis) {
-            v_z = Math.tan(p.y / this.radius_g_1);
-            v_y = Math.tan(p.x / this.radius_g_1) * Math.sqrt(1.0 + v_z * v_z);
-        } else {
-            v_y = Math.tan(p.x / this.radius_g_1);
-            v_z = Math.tan(p.y / this.radius_g_1) * Math.sqrt(1.0 + v_y * v_y);
-        }
-
-        a = v_y * v_y + v_z * v_z + v_x * v_x;
-        b = 2 * this.radius_g * v_x;
-        det = (b * b) - 4 * a * this.C;
-        if (det < 0.0) {
-            p.x = Number.NaN;
-            p.y = Number.NaN;
-            return p;
-        }
-
-        k = (-b - Math.sqrt(det)) / (2.0 * a);
-        v_x = this.radius_g + k * v_x;
-        v_y *= k;
-        v_z *= k;
-
-        p.x = Math.atan2(v_y, v_x);
-        p.y = Math.atan(v_z * Math.cos(p.x) / v_x);
-    }
-    p.x = p.x + this.long0;
-    return p;
-}
-
-var geos_names = ["Geostationary Satellite View", "Geostationary_Satellite", "geos"];
-/* harmony default export */ var geos = ({
-    init: geos_init,
-    forward: geos_forward,
-    inverse: geos_inverse,
-    names: geos_names,
-});
-
-
-// CONCATENATED MODULE: ./node_modules/proj4/projs.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* harmony default export */ var proj4_projs = (function(proj4){
-  proj4.Proj.projections.add(tmerc);
-  proj4.Proj.projections.add(etmerc);
-  proj4.Proj.projections.add(utm);
-  proj4.Proj.projections.add(sterea);
-  proj4.Proj.projections.add(stere);
-  proj4.Proj.projections.add(somerc);
-  proj4.Proj.projections.add(omerc);
-  proj4.Proj.projections.add(lcc);
-  proj4.Proj.projections.add(krovak);
-  proj4.Proj.projections.add(cass);
-  proj4.Proj.projections.add(laea);
-  proj4.Proj.projections.add(aea);
-  proj4.Proj.projections.add(gnom);
-  proj4.Proj.projections.add(cea);
-  proj4.Proj.projections.add(eqc);
-  proj4.Proj.projections.add(poly);
-  proj4.Proj.projections.add(nzmg);
-  proj4.Proj.projections.add(mill);
-  proj4.Proj.projections.add(sinu);
-  proj4.Proj.projections.add(moll);
-  proj4.Proj.projections.add(eqdc);
-  proj4.Proj.projections.add(vandg);
-  proj4.Proj.projections.add(aeqd);
-  proj4.Proj.projections.add(ortho);
-  proj4.Proj.projections.add(qsc);
-  proj4.Proj.projections.add(robin);
-  proj4.Proj.projections.add(geocent);
-  proj4.Proj.projections.add(tpers);
-  proj4.Proj.projections.add(geos);
-});
-// CONCATENATED MODULE: ./node_modules/proj4/lib/index.js
-
-
-
-
-
-
-
-
-
-
-core.defaultDatum = 'WGS84'; //default datum
-core.Proj = Proj;
-core.WGS84 = new core.Proj('WGS84');
-core.Point = lib_Point;
-core.toPoint = toPoint;
-core.defs = lib_defs;
-core.nadgrid = nadgrid;
-core.transform = transform;
-core.mgrs = mgrs;
-core.version = '__VERSION__';
-proj4_projs(core);
-/* harmony default export */ var lib = __webpack_exports__["default"] = (core);
-
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(13)["default"];
+var toPrimitive = __webpack_require__(95);
+function toPropertyKey(t) {
+  var i = toPrimitive(t, "string");
+  return "symbol" == _typeof(i) ? i : i + "";
+}
+module.exports = toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(13)["default"];
+function toPrimitive(t, r) {
+  if ("object" != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+module.exports = toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ })
 /******/ ]);
