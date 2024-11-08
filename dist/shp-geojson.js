@@ -1,7 +1,7 @@
 /*!
  * shp与geojson互转工具类
  * 版本信息：v2.0.1, hash值: 1f1d368dc36aada1be37
- * 编译日期：2024-11-08 13:33:13
+ * 编译日期：2024-11-08 14:49:48
  * 版权所有：Copyright by 木遥 https://github.com/muyao1987/shp-geojson
  * 
  */
