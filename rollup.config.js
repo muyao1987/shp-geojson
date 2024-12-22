@@ -7,15 +7,15 @@ export default [
     plugins: [nodeResolve({ browser: true })],
     output: [
       {
+        name: "shpUtil",
         file: "./dist/shp-geojson-src.js",
         format: "umd",
-        banner: renderBanner(),
-        name: "shpUtil"
+        banner: renderBanner()
       },
       {
+        name: "shpUtil",
         file: "./dist/shp-geojson.js",
         format: "umd",
-        name: "shpUtil",
         banner: renderBanner(),
         plugins: [terser()]
       }

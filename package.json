@@ -7,6 +7,10 @@
     "import": "./src/index.js",
     "require": "./dist/shp-geojson.js"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "npm run lint && rollup -c",
     "lint": "eslint ./src/**/*.{js,ts} --fix",
