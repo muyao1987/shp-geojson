@@ -1,10 +1,14 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import terser from "@rollup/plugin-terser"
+import commonjs from "@rollup/plugin-commonjs"
 
 export default [
   {
     input: "./src/index.js",
-    plugins: [nodeResolve({ browser: true })],
+    plugins: [
+      commonjs(), // 加载非esm资源
+      nodeResolve({ browser: true })
+    ],
     output: [
       {
         name: "shpUtil",
