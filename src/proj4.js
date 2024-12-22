@@ -156,7 +156,7 @@ export function getProj4(value) {
 }
 
 // 获取内部支持的坐标系列表
-export function  getCrsList  ()  {
+export function getCrsList () {
   const arr = []
   for (const key in proj4.defs) {
     if (key.startsWith("EPSG:")) {

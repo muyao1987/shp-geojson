@@ -3,15 +3,84 @@ function isClockWise(array) {
   let i = 1
   const len = array.length
   let prev, cur
+  const bbox = [array[0][0], array[0][1], array[0][0], array[0][1]]
   while (i < len) {
     prev = cur || array[0]
     cur = array[i]
     sum += (cur[0] - prev[0]) * (cur[1] + prev[1])
     i++
+    if (cur[0] < bbox[0]) {
+      bbox[0] = cur[0]
+    }
+    if (cur[1] < bbox[1]) {
+      bbox[1] = cur[1]
+    }
+    if (cur[0] > bbox[2]) {
+      bbox[2] = cur[0]
+    }
+    if (cur[1] > bbox[3]) {
+      bbox[3] = cur[1]
+    }
   }
-  return sum > 0
+  return {
+    ring: array,
+    clockWise: sum > 0,
+    bbox,
+    children: []
+  }
 }
 
+function contains(outer, inner) {
+  if (outer.bbox[0] > inner.bbox[0]) {
+    return false
+  }
+  if (outer.bbox[1] > inner.bbox[1]) {
+    return false
+  }
+  if (outer.bbox[2] < inner.bbox[2]) {
+    return false
+  }
+  if (outer.bbox[3] < inner.bbox[3]) {
+    return false
+  }
+  return true
+}
+
+function handleRings(rings) {
+  const outers = []
+  const inners = []
+  for (const ring of rings) {
+    const proccessed = isClockWise(ring)
+    if (proccessed.clockWise) {
+      outers.push(proccessed)
+    } else {
+      inners.push(proccessed)
+    }
+  }
+  // this is an optimization,
+  // but it would also put in weird bad rings that would otherwise get left out
+  // if (outers.length === 1) {
+  //   const out = [outers[0].ring]
+  //   for (const inner of inners) {
+  //     out.push(inner.ring);
+
+  //   }
+  //   return [out];
+  // }
+  for (const inner of inners) {
+    for (const outer of outers) {
+      if (contains(outer, inner)) {
+        outer.children.push(inner.ring)
+        break
+      }
+    }
+  }
+  const out = []
+  for (const outer of outers) {
+    out.push([outer.ring].concat(outer.children))
+  }
+  return out
+}
 function polyReduce(a, b) {
   if (isClockWise(b) || !a.length) {
     a.push([b])
@@ -20,20 +89,17 @@ function polyReduce(a, b) {
   }
   return a
 }
-
 ParseShp.prototype.parsePoint = function (data) {
   return {
-    type: 'Point',
-    coordinates: this.parseCoord(data, 0),
+    type: "Point",
+    coordinates: this.parseCoord(data, 0)
   }
 }
-
 ParseShp.prototype.parseZPoint = function (data) {
   const pointXY = this.parsePoint(data)
-  pointXY.coordinates.push(data.readDoubleLE(16))
+  pointXY.coordinates.push(data.getFloat64(16, true))
   return pointXY
 }
-
 ParseShp.prototype.parsePointArray = function (data, offset, num) {
   const out = []
   let done = 0
@@ -44,17 +110,15 @@ ParseShp.prototype.parsePointArray = function (data, offset, num) {
   }
   return out
 }
-
 ParseShp.prototype.parseZPointArray = function (data, zOffset, num, coordinates) {
   let i = 0
   while (i < num) {
-    coordinates[i].push(data.readDoubleLE(zOffset))
+    coordinates[i].push(data.getFloat64(zOffset, true))
     i++
     zOffset += 8
   }
   return coordinates
 }
-
 ParseShp.prototype.parseArrayGroup = function (data, offset, partOffset, num, tot) {
   const out = []
   let done = 0
@@ -68,7 +132,7 @@ ParseShp.prototype.parseArrayGroup = function (data, offset, partOffset, num, to
     if (done === num) {
       nextNum = tot
     } else {
-      nextNum = data.readInt32LE(partOffset)
+      nextNum = data.getInt32(partOffset, true)
     }
     pointNumber = nextNum - curNum
     if (!pointNumber) {
@@ -79,7 +143,6 @@ ParseShp.prototype.parseArrayGroup = function (data, offset, partOffset, num, to
   }
   return out
 }
-
 ParseShp.prototype.parseZArrayGroup = function (data, zOffset, num, coordinates) {
   let i = 0
   while (i < num) {
@@ -89,10 +152,9 @@ ParseShp.prototype.parseZArrayGroup = function (data, zOffset, num, coordinates)
   }
   return coordinates
 }
-
 ParseShp.prototype.parseMultiPoint = function (data) {
   const out = {}
-  const num = data.readInt32LE(32, true)
+  const num = data.getInt32(32, true)
   if (!num) {
     return null
   }
@@ -101,23 +163,22 @@ ParseShp.prototype.parseMultiPoint = function (data) {
   out.bbox = [mins[0], mins[1], maxs[0], maxs[1]]
   const offset = 36
   if (num === 1) {
-    out.type = 'Point'
+    out.type = "Point"
     out.coordinates = this.parseCoord(data, offset)
   } else {
-    out.type = 'MultiPoint'
+    out.type = "MultiPoint"
     out.coordinates = this.parsePointArray(data, offset, num)
   }
   return out
 }
-
 ParseShp.prototype.parseZMultiPoint = function (data) {
   const geoJson = this.parseMultiPoint(data)
   if (!geoJson) {
     return null
   }
   let num
-  if (geoJson.type === 'Point') {
-    geoJson.coordinates.push(data.readDoubleLE(72))
+  if (geoJson.type === "Point") {
+    geoJson.coordinates.push(data.getFloat64(72, true))
     return geoJson
   } else {
     num = geoJson.coordinates.length
@@ -126,31 +187,29 @@ ParseShp.prototype.parseZMultiPoint = function (data) {
   geoJson.coordinates = this.parseZPointArray(data, zOffset, num, geoJson.coordinates)
   return geoJson
 }
-
 ParseShp.prototype.parsePolyline = function (data) {
   const out = {}
-  const numParts = data.readInt32LE(32)
+  const numParts = data.getInt32(32, true)
   if (!numParts) {
     return null
   }
   const mins = this.parseCoord(data, 0)
   const maxs = this.parseCoord(data, 16)
   out.bbox = [mins[0], mins[1], maxs[0], maxs[1]]
-  const num = data.readInt32LE(36)
+  const num = data.getInt32(36, true)
   let offset, partOffset
   if (numParts === 1) {
-    out.type = 'LineString'
+    out.type = "LineString"
     offset = 44
     out.coordinates = this.parsePointArray(data, offset, num)
   } else {
-    out.type = 'MultiLineString'
+    out.type = "MultiLineString"
     offset = 40 + (numParts << 2)
     partOffset = 40
     out.coordinates = this.parseArrayGroup(data, offset, partOffset, numParts, num)
   }
   return out
 }
-
 ParseShp.prototype.parseZPolyline = function (data) {
   const geoJson = this.parsePolyline(data)
   if (!geoJson) {
@@ -158,7 +217,7 @@ ParseShp.prototype.parseZPolyline = function (data) {
   }
   const num = geoJson.coordinates.length
   let zOffset
-  if (geoJson.type === 'LineString') {
+  if (geoJson.type === "LineString") {
     zOffset = 60 + (num << 4)
     geoJson.coordinates = this.parseZPointArray(data, zOffset, num, geoJson.coordinates)
     return geoJson
@@ -171,56 +230,52 @@ ParseShp.prototype.parseZPolyline = function (data) {
     return geoJson
   }
 }
-
 ParseShp.prototype.polyFuncs = function (out) {
   if (!out) {
     return out
   }
-  if (out.type === 'LineString') {
-    out.type = 'Polygon'
+  if (out.type === "LineString") {
+    out.type = "Polygon"
     out.coordinates = [out.coordinates]
     return out
   } else {
-    out.coordinates = out.coordinates.reduce(polyReduce, [])
+    out.coordinates = handleRings(out.coordinates)
     if (out.coordinates.length === 1) {
-      out.type = 'Polygon'
+      out.type = "Polygon"
       out.coordinates = out.coordinates[0]
       return out
     } else {
-      out.type = 'MultiPolygon'
+      out.type = "MultiPolygon"
       return out
     }
   }
 }
-
 ParseShp.prototype.parsePolygon = function (data) {
   return this.polyFuncs(this.parsePolyline(data))
 }
-
 ParseShp.prototype.parseZPolygon = function (data) {
   return this.polyFuncs(this.parseZPolyline(data))
 }
-
 const shpFuncObj = {
-  1: 'parsePoint',
-  3: 'parsePolyline',
-  5: 'parsePolygon',
-  8: 'parseMultiPoint',
-  11: 'parseZPoint',
-  13: 'parseZPolyline',
-  15: 'parseZPolygon',
-  18: 'parseZMultiPoint',
+  1: "parsePoint",
+  3: "parsePolyline",
+  5: "parsePolygon",
+  8: "parseMultiPoint",
+  11: "parseZPoint",
+  13: "parseZPolyline",
+  15: "parseZPolygon",
+  18: "parseZMultiPoint"
 }
 
 function makeParseCoord(trans) {
   if (trans) {
     return function (data, offset) {
-      const args = [data.readDoubleLE(offset), data.readDoubleLE(offset + 8)]
+      const args = [data.getFloat64(offset, true), data.getFloat64(offset + 8, true)]
       return trans.inverse(args)
     }
   } else {
     return function (data, offset) {
-      return [data.readDoubleLE(offset), data.readDoubleLE(offset + 8)]
+      return [data.getFloat64(offset, true), data.getFloat64(offset + 8, true)]
     }
   }
 }
@@ -231,9 +286,6 @@ function ParseShp(buffer, trans) {
   }
   this.buffer = buffer
   this.headers = this.parseHeader()
-  if (this.headers.length < this.buffer.byteLength) {
-    this.buffer = this.buffer.slice(0, this.headers.length)
-  }
   this.shpFuncs(trans)
   this.rows = this.getRows()
 }
@@ -243,7 +295,7 @@ ParseShp.prototype.shpFuncs = function (tran) {
     num -= 20
   }
   if (!(num in shpFuncObj)) {
-    throw new Error("I don't know that shp type")
+    throw new Error(`I don't know shp type "${num}"`)
   }
   this.parseFunc = this[shpFuncObj[num]]
   this.parseCoord = makeParseCoord(tran)
@@ -252,20 +304,20 @@ ParseShp.prototype.getShpCode = function () {
   return this.parseHeader().shpCode
 }
 ParseShp.prototype.parseHeader = function () {
-  const view = this.buffer.slice(0, 100)
+  const view = this.buffer
   return {
-    length: view.readInt32BE(6 << 2) << 1,
-    version: view.readInt32LE(7 << 2),
-    shpCode: view.readInt32LE(8 << 2),
-    bbox: [view.readDoubleLE(9 << 2), view.readDoubleLE(11 << 2), view.readDoubleLE(13 << 2), view.readDoubleLE(13 << 2)],
+    length: view.getInt32(6 << 2) << 1,
+    version: view.getInt32(7 << 2, true),
+    shpCode: view.getInt32(8 << 2, true),
+    bbox: [view.getFloat64(9 << 2, true), view.getFloat64(11 << 2, true), view.getFloat64(13 << 2, true), view.getFloat64(15 << 2, true)]
   }
 }
 ParseShp.prototype.getRows = function () {
   let offset = 100
-  const len = this.buffer.byteLength
+  const len = this.buffer.byteLength - 8
   const out = []
   let current
-  while (offset < len) {
+  while (offset <= len) {
     current = this.getRow(offset)
     if (!current) {
       break
@@ -281,24 +333,26 @@ ParseShp.prototype.getRows = function () {
   return out
 }
 ParseShp.prototype.getRow = function (offset) {
-  const view = this.buffer.slice(offset, offset + 12)
-  const len = view.readInt32BE(4) << 1
-  const id = view.readInt32BE(0)
+  const id = this.buffer.getInt32(offset)
+  const len = this.buffer.getInt32(offset + 4) << 1
   if (len === 0) {
     return {
       id: id,
       len: len,
-      type: 0,
+      type: 0
     }
+  }
+
+  if (offset + len + 8 > this.buffer.byteLength) {
+    return
   }
   return {
     id: id,
     len: len,
-    data: this.buffer.slice(offset + 12, offset + len + 8),
-    type: view.readInt32LE(8),
+    data: new DataView(this.buffer.buffer, this.buffer.byteOffset + offset + 12, len - 4),
+    type: this.buffer.getInt32(offset + 8, true)
   }
 }
-
-export function parseShp(buffer, trans) {
+export default function (buffer, trans) {
   return new ParseShp(buffer, trans).rows
 }
