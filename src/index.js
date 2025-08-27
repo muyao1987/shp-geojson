@@ -174,7 +174,7 @@ const fromObject = ({ shp, dbf, cpg, prj }) => {
 export const getShapefile = async function (base, whiteList, encoding, crs) {
   if (typeof base !== "string") {
     if (isArrayBuffer(base) || ArrayBuffer.isView(base) || isDataView(base)) {
-      return parseZip(base)
+      return parseZip(base, whiteList, encoding, crs)
     }
     if (base.shp) {
       return fromObject(base)

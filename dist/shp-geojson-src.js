@@ -1,6 +1,6 @@
 /**
  * shp与geojson互转工具类
- * 编译日期：2025-08-27 10:55
+ * 编译日期：2025-08-27 13:47
  * 版权所有：Copyright by 木遥
  */
 (function (global, factory) {
@@ -11015,7 +11015,7 @@
   const getShapefile = async function (base, whiteList, encoding, crs) {
     if (typeof base !== "string") {
       if (isArrayBuffer(base) || ArrayBuffer.isView(base) || isDataView(base)) {
-        return parseZip(base)
+        return parseZip(base, whiteList, encoding, crs)
       }
       if (base.shp) {
         return fromObject(base)

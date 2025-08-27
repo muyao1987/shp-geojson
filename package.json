@@ -1,6 +1,6 @@
 {
   "name": "shp-geojson",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "shp与geojson互转工具类",
   "main": "src/index.js",
   "exports": {
