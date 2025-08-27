@@ -1,6 +1,6 @@
 {
   "name": "shp-geojson",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "shp与geojson互转工具类",
   "main": "src/index.js",
   "exports": {
@@ -18,23 +18,23 @@
   },
   "type": "module",
   "dependencies": {
-    "but-unzip": "^0.1.4",
+    "but-unzip": "^0.1.7",
     "parsedbf": "^2.0.0",
-    "proj4": "^2.1.4"
+    "proj4": "^2.19.10"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.2",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^15.3.1",
     "@rollup/plugin-terser": "^0.4.4",
-    "chai": "^5.1.0",
-    "chai-promised": "^1.0.2",
-    "eslint": "^8.24.0",
-    "express": "^4.17.2",
-    "mocha": "^8.2.0",
-    "morgan": "^1.10.0",
-    "rollup": "^4.13.0",
+    "chai": "^5.3.3",
+    "chai-promised": "^1.0.7",
+    "eslint": "^8.57.1",
+    "express": "^4.21.2",
+    "mocha": "^8.4.0",
+    "morgan": "^1.10.1",
+    "rollup": "^4.48.1",
     "semistandard": "^16.0.1",
-    "standard": "^17.1.0"
+    "standard": "^17.1.2"
   },
   "repository": {
     "type": "git",
