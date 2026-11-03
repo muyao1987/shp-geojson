@@ -1,3 +1,13 @@
+/**
+ * 坐标系支持模块。
+ * 基于开源库 proj4js（https://github.com/proj4js/proj4js ，npm 包名 proj4）封装：
+ * 1. 转发导出 proj4 默认实例；
+ * 2. 注册 CGCS2000（2000 国家大地坐标系）系列 EPSG 定义（EPSG:4490~4554），
+ *    覆盖 6 度/3 度分带高斯-克吕格投影的"横坐标前加带号（Zone）"与"不加带号（CM）"两种形式，
+ *    定义参数与 epsg.io 公布的标准值一致；
+ * 3. 提供 getProj4 / getCrsList 辅助方法。
+ * 本文件仅为定义注册与封装，未修改 proj4js 源码。
+ */
 import proj4 from "proj4"
 export { proj4 }
 
@@ -145,6 +155,12 @@ proj4.defs("EPSG:4553", "+proj=tmerc +lat_0=0 +lon_0=132 +k=1 +x_0=500000 +y_0=0
 proj4.defs("EPSG:4554", "+proj=tmerc +lat_0=0 +lon_0=135 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs")
 
 
+/**
+ * 获取 proj4 转换对象：优先使用页面全局的 window.proj4 或 window.mars3d.proj4（避免重复加载 proj4 实例），否则使用本模块内置的 proj4。
+ * @param {String} value - 坐标系定义，可为 EPSG 编码（如 "EPSG:4490"）或 proj4 定义串。
+ * @returns {Object} proj4 转换对象。
+ * @throws 当传入的坐标系无法被 proj4 识别时抛出错误。
+ */
 export function getProj4(value) {
   if (window.proj4) {
     return window.proj4(value)
@@ -155,7 +171,10 @@ export function getProj4(value) {
   return proj4(value)
 }
 
-// 获取内部支持的坐标系列表
+/**
+ * 获取本模块已注册的坐标系列表。
+ * @returns {Array<Object>} 坐标系对象数组，形如 { crs: "EPSG:4490", ...proj4 定义项 }。
+ */
 export function getCrsList () {
   const arr = []
   for (const key in proj4.defs) {

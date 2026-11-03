@@ -1,3 +1,13 @@
+/**
+ * 解析 .shp 二进制文件为 GeoJSON geometry 数组（内部模块，对外经 index.js 的 parseShp 调用）。
+ * 支持 Point/LineString/Polygon/MultiPoint 及带 Z 值的变体（shp 类型码 1/3/5/8/11/13/15/18 及其 +20 变体）。
+ */
+
+/**
+ * 判断环的方向（鞋带公式），同时计算环的外包矩形。
+ * @param {Array<Array<number>>} array - 环的坐标点数组。
+ * @returns {{ring: Array<Array<number>>, clockWise: boolean, bbox: number[], children: Array}} 环信息：顺时针为外环，逆时针为内环。
+ */
 function isClockWise(array) {
   let sum = 0
   let i = 1
@@ -30,6 +40,7 @@ function isClockWise(array) {
   }
 }
 
+/** 通过外包矩形快速判断 outer 是否可能包含 inner（内部辅助函数）。 */
 function contains(outer, inner) {
   if (outer.bbox[0] > inner.bbox[0]) {
     return false
@@ -46,15 +57,20 @@ function contains(outer, inner) {
   return true
 }
 
+/**
+ * 区分多边形的外环（顺时针）与内环（逆时针/岛洞），并将内环挂到包含它的外环下，组装为 GeoJSON polygon 坐标结构（内部辅助函数）。
+ * @param {Array<Array<Array<number>>>} rings - 原始环数组。
+ * @returns {Array<Array<Array<Array<number>>>>} 组装后的坐标数组，每个元素为 [外环, 内环...]。
+ */
 function handleRings(rings) {
   const outers = []
   const inners = []
   for (const ring of rings) {
-    const proccessed = isClockWise(ring)
-    if (proccessed.clockWise) {
-      outers.push(proccessed)
+    const processed = isClockWise(ring)
+    if (processed.clockWise) {
+      outers.push(processed)
     } else {
-      inners.push(proccessed)
+      inners.push(processed)
     }
   }
   // this is an optimization,
@@ -280,6 +296,12 @@ function makeParseCoord(trans) {
   }
 }
 
+/**
+ * ParseShp 解析器构造函数：读取文件头、按几何类型绑定解析函数并解析全部记录（内部辅助函数）。
+ * @param {DataView} buffer - .shp 文件的二进制数据。
+ * @param {Object|boolean} [trans] - proj4 坐标转换对象（false 或省略时不做投影转换）。
+ * @returns {ParseShp} 解析器实例，rows 属性即为解析出的 geometry 数组。
+ */
 function ParseShp(buffer, trans) {
   if (!(this instanceof ParseShp)) {
     return new ParseShp(buffer, trans)
@@ -353,6 +375,12 @@ ParseShp.prototype.getRow = function (offset) {
     type: this.buffer.getInt32(offset + 8, true)
   }
 }
+/**
+ * 解析 .shp 二进制数据。
+ * @param {DataView} buffer - .shp 文件的二进制数据（DataView）。
+ * @param {Object|boolean} [trans] - proj4 坐标转换对象；false 或省略时不做投影转换。
+ * @returns {Array<Object|null>} GeoJSON geometry 对象数组，空记录对应 null。
+ */
 export default function (buffer, trans) {
   return new ParseShp(buffer, trans).rows
 }
